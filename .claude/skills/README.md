@@ -4,7 +4,38 @@ This directory contains specialized skills for AI coding agents. These skills en
 
 ## Available Skills
 
-### Cloud & AWS
+### Cloud Platforms
+
+#### Azure AI Foundry
+Build AI agents and automation with Azure AI Foundry platform (formerly Azure AI Studio). Comprehensive platform for production AI applications with multi-agent orchestration, Prompt Flow, and RAG capabilities.
+
+**Use when:**
+- Developing AI agents on Azure infrastructure
+- Implementing Prompt Flow orchestrations
+- Building RAG applications with Azure AI Search
+- Creating multi-agent systems on Azure
+- Deploying production AI applications with MLOps
+
+**Triggers:** Azure AI Foundry, Azure AI Studio, Prompt Flow, Azure OpenAI agents, Azure agents
+
+**Key Capabilities:**
+- AI Agent Service with tools and memory
+- Prompt Flow visual orchestration
+- 1,800+ models in Model Catalog
+- Vector search and RAG with Azure AI Search
+- Built-in evaluation and monitoring
+- Content Safety guardrails
+- MLOps and CI/CD integration
+
+**Resources:**
+- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
+- [Azure AI Agent Service](https://learn.microsoft.com/azure/ai-services/agents/)
+- [Prompt Flow](https://microsoft.github.io/promptflow/)
+- [Azure AI Samples](https://github.com/Azure-Samples/azure-ai-samples)
+
+---
+
+### AWS Cloud
 
 #### aws-agentcore
 Build AI agents with AWS Bedrock AgentCore. Includes tool-use patterns, agent orchestration, Lambda integration, and production-ready use cases.
