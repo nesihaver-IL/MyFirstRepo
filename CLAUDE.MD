@@ -1,85 +1,70 @@
-# CLAUDE.MD
+# CLAUDE.md - Global Workspace Configuration
 
-This file provides context and guidelines for Claude AI when working on this project.
+This file provides global context and guidelines for Claude AI when working across all projects in this workspace.
 
-## Project Overview
+## Workspace Overview
 
-[Describe your project's purpose, main features, and goals]
+This is a multi-project workspace for AI agent development, containing:
+- **Personal projects** for learning and experimentation
+- **Work projects** for professional deliverables
+- **Planning documents** for strategy and research
+- **Reference materials** for quick lookups
 
-## Architecture
-
-[Describe the project structure, main components, and how they interact]
-
-## Technology Stack
-
-- **Language**: [e.g., Python, JavaScript, TypeScript, etc.]
-- **Framework**: [e.g., React, Django, Express, etc.]
-- **Database**: [if applicable]
-- **Other tools**: [list any important tools or libraries]
-
-## Project Structure
-
-```
-/
-├── [main directories and their purposes]
-└── ...
-```
-
-## Development Guidelines
+## Global Coding Standards
 
 ### Code Style
 
-- [List coding conventions and style preferences]
-- [Formatting rules]
-- [Naming conventions]
+- Use consistent formatting (Prettier/Black depending on language)
+- Prefer explicit over implicit
+- Write self-documenting code with clear variable names
+- Keep functions small and focused (single responsibility)
+
+### Documentation Standards
+
+- Every project must have a `CLAUDE.md` with project-specific context
+- Document architectural decisions in `DECISIONS.md`
+- Track active work in `TODO.md`
+- Use templates from `.config/templates/` for consistency
 
 ### Best Practices
 
-- [Important patterns to follow]
-- [Things to avoid]
-- [Security considerations]
+- Write tests for critical functionality
+- Use type hints/annotations where applicable
+- Follow security best practices (no secrets in code)
+- Prefer composition over inheritance
 
-## Setup and Installation
+## Directory Conventions
+
+| Directory | Purpose | Access Level |
+|-----------|---------|--------------|
+| `01-personal/` | Learning, experiments | Private |
+| `02-work/` | Professional projects | May be shared |
+| `03-plans/` | Strategy, research | Private |
+| `04-reference/` | Knowledge base | Private |
+
+## Project-Level CLAUDE.md
+
+Each project should have its own `CLAUDE.md` that inherits from this global config and adds:
+- Project-specific context
+- Tech stack details
+- Build/run commands
+- Team conventions (for work projects)
+
+## Common Commands
 
 ```bash
-# [Add setup commands]
+# Navigate to personal project
+cd 01-personal/aws-ai-agent
+
+# Navigate to work project
+cd 02-work/ai-foundry-agent
+
+# Check all TODOs
+grep -r "TODO" --include="*.md" .
 ```
-
-## Running the Project
-
-```bash
-# [Add commands to run the project]
-```
-
-## Testing
-
-```bash
-# [Add test commands]
-```
-
-## Building/Deployment
-
-```bash
-# [Add build/deployment commands]
-```
-
-## Important Notes for Claude
-
-- [Any specific instructions or context Claude should know]
-- [Preferred approaches for common tasks]
-- [Project-specific conventions]
-- [Areas that need special attention]
-
-## Common Tasks
-
-### [Task 1]
-[How to accomplish this task]
-
-### [Task 2]
-[How to accomplish this task]
 
 ## Resources
 
-- [Links to documentation]
-- [Links to related repositories]
-- [Other useful resources]
+- [AWS Bedrock Documentation](https://docs.aws.amazon.com/bedrock/)
+- [Azure AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
+- [LangChain Documentation](https://python.langchain.com/)
