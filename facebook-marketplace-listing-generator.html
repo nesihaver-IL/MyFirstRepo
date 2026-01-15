@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Marketplace Listing Generator - Second-Hand Products</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1877f2 0%, #0d65d9 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .form-section, .preview-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .form-section h2, .preview-section h2 {
+            color: #1877f2;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1877f2;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #1877f2 0%, #0d65d9 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.4);
+        }
+
+        .preview-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #1877f2;
+            min-height: 300px;
+        }
+
+        .preview-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1c1e21;
+            margin-bottom: 15px;
+        }
+
+        .preview-price {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1877f2;
+            margin-bottom: 15px;
+        }
+
+        .preview-description {
+            color: #65676b;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .tips-section {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .tips-section h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .tips-section ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .tips-section li {
+            margin-bottom: 5px;
+        }
+
+        .copy-btn {
+            background: #28a745;
+            margin-top: 15px;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .product-templates {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .template-btn {
+            background: #e7f3ff;
+            color: #1877f2;
+            border: 2px solid #1877f2;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .template-btn:hover {
+            background: #1877f2;
+            color: white;
+        }
+
+        @media (max-width: 968px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .product-templates {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Facebook Marketplace Pro</h1>
+            <p>Create compelling listings that SELL FAST!</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-section">
+                <h2>📝 Product Details</h2>
+
+                <div class="product-templates">
+                    <button class="template-btn" onclick="loadTemplate('watch')">⌚ TAG Watch</button>
+                    <button class="template-btn" onclick="loadTemplate('bed')">🛏️ Bed</button>
+                    <button class="template-btn" onclick="loadTemplate('coffee')">☕ Coffee Machine</button>
+                    <button class="template-btn" onclick="loadTemplate('furniture')">🪑 Furniture</button>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Category</label>
+                    <select id="category" onchange="updatePreview()">
+                        <option value="watch">⌚ Watch</option>
+                        <option value="bed">🛏️ Bed</option>
+                        <option value="coffee">☕ Coffee Machine</option>
+                        <option value="furniture">🪑 Furniture</option>
+                        <option value="other">📦 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Brand / Model</label>
+                    <input type="text" id="brand" placeholder="e.g., TAG Heuer Aquaracer" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Condition</label>
+                    <select id="condition" onchange="updatePreview()">
+                        <option value="like-new">✨ Like New</option>
+                        <option value="excellent">⭐ Excellent</option>
+                        <option value="good">👍 Good</option>
+                        <option value="fair">👌 Fair</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Price (USD)</label>
+                    <input type="number" id="price" placeholder="299" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Original Price (Optional - builds value)</label>
+                    <input type="number" id="originalPrice" placeholder="799" oninput="updatePreview()">
+                </div>
+
+                <div class="form-group">
+                    <label>Key Features (one per line)</label>
+                    <textarea id="features" placeholder="Stainless steel&#10;Automatic movement&#10;Water resistant 300m&#10;Original box included" oninput="updatePreview()"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Reason for Selling</label>
+                    <select id="reason" onchange="updatePreview()">
+                        <option value="upgrade">Upgraded to newer model</option>
+                        <option value="moving">Moving/Downsizing</option>
+                        <option value="unused">Not using anymore</option>
+                        <option value="gift">Received as gift</option>
+                        <option value="duplicate">Have duplicate</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Location / Delivery Options</label>
+                    <input type="text" id="location" placeholder="Available for pickup in Downtown. Can deliver within 10 miles." oninput="updatePreview()">
+                </div>
+
+                <button class="btn" onclick="updatePreview()">🔄 Update Preview</button>
+            </div>
+
+            <div class="preview-section">
+                <h2>👀 Listing Preview</h2>
+
+                <div class="preview-box">
+                    <div class="preview-title" id="previewTitle">Your listing will appear here</div>
+                    <div class="preview-price" id="previewPrice">$0</div>
+                    <div class="preview-description" id="previewDescription">Fill in the form to generate your listing...</div>
+                </div>
+
+                <button class="btn copy-btn" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                <div class="success-message" id="successMessage">✅ Copied! Paste directly into Facebook Marketplace</div>
+
+                <div class="tips-section">
+                    <h3>💡 Quick Tips for Facebook Marketplace</h3>
+                    <ul>
+                        <li><strong>Photos:</strong> Take 6+ clear, well-lit photos</li>
+                        <li><strong>Timing:</strong> Post between 6-8 PM for max visibility</li>
+                        <li><strong>Response:</strong> Reply within 15 min (boosts ranking)</li>
+                        <li><strong>Boost:</strong> Comment "Still available" after 24hrs</li>
+                        <li><strong>Groups:</strong> Share to 3-5 local buy/sell groups</li>
+                        <li><strong>Price:</strong> Use charm pricing ($299 vs $300)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const templates = {
+            watch: {
+                brand: 'TAG Heuer Aquaracer',
+                condition: 'excellent',
+                price: '899',
+                originalPrice: '2400',
+                features: 'Stainless steel case and bracelet\nAutomatic movement\nWater resistant 300m\nDate display\nOriginal box and papers\nRecently serviced',
+                reason: 'upgrade',
+                location: 'Available for pickup. Can meet in safe public location.'
+            },
+            bed: {
+                brand: 'Queen Platform Bed Frame',
+                condition: 'good',
+                price: '150',
+                originalPrice: '450',
+                features: 'Queen size (60" x 80")\nSolid wood construction\nModern platform design\nNo box spring needed\nEasy assembly\nSmoke-free, pet-free home',
+                reason: 'moving',
+                location: 'Pickup only. Can help load into vehicle.'
+            },
+            coffee: {
+                brand: 'Cuisinart Coffee Maker DCC-3200',
+                condition: 'like-new',
+                price: '45',
+                originalPrice: '89',
+                features: '14-cup capacity\nProgrammable 24-hour timer\nBrew strength control\nSelf-cleaning function\nGold tone filter included\nBarely used - works perfectly',
+                reason: 'upgrade',
+                location: 'Available for pickup or local delivery (small fee)'
+            },
+            furniture: {
+                brand: 'Modern Office Desk',
+                condition: 'excellent',
+                price: '120',
+                originalPrice: '350',
+                features: '48" W x 24" D x 30" H\nSolid wood top\nMetal frame legs\nMinimalist modern design\nNo scratches or damage\nSmoke-free home',
+                reason: 'moving',
+                location: 'Pickup preferred. Can deliver within 15 miles for $20'
+            }
+        };
+
+        function loadTemplate(type) {
+            const template = templates[type];
+            document.getElementById('category').value = type;
+            document.getElementById('brand').value = template.brand;
+            document.getElementById('condition').value = template.condition;
+            document.getElementById('price').value = template.price;
+            document.getElementById('originalPrice').value = template.originalPrice;
+            document.getElementById('features').value = template.features;
+            document.getElementById('reason').value = template.reason;
+            document.getElementById('location').value = template.location;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const brand = document.getElementById('brand').value || 'Your Product';
+            const condition = document.getElementById('condition').value;
+            const price = document.getElementById('price').value || '0';
+            const originalPrice = document.getElementById('originalPrice').value;
+            const features = document.getElementById('features').value;
+            const reason = document.getElementById('reason').options[document.getElementById('reason').selectedIndex].text;
+            const location = document.getElementById('location').value;
+
+            const conditionMap = {
+                'like-new': '✨ Like New',
+                'excellent': '⭐ Excellent',
+                'good': '👍 Good',
+                'fair': '👌 Fair'
+            };
+
+            // Generate title
+            let title = `${brand} - ${conditionMap[condition]}`;
+            document.getElementById('previewTitle').textContent = title;
+
+            // Generate price with savings
+            let priceText = `$${price}`;
+            if (originalPrice && parseFloat(originalPrice) > parseFloat(price)) {
+                const savings = ((1 - parseFloat(price) / parseFloat(originalPrice)) * 100).toFixed(0);
+                priceText += ` (${savings}% off - was $${originalPrice})`;
+            }
+            document.getElementById('previewPrice').textContent = priceText;
+
+            // Generate description
+            let description = `🔥 ${conditionMap[condition]} ${brand}\n\n`;
+
+            if (features) {
+                description += `✨ Key Features:\n`;
+                const featureList = features.split('\n').filter(f => f.trim());
+                featureList.forEach(feature => {
+                    description += `• ${feature.trim()}\n`;
+                });
+                description += '\n';
+            }
+
+            description += `📦 Condition: ${conditionMap[condition]}\n`;
+            description += `💰 Reason for selling: ${reason}\n\n`;
+
+            if (originalPrice && parseFloat(originalPrice) > parseFloat(price)) {
+                const savings = parseFloat(originalPrice) - parseFloat(price);
+                description += `💵 Save $${savings.toFixed(0)}! Originally $${originalPrice}, now only $${price}\n\n`;
+            }
+
+            if (location) {
+                description += `📍 ${location}\n\n`;
+            }
+
+            description += `💬 Serious buyers only. First come, first served!\n`;
+            description += `✅ Cash or Venmo/PayPal accepted\n`;
+            description += `📱 Message for more photos or questions`;
+
+            document.getElementById('previewDescription').textContent = description;
+        }
+
+        function copyToClipboard() {
+            const title = document.getElementById('previewTitle').textContent;
+            const price = document.getElementById('price').value;
+            const description = document.getElementById('previewDescription').textContent;
+
+            const fullListing = `${title}\n\nPrice: $${price}\n\n${description}`;
+
+            navigator.clipboard.writeText(fullListing).then(() => {
+                const successMsg = document.getElementById('successMessage');
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            });
+        }
+
+        // Initialize with default values
+        window.onload = function() {
+            updatePreview();
+        };
+    </script>
+</body>
+</html>
