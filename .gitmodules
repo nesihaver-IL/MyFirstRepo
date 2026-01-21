@@ -1,0 +1,3 @@
+[submodule "azure-ai-workshops"]
+	path = azure-ai-workshops
+	url = https://github.com/moryachok/azure-ai-workshops.git
