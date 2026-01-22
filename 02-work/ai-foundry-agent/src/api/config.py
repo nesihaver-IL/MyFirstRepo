@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     search_endpoint: Optional[str] = None
     search_index: str = "product-knowledge-base"
 
+    # Azure OpenAI (optional)
+    azure_openai_endpoint: Optional[str] = None
+    azure_openai_api_key: Optional[str] = None
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

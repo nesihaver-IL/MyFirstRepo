@@ -79,6 +79,16 @@ class AgentConfig(BaseModel):
         description="Custom function tools",
     )
 
+    # Azure OpenAI settings (for image processing)
+    azure_openai_endpoint: Optional[str] = Field(
+        default=None,
+        description="Azure OpenAI endpoint for image description",
+    )
+    azure_openai_api_key: Optional[str] = Field(
+        default=None,
+        description="Azure OpenAI API key",
+    )
+
     class Config:
         """Pydantic config."""
 
