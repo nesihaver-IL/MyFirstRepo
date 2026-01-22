@@ -2,6 +2,8 @@
 
 import logging
 import time
+import tempfile
+from pathlib import Path
 from typing import Optional, List, Dict, Any
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import (
@@ -15,8 +17,11 @@ from azure.ai.projects.models import (
 )
 from azure.identity import DefaultAzureCredential
 from tenacity import retry, stop_after_attempt, wait_exponential
+from openai import AzureOpenAI
 
 from .agent_config import AgentConfig
+from ..vector_store.image_describer import ImageDescriber
+from ..vector_store.document_processor import DocumentProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +48,35 @@ class KnowledgeHubAgent:
 
         self.agent: Optional[Agent] = None
         self.vector_store: Optional[VectorStore] = None
+
+        # Initialize image processing components
+        self.image_describer: Optional[ImageDescriber] = None
+        self.document_processor: Optional[DocumentProcessor] = None
+
+        if config.azure_openai_endpoint and config.azure_openai_api_key:
+            # Initialize OpenAI client for image description
+            openai_client = AzureOpenAI(
+                azure_endpoint=config.azure_openai_endpoint,
+                api_key=config.azure_openai_api_key,
+                api_version="2024-08-01-preview",
+            )
+
+            # Initialize image describer
+            self.image_describer = ImageDescriber(
+                openai_client=openai_client,
+                model=config.model,
+            )
+
+            # Initialize document processor with image describer
+            self.document_processor = DocumentProcessor(
+                image_describer=self.image_describer
+            )
+
+            logger.info("Initialized image processing components")
+        else:
+            logger.warning(
+                "Azure OpenAI credentials not provided. Image processing disabled."
+            )
 
         logger.info(
             f"Initialized KnowledgeHubAgent for project: {config.project_name}"
@@ -91,6 +125,9 @@ class KnowledgeHubAgent:
     ) -> List[str]:
         """Upload files to AI Foundry for RAG.
 
+        Preprocesses PPT and image files to extract text and generate descriptions
+        before uploading.
+
         Args:
             file_paths: List of file paths to upload
             update_vector_store: Whether to add files to vector store
@@ -99,21 +136,92 @@ class KnowledgeHubAgent:
             List of uploaded file IDs
         """
         file_ids = []
+        temp_files = []  # Track temp files for cleanup
 
         for file_path in file_paths:
             try:
-                # Upload file
-                with open(file_path, "rb") as f:
-                    uploaded_file = self.client.agents.upload_file(
-                        file=f, purpose="assistants"
+                path = Path(file_path)
+                suffix = path.suffix.lower()
+
+                # Check if file needs preprocessing
+                needs_preprocessing = suffix in [
+                    ".ppt",
+                    ".pptx",
+                    ".png",
+                    ".jpg",
+                    ".jpeg",
+                    ".gif",
+                    ".bmp",
+                    ".webp",
+                ]
+
+                if needs_preprocessing and self.document_processor:
+                    logger.info(f"Preprocessing {path.name} to extract content...")
+
+                    # Process the file to extract text and image descriptions
+                    processed_docs = self.document_processor.process_file(
+                        file_path=str(path),
+                        category="general",
                     )
-                    file_ids.append(uploaded_file.id)
-                    logger.info(
-                        f"Uploaded file {file_path}: {uploaded_file.id}"
+
+                    # Combine all chunks into a single text document
+                    combined_content = []
+                    for doc in processed_docs:
+                        combined_content.append(f"# {doc['title']}\n")
+                        combined_content.append(doc["content"])
+                        combined_content.append("\n\n---\n\n")
+
+                    full_content = "\n".join(combined_content)
+
+                    # Create temporary text file with processed content
+                    temp_file = tempfile.NamedTemporaryFile(
+                        mode="w",
+                        suffix=".txt",
+                        prefix=f"{path.stem}_processed_",
+                        delete=False,
+                        encoding="utf-8",
                     )
+                    temp_file.write(full_content)
+                    temp_file.close()
+                    temp_files.append(temp_file.name)
+
+                    # Upload the processed text file
+                    with open(temp_file.name, "rb") as f:
+                        uploaded_file = self.client.agents.upload_file(
+                            file=f, purpose="assistants"
+                        )
+                        file_ids.append(uploaded_file.id)
+                        logger.info(
+                            f"Uploaded preprocessed {path.name}: {uploaded_file.id}"
+                        )
+
+                else:
+                    # Upload file directly (text files or when preprocessing unavailable)
+                    if needs_preprocessing:
+                        logger.warning(
+                            f"Image processing not available for {path.name}. "
+                            "Uploading as binary (text extraction may be limited)."
+                        )
+
+                    with open(file_path, "rb") as f:
+                        uploaded_file = self.client.agents.upload_file(
+                            file=f, purpose="assistants"
+                        )
+                        file_ids.append(uploaded_file.id)
+                        logger.info(
+                            f"Uploaded file {file_path}: {uploaded_file.id}"
+                        )
+
             except Exception as e:
                 logger.error(f"Error uploading file {file_path}: {e}")
                 continue
+
+        # Cleanup temporary files
+        for temp_file in temp_files:
+            try:
+                Path(temp_file).unlink()
+            except Exception as e:
+                logger.warning(f"Could not delete temp file {temp_file}: {e}")
 
         # Update vector store with new files
         if update_vector_store and file_ids:
