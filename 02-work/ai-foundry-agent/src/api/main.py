@@ -37,8 +37,6 @@ async def lifespan(app: FastAPI):
         model=settings.agent_model,
         temperature=settings.agent_temperature,
         use_file_search=settings.use_file_search,
-        azure_openai_endpoint=settings.azure_openai_endpoint,
-        azure_openai_api_key=settings.azure_openai_api_key,
     )
 
     agent = KnowledgeHubAgent(config=agent_config)
