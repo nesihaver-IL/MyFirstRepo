@@ -1,0 +1,65 @@
+{
+  "overview": {
+    "total_activities": 783,
+    "total_wellness_days": 2035,
+    "total_sleep_records": 2035,
+    "date_range": {
+      "earliest": "2020-05-10",
+      "latest": "2025-12-07"
+    }
+  },
+  "activity_summary": {
+    "running": {
+      "count": 72,
+      "total_distance": 35268278.79486084,
+      "total_duration": 142516841.796875
+    },
+    "lap_swimming": {
+      "count": 479,
+      "total_distance": 78882452.00195312,
+      "total_duration": 1125263890.9185963
+    },
+    "cycling": {
+      "count": 80,
+      "total_distance": 110250345.64208984,
+      "total_duration": 407400566.97940826
+    },
+    "walking": {
+      "count": 16,
+      "total_distance": 2761024.973809719,
+      "total_duration": 28091740.899682045
+    },
+    "indoor_running": {
+      "count": 128,
+      "total_distance": 56405922.159177065,
+      "total_duration": 261794662.78648376
+    },
+    "stop_watch": {
+      "count": 1,
+      "total_distance": 0,
+      "total_duration": 7940.000057220459
+    },
+    "breathwork": {
+      "count": 1,
+      "total_distance": 0,
+      "total_duration": 126971.00067138672
+    },
+    "indoor_cardio": {
+      "count": 4,
+      "total_distance": 0.0,
+      "total_duration": 9756813.003897667
+    },
+    "treadmill_running": {
+      "count": 2,
+      "total_distance": 247.00000286102295,
+      "total_duration": 2942852.1118164062
+    }
+  },
+  "wellness_averages": {
+    "avg_daily_steps": 9515,
+    "avg_resting_hr": 53.4
+  },
+  "sleep_averages": {
+    "avg_total_sleep_hours": 5.84
+  }
+}
