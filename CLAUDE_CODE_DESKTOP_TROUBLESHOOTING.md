@@ -1,6 +1,34 @@
-# Claude Code Desktop - Commands Tab Troubleshooting Guide
+# Claude Desktop - Troubleshooting Guide
 
-## Issue: Commands Tab Not Appearing in Claude Code Desktop
+## Issue 1: Cowork Tab Not Appearing After Clicking "Open"
+
+### Root Cause
+
+The Cowork add-on says **"Only on desktop"** in the claude.ai web interface. Clicking "Open" from the browser does nothing visible because Cowork requires the **Claude Desktop app** — it cannot run in a web browser.
+
+### Why It Needs the Desktop App
+
+Cowork works by accessing your local files and browser tabs to assist you in real time. A web browser cannot provide that level of system-level access, so the feature is restricted to the native desktop application.
+
+### Solution
+
+1. **Download the Claude Desktop app** from the download page at claude.ai/download (available for macOS and Windows)
+2. **Install and sign in** with the same account (requires **Pro** or **Max** plan)
+3. **Open the Claude Desktop app** — the Cowork tab should appear in the sidebar/tab bar
+4. If it still doesn't appear, go to **Settings > Add-ons** within the desktop app and enable Cowork from there
+
+### Quick Checklist
+
+| Check | Status |
+|-------|--------|
+| Using Claude Desktop app (not browser)? | Required |
+| On Pro or Max plan? | Required |
+| Desktop app is up to date? | Recommended |
+| Cowork enabled in Settings > Add-ons? | Required |
+
+---
+
+## Issue 2: Commands Tab Not Appearing in Claude Code Desktop
 
 You have **Claude Code v2.1.1** installed. Here's how to resolve the missing commands tab.
 
