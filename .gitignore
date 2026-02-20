@@ -1,1 +1,4 @@
+# Exclude whatsapp-export but allow the album index.html
 whatsapp-export/
+!whatsapp-export/album/
+!whatsapp-export/album/index.html
