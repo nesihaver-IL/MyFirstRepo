@@ -155,6 +155,34 @@ Make executable:
 chmod +x .git/hooks/post-merge
 ```
 
+## 🔌 Connectivity & Login Diagnostics
+
+Before troubleshooting commands, verify that Claude Code can reach Anthropic's servers and is authenticated.
+
+**Linux/macOS:**
+```bash
+chmod +x .claude/scripts/check-connectivity.sh
+./.claude/scripts/check-connectivity.sh
+```
+
+**Windows:**
+```cmd
+.claude\scripts\check-connectivity.bat
+```
+
+The script tests:
+- Internet connection
+- `api.anthropic.com` reachability
+- Claude CLI installation
+- API key format and validity (live API call)
+- Auth credentials file presence
+- Proxy configuration
+
+For a detailed login and connectivity fix guide, see:
+`04-reference/cheatsheets/CLI_LOGIN_TROUBLESHOOTING.md`
+
+---
+
 ## 🛠️ Troubleshooting
 
 ### "Unknown slash command: create"

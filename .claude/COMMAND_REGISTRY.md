@@ -122,8 +122,17 @@ git pull origin claude/add-slash-commands-22qEL
 # Restart your editor to reload
 ```
 
+## Diagnostic Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `.claude/scripts/check-connectivity.sh` | Test internet, Anthropic API, CLI install, and auth |
+| `.claude/scripts/check-connectivity.bat` | Same as above, for Windows |
+
+Run before reporting login or connectivity issues.
+
 ## Command Status
 
-Last Updated: 2026-01-20
+Last Updated: 2026-02-24
 Total Commands: 7
 Status: ✅ Active
