@@ -1,10 +1,25 @@
 # Claude Code CLI — Login & Connectivity Troubleshooting
 
-This guide covers the two most common problems with the Claude Code CLI:
-1. **Cannot log in via terminal**
-2. **Connectivity / network errors**
+This guide covers the most common problems with the Claude Code CLI:
+1. **Stuck on "Checking Connectivity"** (Claude Code hangs at startup)
+2. **Cannot log in via terminal**
+3. **Connectivity / network errors**
 
 Run the automated diagnostic script first, then follow the relevant section below.
+
+---
+
+## Required Network Endpoints
+
+Claude Code **must** be able to reach all three of these over HTTPS (port 443):
+
+| Endpoint | Purpose |
+|----------|---------|
+| `api.anthropic.com` | API calls (primary — Claude Code polls this at startup) |
+| `claude.ai` | Browser-based authentication |
+| `platform.claude.com` | Console authentication (replaces `console.anthropic.com`) |
+
+If **any** of these are blocked, Claude Code will hang or fail to authenticate.
 
 ---
 
@@ -22,6 +37,142 @@ chmod +x .claude/scripts/check-connectivity.sh
 ```
 
 The script checks internet access, Anthropic API reachability, CLI installation, API key validity, and auth file presence — and tells you exactly what is broken.
+
+---
+
+## Problem 0: Stuck on "Checking Connectivity"
+
+### Symptom
+Claude Code starts but hangs permanently on the startup screen showing:
+```
+Claude Code v2.x.x
+✓ Checking connectivity...
+```
+The cursor never moves past this point.
+
+### What is happening
+Claude Code polls `api.anthropic.com` to verify the network before doing anything else.
+If that connection times out (not refused — *times out*), the CLI waits indefinitely.
+
+### Step 1 — Confirm this is the cause
+
+```bash
+# This should complete in under 5 seconds if the network is open
+curl --max-time 10 -o /dev/null -w "HTTP %{http_code}\n" https://api.anthropic.com
+
+# Expected (working):   HTTP 404
+# Broken (your case):   curl: (28) SSL connection timeout
+```
+
+Also test the other two required endpoints:
+```bash
+curl --max-time 10 -o /dev/null -w "HTTP %{http_code}\n" https://claude.ai
+curl --max-time 10 -o /dev/null -w "HTTP %{http_code}\n" https://platform.claude.com
+```
+
+If `claude.ai` or `platform.claude.com` responds but `api.anthropic.com` does not,
+your firewall is **selectively blocking** the API endpoint.
+
+### Step 2 — Find your corporate proxy
+
+```bash
+# Check if a proxy is already configured in environment
+env | grep -i proxy
+
+# Check system-wide proxy settings
+cat /etc/environment | grep -i proxy
+cat /etc/apt/apt.conf.d/proxy.conf 2>/dev/null
+
+# On RHEL/CentOS
+cat /etc/profile.d/*.sh | grep -i proxy
+
+# Ask your IT team for the proxy address if none is found
+```
+
+### Step 3 — Configure the proxy (temporary test)
+
+Once you have the proxy address, test it immediately:
+```bash
+export HTTPS_PROXY="http://proxy.company.com:8080"
+export HTTP_PROXY="http://proxy.company.com:8080"
+
+# Re-test connectivity through the proxy
+curl --max-time 10 -o /dev/null -w "HTTP %{http_code}\n" https://api.anthropic.com
+
+# If that returns HTTP 404, the proxy works — now launch Claude Code
+claude
+```
+
+### Step 4 — Make the proxy permanent (Linux/macOS)
+
+Add these lines to your shell profile so the proxy loads on every terminal session:
+
+```bash
+# For bash users
+cat >> ~/.bashrc << 'EOF'
+
+# Claude Code proxy settings
+export HTTPS_PROXY="http://proxy.company.com:8080"
+export HTTP_PROXY="http://proxy.company.com:8080"
+export NO_PROXY="localhost,127.0.0.1"
+EOF
+source ~/.bashrc
+```
+
+```bash
+# For zsh users
+cat >> ~/.zshrc << 'EOF'
+
+# Claude Code proxy settings
+export HTTPS_PROXY="http://proxy.company.com:8080"
+export HTTP_PROXY="http://proxy.company.com:8080"
+export NO_PROXY="localhost,127.0.0.1"
+EOF
+source ~/.zshrc
+```
+
+To make it system-wide (all users, survives reboots):
+```bash
+sudo tee -a /etc/environment << 'EOF'
+HTTPS_PROXY="http://proxy.company.com:8080"
+HTTP_PROXY="http://proxy.company.com:8080"
+NO_PROXY="localhost,127.0.0.1"
+EOF
+```
+
+### Step 5 — If no proxy exists, request IT allowlisting
+
+If your network does not use a proxy, the firewall must be updated.
+Send your IT/network team this exact request:
+
+> Please allow outbound HTTPS (TCP port 443) from this machine to:
+> - `api.anthropic.com`
+> - `claude.ai`
+> - `platform.claude.com`
+>
+> These are required for the Claude Code CLI development tool.
+
+### Step 6 — If SSL inspection is causing the timeout
+
+Some corporate firewalls do SSL/TLS inspection (MITM). They intercept HTTPS and re-sign
+certificates with the company CA. This causes SSL handshake timeouts for Node.js apps.
+
+```bash
+# Test if skipping SSL verification fixes it (diagnosis only — do not use in production)
+curl -k --max-time 10 https://api.anthropic.com
+```
+
+If `-k` works but normal `curl` does not, get the corporate certificate and configure Node.js:
+
+```bash
+# Linux — add the corporate cert to the OS trust store
+sudo cp /path/to/corporate-ca.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
+
+# Tell Node.js explicitly where the cert is (Claude Code uses Node.js)
+echo 'export NODE_EXTRA_CA_CERTS="/etc/ssl/certs/ca-certificates.crt"' >> ~/.bashrc
+source ~/.bashrc
+```
 
 ---
 

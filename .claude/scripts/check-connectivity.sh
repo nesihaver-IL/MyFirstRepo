@@ -36,25 +36,37 @@ else
     ERRORS=$((ERRORS + 1))
 fi
 
-# ── 2. Check Anthropic API reachability ──────────────────────────────
+# ── 2. Check all required Anthropic endpoints ────────────────────────
 echo ""
-echo "── Step 2: Anthropic API Reachability ──────────────────────────"
-HTTP_STATUS=$(curl -s --max-time 10 -o /dev/null -w "%{http_code}" \
-    "https://api.anthropic.com" 2>/dev/null || echo "000")
+echo "── Step 2: Anthropic Endpoint Reachability ─────────────────────"
+echo "   (Claude Code requires all three endpoints on port 443)"
+echo ""
 
-if [ "$HTTP_STATUS" = "000" ]; then
-    echo -e "$FAIL Cannot reach api.anthropic.com (connection timed out or refused)"
-    echo "       Possible causes:"
-    echo "         - Firewall blocking outbound HTTPS on port 443"
-    echo "         - Corporate proxy requiring configuration"
-    echo "         - DNS resolution failure"
-    ERRORS=$((ERRORS + 1))
-elif [ "$HTTP_STATUS" = "401" ] || [ "$HTTP_STATUS" = "403" ] || [ "$HTTP_STATUS" = "404" ] || [ "$HTTP_STATUS" = "200" ]; then
-    echo -e "$PASS api.anthropic.com is reachable (HTTP $HTTP_STATUS)"
-else
-    echo -e "$WARN api.anthropic.com returned HTTP $HTTP_STATUS"
-    WARNINGS=$((WARNINGS + 1))
-fi
+check_endpoint() {
+    local HOST="$1"
+    local LABEL="$2"
+    local CURL_EXIT=0
+    local HTTP_STATUS
+
+    HTTP_STATUS=$(curl -s --max-time 10 -o /dev/null -w "%{http_code}" \
+        "https://${HOST}" 2>/dev/null) || CURL_EXIT=$?
+
+    if [ "$CURL_EXIT" -ne 0 ] || [ "$HTTP_STATUS" = "000" ]; then
+        echo -e "$FAIL ${LABEL} (${HOST}) — SSL connection timeout or refused"
+        echo "         ► This blocks Claude Code startup ('Checking Connectivity' hangs)"
+        echo "         ► Fix: set HTTPS_PROXY, or ask IT to allowlist ${HOST} on port 443"
+        ERRORS=$((ERRORS + 1))
+    elif echo "$HTTP_STATUS" | grep -qE "^(200|301|302|401|403|404)$"; then
+        echo -e "$PASS ${LABEL} (${HOST}) — reachable (HTTP ${HTTP_STATUS})"
+    else
+        echo -e "$WARN ${LABEL} (${HOST}) — unexpected HTTP ${HTTP_STATUS}"
+        WARNINGS=$((WARNINGS + 1))
+    fi
+}
+
+check_endpoint "api.anthropic.com"   "API endpoint     "
+check_endpoint "claude.ai"           "Auth endpoint    "
+check_endpoint "platform.claude.com" "Console endpoint "
 
 # ── 3. Check Claude CLI installation ─────────────────────────────────
 echo ""
@@ -151,6 +163,7 @@ fi
 # ── 7. Proxy detection ───────────────────────────────────────────────
 echo ""
 echo "── Step 7: Proxy Configuration ─────────────────────────────────"
+PROXY_ACTIVE=0
 if [ -n "${HTTPS_PROXY:-}" ] || [ -n "${https_proxy:-}" ] || \
    [ -n "${HTTP_PROXY:-}" ]  || [ -n "${http_proxy:-}" ]; then
     echo -e "$INFO Proxy detected in environment:"
@@ -159,8 +172,22 @@ if [ -n "${HTTPS_PROXY:-}" ] || [ -n "${https_proxy:-}" ] || \
     [ -n "${HTTP_PROXY:-}" ]  && echo "       HTTP_PROXY=$HTTP_PROXY"
     [ -n "${http_proxy:-}" ]  && echo "       http_proxy=$http_proxy"
     echo "       Make sure Claude Code is configured to use this proxy."
+    PROXY_ACTIVE=1
 else
     echo -e "$INFO No proxy environment variables set"
+    if [ "$ERRORS" -gt 0 ]; then
+        echo ""
+        echo "       ► Connectivity errors detected with no proxy configured."
+        echo "       ► If you are on a corporate network, try:"
+        echo "           export HTTPS_PROXY='http://proxy.company.com:8080'"
+        echo "           export HTTP_PROXY='http://proxy.company.com:8080'"
+        echo "         Ask your IT team for the proxy address if unknown."
+        echo ""
+        echo "       ► To make the proxy permanent, add these lines to ~/.bashrc:"
+        echo "           export HTTPS_PROXY='http://proxy.company.com:8080'"
+        echo "           export HTTP_PROXY='http://proxy.company.com:8080'"
+        echo "           export NO_PROXY='localhost,127.0.0.1'"
+    fi
 fi
 
 # ── Summary ──────────────────────────────────────────────────────────
@@ -176,10 +203,11 @@ else
     echo -e "${RED}$ERRORS error(s) and $WARNINGS warning(s) found.${NC}"
     echo ""
     echo "  Quick fix steps:"
-    echo "  1. Ensure internet access: curl https://api.anthropic.com"
-    echo "  2. Install Claude CLI:     npm install -g @anthropic-ai/claude-code"
-    echo "  3. Login to Claude:        claude auth login"
-    echo "  4. Or set API key:         export ANTHROPIC_API_KEY='sk-ant-...'"
+    echo "  1. Test API directly:   curl --max-time 10 https://api.anthropic.com"
+    echo "  2. Try via proxy:       HTTPS_PROXY='http://proxy:port' claude"
+    echo "  3. Install Claude CLI:  npm install -g @anthropic-ai/claude-code"
+    echo "  4. Set API key:         export ANTHROPIC_API_KEY='sk-ant-...'"
+    echo "  5. Or login:            claude auth login"
     echo ""
     echo "  Full guide: 04-reference/cheatsheets/CLI_LOGIN_TROUBLESHOOTING.md"
 fi
