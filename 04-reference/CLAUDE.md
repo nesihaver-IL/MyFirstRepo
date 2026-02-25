@@ -25,6 +25,11 @@ Use these materials for:
 - Regularly review and prune bookmarks
 - Link to primary sources, not copies
 
+## Performance Rules
+- Do NOT recursively scan all folders
+- Only read files explicitly mentioned in the prompt
+- Answer folder/file existence questions using ls, not by reading file contents
+
 ## Organization
 
 ```
