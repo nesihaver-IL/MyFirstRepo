@@ -147,6 +147,16 @@
       display: flex; flex-direction: column; gap: 11px;
       backdrop-filter: blur(20px);
       transition: background 0.3s, transform 0.3s, border-color 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 20px 20px 0 0;
     }
     .card:hover {
       background: rgba(255,255,255,0.13);
@@ -154,14 +164,25 @@
       border-color: rgba(255,255,255,0.28);
     }
 
-    .card-icon { font-size: 34px; line-height: 1; }
+    .card-icon  { font-size: 34px; line-height: 1; }
     .card-title { font-size: 14.5px; font-weight: 700; line-height: 1.35; }
     .card-desc  { font-size: 12.5px; color: rgba(255,255,255,0.62); line-height: 1.55; }
 
+    /* feature name label */
+    .feature-name {
+      display: inline-block;
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      padding: 3px 9px; border-radius: 100px;
+      background: var(--accent-bg);
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
     /* ─── SUMMARY SLIDE ─── */
-    #s7 {
+    #s6 {
       background:
-        radial-gradient(ellipse 70% 60% at 50% 5%, rgba(100,50,200,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(100,50,200,0.22) 0%, transparent 60%),
         #050510;
       align-items: center;
       justify-content: center;
@@ -176,11 +197,12 @@
       font-size: 15px; margin-top: 8px; margin-bottom: 28px;
     }
 
+    /* 3 + 2 grid using 6 equal columns */
     .sum-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 18px;
-      width: 100%; max-width: 1100px;
+      width: 100%; max-width: 1160px;
     }
 
     .sum-card {
@@ -188,8 +210,22 @@
       padding: 22px 24px;
       border: 1px solid rgba(255,255,255,0.12);
       transition: transform 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .sum-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent);
     }
     .sum-card:hover { transform: translateY(-4px); }
+    /* Row 1: 3 cards each spanning 2 columns */
+    .sum-card:nth-child(1) { grid-column: 1 / 3; }
+    .sum-card:nth-child(2) { grid-column: 3 / 5; }
+    .sum-card:nth-child(3) { grid-column: 5 / 7; }
+    /* Row 2: 2 cards centered */
+    .sum-card:nth-child(4) { grid-column: 2 / 4; }
+    .sum-card:nth-child(5) { grid-column: 4 / 6; }
 
     .sum-name {
       font-size: 17px; font-weight: 800;
@@ -231,9 +267,6 @@
       font-size: 12px; color: rgba(255,255,255,0.42);
       min-width: 30px; text-align: center;
     }
-
-    /* ─── TOOL COLOR ACCENTS ─── */
-    /* used via inline style on each .slide bg */
   </style>
 </head>
 <body>
@@ -256,7 +289,6 @@
       <div class="chip" style="background:rgba(66,133,244,0.15);border-color:rgba(66,133,244,0.35)">✨ Gemini</div>
       <div class="chip" style="background:rgba(255,167,0,0.15);border-color:rgba(255,167,0,0.35)">🍌 Nano Banana</div>
       <div class="chip" style="background:rgba(204,120,92,0.15);border-color:rgba(204,120,92,0.35)">🔮 Claude Chat</div>
-      <div class="chip" style="background:rgba(138,100,210,0.15);border-color:rgba(138,100,210,0.35)">⌨️ Claude Code</div>
       <div class="chip" style="background:rgba(234,67,53,0.15);border-color:rgba(234,67,53,0.35)">📔 NotebookLM</div>
     </div>
   </div>
@@ -264,10 +296,12 @@
   <!-- ══════════════════════════════════════════
        SLIDE 1 — ChatGPT
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s1" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(16,163,127,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(16,163,127,0.12) 0%, transparent 60%),
-    #050510">
+  <div class="slide" id="s1" style="
+    --accent: #10A37F; --accent-bg: rgba(16,163,127,0.15);
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 40%, rgba(16,163,127,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(16,163,127,0.10) 0%, transparent 60%),
+      #050510">
     <div class="slide-head">
       <div class="tool-meta">
         <div class="tool-icon">🤖</div>
@@ -282,30 +316,35 @@
       </a>
     </div>
     <div class="grid">
-      <div class="card">
-        <div class="card-icon">💬</div>
-        <div class="card-title">Natural Conversations</div>
-        <div class="card-desc">Multi-turn chat with memory and context awareness — talk about anything in natural language.</div>
+      <div class="card" style="--accent:#10A37F;--accent-bg:rgba(16,163,127,0.15)">
+        <div class="feature-name">Projects</div>
+        <div class="card-icon">📁</div>
+        <div class="card-title">Projects</div>
+        <div class="card-desc">Organize chats, files and custom instructions into persistent workspaces. Context is always saved.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🖼️</div>
-        <div class="card-title">Multimodal Input</div>
-        <div class="card-desc">Upload images, PDFs, spreadsheets, or speak — GPT-4o understands it all in one chat.</div>
-      </div>
-      <div class="card">
+      <div class="card" style="--accent:#10A37F;--accent-bg:rgba(16,163,127,0.15)">
+        <div class="feature-name">Custom GPTs</div>
         <div class="card-icon">🔧</div>
         <div class="card-title">Custom GPTs</div>
-        <div class="card-desc">Build personalized AI assistants with custom instructions, knowledge, and integrated tools.</div>
+        <div class="card-desc">Build your own AI assistant with a tailored personality, private knowledge base, and integrated tools.</div>
       </div>
-      <div class="card">
+      <div class="card" style="--accent:#10A37F;--accent-bg:rgba(16,163,127,0.15)">
+        <div class="feature-name">DALL·E</div>
+        <div class="card-icon">🖼️</div>
+        <div class="card-title">DALL·E Image Gen</div>
+        <div class="card-desc">Generate high-quality images from text descriptions directly inside the chat. No extra app needed.</div>
+      </div>
+      <div class="card" style="--accent:#10A37F;--accent-bg:rgba(16,163,127,0.15)">
+        <div class="feature-name">Data Analysis</div>
         <div class="card-icon">📊</div>
         <div class="card-title">Data Analysis</div>
-        <div class="card-desc">Run Python code, analyze datasets, generate charts and dashboards — right inside the chat.</div>
+        <div class="card-desc">Upload files, run Python, generate charts. Turn raw data into clear insights on demand.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🌐</div>
-        <div class="card-title">Web Browsing</div>
-        <div class="card-desc">Access real-time internet information, research current events, and summarize live web pages.</div>
+      <div class="card" style="--accent:#10A37F;--accent-bg:rgba(16,163,127,0.15)">
+        <div class="feature-name">Memory</div>
+        <div class="card-icon">🧠</div>
+        <div class="card-title">Memory</div>
+        <div class="card-desc">ChatGPT remembers your preferences and key facts across all conversations automatically.</div>
       </div>
     </div>
   </div>
@@ -313,16 +352,18 @@
   <!-- ══════════════════════════════════════════
        SLIDE 2 — Gemini
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s2" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(66,133,244,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(52,168,83,0.12) 0%, transparent 60%),
-    #050510">
+  <div class="slide" id="s2" style="
+    --accent: #4285F4; --accent-bg: rgba(66,133,244,0.15);
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 40%, rgba(66,133,244,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(52,168,83,0.10) 0%, transparent 60%),
+      #050510">
     <div class="slide-head">
       <div class="tool-meta">
         <div class="tool-icon">✨</div>
         <div>
           <div class="tool-name">Gemini</div>
-          <div class="tool-tagline">by Google — AI deeply woven into Google's ecosystem</div>
+          <div class="tool-tagline">by Google — AI deeply integrated with Google's ecosystem</div>
         </div>
       </div>
       <a href="https://gemini.google.com" target="_blank" class="visit-btn"
@@ -331,41 +372,48 @@
       </a>
     </div>
     <div class="grid">
-      <div class="card">
-        <div class="card-icon">🔍</div>
-        <div class="card-title">Google Search Grounding</div>
-        <div class="card-desc">Every answer is backed by real-time Google Search results with cited sources — always current.</div>
+      <div class="card" style="--accent:#4285F4;--accent-bg:rgba(66,133,244,0.15)">
+        <div class="feature-name">Gems</div>
+        <div class="card-icon">💎</div>
+        <div class="card-title">Gems</div>
+        <div class="card-desc">Create custom AI personas with specific instructions and knowledge — Google's take on Custom GPTs.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🎥</div>
-        <div class="card-title">True Multimodal</div>
-        <div class="card-desc">Natively understands text, images, audio, video, and code — all processed together in one prompt.</div>
+      <div class="card" style="--accent:#4285F4;--accent-bg:rgba(66,133,244,0.15)">
+        <div class="feature-name">Deep Research</div>
+        <div class="card-icon">🔬</div>
+        <div class="card-title">Deep Research</div>
+        <div class="card-desc">Generate comprehensive multi-source research reports with structured findings and full citations.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">📄</div>
-        <div class="card-title">1 Million Token Context</div>
-        <div class="card-desc">Analyze entire codebases, long videos, or thousands of pages in a single conversation. Unmatched.</div>
-      </div>
-      <div class="card">
+      <div class="card" style="--accent:#4285F4;--accent-bg:rgba(66,133,244,0.15)">
+        <div class="feature-name">Workspace</div>
         <div class="card-icon">🏢</div>
         <div class="card-title">Workspace Integration</div>
         <div class="card-desc">Works natively inside Gmail, Docs, Sheets, and Drive — AI right where your team already works.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🔬</div>
-        <div class="card-title">Deep Research Mode</div>
-        <div class="card-desc">Generate multi-source research reports with structured findings, fact-checking, and full citations.</div>
+      <div class="card" style="--accent:#4285F4;--accent-bg:rgba(66,133,244,0.15)">
+        <div class="feature-name">Gemini Live</div>
+        <div class="card-icon">🎙️</div>
+        <div class="card-title">Gemini Live</div>
+        <div class="card-desc">Real-time voice &amp; video conversations with visual understanding. Show your screen, ask questions live.</div>
+      </div>
+      <div class="card" style="--accent:#4285F4;--accent-bg:rgba(66,133,244,0.15)">
+        <div class="feature-name">1M Context</div>
+        <div class="card-icon">📄</div>
+        <div class="card-title">1M Token Context</div>
+        <div class="card-desc">Analyze entire books, codebases, or long videos in one conversation. Unmatched context window.</div>
       </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 3 — Nano Banana Pro
+       SLIDE 3 — Nano Banana
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s3" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(255,167,0,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(255,90,0,0.12) 0%, transparent 60%),
-    #050510">
+  <div class="slide" id="s3" style="
+    --accent: #FFA726; --accent-bg: rgba(255,167,38,0.15);
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 40%, rgba(255,167,0,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(255,90,0,0.10) 0%, transparent 60%),
+      #050510">
     <div class="slide-head">
       <div class="tool-meta">
         <div class="tool-icon">🍌</div>
@@ -380,30 +428,35 @@
       </a>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" style="--accent:#FFA726;--accent-bg:rgba(255,167,38,0.15)">
+        <div class="feature-name">Text-to-Image</div>
         <div class="card-icon">🎨</div>
-        <div class="card-title">Text-to-Image Generation</div>
+        <div class="card-title">Text-to-Image</div>
         <div class="card-desc">Turn plain text descriptions into stunning, high-quality images using Google's Gemini 3 Pro model.</div>
       </div>
-      <div class="card">
+      <div class="card" style="--accent:#FFA726;--accent-bg:rgba(255,167,38,0.15)">
+        <div class="feature-name">Text in Images</div>
         <div class="card-icon">✍️</div>
-        <div class="card-title">Accurate Text in Images</div>
-        <div class="card-desc">Render readable text inside generated images — a long-standing challenge that Gemini 3 Pro finally solves.</div>
+        <div class="card-title">Text in Images</div>
+        <div class="card-desc">Accurately render readable text inside generated visuals — a long-standing AI challenge, now solved.</div>
       </div>
-      <div class="card">
+      <div class="card" style="--accent:#FFA726;--accent-bg:rgba(255,167,38,0.15)">
+        <div class="feature-name">Consistency</div>
         <div class="card-icon">👤</div>
         <div class="card-title">Character Consistency</div>
-        <div class="card-desc">Keep the same character, face, or subject consistent across up to 5 different generated images in a series.</div>
+        <div class="card-desc">Keep the same character or subject consistent across up to 5 related generated images in a series.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🖼️</div>
-        <div class="card-title">Multi-Ratio &amp; 4K</div>
-        <div class="card-desc">Choose from 5 aspect ratios (1:1 to 21:9) and resolutions up to 4K for any use case — web, print, social.</div>
-      </div>
-      <div class="card">
+      <div class="card" style="--accent:#FFA726;--accent-bg:rgba(255,167,38,0.15)">
+        <div class="feature-name">Iterative Edit</div>
         <div class="card-icon">🔄</div>
         <div class="card-title">Iterative Editing</div>
-        <div class="card-desc">Refine images through multi-turn conversation: "add more light", "change the background" — no re-prompting.</div>
+        <div class="card-desc">Refine via conversation: "add more light", "change the background" — no re-prompting from scratch.</div>
+      </div>
+      <div class="card" style="--accent:#FFA726;--accent-bg:rgba(255,167,38,0.15)">
+        <div class="feature-name">4K Output</div>
+        <div class="card-icon">🖼️</div>
+        <div class="card-title">Multi-Ratio &amp; 4K</div>
+        <div class="card-desc">5 aspect ratios (1:1 to 21:9) at up to 4K resolution — ready for web, print, or social media.</div>
       </div>
     </div>
   </div>
@@ -411,10 +464,12 @@
   <!-- ══════════════════════════════════════════
        SLIDE 4 — Claude Chat
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s4" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(204,120,92,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(180,75,55,0.12) 0%, transparent 60%),
-    #050510">
+  <div class="slide" id="s4" style="
+    --accent: #CC785C; --accent-bg: rgba(204,120,92,0.15);
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 40%, rgba(204,120,92,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(180,75,55,0.10) 0%, transparent 60%),
+      #050510">
     <div class="slide-head">
       <div class="tool-meta">
         <div class="tool-icon">🔮</div>
@@ -429,90 +484,48 @@
       </a>
     </div>
     <div class="grid">
-      <div class="card">
+      <div class="card" style="--accent:#CC785C;--accent-bg:rgba(204,120,92,0.15)">
+        <div class="feature-name">Projects</div>
+        <div class="card-icon">📁</div>
+        <div class="card-title">Projects</div>
+        <div class="card-desc">Persistent workspaces with shared context, uploaded files, and a custom system prompt per project.</div>
+      </div>
+      <div class="card" style="--accent:#CC785C;--accent-bg:rgba(204,120,92,0.15)">
+        <div class="feature-name">Artifacts</div>
+        <div class="card-icon">✨</div>
+        <div class="card-title">Artifacts</div>
+        <div class="card-desc">Generate live interactive apps, editable documents, and rich visualizations directly in the chat window.</div>
+      </div>
+      <div class="card" style="--accent:#CC785C;--accent-bg:rgba(204,120,92,0.15)">
+        <div class="feature-name">Ext. Thinking</div>
+        <div class="card-icon">🧪</div>
+        <div class="card-title">Extended Thinking</div>
+        <div class="card-desc">Claude reasons step-by-step through hard problems, showing its work before delivering the final answer.</div>
+      </div>
+      <div class="card" style="--accent:#CC785C;--accent-bg:rgba(204,120,92,0.15)">
+        <div class="feature-name">200K Context</div>
         <div class="card-icon">📚</div>
         <div class="card-title">200K Token Context</div>
-        <div class="card-desc">Upload entire books, legal contracts, or large codebases and ask nuanced questions across all of it at once.</div>
+        <div class="card-desc">Process entire books or large codebases — ask nuanced questions across all the content at once.</div>
       </div>
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <div class="card-title">Deep Document Analysis</div>
-        <div class="card-desc">Extract key insights, compare multiple documents, and generate structured summaries with exceptional accuracy.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">✍️</div>
-        <div class="card-title">Creative Writing</div>
-        <div class="card-desc">Stories, screenplays, essays, and poetry — with a distinctive literary voice and strong narrative awareness.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">💻</div>
-        <div class="card-title">Code Generation</div>
-        <div class="card-desc">Write, explain, review, and debug code across all languages with clear reasoning and best-practice guidance.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <div class="card-title">Honest &amp; Safe</div>
-        <div class="card-desc">Acknowledges its own uncertainty, avoids harmful outputs, and gives balanced perspectives on complex topics.</div>
+      <div class="card" style="--accent:#CC785C;--accent-bg:rgba(204,120,92,0.15)">
+        <div class="feature-name">Doc Analysis</div>
+        <div class="card-icon">📑</div>
+        <div class="card-title">Document Analysis</div>
+        <div class="card-desc">Upload PDFs, contracts, or research and get accurate, detailed analysis with clear source citations.</div>
       </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 5 — Claude Code
+       SLIDE 5 — NotebookLM
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s5" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(138,100,210,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(80,55,160,0.12) 0%, transparent 60%),
-    #050510">
-    <div class="slide-head">
-      <div class="tool-meta">
-        <div class="tool-icon">⌨️</div>
-        <div>
-          <div class="tool-name">Claude Code</div>
-          <div class="tool-tagline">by Anthropic — Agentic AI that lives inside your terminal</div>
-        </div>
-      </div>
-      <a href="https://claude.ai" target="_blank" class="visit-btn"
-         style="border-color:rgba(138,100,210,0.50);background:rgba(138,100,210,0.18)">
-        🌐 Open Claude →
-      </a>
-    </div>
-    <div class="grid">
-      <div class="card">
-        <div class="card-icon">🗂️</div>
-        <div class="card-title">Full Codebase Awareness</div>
-        <div class="card-desc">Reads and navigates your entire repository — understands architecture, dependencies, and naming conventions.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">✏️</div>
-        <div class="card-title">Autonomous Multi-File Edits</div>
-        <div class="card-desc">Plans and implements features across multiple files simultaneously, without you having to copy-paste anything.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔧</div>
-        <div class="card-title">Git Operations</div>
-        <div class="card-desc">Creates branches, writes commits, resolves merge conflicts, and even opens pull requests — all by itself.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🧪</div>
-        <div class="card-title">Run, Test &amp; Debug</div>
-        <div class="card-desc">Executes tests, identifies root causes of failures, patches bugs, and re-runs to verify — end-to-end.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">🤖</div>
-        <div class="card-title">Agentic Workflows</div>
-        <div class="card-desc">Hand it a large task — "add OAuth login" — and watch it plan, research, implement, and ship autonomously.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════════════
-       SLIDE 6 — NotebookLM
-  ══════════════════════════════════════════ -->
-  <div class="slide" id="s6" style="background:
-    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(234,67,53,0.28) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(251,188,4,0.10) 0%, transparent 60%),
-    #050510">
+  <div class="slide" id="s5" style="
+    --accent: #EA4335; --accent-bg: rgba(234,67,53,0.15);
+    background:
+      radial-gradient(ellipse 70% 55% at 15% 40%, rgba(234,67,53,0.25) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 85% 70%, rgba(251,188,4,0.08) 0%, transparent 60%),
+      #050510">
     <div class="slide-head">
       <div class="tool-meta">
         <div class="tool-icon">📔</div>
@@ -527,67 +540,74 @@
       </a>
     </div>
     <div class="grid">
-      <div class="card">
-        <div class="card-icon">📑</div>
-        <div class="card-title">Document Grounding</div>
-        <div class="card-desc">The AI only uses YOUR uploaded sources — no outside knowledge, no hallucinations, no surprises.</div>
-      </div>
-      <div class="card">
+      <div class="card" style="--accent:#EA4335;--accent-bg:rgba(234,67,53,0.15)">
+        <div class="feature-name">Audio Overview</div>
         <div class="card-icon">🎙️</div>
-        <div class="card-title">Audio Overviews</div>
-        <div class="card-desc">Generate a podcast-style audio summary with two AI hosts that discuss your documents in natural conversation.</div>
+        <div class="card-title">Audio Overview</div>
+        <div class="card-desc">One click turns your documents into a podcast with two AI hosts. Fully shareable audio summary.</div>
       </div>
-      <div class="card">
+      <div class="card" style="--accent:#EA4335;--accent-bg:rgba(234,67,53,0.15)">
+        <div class="feature-name">Research Q&amp;A</div>
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Research Q&amp;A</div>
+        <div class="card-desc">Answers grounded exclusively in your uploaded sources — cited, verified, zero outside hallucinations.</div>
+      </div>
+      <div class="card" style="--accent:#EA4335;--accent-bg:rgba(234,67,53,0.15)">
+        <div class="feature-name">Mind Map</div>
+        <div class="card-icon">🗺️</div>
+        <div class="card-title">Mind Map</div>
+        <div class="card-desc">Auto-generated visual map of key concepts and connections across all your uploaded documents.</div>
+      </div>
+      <div class="card" style="--accent:#EA4335;--accent-bg:rgba(234,67,53,0.15)">
+        <div class="feature-name">Study Guide</div>
+        <div class="card-icon">📋</div>
+        <div class="card-title">Study Guide</div>
+        <div class="card-desc">One click creates FAQs, summaries, timelines, and key concept lists from your source material.</div>
+      </div>
+      <div class="card" style="--accent:#EA4335;--accent-bg:rgba(234,67,53,0.15)">
+        <div class="feature-name">Multi-Source</div>
         <div class="card-icon">🔗</div>
         <div class="card-title">Multi-Source Synthesis</div>
-        <div class="card-desc">Upload 50+ documents and ask questions that draw connections and insights across all of them simultaneously.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">📋</div>
-        <div class="card-title">Auto Study Tools</div>
-        <div class="card-desc">One click generates FAQs, study guides, timelines, and briefing documents from your source material.</div>
-      </div>
-      <div class="card">
-        <div class="card-icon">💬</div>
-        <div class="card-title">Cited Q&amp;A</div>
-        <div class="card-desc">Every answer includes a clickable citation that jumps to the exact passage in the original source document.</div>
+        <div class="card-desc">Upload 50+ sources and discover cross-document insights — patterns across your entire corpus.</div>
       </div>
     </div>
   </div>
 
   <!-- ══════════════════════════════════════════
-       SLIDE 7 — SUMMARY
+       SLIDE 6 — SUMMARY
   ══════════════════════════════════════════ -->
-  <div class="slide" id="s7" style="background:
+  <div class="slide" id="s6" style="background:
     radial-gradient(ellipse 70% 55% at 50% 0%, rgba(100,55,200,0.22) 0%, transparent 60%),
     #050510">
     <div class="sec-title">Choose the Right Tool</div>
     <div class="sec-sub">Each tool shines in different scenarios — use the best one for the job</div>
     <div class="sum-grid">
-      <div class="sum-card" style="background:rgba(16,163,127,0.10);border-color:rgba(16,163,127,0.30)">
+
+      <div class="sum-card" style="--accent:#10A37F;background:rgba(16,163,127,0.10);border-color:rgba(16,163,127,0.30)">
         <div class="sum-name">🤖 ChatGPT</div>
-        <div class="sum-best">Best for general-purpose tasks, building custom GPT bots, live data analysis, and versatile everyday use.</div>
+        <div class="sum-best">Best for general tasks, custom GPT bots, data analysis, and maximum versatility for everyday AI work.</div>
       </div>
-      <div class="sum-card" style="background:rgba(66,133,244,0.10);border-color:rgba(66,133,244,0.30)">
+
+      <div class="sum-card" style="--accent:#4285F4;background:rgba(66,133,244,0.10);border-color:rgba(66,133,244,0.30)">
         <div class="sum-name">✨ Gemini</div>
         <div class="sum-best">Best for Google Workspace users, real-time research, multimodal tasks, and ultra-long document processing.</div>
       </div>
-      <div class="sum-card" style="background:rgba(255,167,0,0.10);border-color:rgba(255,167,0,0.30)">
+
+      <div class="sum-card" style="--accent:#FFA726;background:rgba(255,167,0,0.10);border-color:rgba(255,167,0,0.30)">
         <div class="sum-name">🍌 Nano Banana</div>
-        <div class="sum-best">Best for generating professional visuals, marketing assets, consistent character art, and creative image content.</div>
+        <div class="sum-best">Best for professional visuals, marketing assets, consistent character design, and creative image content.</div>
       </div>
-      <div class="sum-card" style="background:rgba(204,120,92,0.10);border-color:rgba(204,120,92,0.30)">
+
+      <div class="sum-card" style="--accent:#CC785C;background:rgba(204,120,92,0.10);border-color:rgba(204,120,92,0.30)">
         <div class="sum-name">🔮 Claude Chat</div>
-        <div class="sum-best">Best for long documents, nuanced analysis, creative writing, complex reasoning, and safety-sensitive topics.</div>
+        <div class="sum-best">Best for long documents, deep analysis, creative writing, complex reasoning, and safety-sensitive tasks.</div>
       </div>
-      <div class="sum-card" style="background:rgba(138,100,210,0.10);border-color:rgba(138,100,210,0.30)">
-        <div class="sum-name">⌨️ Claude Code</div>
-        <div class="sum-best">Best for developers — autonomous coding, large refactors, test-driven bug fixes, and end-to-end engineering tasks.</div>
-      </div>
-      <div class="sum-card" style="background:rgba(234,67,53,0.10);border-color:rgba(234,67,53,0.30)">
+
+      <div class="sum-card" style="--accent:#EA4335;background:rgba(234,67,53,0.10);border-color:rgba(234,67,53,0.30)">
         <div class="sum-name">📔 NotebookLM</div>
-        <div class="sum-best">Best for research, studying, legal/compliance review, and any workflow where accuracy and citations are critical.</div>
+        <div class="sum-best">Best for research, studying, legal review, and any workflow where accuracy and citations are critical.</div>
       </div>
+
     </div>
   </div>
 
@@ -598,7 +618,7 @@
   <button class="nav-btn" onclick="go(cur-1)" title="Previous (←)">&#8592;</button>
   <div class="dots" id="dots"></div>
   <button class="nav-btn" onclick="go(cur+1)" title="Next (→)">&#8594;</button>
-  <span class="counter" id="ctr">1 / 8</span>
+  <span class="counter" id="ctr">1 / 7</span>
 </div>
 
 <script>
@@ -607,7 +627,6 @@
   const ctrEl  = document.getElementById('ctr');
   let cur = 0;
 
-  // Build dots
   slides.forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'dot' + (i === 0 ? ' on' : '');
@@ -617,34 +636,22 @@
 
   function go(idx) {
     if (idx < 0 || idx >= slides.length) return;
-
-    // Exit current
     slides[cur].classList.remove('active');
     slides[cur].classList.add('exit');
     const leaving = cur;
     setTimeout(() => slides[leaving].classList.remove('exit'), 600);
-
     cur = idx;
-
-    // Enter new
     slides[cur].classList.add('active');
-
-    // Sync dots
     dotsEl.querySelectorAll('.dot').forEach((d, i) =>
-      d.classList.toggle('on', i === cur)
-    );
-
-    // Counter
+      d.classList.toggle('on', i === cur));
     ctrEl.textContent = `${cur + 1} / ${slides.length}`;
   }
 
-  // Keyboard
   document.addEventListener('keydown', e => {
     if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); go(cur+1); }
     if (['ArrowLeft','ArrowUp'].includes(e.key))         { e.preventDefault(); go(cur-1); }
   });
 
-  // Touch / swipe
   let tx = 0;
   document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
   document.addEventListener('touchend',   e => {
