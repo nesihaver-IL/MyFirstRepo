@@ -11,6 +11,13 @@
 - review
 - peer-review
 - update-docs
+- azure-ai-foundry
+- aws-strands
+- aws-agentcore
+- analytics-metrics
+- copilot-docs
+- nano-banana-pro
+- github-trending
 
 ### Aliases (Short Names)
 You can use these trigger phrases to activate commands:
@@ -33,6 +40,17 @@ You can use these trigger phrases to activate commands:
 | "second opinion" | peer-review | Get fresh perspective |
 | "docs" | update-docs | Update documentation |
 | "update docs" | update-docs | Sync documentation |
+| "azure ai" | azure-ai-foundry | Azure AI Foundry tasks (02-work/) |
+| "azure foundry" | azure-ai-foundry | Azure AI Studio / Prompt Flow |
+| "aws agent" | aws-strands | AWS model-agnostic agent (01-personal/) |
+| "strands" | aws-strands | Strands Agents SDK ReAct patterns |
+| "bedrock agent" | aws-agentcore | AWS Bedrock AgentCore (01-personal/) |
+| "agentcore" | aws-agentcore | Lambda tools, Bedrock orchestration |
+| "dashboard" | analytics-metrics | Data visualization / Recharts charts |
+| "chart" | analytics-metrics | KPI displays, metrics dashboards |
+| "copilot" | copilot-docs | GitHub Copilot custom instructions |
+| "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
+| "trending" | github-trending | GitHub trending repos discovery |
 
 ## Usage Examples
 
@@ -133,6 +151,6 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-02-24
-Total Commands: 7
+Last Updated: 2026-02-26
+Total Commands: 14
 Status: ✅ Active

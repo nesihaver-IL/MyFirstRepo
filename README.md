@@ -39,6 +39,15 @@ A structured workspace for organizing AI agent development projects, learning re
 3. Check the project-specific `CLAUDE.md` and `README.md`
 4. Use templates from `.config/templates/` for consistency
 
+## Active Tracking
+
+| File | Purpose |
+|------|---------|
+| [`TODO.md`](TODO.md) | Active and backlog tasks across all projects |
+| [`DECISIONS.md`](DECISIONS.md) | Architectural decision log |
+| [`.plans/`](.plans/) | Implementation plans (git-tracked) |
+| [`.claude/COMMAND_REGISTRY.md`](.claude/COMMAND_REGISTRY.md) | All 14 available Claude skills |
+
 ## Contributing
 
 - Follow the coding standards in `CLAUDE.md`
