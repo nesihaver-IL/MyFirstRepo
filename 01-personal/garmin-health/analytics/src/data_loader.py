@@ -1,7 +1,7 @@
 """
 Data loader for Garmin Health Analytics Dashboard.
 
-All source JSON files live in ../../aws-ai-agent/docs/ relative to this project.
+All source JSON files live in ../../../aws-ai-agent/docs/ relative to this file (01-personal/aws-ai-agent/docs/).
 
 Unit notes (from Garmin internal format):
   - distance: centimeters  → divide by 100 for meters, by 100000 for km
@@ -15,7 +15,7 @@ import pandas as pd
 from pathlib import Path
 
 # Absolute path to the data folder
-_DOCS_DIR = Path(__file__).parent.parent.parent / "aws-ai-agent" / "docs"
+_DOCS_DIR = Path(__file__).parent.parent.parent.parent / "aws-ai-agent" / "docs"
 
 
 def _docs(filename: str) -> Path:
