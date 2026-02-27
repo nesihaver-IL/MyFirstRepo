@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-_DOCS_DIR = Path(__file__).parent.parent.parent / "aws-ai-agent" / "docs"
+_DOCS_DIR = Path(__file__).parent.parent.parent.parent / "aws-ai-agent" / "docs"
 
 ATHLETE_PROFILE = {
     "age": 47,
