@@ -26,6 +26,11 @@ ai-foundry-agent/
 │   ├── integration/
 │   └── e2e/
 ├── docs/
+│   ├── setup/          # GUIDED-SETUP-CHECKLIST, QUICKSTART-WINDOWS, IMAGE_PROCESSING_SETUP
+│   ├── operations/     # monitoring-guide, production-checklist, document-management
+│   └── runbooks/       # deployment, incident-response, scaling
+├── scripts/
+│   └── windows/        # All .bat and .ps1 deployment/setup scripts
 └── environments/
 ```
 
@@ -45,6 +50,23 @@ az login
 # Run locally
 python -m src.api.main
 ```
+
+## Windows Setup & Deployment
+All Windows scripts are in `scripts/windows/`:
+```powershell
+# First-time setup
+scripts\windows\setup-windows.ps1
+
+# Deploy infrastructure
+scripts\windows\deploy-infrastructure.ps1
+
+# Run agent
+scripts\windows\run.ps1
+
+# Test agent
+scripts\windows\test-agent.bat
+```
+See `docs/setup/QUICKSTART-WINDOWS.md` for step-by-step guide.
 
 ## Team Requirements
 
