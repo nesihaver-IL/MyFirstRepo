@@ -1,0 +1,6 @@
+# Prompt Flow runtime dependencies
+# These are installed automatically by Azure AI Foundry when the flow runs.
+# Do NOT add local-only tools (pytest, PyMuPDF, etc.) here.
+
+azure-search-documents==11.4.0
+openai==1.12.0
