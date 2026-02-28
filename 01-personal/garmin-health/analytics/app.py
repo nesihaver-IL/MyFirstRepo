@@ -110,6 +110,7 @@ tabs = st.tabs([
     "💪 Fitness & Recovery",
     "🔗 Cross-Pillar",
     "🤖 AI Recommendations",
+    "🏆 Personal Bests",
 ])
 
 
@@ -425,3 +426,386 @@ with tabs[6]:
             "4. **Sleep & Recovery** — stage quality, behavioral recommendations"
         )
         st.caption("Requires `ANTHROPIC_API_KEY` in your `.env` file.")
+
+
+# ── Tab 8: Personal Bests ──────────────────────────────────────────────────────
+with tabs[7]:
+    import plotly.graph_objects as go
+
+    st.header("🏆 Personal Bests & All-Time Records")
+    st.caption(
+        "Peak achievements across all three pillars — **Swimming · Running · Sleep** — "
+        "no date filter applied. These are your all-time records."
+    )
+
+    # ── Hero banner ───────────────────────────────────────────────────────────
+    st.markdown("### All-Time Peaks")
+
+    h1, h2, h3, h4, h5 = st.columns(5)
+
+    with h1:
+        peak_vo2 = vo2_df["vo2max"].max() if not vo2_df.empty else None
+        cur_vo2  = vo2_df["vo2max"].iloc[-1] if not vo2_df.empty else None
+        delta_vo2 = int(cur_vo2 - peak_vo2) if (peak_vo2 and cur_vo2) else None
+        st.metric(
+            "Peak VO2Max",
+            f"{peak_vo2:.0f} ml/kg/min" if peak_vo2 else "—",
+            delta=f"{delta_vo2:+d} vs today" if delta_vo2 is not None else None,
+            delta_color="inverse",
+        )
+
+    with h2:
+        fit_age = vo2_df["fitness_age"].min() if not vo2_df.empty else None
+        st.metric(
+            "Fitness Age",
+            f"{int(fit_age)} yrs" if fit_age else "—",
+            delta="vs 47 chronological",
+            delta_color="normal",
+        )
+
+    with h3:
+        if not race_df.empty:
+            best_5k_sec = race_df["5k_sec"].min()
+            bm, bs = divmod(int(best_5k_sec), 60)
+            st.metric("Best 5K Prediction", f"{bm}:{bs:02d}", delta_color="off")
+
+    with h4:
+        if not swim_df.empty:
+            max_swim_m = swim_df["distance_m"].max()
+            pct = max_swim_m / 2000 * 100
+            st.metric(
+                "Longest Swim",
+                f"{max_swim_m:.0f} m",
+                delta=f"{pct:.0f}% of 2000m goal",
+                delta_color="normal" if max_swim_m >= 2000 else "inverse",
+            )
+
+    with h5:
+        if not sleep_df.empty:
+            st.metric(
+                "Best Sleep Night",
+                f"{sleep_df['total_sleep_h'].max():.1f} h",
+                delta="All-time max",
+                delta_color="off",
+            )
+
+    st.divider()
+
+    # ── SWIMMING ──────────────────────────────────────────────────────────────
+    st.markdown("### 🏊 Swimming — Progress to 2000m Goal")
+
+    sw1, sw2 = st.columns([1, 2])
+
+    with sw1:
+        if not swim_df.empty:
+            avg_swim_m = swim_df["distance_m"].mean()
+
+            fig_gauge = go.Figure(go.Indicator(
+                mode="gauge+number+delta",
+                value=avg_swim_m,
+                delta={"reference": 2000, "valueformat": ".0f", "suffix": " m vs goal"},
+                number={"suffix": " m", "valueformat": ".0f", "font": {"size": 36}},
+                title={"text": "Avg Session Distance", "font": {"size": 15}},
+                gauge={
+                    "axis": {"range": [0, 2200], "tickwidth": 1, "tickcolor": "#555"},
+                    "bar": {"color": "#2196F3", "thickness": 0.3},
+                    "bgcolor": "white",
+                    "steps": [
+                        {"range": [0,    1000], "color": "#FFF9C4"},
+                        {"range": [1000, 1500], "color": "#B3E5FC"},
+                        {"range": [1500, 2000], "color": "#81D4FA"},
+                        {"range": [2000, 2200], "color": "#C8E6C9"},
+                    ],
+                    "threshold": {
+                        "line": {"color": "#1A237E", "width": 4},
+                        "thickness": 0.85,
+                        "value": 2000,
+                    },
+                },
+            ))
+            fig_gauge.update_layout(
+                height=300,
+                margin=dict(l=20, r=20, t=50, b=10),
+                font=dict(family="Inter, Arial, sans-serif"),
+            )
+            st.plotly_chart(fig_gauge, use_container_width=True)
+
+            s1, s2 = st.columns(2)
+            s1.metric("Sessions ≥ 1500m", int((swim_df["distance_m"] >= 1500).sum()))
+            s2.metric("Sessions ≥ 1800m", int((swim_df["distance_m"] >= 1800).sum()))
+            st.metric("Total Swim Sessions", len(swim_df))
+
+    with sw2:
+        if not swim_df.empty:
+            top_swims = swim_df.nlargest(15, "distance_m").copy()
+            top_swims["date_str"] = top_swims["date"].dt.strftime("%b %d %Y")
+            top_swims["label"]    = top_swims["date_str"] + "  ·  " + top_swims["distance_m"].astype(int).astype(str) + " m"
+            bar_colors = [
+                "#1A237E" if d >= 2000 else "#2196F3" if d >= 1500 else "#90CAF9"
+                for d in top_swims["distance_m"]
+            ]
+
+            fig_top_swim = go.Figure(go.Bar(
+                x=top_swims["distance_m"],
+                y=top_swims["label"],
+                orientation="h",
+                marker_color=bar_colors,
+                text=top_swims["distance_m"].astype(int).astype(str) + " m",
+                textposition="outside",
+                hovertemplate="<b>%{y}</b><br>%{x:.0f} m<extra></extra>",
+            ))
+            fig_top_swim.add_vline(
+                x=2000, line_dash="dash", line_color="#1A237E", line_width=2,
+                annotation_text="2000m Goal", annotation_position="top right",
+                annotation_font=dict(color="#1A237E", size=11),
+            )
+            fig_top_swim.update_layout(
+                template="plotly_white",
+                title="Top 15 Swim Sessions — All Time",
+                xaxis_title="Distance (m)",
+                xaxis_range=[0, max(swim_df["distance_m"].max() * 1.15, 2100)],
+                yaxis={"autorange": "reversed"},
+                height=420,
+                margin=dict(l=180, r=60, t=50, b=40),
+                font=dict(family="Inter, Arial, sans-serif", size=12),
+                showlegend=False,
+            )
+            st.plotly_chart(fig_top_swim, use_container_width=True)
+
+    st.divider()
+
+    # ── RUNNING ───────────────────────────────────────────────────────────────
+    st.markdown("### 🏃 Running — Race Predictions & Records")
+
+    rr1, rr2 = st.columns([2, 1])
+
+    with rr1:
+        if not race_df.empty:
+            fig_race = go.Figure()
+            for col, fmt_col, label, color in [
+                ("5k_sec",   "5k_fmt",   "5K",            "#FF6B35"),
+                ("half_sec", "half_fmt", "Half Marathon",  "#E91E63"),
+            ]:
+                d = race_df[race_df[col].notna()].copy()
+                d["minutes"] = d[col] / 60
+                fig_race.add_trace(go.Scatter(
+                    x=d["date"],
+                    y=d["minutes"],
+                    name=label,
+                    mode="lines",
+                    line=dict(color=color, width=2.5),
+                    customdata=d[fmt_col],
+                    hovertemplate=(
+                        f"<b>{label}</b><br>"
+                        "%{x|%Y-%m-%d}<br>"
+                        "Time: %{customdata}<extra></extra>"
+                    ),
+                ))
+
+            # Mark best predictions
+            for col, fmt_col, label, color in [
+                ("5k_sec",   "5k_fmt",   "5K",            "#FF6B35"),
+                ("half_sec", "half_fmt", "Half Marathon",  "#E91E63"),
+            ]:
+                d = race_df[race_df[col].notna()]
+                if d.empty:
+                    continue
+                best_idx  = d[col].idxmin()
+                best_row  = d.loc[best_idx]
+                fig_race.add_annotation(
+                    x=best_row["date"],
+                    y=best_row[col] / 60,
+                    text=f"🏆 {best_row[fmt_col]}",
+                    showarrow=True,
+                    arrowhead=2,
+                    arrowcolor=color,
+                    bgcolor="white",
+                    bordercolor=color,
+                    borderwidth=1,
+                    font=dict(size=11, color=color),
+                    ax=0, ay=-36,
+                )
+
+            fig_race.update_layout(
+                template="plotly_white",
+                title="Race Prediction Trend — All Time",
+                xaxis_title="Date",
+                yaxis_title="Predicted Time (minutes)",
+                hovermode="x unified",
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                font=dict(family="Inter, Arial, sans-serif", size=13),
+                margin=dict(l=50, r=20, t=60, b=40),
+            )
+            st.plotly_chart(fig_race, use_container_width=True)
+
+    with rr2:
+        st.markdown("**All-Time Running Stats**")
+        if not run_df.empty:
+            valid_runs = run_df[
+                run_df["pace_min_per_km"].notna() &
+                (run_df["pace_min_per_km"] > 2) &
+                (run_df["distance_km"] >= 3)
+            ]
+            if not valid_runs.empty:
+                best_pace = valid_runs["pace_min_per_km"].min()
+                bpm2, bps2 = int(best_pace), int((best_pace % 1) * 60)
+                st.metric("Best Pace (≥3km)", f"{bpm2}:{bps2:02d} /km")
+
+            st.metric("Longest Run", f"{run_df['distance_km'].max():.1f} km")
+            st.metric("Total Sessions",  len(run_df))
+            st.metric("Total km Run",    f"{run_df['distance_km'].sum():.0f} km")
+
+        if not race_df.empty:
+            st.markdown("---")
+            st.markdown("**Best Predicted Times**")
+            for col, fmt_col, label in [
+                ("5k_sec",       "5k_fmt",       "5K"),
+                ("10k_sec",      "10k_fmt",      "10K"),
+                ("half_sec",     "half_fmt",     "Half Marathon"),
+                ("marathon_sec", "marathon_fmt", "Marathon"),
+            ]:
+                best = race_df.loc[race_df[col].idxmin(), fmt_col] if race_df[col].notna().any() else "—"
+                st.metric(f"Best {label}", best)
+
+    st.divider()
+
+    # ── SLEEP ─────────────────────────────────────────────────────────────────
+    st.markdown("### 😴 Sleep — Best Recovery Nights")
+
+    if not sleep_df.empty:
+        sl1, sl2, sl3 = st.columns(3)
+
+        for col_widget, night_label, sort_col, chart_title, badge in [
+            (sl1, "Best Total Sleep",  "total_sleep_h",
+             lambda r: f"{r['total_sleep_h']:.1f}h Total",   "💤"),
+            (sl2, "Best Deep Sleep",   "deep_min",
+             lambda r: f"{r['deep_min']:.0f} min Deep",       "🧠"),
+            (sl3, "Best REM Night",    "rem_min",
+             lambda r: f"{r['rem_min']:.0f} min REM",         "🌙"),
+        ]:
+            with col_widget:
+                night = sleep_df.loc[sleep_df[sort_col].idxmax()]
+                st.markdown(f"**{badge} {night_label}**")
+                st.caption(night["date"].strftime("%B %d, %Y"))
+
+                fig_pie = go.Figure(go.Pie(
+                    labels=["Deep", "REM", "Light"],
+                    values=[night["deep_min"], night["rem_min"], night["light_min"]],
+                    hole=0.45,
+                    marker_colors=["#1A237E", "#7B1FA2", "#64B5F6"],
+                    textinfo="label+percent",
+                    hovertemplate="<b>%{label}</b><br>%{value:.0f} min<extra></extra>",
+                    direction="clockwise",
+                ))
+                fig_pie.update_layout(
+                    title=dict(text=chart_title(night), font=dict(size=14)),
+                    height=260,
+                    margin=dict(l=10, r=10, t=50, b=10),
+                    font=dict(family="Inter, Arial, sans-serif", size=12),
+                    showlegend=False,
+                )
+                st.plotly_chart(fig_pie, use_container_width=True)
+
+        sa1, sa2, sa3, sa4 = st.columns(4)
+        sa1.metric("Best Total Sleep",   f"{sleep_df['total_sleep_h'].max():.1f} h")
+        sa2.metric("Best Deep Sleep",    f"{sleep_df['deep_min'].max():.0f} min")
+        sa3.metric("Best REM Sleep",     f"{sleep_df['rem_min'].max():.0f} min")
+        sa4.metric("Best Deep % Night",  f"{sleep_df['deep_pct'].max():.1f}%")
+
+    st.divider()
+
+    # ── VO2MAX PEAK ───────────────────────────────────────────────────────────
+    st.markdown("### 💪 Fitness Peak — VO2Max All-Time History")
+
+    if not vo2_df.empty:
+        peak_row = vo2_df.loc[vo2_df["vo2max"].idxmax()]
+        cur_row  = vo2_df.iloc[-1]
+
+        fig_vo2_peak = go.Figure()
+
+        # Area fill
+        fig_vo2_peak.add_trace(go.Scatter(
+            x=vo2_df["date"],
+            y=vo2_df["vo2max"],
+            fill="tozeroy",
+            fillcolor="rgba(33, 150, 243, 0.12)",
+            line=dict(color="#2196F3", width=2.5),
+            mode="lines",
+            name="VO2Max",
+            hovertemplate="<b>%{x|%Y-%m-%d}</b><br>VO2Max: %{y:.0f} ml/kg/min<extra></extra>",
+        ))
+
+        # Peak marker
+        fig_vo2_peak.add_trace(go.Scatter(
+            x=[peak_row["date"]],
+            y=[peak_row["vo2max"]],
+            mode="markers",
+            marker=dict(size=14, color="#1A237E", symbol="star"),
+            name="Peak",
+            hovertemplate="<b>Peak</b><br>%{x|%Y-%m-%d}<br>%{y:.0f} ml/kg/min<extra></extra>",
+        ))
+
+        # Peak annotation
+        fig_vo2_peak.add_annotation(
+            x=peak_row["date"], y=peak_row["vo2max"],
+            text=f"🏆 Peak: {peak_row['vo2max']:.0f}<br>{peak_row['date'].strftime('%b %Y')}",
+            showarrow=True, arrowhead=2, arrowcolor="#1A237E",
+            bgcolor="#E3F2FD", bordercolor="#1A237E", borderwidth=1,
+            font=dict(size=12, color="#1A237E"),
+            ax=40, ay=-45,
+        )
+
+        # Current annotation
+        fig_vo2_peak.add_annotation(
+            x=cur_row["date"], y=cur_row["vo2max"],
+            text=f"Now: {cur_row['vo2max']:.0f}",
+            showarrow=True, arrowhead=2, arrowcolor="#FF6B35",
+            bgcolor="#FFF3E0", bordercolor="#FF6B35", borderwidth=1,
+            font=dict(size=12, color="#FF6B35"),
+            ax=-40, ay=-45,
+        )
+
+        # Excellent zone reference band
+        fig_vo2_peak.add_hrect(
+            y0=42, y1=56,
+            fillcolor="rgba(76, 175, 80, 0.06)",
+            line_width=0,
+            annotation_text="Excellent range for age 47 (>42)",
+            annotation_position="top left",
+            annotation_font=dict(size=10, color="#4CAF50"),
+        )
+
+        fig_vo2_peak.update_layout(
+            template="plotly_white",
+            title="VO2Max Trend — All Time  |  Fitness Age = 20",
+            xaxis_title="Date",
+            yaxis_title="VO2Max (ml/kg/min)",
+            yaxis=dict(range=[40, 56]),
+            hovermode="x unified",
+            font=dict(family="Inter, Arial, sans-serif", size=13),
+            margin=dict(l=50, r=20, t=60, b=40),
+            showlegend=False,
+        )
+        st.plotly_chart(fig_vo2_peak, use_container_width=True)
+
+        # Summary strip
+        v1, v2, v3, v4 = st.columns(4)
+        v1.metric(
+            "Peak VO2Max", f"{vo2_df['vo2max'].max():.0f} ml/kg/min",
+            delta=f"↑{vo2_df['vo2max'].max() - vo2_df['vo2max'].iloc[0]:.0f} from first reading",
+            delta_color="normal",
+        )
+        v2.metric(
+            "Current VO2Max", f"{cur_row['vo2max']:.0f} ml/kg/min",
+            delta=f"{cur_row['vo2max'] - vo2_df['vo2max'].max():.0f} from peak",
+            delta_color="inverse",
+        )
+        v3.metric(
+            "Fitness Age", f"{int(vo2_df['fitness_age'].min())} yrs",
+            delta="vs 47 chronological", delta_color="normal",
+        )
+        v4.metric(
+            "5-Year Change",
+            f"{vo2_df['vo2max'].iloc[-1] - vo2_df['vo2max'].iloc[0]:+.0f} ml/kg/min",
+            delta="since May 2020", delta_color="inverse",
+        )
