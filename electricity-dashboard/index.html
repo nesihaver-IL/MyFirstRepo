@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>חברת חשמל — דוח תשלומים 2024 vs 2025</title>
+  <title>חברת חשמל — דוח תשלומים 2025 vs 2026</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
@@ -186,14 +186,13 @@
   <div class="icon">⚡</div>
   <div>
     <h1>חברת חשמל לישראל — היסטוריית תשלומים</h1>
-    <p>nesihaver@gmail.com &nbsp;|&nbsp; השוואה שנתית 2024 מול 2025 · פילוג חודשי</p>
+    <p>nesihaver@gmail.com &nbsp;|&nbsp; השוואה שנתית 2025 מול 2026 · פילוג חודשי</p>
   </div>
 </header>
 
 <div style="max-width:1100px;margin:0 auto;padding:0 16px;">
-  <div class="note-banner">
-    ⚠️ <span><strong>שים לב:</strong> הנתונים להלן הם לדוגמה בלבד — לא ניתן לגשת ל-Gmail באופן אוטומטי.
-    כדי לראות נתונים אמיתיים, ייצא את חשבוניות החשמל מהג'ימייל (ראה הוראות בתחתית הדף) ועדכן את המשתנה <code>data</code> בקוד.</span>
+  <div class="note-banner" id="dataBanner">
+    ⏳ <span id="bannerText">טוען נתונים מ-electricity_data.json...</span>
   </div>
 </div>
 
@@ -202,33 +201,33 @@
   <!-- KPI Cards -->
   <div class="kpi-grid">
     <div class="kpi">
-      <div class="lbl">סה"כ 2024</div>
+      <div class="lbl">סה"כ 2025</div>
       <div class="val y24" id="kpi-total24">—</div>
-      <div class="sub">12 חודשים</div>
+      <div class="sub" id="kpi-months24">—</div>
     </div>
     <div class="kpi">
-      <div class="lbl">סה"כ 2025</div>
+      <div class="lbl">סה"כ 2026</div>
       <div class="val y25" id="kpi-total25">—</div>
       <div class="sub" id="kpi-months25">—</div>
     </div>
     <div class="kpi">
       <div class="lbl">שינוי שנתי (YoY)</div>
       <div class="val" id="kpi-yoy">—</div>
-      <div class="sub">ביחס ל-2024</div>
+      <div class="sub">ביחס ל-2025</div>
     </div>
     <div class="kpi">
-      <div class="lbl">ממוצע חודשי 2025</div>
+      <div class="lbl">ממוצע חודשי 2026</div>
       <div class="val y25" id="kpi-avg">—</div>
-      <div class="sub" id="kpi-avg-vs">לעומת 2024: —</div>
+      <div class="sub" id="kpi-avg-vs">לעומת 2025: —</div>
     </div>
   </div>
 
   <!-- Bar chart — main comparison -->
   <div class="chart-full">
-    <h3>השוואה חודשית — 2024 מול 2025 (₪)</h3>
+    <h3>השוואה חודשית — 2025 מול 2026 (₪)</h3>
     <div class="leg">
-      <span><span class="dot" style="background:#6366f1"></span>2024</span>
-      <span><span class="dot" style="background:#0891b2"></span>2025</span>
+      <span><span class="dot" style="background:#6366f1"></span>2025</span>
+      <span><span class="dot" style="background:#0891b2"></span>2026</span>
     </div>
     <canvas id="barChart" height="90"></canvas>
   </div>
@@ -305,183 +304,173 @@ const SEASONS = [
   { label:'חורף',  cls:'winter' },  // Dec
 ];
 
-// נתוני דוגמה — עדכן בנתונים האמיתיים מהג'ימייל
-const data = {
-  y2024: [480, 420, 350, 290, 310, 560, 720, 760, 630, 380, 415, 470],
-  y2025: [510, 445, 370, 305, 335, 595, 780, 830, 680, 405, null, null]
-  // null = חודש שעדיין לא הגיע / לא שולם
+// נתוני ברירת מחדל (דוגמה) — יוחלפו בנתונים אמיתיים אם electricity_data.json קיים
+const FALLBACK = {
+  y2025: [480, 420, 350, 290, 310, 560, 720, 760, 630, 380, 415, 470],
+  y2026: [510, 445, 370, 305, 335, 595, 780, 830, 680, null, null, null]
 };
 
-/* ─────────────────────────────────────────
-   COMPUTED
-   ───────────────────────────────────────── */
-const months25 = data.y2025.filter(v => v !== null).length;
-const total24  = data.y2024.reduce((s, v) => s + (v||0), 0);
-const total25  = data.y2025.reduce((s, v) => s + (v||0), 0);
-const avg24    = total24 / 12;
-const avg25    = total25 / months25;
-
-// Partial-year YoY: compare same months
-const base25   = data.y2024.slice(0, months25).reduce((s,v) => s+(v||0), 0);
-const yoyPct   = ((total25 - base25) / base25 * 100).toFixed(1);
-const yoyUp    = parseFloat(yoyPct) > 0;
-
-const fmt = n => n != null ? n.toLocaleString('he-IL') + ' ₪' : '—';
+const fmt    = n => n != null ? n.toLocaleString('he-IL') + ' ₪' : '—';
 const fmtNum = n => n.toLocaleString('he-IL', {maximumFractionDigits:0});
 
-/* ─────────────────────────────────────────
-   KPI CARDS
-   ───────────────────────────────────────── */
-document.getElementById('kpi-total24').textContent  = fmt(total24);
-document.getElementById('kpi-total25').textContent  = fmt(total25);
-document.getElementById('kpi-months25').textContent = months25 + ' חודשים';
-document.getElementById('kpi-yoy').textContent      = (yoyUp ? '▲ +' : '▼ ') + yoyPct + '%';
-document.getElementById('kpi-yoy').classList.add(yoyUp ? 'up' : 'down');
-document.getElementById('kpi-avg').textContent      = fmt(Math.round(avg25));
-document.getElementById('kpi-avg-vs').textContent   = 'לעומת 2024: ' + fmt(Math.round(avg24));
+function renderDashboard(y2025, y2026) {
+  /* ── COMPUTED ── */
+  const months26 = y2026.filter(v => v !== null).length;
+  const months25 = y2025.filter(v => v !== null).length;
+  const total25  = y2025.reduce((s, v) => s + (v||0), 0);
+  const total26  = y2026.reduce((s, v) => s + (v||0), 0);
+  const avg25    = total25 / months25;
+  const avg26    = months26 > 0 ? total26 / months26 : 0;
 
-/* ─────────────────────────────────────────
-   TABLE
-   ───────────────────────────────────────── */
-const tbody = document.getElementById('tableBody');
-let sumDiff = 0;
+  // YoY — compare same months
+  const base26  = y2025.slice(0, months26).reduce((s,v) => s+(v||0), 0);
+  const yoyPct  = base26 > 0 ? ((total26 - base26) / base26 * 100).toFixed(1) : '0.0';
+  const yoyUp   = parseFloat(yoyPct) > 0;
 
-data.y2024.forEach((v24, i) => {
-  const v25  = data.y2025[i];
-  const diff = v25 != null ? v25 - v24 : null;
-  const pct  = diff != null ? (diff / v24 * 100).toFixed(1) : null;
-  if (diff != null) sumDiff += diff;
+  /* ── KPI CARDS ── */
+  document.getElementById('kpi-total24').textContent  = fmt(total25);
+  document.getElementById('kpi-months24').textContent = months25 + ' חודשים';
+  document.getElementById('kpi-total25').textContent  = fmt(total26);
+  document.getElementById('kpi-months25').textContent = months26 + ' חודשים';
+  document.getElementById('kpi-yoy').textContent      = (yoyUp ? '▲ +' : '▼ ') + yoyPct + '%';
+  document.getElementById('kpi-yoy').classList.add(yoyUp ? 'up' : 'down');
+  document.getElementById('kpi-avg').textContent      = fmt(Math.round(avg26));
+  document.getElementById('kpi-avg-vs').textContent   = 'לעומת 2025: ' + fmt(Math.round(avg25));
 
-  const deltaClass = diff == null ? 'even' : diff > 0 ? 'up' : diff < 0 ? 'down' : 'even';
-  const arrow      = diff == null ? '—' : diff > 0 ? '▲' : diff < 0 ? '▼' : '—';
+  /* ── TABLE ── */
+  const tbody = document.getElementById('tableBody');
+  let sumDiff = 0;
 
-  const tr = document.createElement('tr');
-  tr.innerHTML = `
-    <td><strong>${MONTHS[i]}</strong></td>
-    <td><span class="season ${SEASONS[i].cls}">${SEASONS[i].label}</span></td>
-    <td class="amount" style="color:#6366f1">${fmtNum(v24)} ₪</td>
-    <td class="amount" style="color:#0891b2">${v25 != null ? fmtNum(v25)+' ₪' : '<span style="color:#9ca3af">—</span>'}</td>
-    <td>${diff != null ? `<span style="color:${diff>0?'#dc2626':diff<0?'#059669':'#374151'};font-weight:700">${diff>0?'+':''}${fmtNum(diff)} ₪</span>` : '—'}</td>
-    <td>${pct != null ? `<span class="delta ${deltaClass}">${arrow} ${Math.abs(pct)}%</span>` : '—'}</td>
+  y2025.forEach((v25, i) => {
+    const v26  = y2026[i];
+    const diff = (v25 != null && v26 != null) ? v26 - v25 : null;
+    const pct  = diff != null ? (diff / v25 * 100).toFixed(1) : null;
+    if (diff != null) sumDiff += diff;
+
+    const deltaClass = diff == null ? 'even' : diff > 0 ? 'up' : diff < 0 ? 'down' : 'even';
+    const arrow      = diff == null ? '—' : diff > 0 ? '▲' : diff < 0 ? '▼' : '—';
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${MONTHS[i]}</strong></td>
+      <td><span class="season ${SEASONS[i].cls}">${SEASONS[i].label}</span></td>
+      <td class="amount" style="color:#6366f1">${v25 != null ? fmtNum(v25)+' ₪' : '<span style="color:#9ca3af">—</span>'}</td>
+      <td class="amount" style="color:#0891b2">${v26 != null ? fmtNum(v26)+' ₪' : '<span style="color:#9ca3af">—</span>'}</td>
+      <td>${diff != null ? `<span style="color:${diff>0?'#dc2626':diff<0?'#059669':'#374151'};font-weight:700">${diff>0?'+':''}${fmtNum(diff)} ₪</span>` : '—'}</td>
+      <td>${pct != null ? `<span class="delta ${deltaClass}">${arrow} ${Math.abs(pct)}%</span>` : '—'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Footer
+  const tfoot = document.getElementById('tableFoot');
+  tfoot.innerHTML = `
+    <tr>
+      <td colspan="2">סה"כ</td>
+      <td style="color:#6366f1">${fmtNum(total25)} ₪</td>
+      <td style="color:#0891b2">${fmtNum(total26)} ₪</td>
+      <td style="color:${sumDiff>0?'#dc2626':'#059669'}">${sumDiff>0?'+':''}${fmtNum(sumDiff)} ₪</td>
+      <td><span class="delta ${yoyUp?'up':'down'}">${yoyUp?'▲ +':'▼ '}${Math.abs(yoyPct)}%</span></td>
+    </tr>
   `;
-  tbody.appendChild(tr);
-});
 
-// Footer totals
-const tfoot = document.getElementById('tableFoot');
-tfoot.innerHTML = `
-  <tr>
-    <td colspan="2">סה"כ</td>
-    <td style="color:#6366f1">${fmtNum(total24)} ₪</td>
-    <td style="color:#0891b2">${fmtNum(total25)} ₪</td>
-    <td style="color:${sumDiff>0?'#dc2626':'#059669'}">${sumDiff>0?'+':''}${fmtNum(sumDiff)} ₪</td>
-    <td><span class="delta ${yoyUp?'up':'down'}">${yoyUp?'▲ +':'▼ '}${Math.abs(yoyPct)}%</span></td>
-  </tr>
-`;
+  /* ── CHARTS ── */
+  // 1. Bar
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label: '2025', data: y2025, backgroundColor: 'rgba(99,102,241,0.75)', borderRadius: 5, borderSkipped: false },
+        { label: '2026', data: y2026, backgroundColor: 'rgba(8,145,178,0.75)',  borderRadius: 5, borderSkipped: false }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'top', rtl: true },
+        tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.raw != null ? fmtNum(ctx.raw)+' ₪' : '—') } }
+      },
+      scales: { y: { beginAtZero: true, ticks: { callback: v => fmtNum(v)+' ₪' } } }
+    }
+  });
 
-/* ─────────────────────────────────────────
-   CHARTS
-   ───────────────────────────────────────── */
-const labels = MONTHS;
+  // 2. Line
+  new Chart(document.getElementById('lineChart'), {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label: '2025', data: y2025, borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,0.1)', tension: 0.4, fill: true, pointRadius: 4 },
+        { label: '2026', data: y2026, borderColor: '#0891b2', backgroundColor: 'rgba(8,145,178,0.08)',  tension: 0.4, fill: true, pointRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { rtl: true } },
+      scales: { y: { ticks: { callback: v => fmtNum(v)+' ₪' } } }
+    }
+  });
 
-// 1. Grouped Bar
-new Chart(document.getElementById('barChart'), {
-  type: 'bar',
-  data: {
-    labels,
-    datasets: [
-      {
-        label: '2024',
-        data: data.y2024,
-        backgroundColor: 'rgba(99,102,241,0.75)',
+  // 3. Delta %
+  const deltaData = y2025.map((v25, i) => {
+    const v26 = y2026[i];
+    return (v25 != null && v26 != null) ? parseFloat(((v26-v25)/v25*100).toFixed(1)) : null;
+  });
+
+  new Chart(document.getElementById('deltaChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [{
+        label: 'שינוי %',
+        data: deltaData,
+        backgroundColor: deltaData.map(v => v == null ? 'transparent' : v > 0 ? 'rgba(220,38,38,0.75)' : 'rgba(5,150,105,0.75)'),
         borderRadius: 5,
         borderSkipped: false,
-      },
-      {
-        label: '2025',
-        data: data.y2025,
-        backgroundColor: 'rgba(8,145,178,0.75)',
-        borderRadius: 5,
-        borderSkipped: false,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { position: 'top', rtl: true },
-      tooltip: {
-        callbacks: {
-          label: ctx => ctx.dataset.label + ': ' + (ctx.raw != null ? fmtNum(ctx.raw)+' ₪' : '—')
-        }
-      }
+      }]
     },
-    scales: {
-      y: { beginAtZero: true, ticks: { callback: v => fmtNum(v)+' ₪' } }
-    }
-  }
-});
-
-// 2. Line
-new Chart(document.getElementById('lineChart'), {
-  type: 'line',
-  data: {
-    labels,
-    datasets: [
-      {
-        label: '2024',
-        data: data.y2024,
-        borderColor: '#6366f1',
-        backgroundColor: 'rgba(99,102,241,0.1)',
-        tension: 0.4, fill: true, pointRadius: 4,
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => (ctx.raw > 0 ? '+' : '') + ctx.raw + '%' } }
       },
-      {
-        label: '2025',
-        data: data.y2025,
-        borderColor: '#0891b2',
-        backgroundColor: 'rgba(8,145,178,0.08)',
-        tension: 0.4, fill: true, pointRadius: 4,
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { rtl: true } },
-    scales: { y: { ticks: { callback: v => fmtNum(v)+' ₪' } } }
-  }
-});
-
-// 3. Delta %
-const deltaData = data.y2024.map((v24, i) => {
-  const v25 = data.y2025[i];
-  return v25 != null ? parseFloat(((v25-v24)/v24*100).toFixed(1)) : null;
-});
-
-new Chart(document.getElementById('deltaChart'), {
-  type: 'bar',
-  data: {
-    labels,
-    datasets: [{
-      label: 'שינוי %',
-      data: deltaData,
-      backgroundColor: deltaData.map(v =>
-        v == null ? 'transparent' : v > 0 ? 'rgba(220,38,38,0.75)' : 'rgba(5,150,105,0.75)'
-      ),
-      borderRadius: 5,
-      borderSkipped: false,
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { callbacks: { label: ctx => (ctx.raw > 0 ? '+' : '') + ctx.raw + '%' } }
-    },
-    scales: {
-      y: { ticks: { callback: v => v + '%' } }
+      scales: { y: { ticks: { callback: v => v + '%' } } }
     }
-  }
-});
+  });
+}
+
+/* ── טעינת נתונים: קודם מנסה JSON אמיתי, אחרת fallback ── */
+fetch('electricity_data.json')
+  .then(r => {
+    if (!r.ok) throw new Error('not found');
+    return r.json();
+  })
+  .then(json => {
+    const d = json.data || {};
+    const y2025 = d['2025'] || Array(12).fill(null);
+    const y2026 = d['2026'] || Array(12).fill(null);
+
+    const banner = document.getElementById('dataBanner');
+    const text   = document.getElementById('bannerText');
+    banner.style.background    = '#d1fae5';
+    banner.style.borderColor   = '#059669';
+    text.style.color           = '#065f46';
+    text.innerHTML = `✅ <strong>נתונים אמיתיים נטענו בהצלחה</strong> — ${json.records_found} חשבוניות | עודכן: ${new Date(json.generated_at).toLocaleDateString('he-IL')}`;
+
+    renderDashboard(y2025, y2026);
+  })
+  .catch(() => {
+    const banner = document.getElementById('dataBanner');
+    const text   = document.getElementById('bannerText');
+    banner.style.background  = '#fef3c7';
+    banner.style.borderColor = '#f59e0b';
+    text.style.color         = '#78350f';
+    text.innerHTML = `⚠️ <strong>נתוני דוגמה בלבד</strong> — הרץ <code>python fetch_gmail.py</code> לקבלת נתונים אמיתיים מהג'ימייל`;
+
+    renderDashboard(FALLBACK.y2025, FALLBACK.y2026);
+  });
 </script>
 
 </body>
