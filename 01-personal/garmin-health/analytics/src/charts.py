@@ -149,6 +149,8 @@ def hr_distribution_scatter(run_df: pd.DataFrame, swim_df: pd.DataFrame) -> go.F
     fig = go.Figure()
     for df, name, color in [(run_df, "Running", COLORS["running"]),
                              (swim_df, "Swimming", COLORS["swimming"])]:
+        if df.empty or "avg_hr" not in df.columns:
+            continue
         d = df.dropna(subset=["avg_hr"])
         fig.add_trace(go.Scatter(
             x=d["date"], y=d["avg_hr"],

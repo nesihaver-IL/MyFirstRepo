@@ -18,14 +18,26 @@
 
 #### Cloud Platforms
 - azure-ai-foundry
+- aws-bedrock
 - aws-strands
 - aws-agentcore
+- aws-step-functions
+- aws-eventbridge
+- aws-lambda
 - terraform-ops
 
 #### Domain Skills (added 2026-02-27)
 - streamlit-dash
 - data-pipeline
 - jira-confluence
+
+#### Career & Professional Development (added 2026-03-13)
+- resume-optimizer
+
+#### Project Management (added 2026-02-28)
+- excel-pm-planner
+- cyber-exec-brief
+- pptx-builder
 
 #### Quality & Security (added 2026-02-27)
 - test-runner
@@ -96,6 +108,54 @@ You can use these trigger phrases to activate commands:
 | "figma" | figma | Figma API, design tokens, component gen |
 | "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
 | "trending" | github-trending | GitHub trending repos discovery |
+| "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
+| "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
+| "bedrock flows" | aws-bedrock | Visual agentic flow builder |
+| "converse api" | aws-bedrock | Bedrock Converse API + tool use |
+| "guardrails" | aws-bedrock | Content filtering + PII redaction |
+| "state machine" | aws-step-functions | Step Functions state machine design |
+| "step functions" | aws-step-functions | Orchestrate agentic pipelines |
+| "human approval" | aws-step-functions | Wait-for-task-token approval gate |
+| "event bus" | aws-eventbridge | EventBridge custom bus + rules |
+| "eventbridge" | aws-eventbridge | Event-driven agent triggers |
+| "cron trigger" | aws-eventbridge | Scheduled agent runs (Scheduler) |
+| "eventbridge pipes" | aws-eventbridge | SQS / DynamoDB Stream → agent |
+| "lambda tool" | aws-lambda | Lambda as Bedrock agent tool backend |
+| "lambda handler" | aws-lambda | Serverless function patterns |
+| "sam cli" | aws-lambda | Local Lambda testing with SAM |
+| "function url" | aws-lambda | Lambda HTTP endpoint for agents |
+| "exec brief" | cyber-exec-brief | Executive status update for cyber project |
+| "executive update" | cyber-exec-brief | Management-ready status communication |
+| "status report" | cyber-exec-brief | Project status report for management |
+| "cyber project update" | cyber-exec-brief | Cybersecurity B2C project update |
+| "risk brief" | cyber-exec-brief | Executive risk summary |
+| "milestone update" | cyber-exec-brief | Gate or milestone executive summary |
+| "board presentation" | cyber-exec-brief | Board / steering committee slide content |
+| "steering committee" | cyber-exec-brief | Steering committee update |
+| "gate review" | cyber-exec-brief | Phase gate review brief |
+| "roadmap summary" | cyber-exec-brief | Executive roadmap snapshot |
+| "build slides" | pptx-builder | Generate a PowerPoint deck from structured content |
+| "create presentation" | pptx-builder | Build an exec-ready .pptx file |
+| "powerpoint" | pptx-builder | PowerPoint slide generation |
+| "slide deck" | pptx-builder | Generate a slide deck |
+| "generate deck" | pptx-builder | Build a full presentation deck |
+| "make slides" | pptx-builder | Create PowerPoint slides |
+| "excel plan" | excel-pm-planner | Analyze PM Excel block-timeline plan |
+| "pm excel" | excel-pm-planner | Read discipline / platform / timeline lanes |
+| "timeline blocks" | excel-pm-planner | Extract and interpret block schedule |
+| "plan vs tracking" | excel-pm-planner | Compare planned vs. actual blocks |
+| "schedule review" | excel-pm-planner | Identify slips, gaps, and risks |
+| "discipline allocation" | excel-pm-planner | Who is working and when |
+| "block analysis" | excel-pm-planner | Block-based Gantt / schedule analysis |
+| "optimize resume" | resume-optimizer | Tailor resume against target role |
+| "tailor resume" | resume-optimizer | Resume fit analysis and rewrite |
+| "resume score" | resume-optimizer | ATS-aware resume optimization |
+| "cv optimization" | resume-optimizer | CV enhancement and benchmarking |
+| "career optimization" | resume-optimizer | Career positioning and role matching |
+| "position match" | resume-optimizer | Candidate-role fit analysis |
+| "job fit analysis" | resume-optimizer | Analyze fit and benchmark role |
+| "resume benchmark" | resume-optimizer | Market research + resume rewrite |
+| "resume talent" | resume-optimizer | Resume optimization for talent matching |
 
 ## Usage Examples
 
@@ -213,7 +273,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-02-27
-Total Skills: 20
+Last Updated: 2026-03-13
+Total Skills: 28
 Total Agents: 4
 Status: ✅ Active

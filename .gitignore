@@ -1,6 +1,45 @@
+# Secrets — never commit
+.env
+*.env
+!*.env.example
+credentials.json
+token.json
+
+# Terraform state and local config
+terraform.tfvars
+*.tfvars
+!*.tfvars.example
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+
 # Exclude whatsapp-export but allow the album index.html and photos
 whatsapp-export/
 !whatsapp-export/album/
 !whatsapp-export/album/index.html
 !whatsapp-export/album/photos/
 !whatsapp-export/album/photos/*.jpg
+
+# Windows metadata files (WSL copies from Windows)
+*:Zone.Identifier
+
+# IDE settings (machine-specific)
+.vscode/
+
+# Personal health data exports
+01-personal/garmin-health/data/exports/*.csv
+
+# Interview coach personal data
+01-personal/interview-coach/Nesi_Haver_PDM.pdf
+01-personal/interview-coach/memory/user_profile.md

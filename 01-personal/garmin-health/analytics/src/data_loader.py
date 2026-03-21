@@ -252,6 +252,162 @@ def load_training_history() -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
+# Activities CSV (Garmin Connect export)
+# ---------------------------------------------------------------------------
+
+_CSV_DIR = Path(__file__).parent.parent.parent / "data" / "exports"
+
+
+def _parse_duration_to_min(t: str) -> float | None:
+    """Convert 'HH:MM:SS' string to total minutes."""
+    try:
+        parts = str(t).strip().split(":")
+        if len(parts) == 3:
+            return int(parts[0]) * 60 + int(parts[1]) + int(parts[2]) / 60
+        if len(parts) == 2:
+            return int(parts[0]) + int(parts[1]) / 60
+    except Exception:
+        pass
+    return None
+
+
+def _parse_pace_to_float(p: str) -> float | None:
+    """Convert 'M:SS' pace string (min/km) to float minutes."""
+    try:
+        parts = str(p).strip().split(":")
+        if len(parts) == 2:
+            return int(parts[0]) + int(parts[1]) / 60
+    except Exception:
+        pass
+    return None
+
+
+def _clean(val):
+    """Replace '--' sentinel with NaN and strip commas from numbers."""
+    if isinstance(val, str):
+        val = val.strip().strip('"')
+        if val in ("--", "", "No", "Yes"):
+            return None
+        val = val.replace(",", "")
+    return val
+
+
+def load_activities_csv() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """
+    Parse All_Activities_Data_*.csv from data/exports/ and return
+    (run_df, swim_df, cycle_df). Each row is one activity session.
+
+    CSV quirks handled:
+      - Distance has comma-thousands separators ("2,025")
+      - Missing values are "--"
+      - Pace format differs: "M:SS" for running, km/h for cycling
+      - Swimming distance is in meters; running/cycling in km
+    """
+    # Find the most recently modified CSV in the exports dir
+    csvs = sorted(_CSV_DIR.glob("*.csv"), key=lambda p: p.stat().st_mtime, reverse=True)
+    if not csvs:
+        empty = pd.DataFrame()
+        return empty, empty, empty
+
+    path = csvs[0]
+    df = pd.read_csv(path, na_values=["--"], keep_default_na=True)
+
+    # Strip commas from all string columns so numeric parse works
+    for col in df.columns:
+        if df[col].dtype == object:
+            df[col] = df[col].str.strip().str.replace(",", "", regex=False)
+
+    df["date"] = pd.to_datetime(df["Date"], errors="coerce").dt.normalize()
+    df = df.dropna(subset=["date"])
+
+    def num(series):
+        return pd.to_numeric(series, errors="coerce")
+
+    runs, swims, cycles = [], [], []
+
+    for _, row in df.iterrows():
+        sport = str(row.get("Activity Type", "")).strip()
+        d = row["date"]
+
+        dur_min = _parse_duration_to_min(row.get("Time", ""))
+        calories = num(pd.Series([row.get("Calories")])).iloc[0]
+        avg_hr = num(pd.Series([row.get("Avg HR")])).iloc[0]
+        max_hr = num(pd.Series([row.get("Max HR")])).iloc[0]
+        aero_te = num(pd.Series([row.get("Aerobic TE")])).iloc[0]
+
+        if sport == "Running":
+            dist_km = num(pd.Series([row.get("Distance")])).iloc[0]
+            pace = _parse_pace_to_float(row.get("Avg Pace", ""))
+            best_pace = _parse_pace_to_float(row.get("Best Pace", ""))
+            ascent = num(pd.Series([row.get("Total Ascent")])).iloc[0]
+            descent = num(pd.Series([row.get("Total Descent")])).iloc[0]
+            stride = num(pd.Series([row.get("Avg Stride Length")])).iloc[0]
+            steps_raw = str(row.get("Steps", "")).replace(",", "")
+            steps = num(pd.Series([steps_raw])).iloc[0]
+            runs.append({
+                "date": d,
+                "duration_min": round(dur_min, 1) if dur_min else None,
+                "distance_km": round(float(dist_km), 2) if pd.notna(dist_km) else None,
+                "pace_min_per_km": round(pace, 2) if pace else None,
+                "best_pace_min_per_km": round(best_pace, 2) if best_pace else None,
+                "avg_hr": avg_hr,
+                "max_hr": max_hr,
+                "calories": calories,
+                "aerobic_te": aero_te,
+                "total_ascent_m": ascent,
+                "total_descent_m": descent,
+                "avg_stride_m": stride,
+                "steps": steps,
+            })
+
+        elif sport == "Pool Swim":
+            dist_m = num(pd.Series([row.get("Distance")])).iloc[0]
+            swolf = num(pd.Series([row.get("Avg. Swolf")])).iloc[0]
+            stroke_rate = num(pd.Series([row.get("Avg Stroke Rate")])).iloc[0]
+            total_strokes = num(pd.Series([row.get("Total Strokes")])).iloc[0]
+            laps = num(pd.Series([row.get("Number of Laps")])).iloc[0]
+            swims.append({
+                "date": d,
+                "duration_min": round(dur_min, 1) if dur_min else None,
+                "distance_m": float(dist_m) if pd.notna(dist_m) else None,
+                "avg_hr": avg_hr,
+                "max_hr": max_hr,
+                "calories": calories,
+                "aerobic_te": aero_te,
+                "avg_swolf": swolf,
+                "stroke_rate": stroke_rate,
+                "total_strokes": total_strokes,
+                "laps": laps,
+            })
+
+        elif sport == "Cycling":
+            dist_km = num(pd.Series([row.get("Distance")])).iloc[0]
+            # For cycling, "Avg Pace" is speed in km/h
+            avg_speed = num(pd.Series([row.get("Avg Pace")])).iloc[0]
+            max_speed = num(pd.Series([row.get("Best Pace")])).iloc[0]
+            ascent = num(pd.Series([row.get("Total Ascent")])).iloc[0]
+            descent = num(pd.Series([row.get("Total Descent")])).iloc[0]
+            cycles.append({
+                "date": d,
+                "duration_min": round(dur_min, 1) if dur_min else None,
+                "distance_km": round(float(dist_km), 2) if pd.notna(dist_km) else None,
+                "avg_speed_kmh": avg_speed,
+                "max_speed_kmh": max_speed,
+                "avg_hr": avg_hr,
+                "max_hr": max_hr,
+                "calories": calories,
+                "aerobic_te": aero_te,
+                "total_ascent_m": ascent,
+                "total_descent_m": descent,
+            })
+
+    run_df = pd.DataFrame(runs).sort_values("date").reset_index(drop=True) if runs else pd.DataFrame()
+    swim_df = pd.DataFrame(swims).sort_values("date").reset_index(drop=True) if swims else pd.DataFrame()
+    cycle_df = pd.DataFrame(cycles).sort_values("date").reset_index(drop=True) if cycles else pd.DataFrame()
+    return run_df, swim_df, cycle_df
+
+
+# ---------------------------------------------------------------------------
 # Helper: filter by date range
 # ---------------------------------------------------------------------------
 

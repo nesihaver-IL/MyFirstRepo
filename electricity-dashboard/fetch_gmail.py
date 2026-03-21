@@ -70,6 +70,7 @@ DATE_PATTERNS = [
 
 def authenticate() -> object:
     """אימות OAuth 2.0 מול Google"""
+    import webbrowser
     creds = None
 
     if Path(TOKEN_FILE).exists():
@@ -91,7 +92,33 @@ def authenticate() -> object:
                 raise FileNotFoundError(f"חסר: {CREDS_FILE}")
 
             flow = InstalledAppFlow.from_client_secrets_file(CREDS_FILE, SCOPES)
-            creds = flow.run_local_server(port=0)
+
+            # Try browser first, fallback to manual URL entry for WSL2
+            webbrowser._tryorder = []  # Disable browser detection
+            try:
+                creds = flow.run_local_server(port=0)
+            except:
+                # Manual flow for WSL2/headless
+                print("\n" + "="*70)
+                print("🔗 OAuth Authentication Required")
+                print("="*70)
+                auth_url, _ = flow.authorization_url()
+                print(f"\n📱 Open this URL in your Windows browser:\n")
+                print(f"   {auth_url}\n")
+                print("📝 Steps:")
+                print("   1. Sign in with your Gmail account")
+                print("   2. Click 'Allow'")
+                print("   3. You'll be redirected. Copy the 'code' parameter")
+                print("   4. Paste it below\n")
+
+                # Input validation: OAuth codes are alphanumeric, slash, dash, underscore
+                auth_code = input("🔑 Enter authorization code: ").strip()
+                if not auth_code or not re.match(r'^[a-zA-Z0-9/_\-]+$', auth_code):
+                    raise ValueError("❌ Invalid authorization code format. Expected alphanumeric + / - _")
+                if len(auth_code) < 10:
+                    raise ValueError("❌ Authorization code too short. Check you copied the full code.")
+
+                creds = flow.fetch_token(code=auth_code)
 
         with open(TOKEN_FILE, 'w') as f:
             f.write(creds.to_json())

@@ -105,4 +105,31 @@ to persist workspace context across Claude Code sessions.
 
 ---
 
-_Updated: 2026-02-26_
+### D-006 — Automation Hooks for Auto-Formatting
+
+**Date**: 2026-03-21
+**Status**: Active
+
+**Decision**: Configure a `PostToolUse` hook in `.claude/settings.local.json` that runs
+`black --quiet` on any Python file modified by Claude Code's Edit or Write tools.
+
+**Rationale**:
+- Eliminates manual formatting step after every code edit
+- Black is already the project formatter standard (see Global Coding Standards in CLAUDE.md)
+- Hook runs silently — non-Python files produce no visible errors (`|| true`)
+- Local config only (settings.local.json is gitignored globally) — no CI pipeline needed
+- Complements the execution-driven workflow: run code immediately after writing, without waiting for manual formatting
+
+**Alternatives rejected**:
+- Pre-commit git hook: Would require Black to be installed globally; catches only files being committed, not intermediate edits during active sessions
+- Running Black manually: Relies on human memory; inconsistent in practice (evidenced by zero commits in 38-hour session history)
+- GitHub Actions CI formatter: Adds latency (requires push); overkill for solo workspace exploration mode
+
+**Constraints**:
+- `.claude/settings.local.json` is excluded by global gitignore — hook configuration is machine-local
+- Hook only catches Edit/Write tool calls, not Bash-based file writes (acceptable trade-off — Bash is reserved for process execution)
+- If workspace moves to a new machine, hooks must be re-applied via settings.local.json
+
+---
+
+_Updated: 2026-03-21_

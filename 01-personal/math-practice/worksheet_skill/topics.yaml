@@ -1,0 +1,502 @@
+# topics.yaml - Grade 5 Math Worksheet Topics Configuration
+# Each subtopic defines: range, exercise_types, difficulty_rules, answer_guidelines
+
+topics:
+
+  מספרים עשרוניים:
+    subtopics:
+
+      השוואת מספר עשרוני (א):
+        range: {min: 0, max: 10, decimals: 1}
+        exercise_types: [comparison, ordering, fill_blank]
+        difficulty_rules:
+          קל:     {decimals: 1, max_digit: 1, word_problems: false}
+          ביניים: {decimals: 1, max_digit: 2, word_problems: true,  pct: 10}
+          אתגר:   {decimals: 2, max_digit: 3, word_problems: true,  pct: 20}
+        answer_guidelines:
+          format: "סימן < או > או ="
+          word_problems: false
+
+      השוואת מספר עשרוני (ב):
+        range: {min: 0, max: 100, decimals: 2}
+        exercise_types: [comparison, ordering, number_line]
+        difficulty_rules:
+          קל:     {decimals: 1, ordering_count: 3}
+          ביניים: {decimals: 2, ordering_count: 4}
+          אתגר:   {decimals: 3, ordering_count: 5, negatives: false}
+        answer_guidelines:
+          format: "סימן < או > או = ; סדר מהקטן לגדול"
+
+      חיבור וחיסור של מספרים עשרוניים - עשיריות:
+        range: {min: 0, max: 20, decimals: 1}
+        exercise_types: [addition, subtraction, fill_blank]
+        difficulty_rules:
+          קל:     {decimals: 1, max_val: 10,  carries: false}
+          ביניים: {decimals: 1, max_val: 20,  carries: true}
+          אתגר:   {decimals: 1, max_val: 50,  carries: true, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "עשרונית מצומצמת; לא לכתוב 0 מיותר"
+
+      המרה במספר עשרוני (א):
+        range: {min: 0, max: 10, decimals: 2}
+        exercise_types: [decimal_to_fraction, fraction_to_decimal]
+        difficulty_rules:
+          קל:     {denominators: [10], decimals: 1}
+          ביניים: {denominators: [10, 100], decimals: 2}
+          אתגר:   {denominators: [10, 100, 1000], decimals: 3}
+        answer_guidelines:
+          format: "המרה מדויקת; לצמצם שבר"
+
+      המרה במספר עשרוני (ב):
+        range: {min: 0, max: 100, decimals: 3}
+        exercise_types: [decimal_to_fraction, fraction_to_decimal, mixed_to_decimal]
+        difficulty_rules:
+          קל:     {denominators: [10, 100]}
+          ביניים: {denominators: [10, 100, 1000], mixed_numbers: true}
+          אתגר:   {denominators: [10, 100, 1000], mixed_numbers: true, word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "המרה מדויקת; לצמצם שבר; מספר מעורב כשמתאים"
+
+      חיבור מספרים עשרוניים - עשיריות ומאיות:
+        range: {min: 0, max: 30, decimals: 2}
+        exercise_types: [addition, column_addition, fill_blank]
+        difficulty_rules:
+          קל:     {decimals: 2, max_val: 10,  carries: false}
+          ביניים: {decimals: 2, max_val: 20,  carries: true}
+          אתגר:   {decimals: 2, max_val: 50,  carries: true, word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "עשרונית; עד שתי ספרות אחרי הנקודה"
+
+      חיסור מספרים עשרוניים - עשיריות ומאיות:
+        range: {min: 0, max: 30, decimals: 2}
+        exercise_types: [subtraction, column_subtraction, fill_blank]
+        difficulty_rules:
+          קל:     {decimals: 2, max_val: 10,  borrows: false}
+          ביניים: {decimals: 2, max_val: 20,  borrows: true}
+          אתגר:   {decimals: 2, max_val: 50,  borrows: true, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "עשרונית; עד שתי ספרות אחרי הנקודה"
+
+      האלפית במספר עשרוני:
+        range: {min: 0, max: 5, decimals: 3}
+        exercise_types: [place_value, comparison, addition, subtraction]
+        difficulty_rules:
+          קל:     {decimals: 3, comparison: true}
+          ביניים: {decimals: 3, arithmetic: true}
+          אתגר:   {decimals: 3, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "עד שלוש ספרות אחרי הנקודה"
+
+  מספרים טבעיים ופעולות החשבון:
+    subtopics:
+
+      ייצוגים של מספרים טבעיים:
+        range: {min: 0, max: 1000000}
+        exercise_types: [expanded_form, place_value, number_line, roman]
+        difficulty_rules:
+          קל:     {max_val: 10000}
+          ביניים: {max_val: 100000}
+          אתגר:   {max_val: 1000000}
+        answer_guidelines:
+          format: "צורה מפורטת או ערך מספרי"
+
+      חיבור וחיסור (א):
+        range: {min: 0, max: 10000}
+        exercise_types: [addition, subtraction, fill_blank, word_problem]
+        difficulty_rules:
+          קל:     {max_val: 1000,  carries: false, word_problems: false}
+          ביניים: {max_val: 5000,  carries: true,  word_problems: true, pct: 20}
+          אתגר:   {max_val: 10000, carries: true,  word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      חיבור וחיסור (ב):
+        range: {min: 0, max: 100000}
+        exercise_types: [addition, subtraction, multi_step, word_problem]
+        difficulty_rules:
+          קל:     {max_val: 10000}
+          ביניים: {max_val: 50000,  multi_step: true}
+          אתגר:   {max_val: 100000, multi_step: true, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      כפל:
+        range: {min: 2, max: 1000}
+        exercise_types: [multiplication, fill_blank, word_problem, estimation]
+        difficulty_rules:
+          קל:     {max_factor: 10,  digits: [1,1]}
+          ביניים: {max_factor: 100, digits: [2,2]}
+          אתגר:   {max_factor: 999, digits: [3,2], word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      חילוק במחלק חד-ספרתי:
+        range: {min: 1, max: 9999}
+        exercise_types: [division, fill_blank, word_problem, remainder]
+        difficulty_rules:
+          קל:     {divisor_max: 5,  no_remainder: true}
+          ביניים: {divisor_max: 9,  remainder: true}
+          אתגר:   {divisor_max: 9,  remainder: true, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "מנה ושארית אם יש"
+          no_fraction: true
+
+      חילוק במחלק דו-ספרתי:
+        range: {min: 10, max: 9999}
+        exercise_types: [division, fill_blank, word_problem]
+        difficulty_rules:
+          קל:     {divisor_range: [10,20], no_remainder: true}
+          ביניים: {divisor_range: [10,50], remainder: true}
+          אתגר:   {divisor_range: [10,99], remainder: true, word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "מנה ושארית אם יש"
+          no_fraction: true
+
+      כפל וחילוק:
+        range: {min: 1, max: 9999}
+        exercise_types: [mixed_mul_div, fill_blank, inverse_operations, word_problem]
+        difficulty_rules:
+          קל:     {single_digit: true}
+          ביניים: {two_digit: true, word_problems: true, pct: 20}
+          אתגר:   {three_digit: true, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      סדר פעולות החשבון, שימוש בסוגריים ותכונות ה-0 וה-1:
+        range: {min: 0, max: 500}
+        exercise_types: [order_of_ops, parentheses, zero_one_properties, fill_blank, word_problem]
+        difficulty_rules:
+          קל:
+            ops: ["+", "-", "×"]
+            parentheses: false
+            max_val: 50
+          ביניים:
+            ops: ["+", "-", "×", "÷"]
+            parentheses: true
+            max_val: 200
+          אתגר:
+            ops: ["+", "-", "×", "÷"]
+            nested_parens: true
+            max_val: 500
+            word_problems: true
+            pct: 20
+        answer_guidelines:
+          format: "מספר שלם; הראה שלבי חישוב"
+
+  עוד על מספרים טבעיים:
+    subtopics:
+
+      בעיות מילוליות (א):
+        range: {min: 0, max: 10000}
+        exercise_types: [word_problem]
+        difficulty_rules:
+          קל:     {operations: 1, max_val: 1000}
+          ביניים: {operations: 2, max_val: 5000}
+          אתגר:   {operations: 3, max_val: 10000}
+        answer_guidelines:
+          format: "מספר שלם; כלול יחידות"
+
+      בעיות מילוליות (ב):
+        range: {min: 0, max: 100000}
+        exercise_types: [word_problem, multi_step]
+        difficulty_rules:
+          קל:     {operations: 2}
+          ביניים: {operations: 3}
+          אתגר:   {operations: 4, multi_step: true}
+        answer_guidelines:
+          format: "מספר שלם; כלול יחידות"
+
+      מספרים ראשוניים, פירוק לגורמים ראשוניים:
+        range: {min: 2, max: 200}
+        exercise_types: [is_prime, factor_tree, prime_factorization, lcm_gcd]
+        difficulty_rules:
+          קל:     {max_val: 50}
+          ביניים: {max_val: 100}
+          אתגר:   {max_val: 200, lcm_gcd: true}
+        answer_guidelines:
+          format: "פירוק לגורמים ראשוניים"
+
+      חזקות:
+        range: {min: 1, max: 10}
+        exercise_types: [power_calc, power_fill, expansion, comparison]
+        difficulty_rules:
+          קל:     {bases: [2,3,4,5], exponents: [2,3]}
+          ביניים: {bases: [2,3,4,5,10], exponents: [2,3,4]}
+          אתגר:   {bases: [2,3,4,5,6,10], exponents: [2,3,4,5]}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      חזקות בסדרות של צורות ובסדרות של מספרים:
+        range: {min: 1, max: 1000}
+        exercise_types: [sequence_next, pattern_rule, find_nth]
+        difficulty_rules:
+          קל:     {base: 2, max_term: 5}
+          ביניים: {bases: [2,3,10], max_term: 6}
+          אתגר:   {bases: [2,3,5,10], max_term: 7, mixed_sequences: true}
+        answer_guidelines:
+          format: "מספר; כלול הסבר כלל הסדרה"
+
+      השיטה הרומית לכתיבת מספרים:
+        range: {min: 1, max: 3999}
+        exercise_types: [to_roman, from_roman, comparison, arithmetic]
+        difficulty_rules:
+          קל:     {max_val: 39, symbols: [I, V, X]}
+          ביניים: {max_val: 399, symbols: [I, V, X, L, C]}
+          אתגר:   {max_val: 3999, symbols: [I, V, X, L, C, D, M]}
+        answer_guidelines:
+          format: "ספרות רומיות או ערבות לפי הנדרש"
+
+  חקר נתונים:
+    subtopics:
+
+      שכיחות ושכיחות יחסית:
+        range: {min: 5, max: 50}
+        exercise_types: [frequency_table, relative_frequency, bar_chart_reading]
+        difficulty_rules:
+          קל:     {data_points: 5, fractions: false}
+          ביניים: {data_points: 8, fractions: true}
+          אתגר:   {data_points: 10, percentages: true, word_problems: true}
+        answer_guidelines:
+          format: "שבר פשוט או אחוז"
+
+      משמעות הממוצע:
+        range: {min: 1, max: 100}
+        exercise_types: [calculate_mean, meaning_question, find_missing]
+        difficulty_rules:
+          קל:     {count: 3, max_val: 20}
+          ביניים: {count: 5, max_val: 50}
+          אתגר:   {count: 6, max_val: 100, find_missing: true}
+        answer_guidelines:
+          format: "מספר; עשרוני אם יש"
+
+      תכונות הממוצע (א):
+        range: {min: 1, max: 100}
+        exercise_types: [mean_properties, increase_decrease, add_to_change]
+        difficulty_rules:
+          קל:     {count: 4, simple: true}
+          ביניים: {count: 5, properties: ["total", "add_remove"]}
+          אתגר:   {count: 6, properties: ["total", "add_remove", "balance"]}
+        answer_guidelines:
+          format: "מספר; הסבר תכונה"
+
+      תכונות הממוצע (ב):
+        range: {min: 1, max: 200}
+        exercise_types: [complex_mean, weighted_mean, missing_value]
+        difficulty_rules:
+          קל:     {count: 4}
+          ביניים: {count: 6, missing_value: true}
+          אתגר:   {count: 8, weighted: true, multi_step: true}
+        answer_guidelines:
+          format: "מספר; עשרוני אם יש"
+
+      עבודת חקר:
+        range: {min: 10, max: 200}
+        exercise_types: [survey_analysis, table_reading, conclusion]
+        difficulty_rules:
+          קל:     {given_data: true}
+          ביניים: {given_data: true, own_analysis: true}
+          אתגר:   {own_data: true, full_analysis: true}
+        answer_guidelines:
+          format: "תשובה בשלמים, שברים, ואחוזים לפי הצורך"
+
+  שברים:
+    subtopics:
+
+      # פרק א
+      השבר כחלק משלם:
+        range: {min: 1, max: 12}
+        exercise_types: [identify_fraction, shade_fraction, word_problem]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4]}
+          ביניים: {denominators: [2,3,4,5,6,8]}
+          אתגר:   {denominators: [2,3,4,5,6,7,8,9,10,12]}
+        answer_guidelines:
+          format: "שבר פשוט"
+
+      ייצוג שברים על ישר המספרים:
+        range: {min: 0, max: 2}
+        exercise_types: [place_on_line, read_from_line, compare]
+        difficulty_rules:
+          קל:     {denominators: [2,4]}
+          ביניים: {denominators: [2,3,4,6]}
+          אתגר:   {denominators: [2,3,4,5,6,8,10]}
+        answer_guidelines:
+          format: "שבר פשוט"
+
+      השלמה ל-1:
+        range: {min: 1, max: 20}
+        exercise_types: [complement_unit, fill_blank, word_problem]
+        difficulty_rules:
+          קל:
+            denominators: [2, 3, 4, 5]
+            mixed_numbers: false
+            word_problems: false
+          ביניים:
+            denominators: [2, 3, 4, 5, 6, 8, 10]
+            mixed_numbers: false
+            word_problems: true
+            word_pct: 20
+          אתגר:
+            denominators: [4, 5, 6, 7, 8, 9, 10, 12, 15]
+            mixed_numbers: true
+            word_problems: true
+            word_pct: 30
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      השבר כחלק מכמות:
+        range: {min: 10, max: 100}
+        exercise_types: [fraction_of_quantity, find_whole, word_problem]
+        difficulty_rules:
+          קל:     {denominators: [2,4,5,10], max_whole: 40}
+          ביניים: {denominators: [2,3,4,5,6,10], max_whole: 80}
+          אתגר:   {denominators: [2,3,4,5,6,8,10,12], max_whole: 100, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "מספר שלם"
+
+      השבר כמות חילוק:
+        range: {min: 1, max: 20}
+        exercise_types: [division_as_fraction, fraction_to_division, word_problem]
+        difficulty_rules:
+          קל:     {max_val: 10}
+          ביניים: {max_val: 15, word_problems: true, pct: 20}
+          אתגר:   {max_val: 20, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      # פרק ב
+      שברים גדולים מ-1:
+        range: {min: 1, max: 5}
+        exercise_types: [improper_fraction, mixed_to_improper, number_line]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4]}
+          ביניים: {denominators: [2,3,4,5,6]}
+          אתגר:   {denominators: [2,3,4,5,6,7,8]}
+        answer_guidelines:
+          format: "שבר בלתי פשוט או מספר מעורב"
+
+      ממספר מעורב לשבר:
+        range: {min: 1, max: 5}
+        exercise_types: [mixed_to_improper, improper_to_mixed, compare]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4], max_whole: 3}
+          ביניים: {denominators: [2,3,4,5,6], max_whole: 5}
+          אתגר:   {denominators: [2,3,4,5,6,7,8,9], max_whole: 8}
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      הרחבת שברים:
+        range: {min: 1, max: 10}
+        exercise_types: [expand_fraction, find_equivalent, fill_blank]
+        difficulty_rules:
+          קל:     {factor: [2,3,4]}
+          ביניים: {factor: [2,3,4,5,6]}
+          אתגר:   {factor: [2,3,4,5,6,7,10]}
+        answer_guidelines:
+          format: "שבר שקול"
+
+      צמצום שברים:
+        range: {min: 1, max: 12}
+        exercise_types: [reduce_fraction, find_gcd, check_reduced]
+        difficulty_rules:
+          קל:     {denominators_max: 20, gcd: [2,3]}
+          ביניים: {denominators_max: 36, gcd: [2,3,4,5,6]}
+          אתגר:   {denominators_max: 60, gcd: [2,3,4,5,6,7]}
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      הרחבה וצמצום של שברים:
+        range: {min: 1, max: 12}
+        exercise_types: [expand_or_reduce, order_fractions, equivalence_check]
+        difficulty_rules:
+          קל:     {mixed: false}
+          ביניים: {mixed: true, ordering: true}
+          אתגר:   {mixed: true, ordering: true, word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      # פרק ג
+      מכנה משותף:
+        range: {min: 1, max: 12}
+        exercise_types: [find_lcd, find_lcm, equivalent_fractions]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4,6]}
+          ביניים: {denominators: [2,3,4,5,6,8,10]}
+          אתגר:   {denominators: [2,3,4,5,6,7,8,9,10,12]}
+        answer_guidelines:
+          format: "מכנה משותף מינימלי"
+
+      חיבור וחיסור של שברים (א):
+        range: {min: 1, max: 6}
+        exercise_types: [add_fractions, subtract_fractions, fill_blank]
+        difficulty_rules:
+          קל:     {same_denominator: true}
+          ביניים: {related_denominators: true, denominators: [2,3,4,6,8,12]}
+          אתגר:   {any_denominators: true, denominators: [2,3,4,5,6,7,8,9,10,12]}
+        answer_guidelines:
+          format: "שבר מצומצם; מספר מעורב אם >1"
+          reduce: true
+
+      חיבור וחיסור של מספרים מעורבים (א):
+        range: {min: 1, max: 10}
+        exercise_types: [add_mixed, subtract_mixed, fill_blank]
+        difficulty_rules:
+          קל:     {same_denominator: true, max_whole: 5}
+          ביניים: {related_denominators: true, max_whole: 8}
+          אתגר:   {any_denominators: true, max_whole: 10, word_problems: true, pct: 20}
+        answer_guidelines:
+          format: "מספר מעורב מצומצם"
+          reduce: true
+          mixed: true
+
+      חיבור וחיסור של שברים (ב):
+        range: {min: 1, max: 8}
+        exercise_types: [add_fractions, subtract_fractions, multi_step, word_problem]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4,6]}
+          ביניים: {denominators: [2,3,4,5,6,8,10,12], word_problems: true, pct: 20}
+          אתגר:   {any_denominators: true, multi_step: true, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "שבר מצומצם"
+          reduce: true
+
+      חיבור וחיסור של מספרים מעורבים (ב):
+        range: {min: 1, max: 12}
+        exercise_types: [add_mixed, subtract_mixed, multi_step, word_problem]
+        difficulty_rules:
+          קל:     {max_whole: 6, related_denominators: true}
+          ביניים: {max_whole: 10, any_denominators: true, word_problems: true, pct: 20}
+          אתגר:   {max_whole: 12, any_denominators: true, multi_step: true, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "מספר מעורב מצומצם"
+          reduce: true
+          mixed: true
+
+      חיסור בהמרה (א):
+        range: {min: 1, max: 8}
+        exercise_types: [subtract_with_conversion, fill_blank, word_problem]
+        difficulty_rules:
+          קל:     {denominators: [2,3,4], max_whole: 5}
+          ביניים: {denominators: [2,3,4,5,6], max_whole: 8}
+          אתגר:   {any_denominators: true, max_whole: 10, word_problems: true, pct: 25}
+        answer_guidelines:
+          format: "מספר מעורב מצומצם; להמיר לפני החיסור"
+          reduce: true
+          mixed: true
+
+      חיסור בהמרה (ב):
+        range: {min: 1, max: 12}
+        exercise_types: [subtract_with_conversion, multi_step, word_problem]
+        difficulty_rules:
+          קל:     {any_denominators: false, max_whole: 6}
+          ביניים: {any_denominators: true,  max_whole: 10, word_problems: true, pct: 20}
+          אתגר:   {any_denominators: true,  max_whole: 12, multi_step: true, word_problems: true, pct: 30}
+        answer_guidelines:
+          format: "מספר מעורב מצומצם"
+          reduce: true
+          mixed: true
