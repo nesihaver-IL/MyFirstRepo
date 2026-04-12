@@ -1,0 +1,1937 @@
+{
+  "metadata": {
+    "generated_at": "2026-03-31T14:22:17.001708",
+    "total_pages": 12,
+    "language": "Hebrew",
+    "curriculum": "Israeli Grade 5 Mathematics"
+  },
+  "pages": [
+    {
+      "title": "עמוד 1: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 1,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "decimal_fractions",
+          "fraction_operations",
+          "fraction_comparison"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001521"
+      },
+      "exercises": [
+        {
+          "id": "decimal_fractions_current_v2",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.2,
+            "description": "המר עשרוני לשבר: 0.2 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 1,
+              "denominator": 5
+            },
+            "decimal": 0.2,
+            "steps": [
+              "הסכום העשרוני 0.2",
+              "כתוב כשבר: 1/5",
+              "צמצם אם צריך: 1/5"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_operations_current_v2",
+          "type": "addition_same_denom",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "+",
+            "fraction1": {
+              "numerator": 3,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 1,
+              "denominator": 7
+            },
+            "description": "3/7 + 1/7 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 4,
+              "denominator": 7
+            },
+            "steps": [
+              "מכנה זהה, חבר את המונים: 3 + 1 = 4",
+              "אם צריך, צמצם: 4/7 = 4/7"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_advanced_v1",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 5,
+              "numerator": 5,
+              "denominator": 8
+            },
+            "description": "המר: 5 5/8 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 45,
+              "denominator": 8
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 5 × 8 = 40",
+              "הוסף את המונה: 40 + 5 = 45",
+              "תשובה: 45/8"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_current_v7",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 3,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 7
+            },
+            "description": "3/7 ___ 5/7"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 3 קטן מ 5"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        },
+        {
+          "id": "decimal_fractions_advanced_v2",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.375,
+            "description": "המר עשרוני לשבר: 0.375 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 3,
+              "denominator": 8
+            },
+            "decimal": 0.375,
+            "steps": [
+              "הסכום העשרוני 0.375",
+              "כתוב כשבר: 3/8",
+              "צמצם אם צריך: 3/8"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 2: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 2,
+        "total_exercises": 5,
+        "topics": [
+          "fraction_comparison",
+          "visual_fractions"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001540"
+      },
+      "exercises": [
+        {
+          "id": "fraction_comparison_current_v4",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 5,
+              "denominator": 9
+            },
+            "fraction2": {
+              "numerator": 1,
+              "denominator": 9
+            },
+            "description": "5/9 ___ 1/9"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 5 גדול מ 1"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_current_v6",
+          "type": "number_line_identify",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "number_line_identify",
+            "marked_position": 0.5,
+            "description": "איזה שבר מסומן בחץ?"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 4,
+              "denominator": 8
+            },
+            "decimal_value": 0.5,
+            "explanation": "הנקודה היא ב-0.50 = 4/8"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_current_v6",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 1,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 4,
+              "denominator": 7
+            },
+            "description": "1/7 ___ 4/7"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 1 קטן מ 4"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_advanced_v1",
+          "type": "grid_shading",
+          "topic": "visual_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_shading",
+            "fraction": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "grid_size": 5,
+            "description": "הצל 2/5 של הרשת"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "cells_to_shade": 2,
+            "total_cells": 5,
+            "explanation": "הצל 2 ריבועים מתוך 5"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_advanced_v3",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "advanced",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 5,
+              "denominator": 12
+            },
+            "fraction2": {
+              "numerator": 11,
+              "denominator": 12
+            },
+            "description": "5/12 ___ 11/12"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 5 קטן מ 11"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 3: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 3,
+        "total_exercises": 5,
+        "topics": [
+          "decimal_fractions",
+          "fraction_operations",
+          "visual_fractions",
+          "fraction_comparison"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001548"
+      },
+      "exercises": [
+        {
+          "id": "decimal_fractions_advanced_v1",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "description": "המר שבר לעשרוני: 1/3 = ___"
+          },
+          "answer": {
+            "decimal": 0.333,
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "exact_decimal": 0.333,
+            "steps": [
+              "חלק את המונה בהמכנה: 1 ÷ 3",
+              "תשובה: 0.333"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_current_v0",
+          "type": "grid_identify",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_identify",
+            "grid_size": 7,
+            "shaded_cells": 2,
+            "description": "איזה שבר מייצג ההצללה?"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 7
+            },
+            "unsimplified": {
+              "numerator": 2,
+              "denominator": 7
+            },
+            "explanation": "2 ריבועים מ-7 = 2/7"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_current_v2",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "fraction2": {
+              "numerator": 1,
+              "denominator": 5
+            },
+            "description": "2/5 ___ 1/5"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 2 גדול מ 1"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_operations_current_v7",
+          "type": "multiplication",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "×",
+            "fraction1": {
+              "numerator": 5,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 1
+            },
+            "description": "5/7 × 5 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 25,
+              "denominator": 7
+            },
+            "steps": [
+              "כפול מונים: 5 × 5 = 25",
+              "כפול מכנים: 7 × 1 = 7",
+              "אם צריך, צמצם: 25/7 = 25/7"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_comparison_advanced_v0",
+          "type": "comparison_different_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "advanced",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 1,
+              "denominator": 9
+            },
+            "fraction2": {
+              "numerator": 4,
+              "denominator": 6
+            },
+            "description": "1/9 ___ 4/6"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "המכנים שונים. המרה למכנה משותף 18: 2/18 קטן מ 12/18",
+            "visual_aid": {
+              "type": "grid_comparison",
+              "fraction1": {
+                "numerator": 1,
+                "denominator": 9
+              },
+              "fraction2": {
+                "numerator": 4,
+                "denominator": 6
+              }
+            }
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": true
+        }
+      ]
+    },
+    {
+      "title": "עמוד 4: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 4,
+        "total_exercises": 5,
+        "topics": [
+          "decimal_fractions",
+          "fraction_operations",
+          "visual_fractions"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001558"
+      },
+      "exercises": [
+        {
+          "id": "fraction_operations_advanced_v1",
+          "type": "subtraction_different_denom",
+          "topic": "fraction_operations",
+          "difficulty": "advanced",
+          "question": {
+            "type": "operation",
+            "operation": "-",
+            "fraction1": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 6
+            },
+            "description": "25/30 - 12/30 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 13,
+              "denominator": 30
+            },
+            "steps": [
+              "מצא מכנה משותף (ל.כ.מ): 30",
+              "חסר: 25/30 - 12/30 = 13/30",
+              "צמצם: 13/30 = 13/30"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "decimal_fractions_current_v6",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.125,
+            "description": "המר עשרוני לשבר: 0.125 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 1,
+              "denominator": 8
+            },
+            "decimal": 0.125,
+            "steps": [
+              "הסכום העשרוני 0.125",
+              "כתוב כשבר: 1/8",
+              "צמצם אם צריך: 1/8"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_operations_advanced_v0",
+          "type": "division",
+          "topic": "fraction_operations",
+          "difficulty": "advanced",
+          "question": {
+            "type": "operation",
+            "operation": "÷",
+            "fraction1": {
+              "numerator": 1,
+              "denominator": 8
+            },
+            "fraction2": {
+              "numerator": 2,
+              "denominator": 3
+            },
+            "description": "1/8 ÷ 2/3 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 3,
+              "denominator": 16
+            },
+            "steps": [
+              "חילוק = כפל בהופכי",
+              "1/8 ÷ 2/3 = 1/8 × 3/2",
+              "כפול: 3/16",
+              "צמצם: 3/16"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_current_v4",
+          "type": "grid_shading",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_shading",
+            "fraction": {
+              "numerator": 4,
+              "denominator": 6
+            },
+            "grid_size": 6,
+            "description": "הצל 4/6 של הרשת"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 4,
+              "denominator": 6
+            },
+            "cells_to_shade": 4,
+            "total_cells": 6,
+            "explanation": "הצל 4 ריבועים מתוך 6"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "decimal_fractions_current_v4",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.667,
+            "description": "המר עשרוני לשבר: 0.667 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 3
+            },
+            "decimal": 0.667,
+            "steps": [
+              "הסכום העשרוני 0.667",
+              "כתוב כשבר: 2/3",
+              "צמצם אם צריך: 2/3"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 5: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 5,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "fraction_operations",
+          "visual_fractions"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001565"
+      },
+      "exercises": [
+        {
+          "id": "mixed_improper_fractions_current_v4",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 3,
+              "denominator": 2
+            },
+            "description": "המר: 3/2 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 1,
+              "numerator": 1,
+              "denominator": 2
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 3 ÷ 2",
+              "תוצאה שלמה: 1, שארית: 1",
+              "תשובה: 1 1/2"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_advanced_v2",
+          "type": "addition_different_denom",
+          "topic": "fraction_operations",
+          "difficulty": "advanced",
+          "question": {
+            "type": "operation",
+            "operation": "+",
+            "fraction1": {
+              "numerator": 2,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 8
+            },
+            "description": "2/7 + 5/8 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 51,
+              "denominator": 56
+            },
+            "steps": [
+              "מצא מכנה משותף (ל.כ.מ): 56",
+              "המר: 2/7 = 16/56, 5/8 = 35/56",
+              "חבר: 16/56 + 35/56 = 51/56",
+              "צמצם: 51/56 = 51/56"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_advanced_v2",
+          "type": "grid_identify",
+          "topic": "visual_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_identify",
+            "grid_size": 10,
+            "shaded_cells": 4,
+            "description": "איזה שבר מייצג ההצללה?"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "unsimplified": {
+              "numerator": 4,
+              "denominator": 10
+            },
+            "explanation": "4 ריבועים מ-10 = 2/5"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "visual_fractions_advanced_v0",
+          "type": "pie_color",
+          "topic": "visual_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "visual",
+            "visual_type": "pie_color",
+            "total_sections": 6,
+            "fraction": {
+              "numerator": 2,
+              "denominator": 3
+            },
+            "description": "צבע 2/3 של העוגה"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 3
+            },
+            "sections_to_color": 4,
+            "total_sections": 6,
+            "explanation": "צבע 4 קטעים מ-6"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "visual_fractions_current_v1",
+          "type": "grid_shading",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_shading",
+            "fraction": {
+              "numerator": 4,
+              "denominator": 11
+            },
+            "grid_size": 11,
+            "description": "הצל 4/11 של הרשת"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 4,
+              "denominator": 11
+            },
+            "cells_to_shade": 4,
+            "total_cells": 11,
+            "explanation": "הצל 4 ריבועים מתוך 11"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        }
+      ]
+    },
+    {
+      "title": "עמוד 6: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 6,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "fraction_operations",
+          "visual_fractions",
+          "fraction_comparison"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001570"
+      },
+      "exercises": [
+        {
+          "id": "visual_fractions_current_v3",
+          "type": "grid_shading",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_shading",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 7
+            },
+            "grid_size": 7,
+            "description": "הצל 1/7 של הרשת"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 1,
+              "denominator": 7
+            },
+            "cells_to_shade": 1,
+            "total_cells": 7,
+            "explanation": "הצל 1 ריבועים מתוך 7"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_current_v5",
+          "type": "addition_same_denom",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "+",
+            "fraction1": {
+              "numerator": 3,
+              "denominator": 6
+            },
+            "fraction2": {
+              "numerator": 2,
+              "denominator": 6
+            },
+            "description": "3/6 + 2/6 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 5,
+              "denominator": 6
+            },
+            "steps": [
+              "מכנה זהה, חבר את המונים: 3 + 2 = 5",
+              "אם צריך, צמצם: 5/6 = 5/6"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_operations_advanced_v3",
+          "type": "multiplication",
+          "topic": "fraction_operations",
+          "difficulty": "advanced",
+          "question": {
+            "type": "operation",
+            "operation": "×",
+            "fraction1": {
+              "numerator": 2,
+              "denominator": 4
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 6
+            },
+            "description": "2/4 × 5/6 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 5,
+              "denominator": 12
+            },
+            "steps": [
+              "כפול מונים: 2 × 5 = 10",
+              "כפול מכנים: 4 × 6 = 24",
+              "אם צריך, צמצם: 10/24 = 5/12"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_advanced_v0",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 15,
+              "denominator": 4
+            },
+            "description": "המר: 15/4 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 3,
+              "numerator": 3,
+              "denominator": 4
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 15 ÷ 4",
+              "תוצאה שלמה: 3, שארית: 3",
+              "תשובה: 3 3/4"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_current_v1",
+          "type": "comparison_different_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 4,
+              "denominator": 5
+            },
+            "fraction2": {
+              "numerator": 1,
+              "denominator": 2
+            },
+            "description": "4/5 ___ 1/2"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "המכנים שונים. המרה למכנה משותף 10: 8/10 גדול מ 5/10",
+            "visual_aid": {
+              "type": "grid_comparison",
+              "fraction1": {
+                "numerator": 4,
+                "denominator": 5
+              },
+              "fraction2": {
+                "numerator": 1,
+                "denominator": 2
+              }
+            }
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": true
+        }
+      ]
+    },
+    {
+      "title": "עמוד 7: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 7,
+        "total_exercises": 5,
+        "topics": [
+          "decimal_fractions",
+          "fraction_operations",
+          "visual_fractions",
+          "fraction_comparison"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001575"
+      },
+      "exercises": [
+        {
+          "id": "decimal_fractions_advanced_v0",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.333,
+            "description": "המר עשרוני לשבר: 0.333 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "decimal": 0.333,
+            "steps": [
+              "הסכום העשרוני 0.333",
+              "כתוב כשבר: 1/3",
+              "צמצם אם צריך: 1/3"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_advanced_v3",
+          "type": "number_line_place",
+          "topic": "visual_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "visual",
+            "visual_type": "number_line_place",
+            "fraction": {
+              "numerator": 3,
+              "denominator": 5
+            },
+            "description": "סמן את 3/5 על ציר המספרים"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 3,
+              "denominator": 5
+            },
+            "decimal_value": 0.6,
+            "explanation": "3/5 = 0.60"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "visual_fractions_current_v2",
+          "type": "grid_identify",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "grid_identify",
+            "grid_size": 3,
+            "shaded_cells": 1,
+            "description": "איזה שבר מייצג ההצללה?"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "unsimplified": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "explanation": "1 ריבועים מ-3 = 1/3"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_current_v0",
+          "type": "multiplication",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "×",
+            "fraction1": {
+              "numerator": 2,
+              "denominator": 6
+            },
+            "fraction2": {
+              "numerator": 2,
+              "denominator": 1
+            },
+            "description": "2/6 × 2 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 2,
+              "denominator": 3
+            },
+            "steps": [
+              "כפול מונים: 2 × 2 = 4",
+              "כפול מכנים: 6 × 1 = 6",
+              "אם צריך, צמצם: 4/6 = 2/3"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_comparison_advanced_v1",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "advanced",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 1,
+              "denominator": 5
+            },
+            "fraction2": {
+              "numerator": 4,
+              "denominator": 5
+            },
+            "description": "1/5 ___ 4/5"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 1 קטן מ 4"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 8: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 8,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "decimal_fractions",
+          "fraction_operations"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001580"
+      },
+      "exercises": [
+        {
+          "id": "decimal_fractions_current_v1",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 8
+            },
+            "description": "המר שבר לעשרוני: 1/8 = ___"
+          },
+          "answer": {
+            "decimal": 0.125,
+            "fraction": {
+              "numerator": 1,
+              "denominator": 8
+            },
+            "exact_decimal": 0.125,
+            "steps": [
+              "חלק את המונה בהמכנה: 1 ÷ 8",
+              "תשובה: 0.125"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_advanced_v3",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 4,
+              "numerator": 2,
+              "denominator": 5
+            },
+            "description": "המר: 4 2/5 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 22,
+              "denominator": 5
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 4 × 5 = 20",
+              "הוסף את המונה: 20 + 2 = 22",
+              "תשובה: 22/5"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "mixed_improper_fractions_current_v3",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 1,
+              "numerator": 6,
+              "denominator": 9
+            },
+            "description": "המר: 1 6/9 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 15,
+              "denominator": 9
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 1 × 9 = 9",
+              "הוסף את המונה: 9 + 6 = 15",
+              "תשובה: 15/9"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_current_v6",
+          "type": "multiplication",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "×",
+            "fraction1": {
+              "numerator": 4,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 1
+            },
+            "description": "4/7 × 5 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 20,
+              "denominator": 7
+            },
+            "steps": [
+              "כפול מונים: 4 × 5 = 20",
+              "כפול מכנים: 7 × 1 = 7",
+              "אם צריך, צמצם: 20/7 = 20/7"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_current_v5",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 3,
+              "numerator": 2,
+              "denominator": 9
+            },
+            "description": "המר: 3 2/9 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 29,
+              "denominator": 9
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 3 × 9 = 27",
+              "הוסף את המונה: 27 + 2 = 29",
+              "תשובה: 29/9"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        }
+      ]
+    },
+    {
+      "title": "עמוד 9: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 9,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "decimal_fractions",
+          "fraction_operations",
+          "visual_fractions"
+        ],
+        "difficulties": [
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001586"
+      },
+      "exercises": [
+        {
+          "id": "fraction_operations_current_v4",
+          "type": "subtraction_same_denom",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "-",
+            "fraction1": {
+              "numerator": 3,
+              "denominator": 5
+            },
+            "fraction2": {
+              "numerator": 1,
+              "denominator": 5
+            },
+            "description": "3/5 - 1/5 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "steps": [
+              "מכנה זהה, חסר את המונים: 3 - 1 = 2",
+              "אם צריך, צמצם: 2/5 = 2/5"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "visual_fractions_current_v7",
+          "type": "number_line_identify",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "number_line_identify",
+            "marked_position": 0.2857142857142857,
+            "description": "איזה שבר מסומן בחץ?"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 7
+            },
+            "decimal_value": 0.2857142857142857,
+            "explanation": "הנקודה היא ב-0.29 = 2/7"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "decimal_fractions_current_v7",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 3,
+              "denominator": 10
+            },
+            "description": "המר שבר לעשרוני: 3/10 = ___"
+          },
+          "answer": {
+            "decimal": 0.3,
+            "fraction": {
+              "numerator": 3,
+              "denominator": 10
+            },
+            "exact_decimal": 0.3,
+            "steps": [
+              "חלק את המונה בהמכנה: 3 ÷ 10",
+              "תשובה: 0.3"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_current_v0",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 21,
+              "denominator": 4
+            },
+            "description": "המר: 21/4 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 5,
+              "numerator": 1,
+              "denominator": 4
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 21 ÷ 4",
+              "תוצאה שלמה: 5, שארית: 1",
+              "תשובה: 5 1/4"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "decimal_fractions_current_v3",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "description": "המר שבר לעשרוני: 1/3 = ___"
+          },
+          "answer": {
+            "decimal": 0.333,
+            "fraction": {
+              "numerator": 1,
+              "denominator": 3
+            },
+            "exact_decimal": 0.333,
+            "steps": [
+              "חלק את המונה בהמכנה: 1 ÷ 3",
+              "תשובה: 0.333"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 10: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 10,
+        "total_exercises": 5,
+        "topics": [
+          "mixed_improper_fractions",
+          "decimal_fractions",
+          "fraction_operations"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001591"
+      },
+      "exercises": [
+        {
+          "id": "decimal_fractions_advanced_v3",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "description": "המר שבר לעשרוני: 1/4 = ___"
+          },
+          "answer": {
+            "decimal": 0.25,
+            "fraction": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "exact_decimal": 0.25,
+            "steps": [
+              "חלק את המונה בהמכנה: 1 ÷ 4",
+              "תשובה: 0.25"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_current_v1",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 3,
+              "numerator": 3,
+              "denominator": 7
+            },
+            "description": "המר: 3 3/7 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 24,
+              "denominator": 7
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 3 × 7 = 21",
+              "הוסף את המונה: 21 + 3 = 24",
+              "תשובה: 24/7"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_current_v1",
+          "type": "multiplication",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "×",
+            "fraction1": {
+              "numerator": 5,
+              "denominator": 7
+            },
+            "fraction2": {
+              "numerator": 5,
+              "denominator": 1
+            },
+            "description": "5/7 × 5 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 25,
+              "denominator": 7
+            },
+            "steps": [
+              "כפול מונים: 5 × 5 = 25",
+              "כפול מכנים: 7 × 1 = 7",
+              "אם צריך, צמצם: 25/7 = 25/7"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_current_v6",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 16,
+              "denominator": 3
+            },
+            "description": "המר: 16/3 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 5,
+              "numerator": 1,
+              "denominator": 3
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 16 ÷ 3",
+              "תוצאה שלמה: 5, שארית: 1",
+              "תשובה: 5 1/3"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "mixed_improper_fractions_current_v7",
+          "type": "mixed_to_improper",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "mixed_to_improper",
+            "mixed_number": {
+              "whole": 2,
+              "numerator": 8,
+              "denominator": 10
+            },
+            "description": "המר: 2 8/10 = ___/___"
+          },
+          "answer": {
+            "improper_fraction": {
+              "numerator": 28,
+              "denominator": 10
+            },
+            "steps": [
+              "כפול את השלם בהמכנה: 2 × 10 = 20",
+              "הוסף את המונה: 20 + 8 = 28",
+              "תשובה: 28/10"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        }
+      ]
+    },
+    {
+      "title": "עמוד 11: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 11,
+        "total_exercises": 5,
+        "topics": [
+          "decimal_fractions",
+          "mixed_improper_fractions",
+          "fraction_operations",
+          "fraction_comparison"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001595"
+      },
+      "exercises": [
+        {
+          "id": "mixed_improper_fractions_current_v2",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 23,
+              "denominator": 4
+            },
+            "description": "המר: 23/4 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 5,
+              "numerator": 3,
+              "denominator": 4
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 23 ÷ 4",
+              "תוצאה שלמה: 5, שארית: 3",
+              "תשובה: 5 3/4"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_advanced_v2",
+          "type": "comparison_different_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "advanced",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 8,
+              "denominator": 12
+            },
+            "fraction2": {
+              "numerator": 6,
+              "denominator": 7
+            },
+            "description": "8/12 ___ 6/7"
+          },
+          "answer": {
+            "operator": "<",
+            "explanation": "המכנים שונים. המרה למכנה משותף 84: 56/84 קטן מ 72/84",
+            "visual_aid": {
+              "type": "grid_comparison",
+              "fraction1": {
+                "numerator": 8,
+                "denominator": 12
+              },
+              "fraction2": {
+                "numerator": 6,
+                "denominator": 7
+              }
+            }
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_operations_current_v3",
+          "type": "addition_same_denom",
+          "topic": "fraction_operations",
+          "difficulty": "current",
+          "question": {
+            "type": "operation",
+            "operation": "+",
+            "fraction1": {
+              "numerator": 1,
+              "denominator": 8
+            },
+            "fraction2": {
+              "numerator": 7,
+              "denominator": 8
+            },
+            "description": "1/8 + 7/8 = ___"
+          },
+          "answer": {
+            "result": {
+              "numerator": 1,
+              "denominator": 1
+            },
+            "steps": [
+              "מכנה זהה, חבר את המונים: 1 + 7 = 8",
+              "אם צריך, צמצם: 8/8 = 1/1"
+            ]
+          },
+          "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם",
+          "visual_required": false
+        },
+        {
+          "id": "decimal_fractions_current_v0",
+          "type": "decimal_to_fraction",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "decimal_to_fraction",
+            "decimal": 0.4,
+            "description": "המר עשרוני לשבר: 0.4 = ___/___"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 2,
+              "denominator": 5
+            },
+            "decimal": 0.4,
+            "steps": [
+              "הסכום העשרוני 0.4",
+              "כתוב כשבר: 2/5",
+              "צמצם אם צריך: 2/5"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "fraction_comparison_current_v5",
+          "type": "comparison_same_denom",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison",
+            "fraction1": {
+              "numerator": 3,
+              "denominator": 8
+            },
+            "fraction2": {
+              "numerator": 2,
+              "denominator": 8
+            },
+            "description": "3/8 ___ 2/8"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "מכנה זהה, לכן משווים רק את המונים: 3 גדול מ 2"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": false
+        }
+      ]
+    },
+    {
+      "title": "עמוד 12: תרגול שברים",
+      "count": 5,
+      "metadata": {
+        "page_number": 12,
+        "total_exercises": 5,
+        "topics": [
+          "decimal_fractions",
+          "mixed_improper_fractions",
+          "fraction_comparison",
+          "visual_fractions"
+        ],
+        "difficulties": [
+          "advanced",
+          "current"
+        ],
+        "generated_at": "2026-03-31T14:22:17.001599"
+      },
+      "exercises": [
+        {
+          "id": "fraction_comparison_current_v0",
+          "type": "comparison_with_integer",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison_mixed",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 7
+            },
+            "integer": 0,
+            "description": "1/7 ___ 0"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "השברשווה 0.14, זה גדול מ-0"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": true
+        },
+        {
+          "id": "decimal_fractions_current_v5",
+          "type": "fraction_to_decimal",
+          "topic": "decimal_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "fraction_to_decimal",
+            "fraction": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "description": "המר שבר לעשרוני: 1/4 = ___"
+          },
+          "answer": {
+            "decimal": 0.25,
+            "fraction": {
+              "numerator": 1,
+              "denominator": 4
+            },
+            "exact_decimal": 0.25,
+            "steps": [
+              "חלק את המונה בהמכנה: 1 ÷ 4",
+              "תשובה: 0.25"
+            ]
+          },
+          "instructions": "המר בין עשרוני לשבר",
+          "visual_required": false
+        },
+        {
+          "id": "mixed_improper_fractions_advanced_v2",
+          "type": "improper_to_mixed",
+          "topic": "mixed_improper_fractions",
+          "difficulty": "advanced",
+          "question": {
+            "type": "conversion",
+            "conversion_type": "improper_to_mixed",
+            "improper_fraction": {
+              "numerator": 33,
+              "denominator": 7
+            },
+            "description": "המר: 33/7 = ___ ___/___"
+          },
+          "answer": {
+            "mixed_number": {
+              "whole": 4,
+              "numerator": 5,
+              "denominator": 7
+            },
+            "steps": [
+              "חלק את המונה בהמכנה: 33 ÷ 7",
+              "תוצאה שלמה: 4, שארית: 5",
+              "תשובה: 4 5/7"
+            ]
+          },
+          "instructions": "המר בין מספר מעורב לשבר גדול מ-1",
+          "visual_required": true
+        },
+        {
+          "id": "visual_fractions_current_v5",
+          "type": "number_line_place",
+          "topic": "visual_fractions",
+          "difficulty": "current",
+          "question": {
+            "type": "visual",
+            "visual_type": "number_line_place",
+            "fraction": {
+              "numerator": 4,
+              "denominator": 6
+            },
+            "description": "סמן את 4/6 על ציר המספרים"
+          },
+          "answer": {
+            "fraction": {
+              "numerator": 4,
+              "denominator": 6
+            },
+            "decimal_value": 0.6666666666666666,
+            "explanation": "4/6 = 0.67"
+          },
+          "instructions": "זהה או צייר את השבר על פי התמונה",
+          "visual_required": true
+        },
+        {
+          "id": "fraction_comparison_current_v3",
+          "type": "comparison_with_integer",
+          "topic": "fraction_comparison",
+          "difficulty": "current",
+          "question": {
+            "type": "comparison_mixed",
+            "fraction": {
+              "numerator": 9,
+              "denominator": 5
+            },
+            "integer": 1,
+            "description": "9/5 ___ 1"
+          },
+          "answer": {
+            "operator": ">",
+            "explanation": "השברשווה 1.80, זה גדול מ-1"
+          },
+          "instructions": "בחר את הסימן הנכון: > , < , =",
+          "visual_required": true
+        }
+      ]
+    }
+  ]
+}

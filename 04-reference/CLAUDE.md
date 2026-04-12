@@ -37,5 +37,28 @@ Use these materials for:
 ├── cheatsheets/      # Quick reference guides
 ├── patterns/         # Reusable patterns
 │   └── prompt-templates/
-└── bookmarks/        # Curated links
+├── bookmarks/        # Curated links
+├── learning/         # Educational materials
+├── whatsapp-export/  # Personal media archive
+└── chatgpt-export/   # Archived ChatGPT Projects (see below)
 ```
+
+## ChatGPT Archive
+
+The `chatgpt-export/` folder contains archived data from 6 ChatGPT Projects, exported before subscription cancellation:
+
+1. **Personal Staff**
+2. **Zohar - Country Service manager - Genesis**
+3. **Training and Health Status**
+4. **My Personal Project Manager assistance**
+5. **Matan Math - Practice and exercises**
+6. **AI Initiatives @Azure (Job)**
+
+**Important**: This archive is **completely independent** and does not merge with existing projects in the workspace, even if topics overlap. This keeps ChatGPT context cleanly separated.
+
+**When Claude Code encounters questions related to these projects**, it will:
+- Check `chatgpt-export/projects/<name>/CONTEXT.md` for prior instructions and context
+- Reference conversation summaries in `conversations/` for prior decisions
+- Use uploaded files from `files/` as knowledge base
+
+See `chatgpt-export/CLAUDE.md` and `chatgpt-export/README.md` for full details and next steps.

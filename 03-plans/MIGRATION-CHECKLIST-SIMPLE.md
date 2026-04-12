@@ -202,6 +202,7 @@ cp "C:\Users\<YOUR_WINDOWS_USERNAME>\AppData\Local\Google\Chrome\User Data\Defau
 | **Notepad++** | https://notepad-plus-plus.org/ | Text editor | Windows installer |
 | **KeePass 2** | https://keepass.info/ | Password manager | Portable or installer version |
 | **Spotify** | https://www.spotify.com/download/ | Music streaming | Windows installer |
+| **FEMSIS** | _[Add download link]_ | Work application | **v3.x** (current as of 2026-04-12) |
 
 ---
 
