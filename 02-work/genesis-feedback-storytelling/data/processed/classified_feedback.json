@@ -1,0 +1,1340 @@
+{
+  "total_items": 45,
+  "by_manager": {
+    "Gil": {
+      "count": 3,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4",
+              "theme": "customer appreciation",
+              "keywords": [
+                "thanks",
+                "gratitude"
+              ]
+            }
+          ],
+          "themes": [
+            "customer appreciation",
+            "communication"
+          ],
+          "implied_manager_name": "Gil",
+          "implied_country": "Israel",
+          "summary": "Customer Zohar Haver expressed thanks in a WhatsApp exchange with Gil from mobile service. The brief message indicates customer satisfaction with the service interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00017",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05d2\u05d9\u05dc",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "thanks"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": "Gil",
+          "implied_country": "Israel",
+          "summary": "A brief thank-you message from the customer Zohar Haver directed at Gil, indicating satisfaction with the service provided.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00018",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05d2\u05d9\u05dc",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "thanks"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": "Gil",
+          "implied_country": "Israel",
+          "summary": "Customer Zohar Haver expressed thanks to Gil from customer service, indicating a positive interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00222",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "Zohar Haver": {
+      "count": 2,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d4\u05de\u05dd! \u05d4\u05e8\u05d1\u05d4 \u05e1\u05e7\u05e8\u05d9\u05dd \u05d4\u05d2\u05d9\u05e2\u05d5 \u05d4\u05d9\u05d5\u05dd",
+              "theme": "team enthusiasm and survey response success",
+              "keywords": [
+                "\u05de\u05d4\u05de\u05dd",
+                "\u05e1\u05e7\u05e8\u05d9\u05dd",
+                "\u05d4\u05d2\u05d9\u05e2\u05d5"
+              ]
+            },
+            {
+              "text": "\u05de\u05d4 \u05e9\u05e0\u05e7\u05e8\u05d0\u2026 \u05e4\u05ea\u05d7\u05e0\u05d5 \u05e2\u05d9\u05df \ud83e\uddff",
+              "theme": "team vigilance and proactive engagement",
+              "keywords": [
+                "\u05e4\u05ea\u05d7\u05e0\u05d5 \u05e2\u05d9\u05df",
+                "vigilance"
+              ]
+            }
+          ],
+          "themes": [
+            "team enthusiasm",
+            "customer feedback collection",
+            "proactive engagement",
+            "survey success"
+          ],
+          "implied_manager_name": "Zohar Haver",
+          "implied_country": "Israel",
+          "summary": "An enthusiastic internal exchange celebrating a high volume of customer surveys received in one day, reflecting the team's proactive engagement and attentiveness to customer feedback.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00032",
+          "source": "whatsapp",
+          "story_weight": 0.71,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05ea\u05e7\u05e9\u05e8 \u05d0\u05dc\u05d9\u05d4 \u05d5\u05ea\u05e6\u05d9\u05e2 \u05d0\u05ea \u05e2\u05d6\u05e8\u05ea\u05da. \u05d6\u05d4 \u05e9\u05d9\u05e8\u05d5\u05ea \u05d9\u05d5\u05d6\u05dd",
+              "theme": "proactive service",
+              "keywords": [
+                "\u05e9\u05d9\u05e8\u05d5\u05ea \u05d9\u05d5\u05d6\u05dd",
+                "\u05e2\u05d6\u05e8\u05d4",
+                "\u05d9\u05d5\u05d6\u05de\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "proactive service",
+            "customer initiative",
+            "service excellence coaching"
+          ],
+          "implied_manager_name": "Zohar Haver",
+          "implied_country": "Israel",
+          "summary": "A coaching message encouraging proactive customer service - reaching out to offer help rather than waiting. Emphasizes the value of initiative-driven service.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00698",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "\u05d2\u05d9\u05dc": {
+      "count": 7,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.85,
+          "positive_segments": [
+            {
+              "text": "\u05e0\u05e4\u05dc\u05d0",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05e0\u05e4\u05dc\u05d0",
+                "wonderful"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction",
+            "positive expression"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer Zohar Haver expressed brief but enthusiastic satisfaction with the word 'wonderful' (\u05e0\u05e4\u05dc\u05d0) in a WhatsApp exchange with Gil from customer service.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00033",
+          "source": "whatsapp",
+          "story_weight": 0.59,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4",
+              "theme": "customer appreciation",
+              "keywords": [
+                "thank you",
+                "gratitude"
+              ]
+            }
+          ],
+          "themes": [
+            "customer appreciation",
+            "gratitude"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer expressed gratitude (\u05ea\u05d5\u05d3\u05d4 - 'thank you') in a WhatsApp exchange with Genesis customer service representative Gil, indicating satisfaction with the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00071",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05d9\u05d5\u05e4\u05d9 \u05ea\u05d5\u05d3\u05d4",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05d9\u05d5\u05e4\u05d9",
+                "\u05ea\u05d5\u05d3\u05d4",
+                "thanks"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction",
+            "gratitude"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer Zohar Haver expressed satisfaction and thanks during a WhatsApp service interaction with representative Gil.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00307",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.85,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05e2\u05d5\u05dc\u05d4! \u05ea\u05d5\u05d3\u05d4 \u05d2\u05d9\u05dc",
+              "theme": "appreciation and gratitude",
+              "keywords": [
+                "\u05de\u05e2\u05d5\u05dc\u05d4",
+                "\u05ea\u05d5\u05d3\u05d4",
+                "excellent",
+                "thanks"
+              ]
+            }
+          ],
+          "themes": [
+            "appreciation",
+            "problem-solving",
+            "persistence",
+            "parts availability"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer expresses gratitude to Gil for excellent service and encourages the team not to give up on sourcing parts, even if they need to be flown in from another country.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00508",
+          "source": "whatsapp",
+          "story_weight": 0.59,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4! \u05d4\u05d9\u05d9\u05e0\u05d5 \u05d1\u05e7\u05e8\u05d9\u05e1\u05d9\u05e1.",
+              "theme": "gratitude and crisis resolution",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05e7\u05e8\u05d9\u05e1\u05d9\u05e1"
+              ]
+            },
+            {
+              "text": "\u05e1\u05dc\u05d9\u05d7\u05d4 \u05e2\u05dc \u05d4\u05d4\u05d8\u05e8\u05d3\u05d4 \u05d2\u05d9\u05dc \u05d9\u05e7\u05e8. \u05d0\u05d1\u05dc, \u05d0\u05dd \u05db\u05d1\u05e8 \u05de\u05d3\u05d1\u05e8\u05d9\u05dd \u05d5\u05d0\u05dd \u05db\u05d1\u05e8 \u05d4\u05ea\u05d7\u05dc\u05e0\u05d5 \u05dc\u05d4\u05db\u05d9\u05e8 \u05d0\u05d6 \u05d1\u05d5\u05d0 \u05d4\u05db\u05e8 \u05d0\u05d5\u05ea\u05e0\u05d5 \u05d8\u05d5\u05d1 \u05d9\u05d5\u05ea\u05e8.. \u05e0\u05e9\u05de\u05d7 \u05dc\u05d4\u05d6\u05de\u05d9\u05e0\u05da \u05dc\u05d4\u05d5\u05e4\u05e2\u05d4 \u05e9\u05dc\u05e0\u05d5.",
+              "theme": "personal connection and appreciation",
+              "keywords": [
+                "\u05d2\u05d9\u05dc \u05d9\u05e7\u05e8",
+                "\u05dc\u05d4\u05db\u05d9\u05e8",
+                "\u05d4\u05d5\u05e4\u05e2\u05d4",
+                "\u05d4\u05d6\u05de\u05e0\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "crisis support",
+            "personal connection",
+            "customer appreciation"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer thanks Gil for support during a stressful fuel cap crisis right before Shabbat, and expresses such appreciation that they offer him complimentary tickets to their show as a personal gesture of gratitude.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00576",
+          "source": "whatsapp",
+          "story_weight": 0.78,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d6\u05d4 \u05d4\u05e9\u05d9\u05e8\u05d5\u05ea \u05e9\u05dc \u05d2\u05f3\u05e0\u05e1\u05d9\u05e1 \ud83d\ude09",
+              "theme": "service appreciation",
+              "keywords": [
+                "\u05e9\u05d9\u05e8\u05d5\u05ea",
+                "\u05d2\u05f3\u05e0\u05e1\u05d9\u05e1"
+              ]
+            }
+          ],
+          "themes": [
+            "service appreciation",
+            "brand endorsement"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "The customer makes a positive remark about Genesis customer service, accompanied by a winking emoji suggesting satisfaction with the service experience.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00725",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.85,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05e8\u05d1\u05d4!",
+              "theme": "customer gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "thanks"
+              ]
+            }
+          ],
+          "themes": [
+            "customer gratitude",
+            "appreciation"
+          ],
+          "implied_manager_name": "\u05d2\u05d9\u05dc",
+          "implied_country": "Israel",
+          "summary": "Customer expressed sincere thanks to Gil from mobile service, indicating a positive service interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00731",
+          "source": "whatsapp",
+          "story_weight": 0.59,
+          "featured": false
+        }
+      ]
+    },
+    "Unknown Manager": {
+      "count": 27,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05e8\u05d1\u05d4",
+              "theme": "gratitude",
+              "keywords": [
+                "thank you",
+                "gratitude"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief expression of thanks from the customer, indicating satisfaction with the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00058",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05e1\u05d1\u05d1\u05d4 \u05d0\u05d6 \u05de\u05d0\u05d5\u05e9\u05e8",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05e1\u05d1\u05d1\u05d4",
+                "\u05de\u05d0\u05d5\u05e9\u05e8",
+                "approved"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction",
+            "approval",
+            "quick resolution"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expresses satisfaction and confirms approval in a brief, positive Hebrew message indicating the matter is settled.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00064",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05e2\u05d5\u05dc\u05d4",
+              "theme": "overall satisfaction",
+              "keywords": [
+                "excellent",
+                "\u05de\u05e2\u05d5\u05dc\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "overall satisfaction"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expressed brief but clear satisfaction with the service, simply stating 'excellent' in Hebrew.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00078",
+          "source": "whatsapp",
+          "story_weight": 0.62,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05e7\u05e6\u05d1 \u05d8\u05d5\u05d1 \u05e9\u05dc \u05de\u05e9\u05d5\u05d1\u05d9\u05dd",
+              "theme": "feedback responsiveness",
+              "keywords": [
+                "\u05e7\u05e6\u05d1 \u05d8\u05d5\u05d1",
+                "\u05de\u05e9\u05d5\u05d1\u05d9\u05dd"
+              ]
+            }
+          ],
+          "themes": [
+            "feedback responsiveness",
+            "communication pace"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The customer notes a good pace of feedback, indicating satisfaction with the responsiveness of the service.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00117",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05d9\u05df \u05de\u05d9\u05dc\u05d9\u05dd",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "speechless",
+                "amazing"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction",
+            "exceptional service"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The customer expressed being speechless ('no words'), a Hebrew idiom typically indicating overwhelming satisfaction or admiration for the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00175",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05d9\u05d5\u05e4\u05d9!",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05d9\u05d5\u05e4\u05d9",
+                "great"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Brief positive acknowledgment from the customer expressing satisfaction with 'Great!' in Hebrew.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00188",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4!",
+              "theme": "gratitude",
+              "keywords": [
+                "thanks",
+                "\u05ea\u05d5\u05d3\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief expression of thanks from the customer, indicating satisfaction with the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00191",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d5\u05e7\u05d3\u05dd \u05de\u05de\u05d4 \u05e9\u05e6\u05e4\u05d9\u05ea\u05d9",
+              "theme": "timeliness",
+              "keywords": [
+                "\u05de\u05d5\u05e7\u05d3\u05dd",
+                "\u05e6\u05e4\u05d9\u05ea\u05d9"
+              ]
+            }
+          ],
+          "themes": [
+            "timeliness",
+            "exceeding expectations"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The customer expresses positive surprise that service or delivery happened earlier than they anticipated, indicating exceeded expectations.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00205",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05d9\u05d5\u05e4\u05d9",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05d9\u05d5\u05e4\u05d9",
+                "great"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expressed brief positive acknowledgment ('great') indicating satisfaction with the service interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00223",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.95,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d3\u05d4\u05d9\u05dd! \u05d5\u05d7\u05d9\u05d9\u05d1 \u05dc\u05d4\u05d9\u05e9\u05d0\u05e8 \u05db\u05db\u05d4",
+              "theme": "overall satisfaction",
+              "keywords": [
+                "\u05de\u05d3\u05d4\u05d9\u05dd",
+                "\u05d7\u05d9\u05d9\u05d1 \u05dc\u05d4\u05d9\u05e9\u05d0\u05e8 \u05db\u05db\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "overall satisfaction",
+            "service excellence",
+            "consistency"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expresses enthusiastic satisfaction, calling the service amazing and insisting it must stay this way.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00238",
+          "source": "whatsapp",
+          "story_weight": 0.64,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d4\u05de\u05dd \u05e0\u05e2\u05e9\u05d4 \u05d0\u05ea \u05d6\u05d4! \u05e8\u05e2\u05d9\u05d5\u05df \u05de\u05e2\u05d5\u05dc\u05d4 \ud83d\udc4c",
+              "theme": "enthusiasm and collaboration",
+              "keywords": [
+                "\u05de\u05d4\u05de\u05dd",
+                "\u05e8\u05e2\u05d9\u05d5\u05df \u05de\u05e2\u05d5\u05dc\u05d4",
+                "\u05e0\u05e2\u05e9\u05d4 \u05d0\u05ea \u05d6\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "enthusiasm",
+            "collaboration",
+            "positive engagement"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The customer expressed enthusiastic agreement and excitement about an idea, indicating a positive and collaborative interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00247",
+          "source": "whatsapp",
+          "story_weight": 0.62,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.95,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05e0\u05d9 \u05de\u05d7\u05d6\u05d9\u05e7 \u05d2\u05dd \u05d0\u05d5\u05d5\u05d3\u05d9 \u05e7\u05d9\u05d5 7. \u05ea-\u05e2-\u05e0-\u05d5-\u05d2 \u05e9\u05dc \u05e9\u05d9\u05e8\u05d5\u05ea!!!!",
+              "theme": "service excellence",
+              "keywords": [
+                "\u05ea\u05e2\u05e0\u05d5\u05d2",
+                "\u05e9\u05d9\u05e8\u05d5\u05ea",
+                "\u05d0\u05d5\u05d5\u05d3\u05d9"
+              ]
+            }
+          ],
+          "themes": [
+            "service excellence",
+            "customer satisfaction",
+            "brand loyalty"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The customer, who also owns an Audi Q7, expresses immense delight with the service, describing it as a true pleasure.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00255",
+          "source": "whatsapp",
+          "story_weight": 0.64,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05dc\u05db\u05d5\u05dc\u05dd \u05d1\u05e9\u05de\u05d9 \u05e2\u05dc \u05d4\u05d4\u05ea\u05d9\u05d9\u05d7\u05e1\u05d5\u05ea \u05d5\u05d4\u05e9\u05d9",
+              "theme": "appreciation and attentiveness",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05d4\u05ea\u05d9\u05d9\u05d7\u05e1\u05d5\u05ea",
+                "\u05e9\u05d9"
+              ]
+            }
+          ],
+          "themes": [
+            "appreciation",
+            "attentiveness",
+            "gift/gesture recognition"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expresses gratitude to the entire team for their attentiveness and for a gift received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00308",
+          "source": "whatsapp",
+          "story_weight": 0.62,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05e8\u05d1\u05d4 \u05d5\u05e1\u05d5\u05e4\u05f4\u05e9 \u05de\u05d1\u05d5\u05e8\u05da\ud83d\ude4f\ud83c\udffb",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4 \u05e8\u05d1\u05d4",
+                "\u05e1\u05d5\u05e4\u05f4\u05e9 \u05de\u05d1\u05d5\u05e8\u05da",
+                "blessing"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "courtesy"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer shared their vehicle number and expressed thanks with a blessing for a good weekend, indicating a polite and positive interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00337",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.98,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05dc\u05d5\u05e4\u05d9\u05dd \u05e9\u05d0\u05ea\u05dd\u2764\ufe0f\u2764\ufe0f",
+              "theme": "customer appreciation",
+              "keywords": [
+                "\u05d0\u05dc\u05d5\u05e4\u05d9\u05dd",
+                "champions"
+              ]
+            },
+            {
+              "text": "\u05d0\u05e0\u05d9 \u05e2\u05db\u05e9\u05d9\u05d5 \u05de\u05d7\u05dc\u05d9\u05e3 \u05dc\u05d2\u05e0\u05e1\u05d9\u05e1 \u05d7\u05d3\u05e9\u05d4 \u05d5\u05d4\u05e8\u05d1\u05d4 \u05de\u05d0\u05d5\u05d3 \u05de\u05d6\u05d4 \u05d1\u05d2\u05dc\u05dc \u05d4\u05e9\u05d9\u05e8\u05d5\u05ea \u05dc\u05e7\u05d5\u05d7\u05d5\u05ea \u05d4\u05de\u05d5\u05e9\u05dc\u05dd \u05e9\u05dc\u05db\u05dd",
+              "theme": "customer loyalty driven by service excellence",
+              "keywords": [
+                "\u05e9\u05d9\u05e8\u05d5\u05ea \u05dc\u05e7\u05d5\u05d7\u05d5\u05ea \u05d4\u05de\u05d5\u05e9\u05dc\u05dd",
+                "perfect customer service",
+                "loyalty",
+                "repurchase"
+              ]
+            }
+          ],
+          "themes": [
+            "customer loyalty",
+            "service excellence",
+            "brand advocacy",
+            "repeat purchase"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer enthusiastically praises Genesis customer service, stating that the perfect service is a major reason they are now upgrading to a new Genesis vehicle.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00363",
+          "source": "whatsapp",
+          "story_weight": 0.82,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05e0\u05d5\u05ea\u05df \u05dc\u05da \u05d0\u05ea \u05d4\u05db\u05d1\u05d5\u05d3",
+              "theme": "respect and appreciation",
+              "keywords": [
+                "\u05db\u05d1\u05d5\u05d3",
+                "\u05d4\u05e2\u05e8\u05db\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "respect",
+            "appreciation",
+            "customer acknowledgment"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Brief positive message expressing respect and appreciation in Hebrew, indicating a positive customer interaction.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00367",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05d9\u05d5\u05e4\u05d9",
+              "theme": "customer satisfaction",
+              "keywords": [
+                "\u05d9\u05d5\u05e4\u05d9",
+                "great"
+              ]
+            }
+          ],
+          "themes": [
+            "customer satisfaction"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief positive expression ('great' in Hebrew) indicating customer satisfaction, though without specific context.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00370",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05d1\u05ea\u05d5\u05d3\u05d4 \u05e2\u05dc \u05d4\u05e9\u05d9\u05d7\u05d4",
+              "theme": "appreciation",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05e9\u05d9\u05d7\u05d4"
+              ]
+            }
+          ],
+          "themes": [
+            "appreciation",
+            "follow-up communication"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer thanks the representative for the call and indicates they will send a schedule and company information as follow-up.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00406",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.98,
+          "positive_segments": [
+            {
+              "text": "\u05e9\u05d9\u05e8\u05d5\u05ea \u05de\u05d3\u05d4\u05d9\u05dd",
+              "theme": "service excellence",
+              "keywords": [
+                "amazing",
+                "service",
+                "\u05de\u05d3\u05d4\u05d9\u05dd"
+              ]
+            },
+            {
+              "text": "\u05d0\u05ea \u05d0\u05d5\u05d1\u05e1\u05e1\u05d9\u05d1\u05d9\u05ea \u05dc\u05dc\u05e7\u05d5\u05d7",
+              "theme": "customer dedication",
+              "keywords": [
+                "obsessive",
+                "customer-focused",
+                "dedication"
+              ]
+            }
+          ],
+          "themes": [
+            "service excellence",
+            "customer dedication",
+            "customer focus"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer praises the service as amazing and describes the representative as obsessively customer-focused, highlighting exceptional dedication to the customer.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00448",
+          "source": "whatsapp",
+          "story_weight": 0.82,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d4\u05e8\u05d2\u05e2 \u05e9\u05d9\u05e9 \u05dc\u05da GENESIS, \u05d9\u05e9 \u05dc\u05da \u05d2\u05dd \u05de\u05e0\u05d4\u05dc \u05e9\u05d9\u05e8\u05d5\u05ea \u05d0\u05d9\u05e9\u05d9 \u05e9\u05d3\u05d5\u05d0\u05d2 \u05dc\u05da 24 \u05e9\u05e2\u05d5\u05ea, \u05e9\u05d1\u05e2\u05d4 \u05d9\u05de\u05d9\u05dd \u05d1\u05e9\u05d1\u05d5\u05e2",
+              "theme": "personal service availability",
+              "keywords": [
+                "\u05de\u05e0\u05d4\u05dc \u05e9\u05d9\u05e8\u05d5\u05ea \u05d0\u05d9\u05e9\u05d9",
+                "24 \u05e9\u05e2\u05d5\u05ea",
+                "\u05e9\u05d1\u05e2\u05d4 \u05d9\u05de\u05d9\u05dd \u05d1\u05e9\u05d1\u05d5\u05e2"
+              ]
+            },
+            {
+              "text": "\u05d9\u05e9 \u05dc\u05da \u05d0\u05ea \u05d4\u05e0\u05d9\u05d9\u05d3 \u05d4\u05d0\u05d9\u05e9\u05d9 \u05e9\u05dc\u05d5 \u05dc\u05db\u05dc \u05e0\u05d5\u05e9\u05d0. \u05e7\u05d8\u05df \u05d0\u05d5 \u05d2\u05d3\u05d5\u05dc",
+              "theme": "accessibility and personal contact",
+              "keywords": [
+                "\u05e0\u05d9\u05d9\u05d3 \u05d0\u05d9\u05e9\u05d9",
+                "\u05db\u05dc \u05e0\u05d5\u05e9\u05d0"
+              ]
+            },
+            {
+              "text": "\u05de\u05d9\u05e9\u05d4\u05d5 \u05d0\u05d7\u05d3 \u05e9\u05de\u05db\u05d9\u05e8 \u05d0\u05d5\u05ea\u05da \u05d5\u05d9\u05d5\u05e8\u05d9\u05d3 \u05de\u05de\u05da \u05d0\u05ea \u05db\u05dc \u05d4\u05d3\u05d0\u05d2\u05d5\u05ea",
+              "theme": "personalized care and peace of mind",
+              "keywords": [
+                "\u05de\u05db\u05d9\u05e8 \u05d0\u05d5\u05ea\u05da",
+                "\u05d9\u05d5\u05e8\u05d9\u05d3 \u05d3\u05d0\u05d2\u05d5\u05ea"
+              ]
+            }
+          ],
+          "themes": [
+            "personal service manager",
+            "24/7 availability",
+            "accessibility",
+            "personalized care",
+            "peace of mind"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "The feedback highlights Genesis's premium customer service offering, emphasizing the value of having a dedicated personal service manager available 24/7 through multiple channels who knows the customer personally and handles all concerns.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00529",
+          "source": "whatsapp",
+          "story_weight": 0.95,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d9\u05d5\u05e4\u05d9! \u05dc\u05e4\u05d7\u05d5\u05ea \u05d9\u05d3\u05e2 \u05dc\u05d4\u05e2\u05e8\u05d9\u05da \u05d0\u05ea \u05d4\u05e9\u05d9\u05e8\u05d5\u05ea.",
+              "theme": "customer appreciation",
+              "keywords": [
+                "\u05d9\u05d5\u05e4\u05d9",
+                "\u05dc\u05d4\u05e2\u05e8\u05d9\u05da",
+                "\u05e9\u05d9\u05e8\u05d5\u05ea"
+              ]
+            }
+          ],
+          "themes": [
+            "customer appreciation",
+            "service recognition"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief positive remark expressing satisfaction that the customer recognized and appreciated the service provided.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00570",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05d9\u05d6\u05d4 \u05d7\u05de\u05d5\u05d3\u05d9\u05dd\u2026",
+              "theme": "warmth and affection",
+              "keywords": [
+                "\u05d7\u05de\u05d5\u05d3\u05d9\u05dd",
+                "cute",
+                "endearing"
+              ]
+            }
+          ],
+          "themes": [
+            "warmth and affection",
+            "customer appreciation"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief, affectionate expression from the customer ('how cute\u2026') indicating warmth and a positive emotional response, though context is limited.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00579",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05d1\u05d5\u05e1",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05d1\u05d5\u05e1"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "informal rapport"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief, informal thank-you message ('Thanks boss') from a customer, indicating satisfaction with the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00639",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.85,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05d9\u05d6\u05d4 \u05d0\u05d5\u05e9\u05e8",
+              "theme": "customer delight",
+              "keywords": [
+                "\u05d0\u05d5\u05e9\u05e8",
+                "happiness",
+                "joy"
+              ]
+            }
+          ],
+          "themes": [
+            "customer delight",
+            "emotional satisfaction"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "A brief but enthusiastic expression of happiness from the customer, indicating strong emotional satisfaction with the service experience.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00641",
+          "source": "whatsapp",
+          "story_weight": 0.59,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [],
+          "themes": [
+            "acknowledgment",
+            "appreciation"
+          ],
+          "implied_manager_name": null,
+          "implied_country": null,
+          "summary": "Customer sent emoji-only response (thumbs up and folded hands) indicating approval and gratitude, but no substantive quotable content.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00653",
+          "source": "whatsapp",
+          "story_weight": 0.35,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.9,
+          "positive_segments": [
+            {
+              "text": "\u05dc\u05d0 \u05e6\u05e8\u05d9\u05db\u05d4 \u05e9\u05ea\u05e2\u05d3\u05db\u05df\u2026 \u05e1\u05d5\u05de\u05db\u05ea \u05e2\u05dc\u05d9\u05da",
+              "theme": "trust and confidence",
+              "keywords": [
+                "\u05e1\u05d5\u05de\u05db\u05ea",
+                "trust",
+                "confidence"
+              ]
+            }
+          ],
+          "themes": [
+            "trust",
+            "customer confidence",
+            "reliability"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expresses complete trust in the service representative, stating they don't need updates because they trust them.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00682",
+          "source": "whatsapp",
+          "story_weight": 0.62,
+          "featured": false
+        },
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d0\u05d5\u05d5 \u05ea\u05d5\u05d3\u05d4 \u05d1\u05d0\u05de\u05ea",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05d1\u05d0\u05de\u05ea"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": null,
+          "implied_country": "Israel",
+          "summary": "Customer expresses sincere thanks with an appreciative tone, indicating satisfaction with the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00733",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "\u05de\u05e9\u05d4 \u05d2\u05d6": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.7,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05e9\u05d4 \u05d2\u05d6 \u05d7\u05e1\u05db\u05df, \u05dc\u05d0 \u05de\u05e8\u05e4\u05d4",
+              "theme": "persistence and dedication",
+              "keywords": [
+                "\u05d7\u05e1\u05db\u05df",
+                "\u05dc\u05d0 \u05de\u05e8\u05e4\u05d4",
+                "persistence"
+              ]
+            }
+          ],
+          "themes": [
+            "persistence",
+            "dedication",
+            "problem-solving"
+          ],
+          "implied_manager_name": "\u05de\u05e9\u05d4 \u05d2\u05d6",
+          "implied_country": "Israel",
+          "summary": "Brief positive feedback praising Moshe Gaz for being thrifty/efficient and persistent, never giving up on issues.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00167",
+          "source": "whatsapp",
+          "story_weight": 0.52,
+          "featured": false
+        }
+      ]
+    },
+    "\u05d9\u05e8\u05d5\u05df": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d3\u05d1\u05e8\u05ea\u05d9 \u05e2\u05dd \u05d9\u05e8\u05d5\u05df, \u05d4\u05e2\u05e8\u05d9\u05da \u05de\u05d0\u05d5\u05d3 \u05d0\u05ea \u05d4\u05e9\u05d9\u05d7\u05d4",
+              "theme": "appreciation and communication",
+              "keywords": [
+                "\u05d4\u05e2\u05e8\u05d9\u05da",
+                "\u05e9\u05d9\u05d7\u05d4",
+                "\u05d9\u05e8\u05d5\u05df"
+              ]
+            }
+          ],
+          "themes": [
+            "customer appreciation",
+            "communication",
+            "problem-solving",
+            "follow-up"
+          ],
+          "implied_manager_name": "\u05d9\u05e8\u05d5\u05df",
+          "implied_country": "Israel",
+          "summary": "A conversation with Yaron was greatly appreciated, and the team is committed to keeping him updated. They are actively working with Kobi and Tai to find vehicles for dismantling, showing dedication to problem-solving.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00333",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "\u05e8\u05de\u05d9": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.98,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05e8\u05d1\u05d4 \u05e2\u05dc \u05d4\u05e9\u05d9\u05e8\u05d5\u05ea!",
+              "theme": "customer gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "\u05e9\u05d9\u05e8\u05d5\u05ea"
+              ]
+            },
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05e2\u05dc \u05d4\u05d6\u05de\u05d9\u05e0\u05d5\u05ea \u05e9\u05dc\u05da \u05d5\u05d4\u05d8\u05d9\u05e4\u05d5\u05dc \u05d4\u05de\u05d4\u05d9\u05e8!",
+              "theme": "availability and quick response",
+              "keywords": [
+                "\u05d6\u05de\u05d9\u05e0\u05d5\u05ea",
+                "\u05d8\u05d9\u05e4\u05d5\u05dc \u05de\u05d4\u05d9\u05e8"
+              ]
+            },
+            {
+              "text": "\u05e7\u05d9\u05d1\u05dc\u05ea\u05d9 \u05e9\u05d9\u05e8\u05d5\u05ea \u05de\u05e8\u05de\u05d9, \u05de\u05d7\u05d1\u05e8\u05ea \u05db\u05dc\u05de\u05d5\u05d1\u05d9\u05dc, \u05de\u05de\u05e9 \u05d4\u05d9\u05d4 \u05d0\u05d3\u05d9\u05d1, \u05e9\u05d9\u05e8\u05d5\u05ea\u05d9 \u05d5\u05d0\u05de\u05d9\u05df!",
+              "theme": "manager professionalism",
+              "keywords": [
+                "\u05d0\u05d3\u05d9\u05d1",
+                "\u05e9\u05d9\u05e8\u05d5\u05ea\u05d9",
+                "\u05d0\u05de\u05d9\u05df"
+              ]
+            },
+            {
+              "text": "\u05d1\u05e9\u05d5\u05e8\u05d5\u05ea \u05d8\u05d5\u05d1\u05d5\u05ea \u05d5\u05e1\u05d5\u05e4\u05e9 \u05e8\u05d2\u05d5\u05e2\ud83d\ude0a",
+              "theme": "warm closing",
+              "keywords": [
+                "\u05d1\u05e9\u05d5\u05e8\u05d5\u05ea \u05d8\u05d5\u05d1\u05d5\u05ea",
+                "\u05e1\u05d5\u05e4\u05e9 \u05e8\u05d2\u05d5\u05e2"
+              ]
+            }
+          ],
+          "themes": [
+            "customer gratitude",
+            "availability",
+            "quick response",
+            "manager professionalism",
+            "trustworthiness",
+            "courtesy"
+          ],
+          "implied_manager_name": "\u05e8\u05de\u05d9",
+          "implied_country": "Israel",
+          "summary": "The customer expresses heartfelt gratitude for the fast and available service received from Rami at Colmobil, describing him as courteous, service-oriented, and trustworthy.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00469",
+          "source": "whatsapp",
+          "story_weight": 0.99,
+          "featured": true
+        }
+      ]
+    },
+    "Karin": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05d4\u05d1\u05d0\u05ea\u05dd \u05de\u05d9\u05d3 \u05e8\u05db\u05d1 \u05d7\u05dc\u05d5\u05e4\u05d9 \u05d5\u05d4\u05d9\u05d9\u05ea\u05dd \u05d6\u05de\u05d9\u05e0\u05d9\u05dd \u05dc\u05db\u05dc \u05e9\u05d0\u05dc\u05d4",
+              "theme": "responsiveness and problem-solving",
+              "keywords": [
+                "\u05e8\u05db\u05d1 \u05d7\u05dc\u05d5\u05e4\u05d9",
+                "\u05d6\u05de\u05d9\u05e0\u05d9\u05dd",
+                "\u05de\u05d9\u05d3"
+              ]
+            }
+          ],
+          "themes": [
+            "responsiveness",
+            "availability",
+            "problem-solving",
+            "replacement vehicle"
+          ],
+          "implied_manager_name": "Karin",
+          "implied_country": "Israel",
+          "summary": "Customer acknowledges that while the 5-day repair time was long, the company immediately provided a replacement vehicle and was available to answer all questions, which was appreciated.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00569",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "\u05de\u05d0\u05d9\u05e8": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.75,
+          "positive_segments": [
+            {
+              "text": "\u05de\u05d0\u05d9\u05e8 \u05d7\u05d6\u05e8 \u05d0\u05dc\u05d9\u05d9. \u05d4\u05d5\u05d0 \u05d3\u05d5\u05d0\u05d2 \u05dc\u05d4\u05d1\u05d9\u05d0 \u05dc\u05d9 \u05d0\u05ea \u05d4\u05d0\u05d5\u05d8\u05d5 \u05d1\u05e1\u05d1\u05d9\u05d1\u05d5\u05ea 1700",
+              "theme": "responsiveness and follow-through",
+              "keywords": [
+                "\u05d7\u05d6\u05e8 \u05d0\u05dc\u05d9\u05d9",
+                "\u05d3\u05d5\u05d0\u05d2",
+                "\u05dc\u05d4\u05d1\u05d9\u05d0"
+              ]
+            }
+          ],
+          "themes": [
+            "responsiveness",
+            "follow-through",
+            "customer care",
+            "communication"
+          ],
+          "implied_manager_name": "\u05de\u05d0\u05d9\u05e8",
+          "implied_country": "Israel",
+          "summary": "The customer reports that Meir got back to them and is taking care of bringing their car around 17:00, indicating responsive and attentive service.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00587",
+          "source": "whatsapp",
+          "story_weight": 0.54,
+          "featured": false
+        }
+      ]
+    },
+    "\u05d6\u05d5\u05d4\u05e8": {
+      "count": 1,
+      "feedback": [
+        {
+          "sentiment": "positive",
+          "confidence": 0.85,
+          "positive_segments": [
+            {
+              "text": "\u05ea\u05d5\u05d3\u05d4 \u05dc\u05da \u05d6\u05d5\u05d4\u05e8",
+              "theme": "gratitude",
+              "keywords": [
+                "\u05ea\u05d5\u05d3\u05d4",
+                "thank you"
+              ]
+            }
+          ],
+          "themes": [
+            "gratitude",
+            "customer appreciation"
+          ],
+          "implied_manager_name": "\u05d6\u05d5\u05d4\u05e8",
+          "implied_country": "Israel",
+          "summary": "A brief but sincere thank-you message from a customer addressed to Zohar, expressing appreciation for the service received.",
+          "id": "whatsapp_Genesis_Customer_Service_Whatapp_chat_00689",
+          "source": "whatsapp",
+          "story_weight": 0.59,
+          "featured": false
+        }
+      ]
+    }
+  },
+  "by_geography": {
+    "Israel": [
+      {
+        "manager": "Gil",
+        "feedback_count": 3
+      },
+      {
+        "manager": "Zohar Haver",
+        "feedback_count": 2
+      },
+      {
+        "manager": "\u05d2\u05d9\u05dc",
+        "feedback_count": 7
+      },
+      {
+        "manager": "Unknown Manager",
+        "feedback_count": 27
+      },
+      {
+        "manager": "\u05de\u05e9\u05d4 \u05d2\u05d6",
+        "feedback_count": 1
+      },
+      {
+        "manager": "\u05d9\u05e8\u05d5\u05df",
+        "feedback_count": 1
+      },
+      {
+        "manager": "\u05e8\u05de\u05d9",
+        "feedback_count": 1
+      },
+      {
+        "manager": "Karin",
+        "feedback_count": 1
+      },
+      {
+        "manager": "\u05de\u05d0\u05d9\u05e8",
+        "feedback_count": 1
+      },
+      {
+        "manager": "\u05d6\u05d5\u05d4\u05e8",
+        "feedback_count": 1
+      }
+    ]
+  }
+}

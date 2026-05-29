@@ -39,68 +39,9 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 
 ## Build, Test & Run Commands
 
-### Python Projects (with `.venv`)
+See each project's `CLAUDE.md` for project-specific build, test, and run commands.
 
-Before running any Python command, **always check for and activate the project's `.venv`**:
-
-```bash
-# Garmin Health Analytics (Streamlit dashboard)
-cd 01-personal/garmin-health/analytics
-source .venv/bin/activate
-pip install -r requirements.txt
-streamlit run app.py
-
-# Garmin Health Backend (AWS Lambda)
-cd 01-personal/garmin-health/backend
-source .venv/bin/activate
-pip install -r requirements.txt
-bash scripts/test.sh        # Run OAuth + query tests
-bash scripts/deploy.sh      # Deploy Terraform
-bash scripts/destroy.sh     # Tear down infrastructure
-
-# Math Practice Tests
-cd 01-personal/math-practice
-python -m pytest tests/ -v
-
-# AWS AI Agent (if venv exists)
-cd 01-personal/aws-ai-agent
-[if .venv exists: source .venv/bin/activate]
-pip install -r requirements.txt  # or add to .venv
-python run_agent.py
-```
-
-### JavaScript/Node Projects
-
-```bash
-# Interview Coach (submodule with build scripts)
-cd 01-personal/interview-coach
-npm install
-npm run build    # or project-specific script
-
-# Work projects
-cd 02-work/automation-integrations
-npm install && npm run test
-```
-
-### Terraform (Garmin Backend)
-
-```bash
-cd 01-personal/garmin-health/backend/terraform
-terraform init
-terraform plan -var-file="../config/terraform.tfvars"
-terraform apply -var-file="../config/terraform.tfvars"
-```
-
-## Python Environment Rules
-
-- **Before running `pip`, `python`, or any Python script, check for a project-level `.venv`**
-- Use `.venv/bin/python` (not system `python3`) when a `.venv` exists
-- If `.venv` exists: activate it (`source .venv/bin/activate`) before pip install
-- Known project venvs:
-  - `01-personal/garmin-health/analytics/.venv` — Streamlit + Anthropic SDK
-  - `01-personal/aws-ai-agent/.venv` — Bedrock + LangChain (if exists)
-- There is no root-level venv — each project is isolated
-- When creating a new `.venv`: `python -m venv .venv && source .venv/bin/activate`
+**Key rule**: Always activate the project's `.venv` before running `pip`, `python`, or any Python script.
 
 ## Development Workflows
 
@@ -195,23 +136,6 @@ Example: `claude/update-claude-md-BGuLn`
 4. Link related issues and add description context
 5. Run `update-docs` skill after merge to sync documentation
 
-## Tool Preference (Dedicated Tools > Bash)
-
-Always use the right tool first — Bash is a fallback:
-
-| Task | Preferred Tool | Bash Only When |
-|------|---|---|
-| Read a file | `Read` | File is too large (use offset/limit) |
-| Edit a file | `Edit` | Bulk find-replace (use replace_all) |
-| Create a file | `Write` | Creating a one-off script |
-| Search files | `Grep` | Complex regex or multiple patterns |
-| Find files | `Glob` | Pattern matching by name |
-| Run processes | `Bash` | — (exclusive use case) |
-| Git operations | `Bash` | — (exclusive use case) |
-| System commands | `Bash` | — (exclusive use case) |
-
-Reserve Bash for: running processes, git commands, system utilities, and anything the above tools cannot do.
-
 ## Bash Efficiency Rules
 
 - Combine related sequential commands with `&&` in a single Bash call
@@ -227,23 +151,9 @@ Reserve Bash for: running processes, git commands, system utilities, and anythin
 - One active todo list per conversation; clear stale items when starting new work
 - Update status in real-time, especially for long-running tasks
 
-## Known Limitations & Workarounds
-
-**Anthropic API connectivity**: Corporate network TLS handshake timeout (cached 2026-03-21)
-- Workaround: Use mobile hotspot or VPN
-- Detailed troubleshooting: `.claude/CONNECTIVITY-TROUBLESHOOTING.md`
-
-**Data file locations**: Garmin JSON exports currently in `01-personal/aws-ai-agent/docs/`
-- Target migration: `01-personal/garmin-health/data/raw/` on next pipeline run
-- Use `data-pipeline` skill to orchestrate migration
-
 ## Resources
 
-- **AWS**: [Bedrock](https://docs.aws.amazon.com/bedrock/), [Lambda](https://docs.aws.amazon.com/lambda/), [EventBridge](https://docs.aws.amazon.com/eventbridge/), [DynamoDB](https://docs.aws.amazon.com/dynamodb/)
-- **Azure**: [AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
-- **Agent Frameworks**: [LangChain](https://python.langchain.com/), [Anthropic SDK](https://github.com/anthropics/anthropic-sdk-python)
-- **Local Dashboards**: [Streamlit](https://docs.streamlit.io/)
-- **Terraform**: [Registry](https://registry.terraform.io/), [AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/)
+Documentation and links: See [.claude/docs/resources.md](.claude/docs/resources.md)
 
 ## Skill & Agent Registry
 
