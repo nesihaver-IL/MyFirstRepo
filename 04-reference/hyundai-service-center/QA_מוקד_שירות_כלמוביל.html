@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>שאלות ותשובות – מוקד שירות | סדנת פשרה ונירוון | הדיון</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1B2340;
+      --navy-light: #243050;
+      --red: #CC1230;
+      --red-hover: #a50e27;
+      --white: #FFFFFF;
+      --gray-bg: #F5F6F8;
+      --gray-light: #EFF1F5;
+      --gray-border: #D8DCE6;
+      --text-dark: #1A1D2E;
+      --text-mid: #4A5068;
+      --text-light: #7A80A0;
+      --success: #1A7A4A;
+      --warning: #C47B00;
+      --danger: #CC1230;
+      --font: 'Assistant', Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--gray-bg);
+      color: var(--text-dark);
+      direction: rtl;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* Header */
+    header {
+      background: var(--navy);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 28px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-badge {
+      width: 44px;
+      height: 44px;
+      background: var(--red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--white);
+      letter-spacing: -1px;
+    }
+    .logo-text {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .logo-sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      font-weight: 400;
+    }
+    .header-badge {
+      background: rgba(204,18,48,0.18);
+      border: 1px solid rgba(204,18,48,0.4);
+      color: #ff8095;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3660 100%);
+      padding: 48px 28px 40px;
+      text-align: center;
+      color: var(--white);
+      border-bottom: 4px solid var(--red);
+    }
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #ff8095;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .hero-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: inline-flex;
+      gap: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      padding: 10px 24px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      max-width: 1100px;
+      margin: 24px auto 0;
+      padding: 0 28px;
+    }
+    .disclaimer-box {
+      background: #fff8e6;
+      border: 1.5px solid #e6b800;
+      border-right: 4px solid #e6b800;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      color: #5a4200;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* Layout */
+    .main-layout {
+      max-width: 1100px;
+      margin: 24px auto 60px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-border);
+      overflow: hidden;
+      position: sticky;
+      top: 82px;
+    }
+    .sidebar-title {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 12px 16px;
+      letter-spacing: 0.5px;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 13.5px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--gray-light);
+      transition: all 0.15s;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      background: var(--gray-bg);
+      color: var(--navy);
+    }
+    .sidebar-nav a .count {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 10px;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    /* Section blocks */
+    .section-block {
+      margin-bottom: 24px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: var(--navy);
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-num {
+      background: var(--red);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-title-text {
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      flex: 1;
+    }
+    .section-count-badge {
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      padding: 3px 9px;
+      border-radius: 12px;
+    }
+    .section-chevron {
+      color: rgba(255,255,255,0.7);
+      font-size: 18px;
+      transition: transform 0.25s;
+    }
+    .section-block.collapsed .section-chevron { transform: rotate(180deg); }
+
+    .section-body {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+    }
+    .section-block.collapsed .section-body { display: none; }
+
+    /* Q&A Items */
+    .qa-item {
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .qa-item:last-child { border-bottom: none; }
+
+    .qa-question {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .qa-question:hover { background: var(--gray-bg); }
+    .qa-q-badge {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .qa-question-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      flex: 1;
+      line-height: 1.5;
+    }
+    .qa-toggle {
+      color: var(--text-light);
+      font-size: 20px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+      margin-top: 0px;
+    }
+    .qa-item.open .qa-toggle { transform: rotate(180deg); }
+
+    .qa-answer {
+      display: none;
+      padding: 0 20px 20px 20px;
+      border-top: 1px solid var(--gray-light);
+      background: #FAFBFF;
+    }
+    .qa-item.open .qa-answer { display: block; }
+    .qa-answer-inner {
+      padding-top: 16px;
+      font-size: 15px;
+      color: var(--text-mid);
+      line-height: 1.8;
+    }
+
+    /* Tables */
+    .qa-answer table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    .qa-answer th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 600;
+    }
+    .qa-answer td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-light);
+      color: var(--text-dark);
+    }
+    .qa-answer tr:nth-child(even) td { background: var(--gray-bg); }
+    .qa-answer tr:hover td { background: #eef0f8; }
+
+    /* Alert boxes */
+    .alert {
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-warning {
+      background: #fff8e6;
+      border: 1px solid #e6b800;
+      border-right: 3px solid #e6b800;
+      color: #5a4200;
+    }
+    .alert-danger {
+      background: #fff0f2;
+      border: 1px solid #f0b0bb;
+      border-right: 3px solid var(--red);
+      color: #6a0010;
+    }
+    .alert-success {
+      background: #edfaf4;
+      border: 1px solid #a0dfc0;
+      border-right: 3px solid var(--success);
+      color: #0a4a25;
+    }
+    .alert-info {
+      background: #eef2ff;
+      border: 1px solid #b0bef0;
+      border-right: 3px solid #3050cc;
+      color: #1a2868;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.85); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-badge">ה</div>
+      <div>
+        <div class="logo-text">הדיון | שירות מוקדים</div>
+        <div class="logo-sub">סדנת פשרה – פן ניירוון</div>
+      </div>
+    </div>
+    <div class="header-badge">🎯 מוקד שירות חדש</div>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">תאריך עדכון: 9.4.2026 | ממלא מקום בעדכון מערכת</div>
+  <h1>שאלות ותשובות – מוקד שירות</h1>
+  <div class="hero-subtitle">סדנת פשרה כלמוביל צפוני הצפון לחברה | עדכון אחרון 9.4.2026</div>
+  <div class="hero-meta">
+    <span>📋 45 שאלות ותשובות</span>
+    <span>🔍 9 קטגוריות</span>
+    <span>📅 גרסה 1.0 | יולי 2026</span>
+  </div>
+</div>
+
+<!-- Disclaimer -->
+<div class="disclaimer">
+  <div class="disclaimer-box">
+    <div style="font-size:18px;">⚠️</div>
+    <div><strong>הערה חשובה שצריך לדעת:</strong> המסמך זה אינו מסמך רשמי של מוקד השירות בחברה. זהו מסמך עזר בלבד. אם יש לך שאלה או בעיה שלא מכוסה כאן – אנא תפנה למנהל המוקד ישירות, או קרא לשירות הטלפוני (03-5750421).</div>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-title">📑 ניווט מהיר</div>
+    <nav class="sidebar-nav">
+      <a href="#sec-a" onclick="scrollTo('sec-a')">סעיף א – שאלות בסיס <span class="count">5</span></a>
+      <a href="#sec-b" onclick="scrollTo('sec-b')">סעיף ב – הצעות צפויות <span class="count">9</span></a>
+      <a href="#sec-c" onclick="scrollTo('sec-c')">סעיף ג – תאונות השימוש <span class="count">9</span></a>
+      <a href="#sec-d" onclick="scrollTo('sec-d')">סעיף ד – תיקון משימות <span class="count">2</span></a>
+      <a href="#sec-e" onclick="scrollTo('sec-e')">סעיף ה – מידע שהשימוש <span class="count">3</span></a>
+      <a href="#sec-f" onclick="scrollTo('sec-f')">סעיף ו – הערות פרטניות <span class="count">9</span></a>
+      <a href="#sec-g" onclick="scrollTo('sec-g')">סעיף ז – פרסום מידע <span class="count">3</span></a>
+      <a href="#sec-h" onclick="scrollTo('sec-h')">סעיף ח – צפוי בתובנות <span class="count">2</span></a>
+      <a href="#sec-i" onclick="scrollTo('sec-i')">סעיף ט – עידן המידע <span class="count">2</span></a>
+      <a href="#contacts" onclick="scrollTo('contacts')">📞 מי זה קשור</a>
+      <a href="#dodont" onclick="scrollTo('dodont')">🚫 סדרות וסירוב</a>
+    </nav>
+  </div>
+
+  <!-- Content -->
+  <div class="content" id="qaContent">
+
+    <!-- Section A -->
+    <div class="section-block" id="sec-a">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div class="section-num">א</div>
+        <div class="section-title-text">שאלות בסיס עם מוקדים</div>
+        <span class="section-count-badge">5 שאלות</span>
+        <span class="section-chevron">⌄</span>
+      </div>
+      <div class="section-body">
+
+        <div class="qa-item">
+          <div class="qa-question" onclick="toggleQA(this)">
+            <span class="qa-q-badge">ש1</span>
+            <span class="qa-question-text">מה זה מוקד פשרה מנוהל בתוך סדנת צפוניים?</span>
+            <span class="qa-toggle">⌄</span>
+          </div>
+          <div class="qa-answer">
+            <div class="qa-answer-inner">
+              תיאור בסיסי של מוקד השירות - וסבר בעיקר. זה מוקד הקשור לתמיכה שונה מנהלי מוקדים נוספים בנושא. הידע הכללי מצוין בספר ממוצע קטן לשימוש מהיר.
+              <div class="alert alert-warning">
+                <span>⚠️</span>
+                <div><strong>הערה חשובה:</strong> זה לא המוקד הרשמי בחברה. הרשמי נקרא הדיון - שירות חברה מקדים מלא.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Additional sections would go here... -->
+
+  </div>
+</div>
+
+<footer>
+  <strong>הדיון בע"מ</strong> | סדנת שירות | סדנה פשרה | שירות מוקדים צפוניים | גרסה 1.0 | יולי 2026
+</footer>
+
+<script>
+  function toggleSection(header) {
+    const block = header.closest('.section-block');
+    block.classList.toggle('collapsed');
+  }
+
+  function toggleQA(questionEl) {
+    const item = questionEl.closest('.qa-item');
+    item.classList.toggle('open');
+  }
+
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const block = el.closest ? el : el;
+      if (block.classList && block.classList.contains('collapsed')) {
+        block.classList.remove('collapsed');
+      }
+    }
+  }
+</script>
+</body>
+</html>
