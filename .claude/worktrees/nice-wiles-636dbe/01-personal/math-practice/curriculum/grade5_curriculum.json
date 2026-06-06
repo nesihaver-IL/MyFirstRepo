@@ -1,0 +1,188 @@
+{
+  "grade": 5,
+  "language": "Hebrew",
+  "curriculum_code": "IL_G5_MATH",
+  "topics": [
+    {
+      "id": "fraction_comparison",
+      "hebrew_name": "השוואת שברים",
+      "english_name": "Fraction Comparison",
+      "description": "Compare fractions using >, <, = symbols",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "same_denominator",
+          "name": "שברים עם מכנה זהה",
+          "description": "Compare fractions with same denominator",
+          "examples": ["2/5 vs 3/5", "1/4 vs 3/4"]
+        },
+        {
+          "id": "different_denominator",
+          "name": "שברים עם מכנים שונים",
+          "description": "Compare fractions with different denominators using visual aids",
+          "examples": ["1/2 vs 3/4", "2/3 vs 3/4"],
+          "visual_required": true
+        },
+        {
+          "id": "with_integers",
+          "name": "שברים עם מספרים שלמים",
+          "description": "Compare fractions with whole numbers",
+          "examples": ["3/4 vs 1", "5/6 vs 1"]
+        }
+      ],
+      "num_exercises": 8,
+      "numerator_range": [1, 10],
+      "denominator_range": [2, 12],
+      "operators": [">", "<", "="],
+      "visual_required": true,
+      "instructions": "בחר את הסימן הנכון: > , < , ="
+    },
+    {
+      "id": "fraction_simplification",
+      "hebrew_name": "צמצום שברים",
+      "english_name": "Fraction Simplification",
+      "description": "Reduce fractions to lowest terms",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "reduce_to_lowest",
+          "name": "צמצום לשבר מצומצם",
+          "description": "Simplify by dividing numerator and denominator by GCD",
+          "examples": ["4/8 = 1/2", "6/9 = 2/3"]
+        },
+        {
+          "id": "identify_equivalent",
+          "name": "זיהוי שברים שווים",
+          "description": "Identify equivalent fractions",
+          "examples": ["1/2 = 2/4 = 3/6"]
+        }
+      ],
+      "num_exercises": 6,
+      "numerator_range": [2, 12],
+      "denominator_range": [4, 20],
+      "visual_required": false,
+      "instructions": "צמצם את השבר לצורה מצומצמת"
+    },
+    {
+      "id": "mixed_improper_fractions",
+      "hebrew_name": "מספרים מעורבים ושברים גדולים מ-1",
+      "english_name": "Mixed Numbers & Improper Fractions",
+      "description": "Convert between mixed numbers and improper fractions",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "improper_to_mixed",
+          "name": "שבר גדול מ-1 למעורב",
+          "description": "Convert improper fraction to mixed number",
+          "examples": ["7/4 = 1 3/4", "11/5 = 2 1/5"]
+        },
+        {
+          "id": "mixed_to_improper",
+          "name": "מעורב לשבר גדול מ-1",
+          "description": "Convert mixed number to improper fraction",
+          "examples": ["1 3/4 = 7/4", "2 1/5 = 11/5"]
+        }
+      ],
+      "num_exercises": 8,
+      "whole_range": [1, 5],
+      "numerator_range": [1, 9],
+      "denominator_range": [2, 10],
+      "visual_required": true,
+      "instructions": "המר בין מספר מעורב לשבר גדול מ-1"
+    },
+    {
+      "id": "fraction_operations",
+      "hebrew_name": "פעולות בשברים",
+      "english_name": "Fraction Operations",
+      "description": "Addition, subtraction, and multiplication of fractions",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "addition_same_denom",
+          "name": "חיבור - מכנה זהה",
+          "description": "Add fractions with same denominator",
+          "examples": ["2/5 + 1/5 = 3/5", "1/4 + 2/4 = 3/4"]
+        },
+        {
+          "id": "subtraction_same_denom",
+          "name": "חיסור - מכנה זהה",
+          "description": "Subtract fractions with same denominator",
+          "examples": ["3/5 - 1/5 = 2/5", "4/6 - 2/6 = 2/6"]
+        },
+        {
+          "id": "multiplication_simple",
+          "name": "כפל - מודל פשוט",
+          "description": "Multiply fractions by whole numbers and by fractions",
+          "examples": ["1/2 × 3 = 3/2", "1/2 × 1/2 = 1/4"]
+        }
+      ],
+      "num_exercises": 10,
+      "numerator_range": [1, 8],
+      "denominator_range": [2, 8],
+      "multiplier_range": [1, 5],
+      "visual_required": false,
+      "instructions": "חשב את הפעולה ובטא את התשובה כשבר מצומצם"
+    },
+    {
+      "id": "visual_fractions",
+      "hebrew_name": "שברים עם תמונות",
+      "english_name": "Visual Fractions",
+      "description": "Identify and represent fractions using visual models",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "grid_shading",
+          "name": "רשת עם הצללה",
+          "description": "Shade grid to represent fractions",
+          "examples": ["Shade 3/4 of a grid", "Identify shaded portion"]
+        },
+        {
+          "id": "pie_chart",
+          "name": "עוגה",
+          "description": "Identify fractions in pie chart form",
+          "examples": ["What fraction is colored?", "Color 2/3 of pie"]
+        },
+        {
+          "id": "number_line",
+          "name": "ציר מספרים",
+          "description": "Place fractions on number line",
+          "examples": ["Place 1/2, 3/4 on number line"]
+        }
+      ],
+      "num_exercises": 8,
+      "numerator_range": [1, 8],
+      "denominator_range": [2, 12],
+      "visual_required": true,
+      "visual_types": ["grid", "pie_chart", "number_line"],
+      "instructions": "זהה או צייר את השבר על פי התמונה"
+    },
+    {
+      "id": "decimal_fractions",
+      "hebrew_name": "עשרונים ושברים",
+      "english_name": "Decimals & Fractions",
+      "description": "Convert between decimal and fraction notation",
+      "difficulty": "current",
+      "subtopics": [
+        {
+          "id": "decimal_to_fraction",
+          "name": "עשרוני לשבר",
+          "description": "Convert decimal to fraction",
+          "examples": ["0.5 = 1/2", "0.25 = 1/4", "0.75 = 3/4"]
+        },
+        {
+          "id": "fraction_to_decimal",
+          "name": "שבר לעשרוני",
+          "description": "Convert fraction to decimal",
+          "examples": ["1/2 = 0.5", "1/4 = 0.25", "3/4 = 0.75"]
+        }
+      ],
+      "num_exercises": 6,
+      "denominator_range": [2, 10],
+      "visual_required": false,
+      "instructions": "המר בין עשרוני לשבר"
+    }
+  ],
+  "notes": "Curriculum extracted from Israeli 5th grade exam materials. Fractions are emphasized with visual representations.",
+  "total_topics": 6,
+  "estimated_hours": 40
+}

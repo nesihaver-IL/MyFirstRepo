@@ -1,0 +1,9 @@
+# Snippets Directory
+
+This directory contains reusable code patterns and snippets.
+
+## Organization
+
+- `python/` - Python snippets
+- `typescript/` - TypeScript snippets
+- `terraform/` - Infrastructure snippets

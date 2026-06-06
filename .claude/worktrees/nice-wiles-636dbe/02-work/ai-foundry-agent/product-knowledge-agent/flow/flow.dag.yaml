@@ -1,0 +1,80 @@
+$schema: https://azuremlschemas.azureedge.net/promptflow/latest/Flow.schema.json
+environment:
+  python_requirements_txt: requirements.txt
+
+inputs:
+  question:
+    type: string
+    description: The user's question about a product
+
+outputs:
+  final_response:
+    type: string
+    reference: ${response_assembler.output}
+
+nodes:
+  - name: intent_classifier
+    type: llm
+    source:
+      type: code
+      path: nodes/intent_classifier.jinja2
+    inputs:
+      deployment_name: gpt-4o-product
+      temperature: 0
+      max_tokens: 300
+      question: ${inputs.question}
+    connection: aoai-product-connection
+    api: chat
+
+  - name: rag_retrieval
+    type: python
+    source:
+      type: code
+      path: nodes/rag_retrieval.py
+    inputs:
+      question: ${inputs.question}
+      intent_json: ${intent_classifier.output}
+      search_endpoint: https://srch-product-knowledge.search.windows.net
+      search_key: "{{SEARCH_ADMIN_KEY}}"
+      openai_endpoint: https://aoai-product-knowledge.openai.azure.com/
+      openai_key: "{{OPENAI_API_KEY}}"
+
+  - name: answer_synthesizer
+    type: llm
+    source:
+      type: code
+      path: nodes/answer_synthesizer.jinja2
+    inputs:
+      deployment_name: gpt-4o-product
+      temperature: 0.3
+      max_tokens: 1500
+      question: ${inputs.question}
+      intents: ${rag_retrieval.output.intents}
+      doc_context: ${rag_retrieval.output.doc_chunks}
+    connection: aoai-product-connection
+    api: chat
+
+  - name: diagram_handler
+    type: python
+    source:
+      type: code
+      path: nodes/diagram_handler.py
+    inputs:
+      intents: ${rag_retrieval.output.intents}
+      diagrams: ${rag_retrieval.output.diagrams}
+      product_hint: ${rag_retrieval.output.product_hint}
+      subsystem_hint: ${rag_retrieval.output.subsystem_hint}
+      openai_endpoint: https://aoai-product-knowledge.openai.azure.com/
+      openai_key: "{{OPENAI_API_KEY}}"
+      dalle_deployment: dalle3-diagrams
+
+  - name: response_assembler
+    type: python
+    source:
+      type: code
+      path: nodes/response_assembler.py
+    inputs:
+      answer: ${answer_synthesizer.output}
+      diagram_url: ${diagram_handler.output.diagram_url}
+      diagram_mode: ${diagram_handler.output.diagram_mode}
+      diagram_description: ${diagram_handler.output.diagram_description}

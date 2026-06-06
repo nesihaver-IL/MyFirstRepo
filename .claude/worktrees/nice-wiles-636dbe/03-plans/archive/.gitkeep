@@ -1,0 +1,9 @@
+# Archive
+
+Completed plans organized by year.
+
+Structure:
+archive/
+├── 2024/
+├── 2025/
+└── ...

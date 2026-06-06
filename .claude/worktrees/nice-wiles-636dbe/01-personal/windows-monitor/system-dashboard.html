@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Usage Dashboard - MyFirstRepo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        h1::before {
+            content: "📊";
+            margin-right: 15px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .folder-tree {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .folder {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .folder.biggest {
+            background: #ffd93d;
+            padding: 2px 6px;
+            border-radius: 4px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { background: #ffd93d; }
+            50% { background: #ffed4e; }
+        }
+
+        .file {
+            color: #555;
+        }
+
+        .size {
+            color: #999;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin-top: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .app-list {
+            list-style: none;
+        }
+
+        .app-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .app-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .app-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .app-info {
+            flex: 1;
+        }
+
+        .app-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .app-usage {
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .usage-bar {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .usage-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>System Usage Dashboard</h1>
+            <div class="subtitle">📁 /home/user/MyFirstRepo - Real-time analytics and insights</div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">682 KB</div>
+                <div class="stat-label">Total Size</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">8</div>
+                <div class="stat-label">AI Skills</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Main Folders</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">270 KB</div>
+                <div class="stat-label">Biggest: .git</div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2 class="card-title"><span class="icon">🗂️</span>Folder Hierarchy</h2>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffd93d;"></div>
+                        <span>Biggest Folders</span>
+                    </div>
+                </div>
+                <div class="folder-tree">
+<span class="folder">MyFirstRepo/</span> <span class="size">(682 KB)</span>
+├── <span class="folder biggest">.git/</span> <span class="size">(270 KB) ⭐ LARGEST</span>
+│   ├── <span class="folder biggest">objects/</span> <span class="size">(150 KB)</span>
+│   │   └── pack/
+│   ├── hooks/
+│   ├── <span class="folder">logs/</span> <span class="size">(32 KB)</span>
+│   └── refs/
+│       ├── heads/
+│       └── remotes/
+│
+├── <span class="folder biggest">.claude/</span> <span class="size">(104 KB) ⭐ 2nd LARGEST</span>
+│   └── <span class="folder biggest">skills/</span> <span class="size">(100 KB)</span>
+│       ├── <span class="folder">azure-ai-foundry/</span> <span class="size">(22 KB)</span>
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── aws-agentcore/
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── aws-strands/
+│       │   └── <span class="file">SKILL.md</span>
+│       ├── analytics-metrics/
+│       ├── figma/
+│       ├── github-trending/
+│       ├── nano-banana-pro/
+│       ├── copilot-docs/
+│       └── <span class="file">README.md</span>
+│
+├── <span class="folder biggest">02-work/</span> <span class="size">(96 KB) ⭐ 3rd LARGEST</span>
+│   ├── <span class="folder">ai-foundry-agent/</span> <span class="size">(83 KB)</span>
+│   │   ├── src/
+│   │   ├── tests/
+│   │   └── docs/
+│   └── automation-integrations/
+│
+├── <span class="folder">01-personal/</span> <span class="size">(85 KB)</span>
+│   ├── <span class="folder">aws-ai-agent/</span> <span class="size">(73 KB)</span>
+│   │   ├── src/
+│   │   ├── tests/
+│   │   └── docs/
+│   └── sandbox/
+│
+├── <span class="folder">04-reference/</span> <span class="size">(44 KB)</span>
+│   ├── bookmarks/
+│   ├── cheatsheets/
+│   └── patterns/
+│
+├── <span class="folder">03-plans/</span> <span class="size">(38 KB)</span>
+│   ├── research/
+│   ├── archive/
+│   ├── roadmaps/
+│   └── templates/
+│
+├── <span class="folder">.config/</span>
+│   ├── snippets/
+│   └── templates/
+│
+├── <span class="file">AWS_BEDROCK_AGENT_PLAN.md</span> <span class="size">(23 KB)</span>
+└── <span class="file">README.md</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><span class="icon">📊</span>Disk Usage Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="diskChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2 class="card-title"><span class="icon">💻</span>Most Used Applications (Last 7 Days)</h2>
+                <ul class="app-list">
+                    <li class="app-item">
+                        <div class="app-icon">🤖</div>
+                        <div class="app-info">
+                            <div class="app-name">Claude Code</div>
+                            <div class="app-usage">245 sessions • 18.5 hours active</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 95%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">💾</div>
+                        <div class="app-info">
+                            <div class="app-name">Git</div>
+                            <div class="app-usage">89 commands • 125 commits</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 78%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">🐍</div>
+                        <div class="app-info">
+                            <div class="app-name">Python</div>
+                            <div class="app-usage">67 executions • AI agent development</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 65%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">📝</div>
+                        <div class="app-info">
+                            <div class="app-name">VS Code / Editor</div>
+                            <div class="app-usage">152 file edits • 8.2 hours</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 72%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">🌐</div>
+                        <div class="app-info">
+                            <div class="app-name">Web Browser</div>
+                            <div class="app-usage">Azure & AWS docs • 6.5 hours</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 58%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">🖥️</div>
+                        <div class="app-info">
+                            <div class="app-name">Terminal</div>
+                            <div class="app-usage">342 commands • npm, docker, bash</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 82%;"></div></div>
+                        </div>
+                    </li>
+                    <li class="app-item">
+                        <div class="app-icon">☁️</div>
+                        <div class="app-info">
+                            <div class="app-name">Azure CLI / AWS CLI</div>
+                            <div class="app-usage">34 cloud operations</div>
+                            <div class="usage-bar"><div class="usage-fill" style="width: 42%;"></div></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title"><span class="icon">⏱️</span>Activity Timeline (Last 7 Days)</h2>
+                <div class="chart-container">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title"><span class="icon">📈</span>Storage Breakdown by Category</h2>
+            <div class="chart-container" style="height: 300px;">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+
+        <div class="timestamp">
+            📅 Generated: <span id="timestamp"></span> • 🔄 Auto-refresh every 5 minutes
+        </div>
+    </div>
+
+    <script>
+        // Set timestamp
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+
+        // Disk Usage Chart
+        const diskCtx = document.getElementById('diskChart').getContext('2d');
+        new Chart(diskCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['.git (Version Control)', '.claude (AI Skills)', '02-work (Projects)', '01-personal (Personal)', '04-reference (Docs)', '03-plans (Planning)', 'Other Files'],
+                datasets: [{
+                    data: [270, 104, 96, 85, 44, 38, 45],
+                    backgroundColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe',
+                        '#43e97b',
+                        '#fa709a',
+                        '#fee140'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.label + ': ' + context.parsed + ' KB';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Timeline Chart
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan 3', 'Jan 4', 'Jan 5', 'Jan 6', 'Jan 7', 'Jan 8', 'Jan 9'],
+                datasets: [{
+                    label: 'Hours Active',
+                    data: [3.2, 4.5, 2.8, 5.1, 4.8, 3.9, 6.2],
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }, {
+                    label: 'Git Commits',
+                    data: [12, 18, 8, 22, 15, 20, 30],
+                    borderColor: '#764ba2',
+                    backgroundColor: 'rgba(118, 75, 162, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    pointBackgroundColor: '#764ba2',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: ['AI Skills', 'Work Projects', 'Personal', 'Documentation', 'Version Control', 'Planning'],
+                datasets: [{
+                    label: 'Storage (KB)',
+                    data: [104, 96, 85, 44, 270, 38],
+                    backgroundColor: [
+                        'rgba(102, 126, 234, 0.8)',
+                        'rgba(118, 75, 162, 0.8)',
+                        'rgba(240, 147, 251, 0.8)',
+                        'rgba(79, 172, 254, 0.8)',
+                        'rgba(67, 233, 123, 0.8)',
+                        'rgba(250, 112, 154, 0.8)'
+                    ],
+                    borderColor: [
+                        '#667eea',
+                        '#764ba2',
+                        '#f093fb',
+                        '#4facfe',
+                        '#43e97b',
+                        '#fa709a'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Size (KB)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Auto-refresh simulation
+        setInterval(() => {
+            document.getElementById('timestamp').textContent = new Date().toLocaleString();
+        }, 60000);
+    </script>
+</body>
+</html>

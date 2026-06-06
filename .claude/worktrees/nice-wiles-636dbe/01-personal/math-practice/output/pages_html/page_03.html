@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עמוד 3: תרגול שברים</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Tahoma', sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            direction: rtl;
+        }
+
+        .exercise-container {
+            display: flex;
+            margin-bottom: 30px;
+            min-height: 120px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .exercise-left {
+            flex: 1;
+            padding: 20px;
+            background: #f9f9f9;
+            direction: ltr;
+            text-align: left;
+            border-right: 2px solid #3498db;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .exercise-right {
+            flex: 1;
+            padding: 20px;
+            background: #ffffff;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .exercise-number {
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .exercise-question {
+            font-size: 18px;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .answer-space {
+            border-bottom: 2px solid #2c3e50;
+            height: 35px;
+            margin-top: 10px;
+            width: 80%;
+        }
+
+        .visual-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            min-height: 60px;
+        }
+
+        .visual-area svg {
+            max-width: 95%;
+            height: auto;
+        }
+
+        .exercise-instruction {
+            color: #555555;
+            font-size: 13px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            padding: 8px;
+            background: #f5f5f5;
+            border-radius: 3px;
+        }
+
+        .instruction-label {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        @media print {
+            body { background: white; }
+            .page-container { box-shadow: none; border: none; }
+            .exercise-container { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-title" dir="rtl">עמוד 3: תרגול שברים</div>
+
+        <div class="exercise-container">
+            <!-- LEFT SIDE: NUMERIC EXERCISE (LTR) -->
+            <div class="exercise-left">
+                <div class="exercise-question">המר שבר לעשרוני: 1/3 = ___</div>
+                <div class="answer-space"></div>
+            </div>
+
+            <!-- RIGHT SIDE: HEBREW INSTRUCTIONS (RTL) -->
+            <div class="exercise-right">
+                <span class="exercise-number">תרגיל 1</span>
+                <div class="exercise-instruction">
+                    <span class="instruction-label">הוראות:</span>
+                    המר בין עשרוני לשבר
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-container">
+            <!-- LEFT SIDE: NUMERIC EXERCISE (LTR) -->
+            <div class="exercise-left">
+                <div class="exercise-question">איזה שבר מייצג ההצללה?</div>
+                <div class="visual-area">
+                    <div class="visual-content"></div>
+                </div>
+                <div class="answer-space"></div>
+            </div>
+
+            <!-- RIGHT SIDE: HEBREW INSTRUCTIONS (RTL) -->
+            <div class="exercise-right">
+                <span class="exercise-number">תרגיל 2</span>
+                <div class="exercise-instruction">
+                    <span class="instruction-label">הוראות:</span>
+                    זהה או צייר את השבר על פי התמונה
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-container">
+            <!-- LEFT SIDE: NUMERIC EXERCISE (LTR) -->
+            <div class="exercise-left">
+                <div class="exercise-question">2/5 ___ 1/5</div>
+                <div class="answer-space"></div>
+            </div>
+
+            <!-- RIGHT SIDE: HEBREW INSTRUCTIONS (RTL) -->
+            <div class="exercise-right">
+                <span class="exercise-number">תרגיל 3</span>
+                <div class="exercise-instruction">
+                    <span class="instruction-label">הוראות:</span>
+                    בחר את הסימן הנכון: > , < , =
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-container">
+            <!-- LEFT SIDE: NUMERIC EXERCISE (LTR) -->
+            <div class="exercise-left">
+                <div class="exercise-question">5/7 × 5 = ___</div>
+                <div class="answer-space"></div>
+            </div>
+
+            <!-- RIGHT SIDE: HEBREW INSTRUCTIONS (RTL) -->
+            <div class="exercise-right">
+                <span class="exercise-number">תרגיל 4</span>
+                <div class="exercise-instruction">
+                    <span class="instruction-label">הוראות:</span>
+                    חשב את הפעולה ובטא את התשובה כשבר מצומצם
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-container">
+            <!-- LEFT SIDE: NUMERIC EXERCISE (LTR) -->
+            <div class="exercise-left">
+                <div class="exercise-question">1/9 ___ 4/6</div>
+                <div class="visual-area">
+                    <div class="visual-content"><div style='display: flex; gap: 20px; justify-content: center;'><div><svg width="92" height="92" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="30" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="1" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="1" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="1" y="31" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="31" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="31" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="1" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+</svg></div><div><svg width="92" height="92" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="30" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="1" width="30" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="1" width="30" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+<rect x="1" y="31" width="30" height="30" fill="#3498db" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="31" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="31" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="1" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="31" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+<rect x="61" y="61" width="30" height="30" fill="#ffffff" stroke="#2c3e50" stroke-width="1"/>
+</svg></div></div></div>
+                </div>
+                <div class="answer-space"></div>
+            </div>
+
+            <!-- RIGHT SIDE: HEBREW INSTRUCTIONS (RTL) -->
+            <div class="exercise-right">
+                <span class="exercise-number">תרגיל 5</span>
+                <div class="exercise-instruction">
+                    <span class="instruction-label">הוראות:</span>
+                    בחר את הסימן הנכון: > , < , =
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
