@@ -1,0 +1,396 @@
+/* ═══════════════════════════════════════════════════════════════════
+   DEFAULT THEME — Main stylesheet
+   Purpose: Complete presentation styling with all imports
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Import all theme modules */
+@import '_theme-variables.css';
+@import '_components.css';
+@import '_utilities.css';
+
+/* ─ RESET & BASE STYLES ─ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* ─ TYPOGRAPHY BASE ─ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-snug);
+  margin: 0;
+}
+
+h1 {
+  font-size: var(--font-size-5xl);
+}
+
+h2 {
+  font-size: var(--font-size-4xl);
+}
+
+h3 {
+  font-size: var(--font-size-3xl);
+}
+
+h4 {
+  font-size: var(--font-size-2xl);
+}
+
+h5 {
+  font-size: var(--font-size-xl);
+}
+
+h6 {
+  font-size: var(--font-size-lg);
+}
+
+p {
+  margin: 0;
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: color var(--t-normal);
+}
+
+a:hover {
+  color: var(--color-accent-light);
+  text-decoration: underline;
+}
+
+/* ─ BUTTON BASE ─ */
+button {
+  font-family: var(--font-family-base);
+}
+
+/* ─ DECK & SLIDE ENGINE ─ */
+.deck {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3xl) var(--space-4xl) var(--space-4xl);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(80px);
+  transition: opacity var(--t), transform var(--t);
+  z-index: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+  z-index: 1;
+}
+
+.slide.exit {
+  opacity: 0;
+  transform: translateX(-80px);
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: opacity 0.1s;
+  }
+
+  .slide.active {
+    transform: translateX(0);
+  }
+
+  .slide.exit {
+    transform: translateX(0);
+  }
+}
+
+/* ─ SLIDE LAYOUT VARIANTS ─ */
+.slide--center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.slide--left {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.slide--right {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.slide--column {
+  flex-direction: column;
+}
+
+.slide--row {
+  flex-direction: row;
+}
+
+/* ─ INDIVIDUAL SLIDE BACKGROUNDS ─ */
+/* Slide 0 - Title Slide */
+#s0 {
+  background:
+    radial-gradient(ellipse 80% 60% at 25% 55%, rgba(5, 150, 105, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 80% 20%, rgba(5, 150, 105, 0.15) 0%, transparent 60%),
+    var(--color-bg-primary);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Slide 1 - Garmin Overview */
+#s1 {
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 40%, rgba(5, 150, 105, 0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 85% 70%, rgba(5, 150, 105, 0.12) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* Slide 2 - Garmin Deep Dive */
+#s2 {
+  background:
+    radial-gradient(ellipse 75% 50% at 50% 30%, rgba(5, 150, 105, 0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 60% at 90% 80%, rgba(5, 150, 105, 0.10) 0%, transparent 65%),
+    var(--color-bg-primary);
+}
+
+/* Slide 3 - AWS Agent */
+#s3 {
+  background:
+    radial-gradient(ellipse 65% 55% at 10% 25%, rgba(5, 150, 105, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 95% 85%, rgba(5, 150, 105, 0.12) 0%, transparent 65%),
+    var(--color-bg-primary);
+}
+
+/* Slide 4 - Azure Agent */
+#s4 {
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 20%, rgba(5, 150, 105, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 55% at 20% 75%, rgba(5, 150, 105, 0.10) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* Slide 5 - Other Projects */
+#s5 {
+  background:
+    radial-gradient(ellipse 80% 45% at 35% 10%, rgba(5, 150, 105, 0.20) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 50% at 75% 90%, rgba(5, 150, 105, 0.12) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* Slide 6 - Achievements */
+#s6 {
+  background:
+    radial-gradient(ellipse 75% 55% at 25% 35%, rgba(5, 150, 105, 0.25) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 80% 65%, rgba(5, 150, 105, 0.12) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* Slide 7 - Skills */
+#s7 {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 50%, rgba(5, 150, 105, 0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 90% 25%, rgba(5, 150, 105, 0.12) 0%, transparent 60%),
+    var(--color-bg-primary);
+}
+
+/* Slide 8 - Key Takeaways */
+#s8 {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(5, 150, 105, 0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 10% 80%, rgba(5, 150, 105, 0.12) 0%, transparent 65%),
+    var(--color-bg-primary);
+}
+
+/* Slide 9 - Call to Action */
+#s9 {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 50%, rgba(5, 150, 105, 0.30) 0%, transparent 70%),
+    var(--color-bg-primary);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ─ RESPONSIVE DESIGN ─ */
+@media (max-width: 1024px) {
+  .slide {
+    padding: var(--space-2xl) var(--space-2xl) var(--space-2xl);
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .sum-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .hero-title {
+    font-size: clamp(40px, 5vw, 60px);
+  }
+
+  .tool-name {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: var(--space-xl) var(--space-lg) var(--space-xl);
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .sum-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .chip-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: clamp(32px, 4vw, 48px);
+  }
+
+  .hero-sub {
+    font-size: var(--font-size-lg);
+  }
+
+  .tool-name {
+    font-size: var(--font-size-2xl);
+  }
+
+  .slide-head {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 640px) {
+  .slide {
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .sum-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .card {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .chip-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 3vw, 40px);
+  }
+
+  .hero-sub {
+    font-size: var(--font-size-base);
+  }
+
+  .tool-meta {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .tool-name {
+    font-size: var(--font-size-2xl);
+  }
+
+  .nav {
+    bottom: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .counter {
+    font-size: var(--font-size-xs);
+    min-width: 40px;
+  }
+}
+
+/* ─ SCROLLBAR STYLING (Optional) ─ */
+.slide::-webkit-scrollbar {
+  width: 6px;
+}
+
+.slide::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slide::-webkit-scrollbar-thumb {
+  background: var(--color-accent-primary);
+  border-radius: 3px;
+}
+
+.slide::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-light);
+}
+
+/* ─ PRINT STYLES ─ */
+@media print {
+  .nav {
+    display: none;
+  }
+
+  .slide {
+    page-break-after: always;
+    opacity: 1;
+    transform: none;
+  }
+}

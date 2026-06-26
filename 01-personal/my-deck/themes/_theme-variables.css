@@ -1,0 +1,100 @@
+/* ═══════════════════════════════════════════════════════════════════
+   THEME VARIABLES — Custom Open Slide Theme
+   Purpose: Single source of truth for all theme styling
+   Usage: Import this file before component-specific CSS
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ─ TIMING & EASING ─ */
+  --t: 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --t-slow: 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ─ COLOR PALETTE ─ */
+  /* Primary & Background Colors */
+  --color-bg-primary: #050510;      /* Deepest background */
+  --color-bg-secondary: #0f0f1f;    /* Card/surface color */
+  --color-bg-tertiary: #1a1a2e;     /* Alternative surface */
+
+  /* Accent Colors (Emerald Green) */
+  --color-accent-primary: #059669;   /* Bold emerald green (main accent) */
+  --color-accent-light: #10a35f;     /* Lighter emerald (hover states) */
+  --color-accent-dark: #047857;      /* Darker emerald (active states) */
+  --color-accent-subtle: rgba(5, 150, 105, 0.15);  /* Emerald tint for backgrounds */
+  --color-accent-border: rgba(5, 150, 105, 0.35);  /* Emerald tint for borders */
+
+  /* Status Colors */
+  --color-success: #059669;          /* Emerald (matches accent) */
+  --color-warning: #f59e0b;          /* Amber */
+  --color-error: #dc2626;            /* Red */
+  --color-info: #3b82f6;             /* Blue */
+
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+  --color-text-muted: rgba(255, 255, 255, 0.45);
+  --color-text-disabled: rgba(255, 255, 255, 0.25);
+
+  /* Border & Divider */
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-border-light: rgba(255, 255, 255, 0.06);
+  --color-divider: rgba(5, 150, 105, 0.25);    /* Emerald-tinted divider */
+
+  /* Glassmorphism base */
+  --glass-light: rgba(255, 255, 255, 0.07);
+  --glass-light-border: rgba(255, 255, 255, 0.12);
+  --glass-medium: rgba(255, 255, 255, 0.12);
+  --glass-medium-border: rgba(255, 255, 255, 0.18);
+  --glass-dark: rgba(255, 255, 255, 0.18);
+  --glass-dark-border: rgba(255, 255, 255, 0.28);
+
+  /* ─ TYPOGRAPHY ─ */
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-family-mono: 'Monaco', 'Courier New', monospace;
+
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 15px;
+  --font-size-lg: 17px;
+  --font-size-xl: 19px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 28px;
+  --font-size-4xl: 36px;
+  --font-size-5xl: 48px;
+  --font-size-6xl: clamp(52px, 6.5vw, 88px);
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+
+  --line-height-tight: 1.0;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --line-height-loose: 1.85;
+
+  /* ─ SPACING ─ */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 80px;
+
+  /* ─ BORDER RADIUS ─ */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 100px;
+
+  /* ─ SHADOWS & EFFECTS ─ */
+  --blur-sm: 10px;
+  --blur-md: 14px;
+  --blur-lg: 20px;
+  --blur-xl: 24px;
+}
