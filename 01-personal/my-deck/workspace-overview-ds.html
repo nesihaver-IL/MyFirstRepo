@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyFirstRepo - AI Agent Development Workspace</title>
+
+  <!-- New design system - light mode, Geist, electric blue -->
+  <link rel="stylesheet" href="../../shared/design-system/index.css">
+
+  <style>
+    /* ── Page layout ── */
+    .page {
+      max-width: var(--container-lg);
+      margin: 0 auto;
+      padding: 0 var(--space-8);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+      border-bottom: 1px solid var(--color-border);
+      background: var(--gradient-hero);
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-accent-subtle);
+      color: var(--color-accent-primary);
+      border: 1px solid var(--color-accent-border);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-6);
+    }
+    .hero h1 {
+      font-size: var(--font-size-6xl);
+      font-weight: var(--font-weight-display);
+      line-height: var(--line-height-heading);
+      letter-spacing: -0.02em;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-6);
+    }
+    .hero-sub {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-reading);
+      max-width: 680px;
+      margin-bottom: var(--space-10);
+    }
+    .chip-row {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--color-border);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: var(--space-12) 0;
+    }
+    .stat-cell {
+      background: var(--color-bg-primary);
+      padding: var(--space-6) var(--space-8);
+    }
+    .stat-value {
+      font-size: var(--font-size-4xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent-primary);
+      line-height: 1;
+      margin-bottom: var(--space-1);
+    }
+    .stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    /* ── Section ── */
+    .section {
+      padding: var(--space-16) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .section-header {
+      margin-bottom: var(--space-10);
+    }
+    .section-eyebrow {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent-primary);
+      margin-bottom: var(--space-2);
+    }
+    .section-title {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      line-height: var(--line-height-heading);
+      margin-bottom: var(--space-3);
+    }
+    .section-sub {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-reading);
+    }
+
+    /* ── Cards ── */
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    .card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--t-normal), transform var(--t-normal), border-color var(--t-normal);
+    }
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-accent-border);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: var(--space-4);
+    }
+    .card-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+    }
+    .card-desc {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-reading);
+    }
+
+    /* ── Feature card (larger) ── */
+    .feature-card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--t-normal), border-color var(--t-normal);
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-accent-border);
+    }
+    .feature-card .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-accent-subtle);
+      color: var(--color-accent-primary);
+      border: 1px solid var(--color-accent-border);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-4);
+    }
+    .feature-card h3 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-3);
+    }
+    .feature-card p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-reading);
+      margin-bottom: var(--space-4);
+    }
+    .feature-card .stack-tag {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+    }
+
+    /* ── Workspace folder cards ── */
+    .folder-card {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: box-shadow var(--t-normal);
+    }
+    .folder-card:hover { box-shadow: var(--shadow-md); }
+    .folder-card h3 {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-2);
+    }
+    .folder-card .folder-desc {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent-primary);
+      margin-bottom: var(--space-4);
+    }
+    .folder-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .folder-card li {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .folder-card li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--color-accent-primary);
+      flex-shrink: 0;
+    }
+
+    /* ── Skills list ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    .skills-card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .skills-card h4 {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-4);
+      color: var(--color-text-primary);
+    }
+    .skill-pill {
+      display: inline-block;
+      padding: 2px 10px;
+      background: var(--color-bg-tertiary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-secondary);
+      margin: 2px;
+    }
+
+    /* ── Tech stack table ── */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    .tech-row {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5) var(--space-6);
+    }
+    .tech-row h4 {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent-primary);
+      margin-bottom: var(--space-3);
+    }
+    .tech-row p {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ── Standards ── */
+    .standards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+    .standard-card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-sm);
+    }
+    .standard-card h3 {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-4);
+    }
+    .standard-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .standard-card li {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+      padding-left: var(--space-4);
+      position: relative;
+    }
+    .standard-card li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-success);
+      font-weight: var(--font-weight-bold);
+      font-size: var(--font-size-xs);
+    }
+
+    /* ── Agent cards ── */
+    .agent-card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+    }
+    .agent-card h3 {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-2);
+    }
+    .agent-prompt {
+      font-size: var(--font-size-sm);
+      font-family: var(--font-family-mono);
+      color: var(--color-accent-primary);
+      background: var(--color-accent-subtle);
+      border: 1px solid var(--color-accent-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-3);
+      margin-bottom: var(--space-3);
+      line-height: 1.4;
+    }
+    .agent-desc {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+
+    /* ── CTA / Contact ── */
+    .cta-section {
+      padding: var(--space-20) 0;
+      text-align: center;
+    }
+    .cta-section h2 {
+      font-size: var(--font-size-5xl);
+      font-weight: var(--font-weight-bold);
+      line-height: var(--line-height-heading);
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+    .cta-section p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin: 0 auto var(--space-10);
+      line-height: var(--line-height-reading);
+    }
+    .contact-row {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-8);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-5) var(--space-10);
+      box-shadow: var(--shadow-md);
+    }
+    .contact-item { text-align: center; }
+    .contact-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: var(--space-1);
+    }
+    .contact-value {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-bold);
+    }
+    .contact-value a {
+      color: var(--color-accent-primary);
+      text-decoration: none;
+      transition: color var(--t-fast);
+    }
+    .contact-value a:hover { color: var(--color-accent-hover); }
+    .contact-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--color-border);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .card-grid-4, .skills-grid, .standards-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: var(--font-size-4xl); }
+      .card-grid-3, .card-grid-2, .tech-grid { grid-template-columns: 1fr; }
+      .card-grid-4, .skills-grid, .standards-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .chip-row { gap: var(--space-2); }
+      .contact-row { flex-direction: column; gap: var(--space-4); }
+      .contact-divider { width: 60px; height: 1px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <header class="hero">
+    <div class="hero-eyebrow">Complete Workspace Overview</div>
+    <h1>MyFirstRepo<br><span class="gradient-text">AI Agent Workspace</span></h1>
+    <p class="hero-sub">
+      A multi-project environment for AI agent development, data engineering,
+      and enterprise automation - featuring 6 active projects and 27 registered skills.
+    </p>
+    <div class="chip-row">
+      <div class="chip">6 Active Projects</div>
+      <div class="chip">27 Skills</div>
+      <div class="chip">4 Agents</div>
+      <div class="chip">AWS + Azure</div>
+      <div class="chip">Python + JavaScript</div>
+    </div>
+  </header>
+
+  <!-- ── STATS BAR ── -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-value">6</div>
+      <div class="stat-label">Active projects</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">27</div>
+      <div class="stat-label">Registered skills</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">4</div>
+      <div class="stat-label">AI agents</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-value">2</div>
+      <div class="stat-label">Cloud platforms</div>
+    </div>
+  </div>
+
+  <!-- ── WORKSPACE STRUCTURE ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Architecture</div>
+      <div class="section-title">Workspace Structure</div>
+      <p class="section-sub">Organized across learning, professional, and ecosystem domains</p>
+    </div>
+    <div class="card-grid-3">
+      <div class="folder-card">
+        <h3>01-personal/</h3>
+        <div class="folder-desc">Learning and Experiments</div>
+        <ul>
+          <li>Garmin Health Analytics</li>
+          <li>AWS AI Agent Framework</li>
+          <li>Math Practice Generator</li>
+          <li>Interview Coach</li>
+        </ul>
+      </div>
+      <div class="folder-card">
+        <h3>02-work/</h3>
+        <div class="folder-desc">Professional Deliverables</div>
+        <ul>
+          <li>Azure Foundry Agent</li>
+          <li>JIRA/Confluence Automation</li>
+          <li>Enterprise integrations</li>
+        </ul>
+      </div>
+      <div class="folder-card">
+        <h3>.claude/ + 03-plans/</h3>
+        <div class="folder-desc">Ecosystem and Resources</div>
+        <ul>
+          <li>27 Registered Skills</li>
+          <li>4 Domain Agents</li>
+          <li>Planning and Reference</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GARMIN PROJECT ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Flagship Project</div>
+      <div class="section-title">Garmin Health Analytics</div>
+      <p class="section-sub">End-to-end health data ingestion to AI-powered insights</p>
+    </div>
+    <div class="card-grid-4">
+      <div class="card">
+        <div class="card-icon">🔐</div>
+        <div class="card-title">OAuth Integration</div>
+        <div class="card-desc">Secure Garmin Connect OAuth flow with automatic token refresh and webhook handlers.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">☁️</div>
+        <div class="card-title">AWS Backend</div>
+        <div class="card-desc">4 Lambda functions, DynamoDB storage, EventBridge orchestration, Terraform IaC.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <div class="card-title">Streamlit Dashboard</div>
+        <div class="card-desc">Interactive analytics with Claude AI integration for personalized health coaching.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">RAG Datasets</div>
+        <div class="card-desc">Vector datasets for activities, wellness, and training - 2,205 sleep records, 851 activities.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AWS + LEARNING PROJECTS ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Core Projects</div>
+      <div class="section-title">Full-Stack Learning Projects</div>
+    </div>
+    <div class="card-grid-2">
+      <div class="feature-card">
+        <div class="badge">AWS Bedrock</div>
+        <h3>AWS AI Agent Framework</h3>
+        <p>Generic AWS Bedrock patterns using Strands/AgentCore. Clean separation of concerns, reusable architecture, no domain-specific logic. Production-ready patterns for Bedrock, LangChain, and agent orchestration.</p>
+        <div class="stack-tag">Python, AWS Bedrock, LangChain, Terraform</div>
+      </div>
+      <div class="feature-card">
+        <div class="badge">Education</div>
+        <h3>Math Practice Generator</h3>
+        <p>Grade 5 math exam generator with Hebrew UI and dynamic problem generation. Full-stack application demonstrating Python backend with a localized JavaScript frontend for educational use.</p>
+        <div class="stack-tag">Python, JavaScript, Hebrew UI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ENTERPRISE ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Enterprise</div>
+      <div class="section-title">Enterprise Automation</div>
+    </div>
+    <div class="card-grid-2">
+      <div class="feature-card">
+        <div class="badge">Azure AI Foundry</div>
+        <h3>Azure Foundry Agent</h3>
+        <p>Enterprise-grade agent for professional automation workflows, multi-step orchestration, and system integration. Built on Azure AI Foundry with production-ready patterns for enterprise environments.</p>
+        <div class="stack-tag">Python, Azure AI Foundry, REST APIs</div>
+      </div>
+      <div class="feature-card">
+        <div class="badge">Automation</div>
+        <h3>JIRA / Confluence Automation</h3>
+        <p>Work ticketing automation, integration hooks, and enterprise process automation workflows. Connects JIRA and Confluence to reduce manual overhead on sprint management and documentation.</p>
+        <div class="stack-tag">Python, REST APIs, JIRA Cloud, Confluence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLAUDE CODE SKILLS ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Claude Code Ecosystem</div>
+      <div class="section-title">27 Registered Skills</div>
+      <p class="section-sub">Domain-specialized tools for every development workflow</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skills-card">
+        <h4>Code Development</h4>
+        <span class="skill-pill">create-plan</span>
+        <span class="skill-pill">execute-plan</span>
+        <span class="skill-pill">review</span>
+        <span class="skill-pill">peer-review</span>
+        <span class="skill-pill">simplify</span>
+      </div>
+      <div class="skills-card">
+        <h4>Quality and Security</h4>
+        <span class="skill-pill">security-audit</span>
+        <span class="skill-pill">test-runner</span>
+        <span class="skill-pill">code-review</span>
+        <span class="skill-pill">update-docs</span>
+      </div>
+      <div class="skills-card">
+        <h4>Domain-Specific</h4>
+        <span class="skill-pill">streamlit-dash</span>
+        <span class="skill-pill">data-pipeline</span>
+        <span class="skill-pill">garmin-analyzer</span>
+        <span class="skill-pill">terraform-ops</span>
+      </div>
+      <div class="skills-card">
+        <h4>Cloud and Deploy</h4>
+        <span class="skill-pill">aws-bedrock</span>
+        <span class="skill-pill">aws-lambda</span>
+        <span class="skill-pill">azure-ai-foundry</span>
+        <span class="skill-pill">jira-confluence</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENTS ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">AI Agents</div>
+      <div class="section-title">4 Domain-Specialized Agents</div>
+      <p class="section-sub">Delegate complex multi-step tasks in natural language</p>
+    </div>
+    <div class="card-grid-4">
+      <div class="agent-card">
+        <h3>Garmin Agent</h3>
+        <div class="agent-prompt">"Analyze my training data for the last month"</div>
+        <div class="agent-desc">Health data analysis and fitness insights</div>
+      </div>
+      <div class="agent-card">
+        <h3>AWS Infra Agent</h3>
+        <div class="agent-prompt">"Plan the Lambda deployment for the analytics backend"</div>
+        <div class="agent-desc">Infrastructure planning and deployment orchestration</div>
+      </div>
+      <div class="agent-card">
+        <h3>JIRA Agent</h3>
+        <div class="agent-prompt">"Build the sprint automation workflow"</div>
+        <div class="agent-desc">Ticket automation and workflow management</div>
+      </div>
+      <div class="agent-card">
+        <h3>Quality Agent</h3>
+        <div class="agent-prompt">"Run the full pre-PR security and test gate"</div>
+        <div class="agent-desc">Pre-deployment validation and quality checks</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TECH STACK ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Stack</div>
+      <div class="section-title">Technology Stack</div>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-row">
+        <h4>Languages and Runtimes</h4>
+        <p>Python - JavaScript - TypeScript - Bash - SQL - JSON</p>
+      </div>
+      <div class="tech-row">
+        <h4>Cloud Platforms</h4>
+        <p>AWS (Lambda, DynamoDB, EventBridge, Bedrock) - Azure AI Foundry - Terraform IaC</p>
+      </div>
+      <div class="tech-row">
+        <h4>AI and ML Frameworks</h4>
+        <p>Claude API - Bedrock - LangChain - Strands SDK - Anthropic SDK - RAG</p>
+      </div>
+      <div class="tech-row">
+        <h4>Tools and Patterns</h4>
+        <p>Streamlit - Microservices - OAuth Flows - Data Pipelines - REST APIs</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STANDARDS ── -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-eyebrow">Standards</div>
+      <div class="section-title">Development Standards</div>
+    </div>
+    <div class="standards-grid">
+      <div class="standard-card">
+        <h3>Code Quality</h3>
+        <ul>
+          <li>Prettier (JS/TS) and Black (Python)</li>
+          <li>Type hints and annotations</li>
+          <li>Self-documenting code</li>
+          <li>Security-first approach</li>
+        </ul>
+      </div>
+      <div class="standard-card">
+        <h3>Documentation</h3>
+        <ul>
+          <li>CLAUDE.md per project</li>
+          <li>DECISIONS.md for architecture</li>
+          <li>TODO.md for active work</li>
+          <li>Inline comments for WHY</li>
+        </ul>
+      </div>
+      <div class="standard-card">
+        <h3>Security and Testing</h3>
+        <ul>
+          <li>Pre-commit security audit</li>
+          <li>No secrets in code</li>
+          <li>Tests for critical flows</li>
+          <li>Full pre-PR gate</li>
+        </ul>
+      </div>
+      <div class="standard-card">
+        <h3>Git Discipline</h3>
+        <ul>
+          <li>Conventional commits</li>
+          <li>Atomic, logical changes</li>
+          <li>claude/* branch naming</li>
+          <li>PR descriptions with context</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <div class="cta-section">
+    <h2 class="gradient-text" style="font-weight: var(--font-weight-display);">Building Intelligence<br>at Scale</h2>
+    <p>
+      A workspace for experimenting with cutting-edge AI, data engineering,
+      and cloud infrastructure. 27 skills. 4 agents. 6 active projects.
+      One mission: shipping excellent software.
+    </p>
+    <a href="mailto:nesihaver@gmail.com" style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-4) var(--space-8); background: var(--gradient-btn); color: #fff; border: none; border-radius: var(--radius-full); font-size: var(--font-size-base); font-weight: var(--font-weight-medium); font-family: var(--font-family-base); text-decoration: none; box-shadow: var(--shadow-md); transition: all var(--t-normal); margin-bottom: var(--space-10);">Get in touch</a>
+    <div class="contact-row">
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div class="contact-value">
+          <a href="mailto:nesihaver@gmail.com">nesihaver@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-item">
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">
+          <a href="https://github.com/nesihaver-il">nesihaver-IL</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.page -->
+
+</body>
+</html>

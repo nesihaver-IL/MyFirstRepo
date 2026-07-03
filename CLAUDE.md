@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead. This applies to all environments: VS Code extension, Claude Code desktop, chat responses, markdown files, code comments, commit messages, PR descriptions, plans, and presentations.
+
 ## Workspace Overview
 
 This is a sophisticated multi-project workspace for AI agent development, containing:

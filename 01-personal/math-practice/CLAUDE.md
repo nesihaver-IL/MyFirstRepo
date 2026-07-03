@@ -1,5 +1,9 @@
 # CLAUDE.md - Math Practice App
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Project Purpose
 
 Interactive math practice web app + exam generator for Grade 5 students in Hebrew language. Generates randomized math questions for classroom practice and produces Word document exams (`.docx`) with shuffled questions.

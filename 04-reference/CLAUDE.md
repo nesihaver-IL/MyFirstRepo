@@ -1,5 +1,9 @@
 # CLAUDE.md - Reference & Knowledge Base
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Purpose
 
 Quick reference materials, cheatsheets, and patterns for AI development.

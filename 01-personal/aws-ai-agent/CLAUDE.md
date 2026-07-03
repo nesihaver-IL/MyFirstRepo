@@ -1,5 +1,9 @@
 # CLAUDE.md - AWS AI Agent Project
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Project Overview
 
 Generic AWS Bedrock AI agent framework for learning and experimentation. Focus is on **reusable patterns** (not domain-specific logic) for agent architectures, tool integration, and cloud deployment. Used as a template for other agent projects (e.g., Garmin health agent, product knowledge agent).

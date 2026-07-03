@@ -1,0 +1,211 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colors - Nesi Haver Design System</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body { padding: 40px; max-width: 960px; }
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .swatch-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 120px;
+    }
+    .swatch-color {
+      height: 64px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+    .swatch-name {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-secondary);
+      word-break: break-all;
+    }
+    .swatch-value {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+    }
+    .text-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .text-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .text-row .meta {
+      min-width: 220px;
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+    }
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .status-card {
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .status-card .label {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: 4px;
+    }
+    .status-card .value {
+      font-size: var(--font-size-xs);
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="font-size: var(--font-size-2xl); margin-bottom: 8px;">Colors</h1>
+  <p style="color: var(--color-text-secondary); margin-bottom: 40px;">
+    Light mode palette. Electric blue accent. Neutral gray text. Tailwind semantic status.
+  </p>
+
+  <!-- Backgrounds -->
+  <div class="section">
+    <div class="section-label">Backgrounds</div>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-bg-primary); box-shadow: var(--shadow-sm);"></div>
+        <div class="swatch-name">--color-bg-primary</div>
+        <div class="swatch-value">#ffffff</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-bg-secondary);"></div>
+        <div class="swatch-name">--color-bg-secondary</div>
+        <div class="swatch-value">#f8fafc</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-bg-tertiary);"></div>
+        <div class="swatch-name">--color-bg-tertiary</div>
+        <div class="swatch-value">#f1f5f9</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-border);"></div>
+        <div class="swatch-name">--color-border</div>
+        <div class="swatch-value">#e5e7eb</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blue Accent Palette -->
+  <div class="section">
+    <div class="section-label">Accent - Electric Blue</div>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-accent-50);"></div>
+        <div class="swatch-name">--color-accent-50</div>
+        <div class="swatch-value">#eff6ff</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-accent-100);"></div>
+        <div class="swatch-name">--color-accent-100</div>
+        <div class="swatch-value">#dbeafe</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-accent-500);"></div>
+        <div class="swatch-name">--color-accent-500</div>
+        <div class="swatch-value">#3b82f6</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-accent-600);"></div>
+        <div class="swatch-name">--color-accent-600 (primary)</div>
+        <div class="swatch-value">#2563eb</div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background: var(--color-accent-700);"></div>
+        <div class="swatch-name">--color-accent-700 (hover)</div>
+        <div class="swatch-value">#1d4ed8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Text Colors -->
+  <div class="section">
+    <div class="section-label">Text</div>
+    <div class="text-demo">
+      <div class="text-row">
+        <div class="meta">--color-text-primary</div>
+        <div style="color: var(--color-text-primary); font-size: var(--font-size-lg); font-weight: var(--font-weight-medium);">Primary - Headings and body text</div>
+      </div>
+      <div class="text-row">
+        <div class="meta">--color-text-secondary</div>
+        <div style="color: var(--color-text-secondary); font-size: var(--font-size-base);">Secondary - Supporting descriptions and metadata</div>
+      </div>
+      <div class="text-row">
+        <div class="meta">--color-text-muted</div>
+        <div style="color: var(--color-text-muted); font-size: var(--font-size-sm);">Muted - Captions, timestamps, and low-priority info</div>
+      </div>
+      <div class="text-row">
+        <div class="meta">--color-text-disabled</div>
+        <div style="color: var(--color-text-disabled); font-size: var(--font-size-sm);">Disabled - Inactive controls and placeholder state</div>
+      </div>
+      <div class="text-row">
+        <div class="meta">--color-text-link</div>
+        <a href="#" style="font-size: var(--font-size-base);">Link text - Click here to learn more</a>
+      </div>
+      <div class="text-row" style="background: var(--color-accent-primary); padding: 12px 16px; border-radius: var(--radius-md);">
+        <div class="meta" style="color: rgba(255,255,255,0.6);">--color-text-inverse</div>
+        <div style="color: var(--color-text-inverse); font-size: var(--font-size-base);">Inverse - Used on colored / dark backgrounds</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Colors -->
+  <div class="section">
+    <div class="section-label">Status / Semantic</div>
+    <div class="status-grid">
+      <div class="status-card" style="background: var(--color-success-bg); border: 1px solid var(--color-success-border);">
+        <div class="label" style="color: var(--color-success);">Success</div>
+        <div class="value" style="color: var(--color-success);">#16a34a (green-600)</div>
+        <div style="margin-top: 8px; font-size: var(--font-size-sm); color: var(--color-success);">Operation completed</div>
+      </div>
+      <div class="status-card" style="background: var(--color-warning-bg); border: 1px solid var(--color-warning-border);">
+        <div class="label" style="color: var(--color-warning);">Warning</div>
+        <div class="value" style="color: var(--color-warning);">#d97706 (amber-600)</div>
+        <div style="margin-top: 8px; font-size: var(--font-size-sm); color: var(--color-warning);">Needs attention</div>
+      </div>
+      <div class="status-card" style="background: var(--color-error-bg); border: 1px solid var(--color-error-border);">
+        <div class="label" style="color: var(--color-error);">Error</div>
+        <div class="value" style="color: var(--color-error);">#dc2626 (red-600)</div>
+        <div style="margin-top: 8px; font-size: var(--font-size-sm); color: var(--color-error);">Something went wrong</div>
+      </div>
+      <div class="status-card" style="background: var(--color-info-bg); border: 1px solid var(--color-info-border);">
+        <div class="label" style="color: var(--color-info);">Info</div>
+        <div class="value" style="color: var(--color-info);">#2563eb (blue-600)</div>
+        <div style="margin-top: 8px; font-size: var(--font-size-sm); color: var(--color-info);">Helpful information</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

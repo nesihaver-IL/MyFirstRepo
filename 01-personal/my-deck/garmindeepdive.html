@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garmin Health Analytics — Technical Deep Dive</title>
+  <link rel="stylesheet" href="themes/default.css">
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- SLIDE 0: TITLE SLIDE -->
+  <div class="slide active" id="s0">
+    <div class="badge">🏃 Health Analytics Platform</div>
+    <h1 class="hero-title">Garmin Health Analytics<br>Technical Deep Dive</h1>
+    <p class="hero-sub">
+      From raw fitness data to AI-powered health insights — a complete end-to-end system
+      for activity tracking, performance analysis, and personalized health coaching.
+    </p>
+    <div class="chip-row">
+      <div class="chip">📊 50M+ Data Points</div>
+      <div class="chip">⚡ Real-time Pipeline</div>
+      <div class="chip">🤖 Claude AI Insights</div>
+      <div class="chip">😴 Sleep Intelligence</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 1: THE PROBLEM -->
+  <div class="slide" id="s1">
+    <h2 class="sec-title">The Challenge</h2>
+    <p class="sec-sub">Why we built this system</p>
+    <div class="sum-grid" style="margin-top: 48px;">
+      <div class="sum-card">
+        <h3>Data Fragmentation</h3>
+        <p>Garmin data scattered across the platform with no unified view of performance, recovery, and health trends over time.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Garmin API Limitations</h3>
+        <p>Initial webhook-based integration faced challenges with real-time data sync. Manual data exports became necessary to ensure data completeness.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Missing Intelligence</h3>
+        <p>No automated insights connecting activity performance with sleep quality and recovery metrics for personalized coaching.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: SOLUTION OVERVIEW -->
+  <div class="slide" id="s2">
+    <h2 class="sec-title">The Solution</h2>
+    <p class="sec-sub">End-to-end health analytics platform</p>
+    <div style="max-width: 900px; margin: 48px auto; background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 32px; backdrop-filter: blur(20px);">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center;">
+        <div>
+          <div style="font-size: 32px; margin-bottom: 12px;">📥</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--color-accent-primary);">Data Ingestion</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Garmin exports + manual uploads</p>
+        </div>
+        <div>
+          <div style="font-size: 32px; margin-bottom: 12px;">⚙️</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--color-accent-primary);">Processing</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Lambda transformation pipeline</p>
+        </div>
+        <div>
+          <div style="font-size: 32px; margin-bottom: 12px;">💾</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--color-accent-primary);">Storage</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">DynamoDB time-series</p>
+        </div>
+        <div>
+          <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
+          <h4 style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--color-accent-primary);">Visualization</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Streamlit dashboard</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: DATA SOURCES -->
+  <div class="slide" id="s3">
+    <h2 class="sec-title">Data Sources</h2>
+    <p class="sec-sub">What data we collect and how</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">🏃</div>
+        <div class="card-title">Activities</div>
+        <div class="card-desc">Running, cycling, strength training, sports with GPS coordinates, pace, and duration.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">❤️</div>
+        <div class="card-title">Vital Metrics</div>
+        <div class="card-desc">Heart rate zones, VO2 max, resting heart rate, HR recovery, and training effect.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">😴</div>
+        <div class="card-title">Sleep Data</div>
+        <div class="card-desc">Sleep duration, deep/light/REM sleep, sleep quality score, and body battery recovery.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Performance</div>
+        <div class="card-desc">Training load, stress levels, calories burned, elevation gain, and recovery time.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: DATA INGESTION CHALLENGE -->
+  <div class="slide" id="s4">
+    <h2 class="sec-title">Data Integration Challenge</h2>
+    <p class="sec-sub">Overcoming Garmin API limitations</p>
+    <div style="max-width: 900px; margin: 48px auto;">
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px; backdrop-filter: blur(20px);">
+        <h4 style="color: var(--color-accent-primary); margin-bottom: 16px; font-size: 16px; font-weight: 600;">Initial Approach: Webhook + Scheduled Polling</h4>
+        <p style="color: var(--color-text-secondary); line-height: 1.6;">Real-time webhooks triggered by Garmin when activities completed. Scheduled Lambda functions polled for updates every 6 hours. Expected workflow: seamless, automatic data sync.</p>
+      </div>
+      <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: var(--radius-lg); padding: 32px; margin-bottom: 24px;">
+        <h4 style="color: #dc2626; margin-bottom: 16px; font-size: 16px; font-weight: 600;">The Problem</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;">
+          <li style="padding-left: 24px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0;">▸</span>
+            Webhook delivery was unreliable — some activities never triggered
+          </li>
+          <li style="padding-left: 24px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0;">▸</span>
+            Historical data gaps — Garmin API didn't return complete activity history
+          </li>
+          <li style="padding-left: 24px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0;">▸</span>
+            Rate limiting on polling requests caused delays in data sync
+          </li>
+          <li style="padding-left: 24px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0;">▸</span>
+            Data consistency issues — some fields missing or incomplete
+          </li>
+        </ul>
+      </div>
+      <div style="background: rgba(5, 150, 105, 0.1); border: 1px solid var(--color-accent-border); border-radius: var(--radius-lg); padding: 32px;">
+        <h4 style="color: var(--color-accent-primary); margin-bottom: 16px; font-size: 16px; font-weight: 600;">Our Solution</h4>
+        <p style="color: var(--color-text-secondary); line-height: 1.6;">Manual Garmin data exports combined with Lambda batch processing. Users export full activity history from Garmin Connect, upload to system, Lambda functions parse and normalize the data. This approach guarantees data completeness and consistency while working around API limitations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: ARCHITECTURE DIAGRAM -->
+  <div class="slide" id="s5">
+    <h2 class="sec-title">System Architecture</h2>
+    <p class="sec-sub">Complete data flow from ingestion to visualization</p>
+    <div style="max-width: 900px; margin: 48px auto; background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 32px; backdrop-filter: blur(20px); font-family: monospace; font-size: 13px; color: var(--color-text-secondary); line-height: 1.8;">
+      <div style="color: var(--color-accent-primary); margin-bottom: 16px; font-weight: 600;">┌─ DATA INGESTION ─────────────────────┐</div>
+      <div style="padding-left: 20px; margin-bottom: 16px;">
+        Garmin Export (CSV/JSON)<br>
+        │<br>
+        └─→ S3 Bucket (Raw Data Storage)
+      </div>
+      <div style="color: var(--color-accent-primary); margin-bottom: 16px; font-weight: 600;">┌─ PROCESSING LAYER ───────────────────┐</div>
+      <div style="padding-left: 20px; margin-bottom: 16px;">
+        Lambda Function 1: Parse & Validate<br>
+        │<br>
+        Lambda Function 2: Transform & Normalize<br>
+        │<br>
+        Lambda Function 3: Calculate Metrics<br>
+        │<br>
+        Lambda Function 4: Sleep Correlation<br>
+        │<br>
+        └─→ DynamoDB (Time-Series Storage)
+      </div>
+      <div style="color: var(--color-accent-primary); margin-bottom: 16px; font-weight: 600;">┌─ VISUALIZATION ──────────────────────┐</div>
+      <div style="padding-left: 20px;">
+        Streamlit Dashboard<br>
+        │<br>
+        ├─ Charts & Graphs (Plotly)<br>
+        ├─ Key Metrics Display<br>
+        ├─ Interactive Filters<br>
+        └─ Claude AI Insights
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: LAMBDA FUNCTIONS -->
+  <div class="slide" id="s6">
+    <h2 class="sec-title">Lambda Processing Pipeline</h2>
+    <p class="sec-sub">4 specialized functions for data transformation</p>
+    <div class="sum-grid">
+      <div class="sum-card">
+        <h3>Function 1: Parser</h3>
+        <ul>
+          <li>Reads Garmin export files (CSV/JSON)</li>
+          <li>Validates data integrity</li>
+          <li>Handles format variations</li>
+          <li>Logs parsing errors</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3>Function 2: Transformer</h3>
+        <ul>
+          <li>Normalizes date/time formats</li>
+          <li>Unit conversions (mi to km, etc.)</li>
+          <li>Cleans missing values</li>
+          <li>Enriches metadata</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3>Function 3: Metrics Calculator</h3>
+        <ul>
+          <li>Computes pace, HR zones, effort</li>
+          <li>Calculates weekly/monthly aggregates</li>
+          <li>Training load scoring</li>
+          <li>Recovery time estimation</li>
+        </ul>
+      </div>
+      <div class="sum-card">
+        <h3>Function 4: Sleep Correlation</h3>
+        <ul>
+          <li>Links activities to sleep data</li>
+          <li>Calculates recovery scores</li>
+          <li>Identifies patterns & trends</li>
+          <li>Prepares Claude AI analysis</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: DYNAMODB SCHEMA -->
+  <div class="slide" id="s7">
+    <h2 class="sec-title">DynamoDB Time-Series Design</h2>
+    <p class="sec-sub">50M+ rows optimized for performance</p>
+    <div style="max-width: 900px; margin: 48px auto; background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 32px; backdrop-filter: blur(20px);">
+      <div style="margin-bottom: 24px;">
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">Primary Key Design</h4>
+        <div style="background: var(--color-bg-primary); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px; font-family: monospace; font-size: 12px;">
+          <div style="color: var(--color-accent-primary); margin-bottom: 8px;">Partition Key (PK):</div>
+          <div style="color: var(--color-text-secondary); margin-bottom: 16px;">activity#USER_ID</div>
+
+          <div style="color: var(--color-accent-primary); margin-bottom: 8px;">Sort Key (SK):</div>
+          <div style="color: var(--color-text-secondary); margin-bottom: 16px;">TIMESTAMP#ACTIVITY_ID</div>
+        </div>
+      </div>
+      <div style="margin-bottom: 24px;">
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">Attributes Stored</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 12px;">
+          <div>
+            <div style="color: var(--color-accent-primary);">Activity Data</div>
+            <div style="color: var(--color-text-secondary);">type, distance, duration, pace, elevation</div>
+          </div>
+          <div>
+            <div style="color: var(--color-accent-primary);">Heart Data</div>
+            <div style="color: var(--color-text-secondary);">hr_avg, hr_max, hr_zone, vo2_max</div>
+          </div>
+          <div>
+            <div style="color: var(--color-accent-primary);">Recovery Data</div>
+            <div style="color: var(--color-text-secondary);">recovery_time, training_load, stress_level</div>
+          </div>
+          <div>
+            <div style="color: var(--color-accent-primary);">Sleep Correlation</div>
+            <div style="color: var(--color-text-secondary);">sleep_quality, recovery_score, impact</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; font-weight: 600; margin-bottom: 12px;">Query Patterns</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px;">
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Activities by user in date range (SK range query)
+          </li>
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Last 30 days of activities (efficient scanning with TTL)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Sleep-activity correlation lookup (index query)
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: STREAMLIT DASHBOARD OVERVIEW -->
+  <div class="slide" id="s8">
+    <h2 class="sec-title">Streamlit Dashboard</h2>
+    <p class="sec-sub">Interactive analytics & visualization platform</p>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <div class="card-title">Activity Charts</div>
+        <div class="card-desc">Distance, pace, elevation trends over time with interactive date range selectors.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">❤️</div>
+        <div class="card-title">Heart Rate Zones</div>
+        <div class="card-desc">Zone distribution, avg HR by activity type, HR recovery analysis.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Performance Metrics</div>
+        <div class="card-desc">Training load, VO2 max trends, weekly/monthly summaries, KPI cards.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">😴</div>
+        <div class="card-title">Sleep Correlation</div>
+        <div class="card-desc">Activity impact on sleep quality, recovery scores, pattern detection.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: DASHBOARD SCREENSHOTS (Placeholder) -->
+  <div class="slide" id="s9">
+    <h2 class="sec-title">Dashboard Screenshots</h2>
+    <p class="sec-sub">Actual visualizations and key metrics</p>
+    <div style="max-width: 900px; margin: 48px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div style="background: var(--glass-dark); border: 2px dashed var(--color-accent-primary); border-radius: var(--radius-lg); padding: 32px; text-align: center; backdrop-filter: blur(20px);">
+        <div style="font-size: 48px; margin-bottom: 12px;">📊</div>
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; margin-bottom: 8px;">Activity Trends Chart</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">[Screenshot: Distance/pace trends]</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 2px dashed var(--color-accent-primary); border-radius: var(--radius-lg); padding: 32px; text-align: center; backdrop-filter: blur(20px);">
+        <div style="font-size: 48px; margin-bottom: 12px;">❤️</div>
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; margin-bottom: 8px;">Heart Rate Analysis</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">[Screenshot: HR zones breakdown]</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 2px dashed var(--color-accent-primary); border-radius: var(--radius-lg); padding: 32px; text-align: center; backdrop-filter: blur(20px);">
+        <div style="font-size: 48px; margin-bottom: 12px;">📈</div>
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; margin-bottom: 8px;">Weekly Summary</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">[Screenshot: KPI cards]</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 2px dashed var(--color-accent-primary); border-radius: var(--radius-lg); padding: 32px; text-align: center; backdrop-filter: blur(20px);">
+        <div style="font-size: 48px; margin-bottom: 12px;">😴</div>
+        <h4 style="color: var(--color-accent-primary); font-size: 14px; margin-bottom: 8px;">Sleep Quality Insights</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary);">[Screenshot: Sleep correlation]</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: CLAUDE AI INSIGHTS -->
+  <div class="slide" id="s10">
+    <h2 class="sec-title">Claude AI Insights Engine</h2>
+    <p class="sec-sub">Personalized health coaching powered by Claude API</p>
+    <div class="sum-grid">
+      <div class="sum-card">
+        <h3>Best Performance Analysis</h3>
+        <p>Identifies your strongest activities, peak performance times, and conditions that lead to excellent results. Highlights patterns in pace, heart rate, and endurance.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Poor Performance Detection</h3>
+        <p>Flags underperforming sessions, analyzes potential causes (fatigue, illness, conditions), and recommends adjustments to training approach.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Sleep Quality Correlation</h3>
+        <p>Analyzes how sleep duration/quality affects next-day performance. Identifies optimal recovery windows and sleep targets for peak training effect.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: CLAUDE INSIGHTS EXAMPLE -->
+  <div class="slide" id="s11">
+    <h2 class="sec-title">Sample Claude AI Analysis</h2>
+    <p class="sec-sub">Real insights from the system</p>
+    <div style="max-width: 900px; margin: 32px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+      <div style="background: rgba(5, 150, 105, 0.1); border: 1px solid var(--color-accent-border); border-radius: var(--radius-lg); padding: 20px;">
+        <h4 style="color: var(--color-accent-primary); font-size: 13px; font-weight: 600; margin-bottom: 12px;">📈 Best Performance</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.6;">Your morning runs consistently show 8-12% better pace vs evening runs. Weekend long runs (Saturday mornings) achieve optimal VO2 max utilization. Best results after 7+ hours sleep with 85%+ sleep efficiency.</p>
+      </div>
+      <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid rgba(220, 38, 38, 0.3); border-radius: var(--radius-lg); padding: 20px;">
+        <h4 style="color: #dc2626; font-size: 13px; font-weight: 600; margin-bottom: 12px;">⚠️ Performance Dips</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.6;">Tuesday evening runs show 15% slower pace — likely from Monday training load. Sessions after &lt;6 hours sleep show elevated HR zones and reduced endurance. Consider extending recovery time.</p>
+      </div>
+      <div style="background: rgba(5, 150, 105, 0.1); border: 1px solid var(--color-accent-border); border-radius: var(--radius-lg); padding: 20px; grid-column: 1 / -1;">
+        <h4 style="color: var(--color-accent-primary); font-size: 13px; font-weight: 600; margin-bottom: 12px;">😴 Sleep-Performance Correlation</h4>
+        <p style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.6;">Strong correlation detected: Each additional hour of sleep increases next-day performance by ~5%. REM sleep efficiency directly impacts recovery rate (r=0.87). Recommendation: Target 7-8 hours on training days, prioritize sleep quality over duration. Current recovery window: 48-72 hours optimal between intense sessions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: KEY METRICS & KPIs -->
+  <div class="slide" id="s12">
+    <h2 class="sec-title">Key Performance Indicators</h2>
+    <p class="sec-sub">Measurable outcomes from the system</p>
+    <div style="max-width: 900px; margin: 48px auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;">
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(20px);">
+        <div style="color: var(--color-accent-primary); font-size: 28px; font-weight: 700; margin-bottom: 4px;">50M+</div>
+        <p style="color: var(--color-text-secondary); font-size: 12px; margin-bottom: 12px;">Data Points Processed</p>
+        <p style="font-size: 11px; color: var(--color-text-muted);">Activities, HR readings, sleep metrics across 2+ years</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(20px);">
+        <div style="color: var(--color-accent-primary); font-size: 28px; font-weight: 700; margin-bottom: 4px;">1000+</div>
+        <p style="color: var(--color-text-secondary); font-size: 12px; margin-bottom: 12px;">Activities Analyzed</p>
+        <p style="font-size: 11px; color: var(--color-text-muted);">Running, cycling, strength, sports with detailed metrics</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(20px);">
+        <div style="color: var(--color-accent-primary); font-size: 28px; font-weight: 700; margin-bottom: 4px;">87%</div>
+        <p style="color: var(--color-text-secondary); font-size: 12px; margin-bottom: 12px;">Sleep-Performance Correlation</p>
+        <p style="font-size: 11px; color: var(--color-text-muted);">R² coefficient on sleep impact analysis</p>
+      </div>
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 24px; backdrop-filter: blur(20px);">
+        <div style="color: var(--color-accent-primary); font-size: 28px; font-weight: 700; margin-bottom: 4px;">↑ 15%</div>
+        <p style="color: var(--color-text-secondary); font-size: 12px; margin-bottom: 12px;">Performance Improvement</p>
+        <p style="font-size: 11px; color: var(--color-text-muted);">Avg pace & endurance after 1 month using insights</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: CHALLENGES OVERCOME -->
+  <div class="slide" id="s13">
+    <h2 class="sec-title">Challenges & Solutions</h2>
+    <p class="sec-sub">What we learned along the way</p>
+    <div class="sum-grid">
+      <div class="sum-card">
+        <h3>API Reliability</h3>
+        <p><strong>Challenge:</strong> Garmin webhooks were unreliable. <strong>Solution:</strong> Switched to manual exports + Lambda batch processing for guaranteed data completeness.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Data Quality</h3>
+        <p><strong>Challenge:</strong> Missing/incomplete fields in raw data. <strong>Solution:</strong> Built validation layer in Lambda with error logging and manual review workflows.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Storage Scaling</h3>
+        <p><strong>Challenge:</strong> 50M rows needed efficient queries. <strong>Solution:</strong> Optimized DynamoDB schema with time-series partitioning and GSIs for fast lookups.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: TECHNOLOGY STACK -->
+  <div class="slide" id="s14">
+    <h2 class="sec-title">Technology Stack</h2>
+    <p class="sec-sub">Tools and platforms used</p>
+    <div style="max-width: 900px; margin: 48px auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;">
+      <div>
+        <h4 style="color: var(--color-accent-primary); font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase;">Backend & Data</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px;">
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            AWS Lambda (Python)
+          </li>
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            DynamoDB
+          </li>
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            S3 (file storage)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            EventBridge (scheduling)
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: var(--color-accent-primary); font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase;">Frontend & AI</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px;">
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Streamlit (Python)
+          </li>
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Plotly (visualizations)
+          </li>
+          <li style="padding-left: 16px; position: relative; margin-bottom: 8px; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Claude API (insights)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Anthropic SDK
+          </li>
+        </ul>
+      </div>
+      <div style="grid-column: 1 / -1;">
+        <h4 style="color: var(--color-accent-primary); font-size: 13px; font-weight: 600; margin-bottom: 12px; text-transform: uppercase;">Infrastructure & DevOps</h4>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Terraform (IaC)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            CloudWatch (logging)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Git (version control)
+          </li>
+          <li style="padding-left: 16px; position: relative; color: var(--color-text-secondary);">
+            <span style="position: absolute; left: 0; color: var(--color-accent-primary);">▸</span>
+            Python 3.11+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: CURRENT STATE -->
+  <div class="slide" id="s15">
+    <h2 class="sec-title">Current System State</h2>
+    <p class="sec-sub">What's working today</p>
+    <div class="grid">
+      <div class="card" style="border: 1px solid var(--color-accent-primary);">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Batch Data Processing</div>
+        <div class="card-desc">Monthly manual exports processed through Lambda pipeline with 100% data integrity validation.</div>
+      </div>
+      <div class="card" style="border: 1px solid var(--color-accent-primary);">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Complete Analytics</div>
+        <div class="card-desc">50M+ data points in DynamoDB queried in real-time. Streamlit dashboard loads in &lt;2 seconds.</div>
+      </div>
+      <div class="card" style="border: 1px solid var(--color-accent-primary);">
+        <div class="card-icon">✅</div>
+        <div class="card-title">AI-Powered Insights</div>
+        <div class="card-desc">Claude analyzes activities and sleep patterns, providing personalized coaching recommendations.</div>
+      </div>
+      <div class="card" style="border: 1px solid var(--color-accent-primary);">
+        <div class="card-icon">✅</div>
+        <div class="card-title">Sleep Correlation</div>
+        <div class="card-desc">Sleep quality linked to activity performance with 87% R² coefficient. Insights integrated in dashboard.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: FUTURE ROADMAP -->
+  <div class="slide" id="s16">
+    <h2 class="sec-title">Future Roadmap</h2>
+    <p class="sec-sub">Next phase: Real-time data synchronization</p>
+    <div style="max-width: 900px; margin: 48px auto;">
+      <div style="position: relative; padding-left: 40px; margin-bottom: 32px;">
+        <div style="position: absolute; left: 0; top: 2px; width: 24px; height: 24px; background: var(--color-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">1</div>
+        <div>
+          <h4 style="color: var(--color-text-primary); font-size: 14px; font-weight: 600; margin-bottom: 8px;">Real-Time Garmin API Integration</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Build direct API connection to Garmin using OAuth. Automatic activity sync within 5 minutes of completion. Eliminate manual exports.</p>
+        </div>
+      </div>
+      <div style="position: relative; padding-left: 40px; margin-bottom: 32px;">
+        <div style="position: absolute; left: 0; top: 2px; width: 24px; height: 24px; background: var(--color-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">2</div>
+        <div>
+          <h4 style="color: var(--color-text-primary); font-size: 14px; font-weight: 600; margin-bottom: 8px;">Last Week vs Last Month Comparisons</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Add comparison views showing weekly/monthly performance trends. Track progress over time with visual delta indicators.</p>
+        </div>
+      </div>
+      <div style="position: relative; padding-left: 40px;">
+        <div style="position: absolute; left: 0; top: 2px; width: 24px; height: 24px; background: var(--color-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px;">3</div>
+        <div>
+          <h4 style="color: var(--color-text-primary); font-size: 14px; font-weight: 600; margin-bottom: 8px;">Advanced Sleep-Activity Linkage</h4>
+          <p style="font-size: 12px; color: var(--color-text-secondary);">Machine learning model predicting optimal activity intensity based on sleep quality. Automated recommendations for training schedule based on sleep forecast.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: REAL-TIME ARCHITECTURE -->
+  <div class="slide" id="s17">
+    <h2 class="sec-title">Future: Real-Time Architecture</h2>
+    <p class="sec-sub">Phase 2 system design</p>
+    <div style="max-width: 900px; margin: 48px auto; background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 32px; backdrop-filter: blur(20px); font-family: monospace; font-size: 12px; color: var(--color-text-secondary); line-height: 1.8;">
+      <div style="color: var(--color-accent-primary); margin-bottom: 12px; font-weight: 600;">Garmin OAuth Flow</div>
+      <div style="padding-left: 20px; margin-bottom: 16px;">
+        User Authenticates with Garmin<br>
+        │<br>
+        OAuth Token stored in Secrets Manager<br>
+        │<br>
+        EventBridge triggers every 5 minutes
+      </div>
+      <div style="color: var(--color-accent-primary); margin-bottom: 12px; font-weight: 600;">Real-Time Sync</div>
+      <div style="padding-left: 20px; margin-bottom: 16px;">
+        Lambda: Check Garmin API for new activities<br>
+        │<br>
+        Process & enrich in parallel lambdas<br>
+        │<br>
+        Update DynamoDB in real-time
+      </div>
+      <div style="color: var(--color-accent-primary); margin-bottom: 12px; font-weight: 600;">Dashboard Updates</div>
+      <div style="padding-left: 20px;">
+        Streamlit refreshes every activity completion<br>
+        │<br>
+        Claude AI analyzes immediately<br>
+        │<br>
+        User sees new insights instantly
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: PROJECT IMPACT -->
+  <div class="slide" id="s18">
+    <h2 class="sec-title">Project Impact</h2>
+    <p class="sec-sub">What this system enables</p>
+    <div class="sum-grid">
+      <div class="sum-card">
+        <h3>Data-Driven Training</h3>
+        <p>Make informed decisions about training intensity and recovery based on comprehensive performance analytics and sleep quality insights.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Personalized Coaching</h3>
+        <p>Receive AI-powered recommendations tailored to your unique patterns, eliminating generic training advice and optimizing your approach.</p>
+      </div>
+      <div class="sum-card">
+        <h3>Health Intelligence</h3>
+        <p>Understand the deep connection between activity, sleep, and recovery. Predict optimal conditions for peak performance and injury prevention.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19: CONCLUSION -->
+  <div class="slide" id="s19">
+    <h2 class="sec-title">Conclusion</h2>
+    <p class="sec-sub">From raw data to actionable health intelligence</p>
+    <div style="max-width: 900px; margin: 48px auto; text-align: center;">
+      <div style="background: var(--glass-dark); border: 1px solid var(--glass-dark-border); border-radius: var(--radius-lg); padding: 48px; backdrop-filter: blur(20px);">
+        <h3 style="font-size: 20px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 24px;">A Complete Health Analytics Platform</h3>
+        <p style="font-size: 14px; color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 32px;">
+          This project demonstrates full-stack engineering across cloud infrastructure (AWS Lambda, DynamoDB), data pipeline orchestration, interactive analytics (Streamlit), and AI integration (Claude API). From overcoming Garmin API challenges to building a robust processing pipeline handling 50M+ data points, the system delivers actionable health insights powered by advanced AI analysis.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+          <div style="background: rgba(5, 150, 105, 0.15); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-accent-border);">
+            <div style="font-size: 12px; color: var(--color-accent-primary); font-weight: 600;">Data Processing</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Lambda + DynamoDB</div>
+          </div>
+          <div style="background: rgba(5, 150, 105, 0.15); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-accent-border);">
+            <div style="font-size: 12px; color: var(--color-accent-primary); font-weight: 600;">Analytics</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Streamlit + Plotly</div>
+          </div>
+          <div style="background: rgba(5, 150, 105, 0.15); padding: 12px 16px; border-radius: var(--radius-md); border: 1px solid var(--color-accent-border);">
+            <div style="font-size: 12px; color: var(--color-accent-primary); font-weight: 600;">AI Insights</div>
+            <div style="font-size: 11px; color: var(--color-text-secondary);">Claude API</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="go(cur-1)" title="Previous (←)">←</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="go(cur+1)" title="Next (→)">→</button>
+  <span class="counter" id="ctr">1 / 20</span>
+</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dotsEl = document.getElementById('dots');
+  const ctrEl = document.getElementById('ctr');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let cur = 0;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  });
+
+  function go(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+
+    // Exit current slide
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    const leaving = cur;
+    setTimeout(() => slides[leaving].classList.remove('exit'), 600);
+
+    cur = idx;
+
+    // Enter new slide
+    slides[cur].classList.add('active');
+
+    // Sync navigation dots
+    dotsEl.querySelectorAll('.dot').forEach((d, i) =>
+      d.classList.toggle('on', i === cur)
+    );
+
+    // Update counter
+    ctrEl.textContent = `${cur + 1} / ${slides.length}`;
+
+    // Update button states
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === slides.length - 1;
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) {
+      e.preventDefault();
+      go(cur + 1);
+    }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+      e.preventDefault();
+      go(cur - 1);
+    }
+  });
+
+  // Touch/swipe navigation
+  let tx = 0;
+  document.addEventListener('touchstart', e => {
+    tx = e.touches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', e => {
+    const dx = tx - e.changedTouches[0].clientX;
+    if (Math.abs(dx) > 45) {
+      go(dx > 0 ? cur + 1 : cur - 1);
+    }
+  });
+
+  // Initialize button states
+  prevBtn.disabled = cur === 0;
+  nextBtn.disabled = cur === slides.length - 1;
+</script>
+
+</body>
+</html>

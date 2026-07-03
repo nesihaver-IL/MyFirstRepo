@@ -1,4 +1,8 @@
-# tzofim-payments — Scouts Payment Tracker
+# tzofim-payments - Scouts Payment Tracker
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Overview
 Personal utility for managing Tzofim (Israeli Scouts movement) payment tracking and administration.

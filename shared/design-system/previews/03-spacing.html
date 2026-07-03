@@ -1,0 +1,235 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spacing - Nesi Haver Design System</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body { padding: 40px; max-width: 900px; }
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .space-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .space-meta {
+      min-width: 200px;
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+    }
+    .space-bar-wrap {
+      flex: 1;
+    }
+    .space-bar {
+      height: 20px;
+      background: var(--color-accent-primary);
+      border-radius: var(--radius-sm);
+      opacity: 0.8;
+    }
+    .space-value {
+      min-width: 48px;
+      text-align: right;
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-secondary);
+    }
+    .radius-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .radius-demo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .radius-box {
+      width: 80px;
+      height: 80px;
+      background: var(--color-accent-subtle);
+      border: 2px solid var(--color-accent-border);
+    }
+    .radius-label {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+      text-align: center;
+    }
+    .container-demo {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .container-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .container-bar {
+      height: 24px;
+      background: var(--color-accent-100);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-accent-border);
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+    }
+    .container-label {
+      min-width: 160px;
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-text-muted);
+    }
+    .container-value {
+      font-size: var(--font-size-xs);
+      font-family: var(--font-family-mono);
+      color: var(--color-accent-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="font-size: var(--font-size-2xl); margin-bottom: 8px;">Spacing & Layout</h1>
+  <p style="color: var(--color-text-secondary); margin-bottom: 40px;">
+    4px base scale. Semantic aliases. Rounded border radius. 4 container widths.
+  </p>
+
+  <!-- Spacing Scale -->
+  <div class="section">
+    <div class="section-label">Spacing Scale (4px base)</div>
+    <div class="space-row">
+      <div class="space-meta">--space-px</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 1px;"></div></div>
+      <div class="space-value">1px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-1 / --space-xs</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 4px;"></div></div>
+      <div class="space-value">4px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-2 / --space-sm</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 8px;"></div></div>
+      <div class="space-value">8px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-3</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 12px;"></div></div>
+      <div class="space-value">12px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-4 / --space-md</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 16px;"></div></div>
+      <div class="space-value">16px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-5</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 20px;"></div></div>
+      <div class="space-value">20px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-6 / --space-lg</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 24px;"></div></div>
+      <div class="space-value">24px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-8 / --space-xl</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 32px;"></div></div>
+      <div class="space-value">32px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-10</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 40px;"></div></div>
+      <div class="space-value">40px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-12 / --space-2xl</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 48px;"></div></div>
+      <div class="space-value">48px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-16 / --space-3xl</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 64px;"></div></div>
+      <div class="space-value">64px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-20 / --space-4xl</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 80px;"></div></div>
+      <div class="space-value">80px</div>
+    </div>
+    <div class="space-row">
+      <div class="space-meta">--space-24</div>
+      <div class="space-bar-wrap"><div class="space-bar" style="width: 96px;"></div></div>
+      <div class="space-value">96px</div>
+    </div>
+  </div>
+
+  <!-- Border Radius -->
+  <div class="section">
+    <div class="section-label">Border Radius</div>
+    <div class="radius-grid">
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius: var(--radius-sm);"></div>
+        <div class="radius-label">--radius-sm<br>6px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius: var(--radius-md);"></div>
+        <div class="radius-label">--radius-md<br>12px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius: var(--radius-lg);"></div>
+        <div class="radius-label">--radius-lg<br>16px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius: var(--radius-xl);"></div>
+        <div class="radius-label">--radius-xl<br>24px</div>
+      </div>
+      <div class="radius-demo">
+        <div class="radius-box" style="border-radius: var(--radius-full);"></div>
+        <div class="radius-label">--radius-full<br>9999px</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container Widths -->
+  <div class="section">
+    <div class="section-label">Container Widths</div>
+    <div class="container-demo">
+      <div class="container-row">
+        <div class="container-label">--container-sm</div>
+        <div class="container-bar" style="width: 32%;"><span class="container-value">640px - narrow / article</span></div>
+      </div>
+      <div class="container-row">
+        <div class="container-label">--container-md</div>
+        <div class="container-bar" style="width: 48%;"><span class="container-value">960px - standard content</span></div>
+      </div>
+      <div class="container-row">
+        <div class="container-label">--container-lg</div>
+        <div class="container-bar" style="width: 64%;"><span class="container-value">1280px - dashboard / wide</span></div>
+      </div>
+      <div class="container-row">
+        <div class="container-label">--container-xl</div>
+        <div class="container-bar" style="width: 80%;"><span class="container-value">1536px - full-screen app</span></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

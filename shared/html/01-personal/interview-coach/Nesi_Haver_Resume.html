@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nesi Haver &mdash; Program Delivery Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#f0f4f8;color:#2d3748;font-size:15px;line-height:1.65}
+    .page{max-width:900px;margin:40px auto;background:#fff;border-radius:12px;box-shadow:0 8px 40px rgba(31,56,100,.13);overflow:hidden}
+    /* HEADER */
+    .hd{background:linear-gradient(135deg,#1F3864 0%,#2E5D9B 100%);padding:48px 52px 36px;color:#fff}
+    .hd-name{font-size:2.6rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
+    .hd-title{font-size:1.1rem;font-weight:400;color:rgba(255,255,255,.88);letter-spacing:.06em;margin-bottom:22px}
+    .hd-title .cred{font-weight:600;color:#a8c8f0}
+    .hd-contact{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.85rem;color:rgba(255,255,255,.80)}
+    .hd-contact a{color:rgba(255,255,255,.85);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:1px;transition:color .2s}
+    .hd-contact a:hover{color:#fff;border-color:#fff}
+    .sep{color:rgba(255,255,255,.35)}
+    /* BODY */
+    .bd{padding:40px 52px 48px}
+    section{margin-bottom:32px}
+    /* SECTION TITLES */
+    .st{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#2E5D9B;padding-bottom:7px;border-bottom:2px solid #2E5D9B;margin-bottom:20px}
+    /* SUMMARY */
+    .summary{font-size:.96rem;color:#3a4a5c;line-height:1.75;background:#f7faff;border-left:4px solid #2E5D9B;padding:16px 20px;border-radius:0 6px 6px 0}
+    /* EXPERIENCE */
+    .co{margin-bottom:24px}
+    .co:last-child{margin-bottom:0}
+    .co-name{font-size:.78rem;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#1F3864;margin-bottom:10px;padding-bottom:4px;border-bottom:1px solid #e2e8f0}
+    .co-name .sub{font-weight:400;color:#718096;text-transform:none;letter-spacing:0}
+    .role{margin-bottom:14px}
+    .role:last-child{margin-bottom:0}
+    .rh{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+    .rt{font-weight:600;font-size:.94rem;color:#2d3748}
+    .rd{font-size:.80rem;color:#718096;font-style:italic;white-space:nowrap}
+    ul.bl{list-style:none;padding:0;margin:0}
+    ul.bl li{position:relative;padding-left:18px;margin-bottom:6px;font-size:.88rem;color:#4a5568;line-height:1.62}
+    ul.bl li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;background:#2E5D9B;border-radius:50%}
+    /* SIMPLE LISTS */
+    ul.sl{list-style:none;padding:0;margin:0}
+    ul.sl li{position:relative;padding-left:18px;margin-bottom:7px;font-size:.88rem;color:#4a5568;line-height:1.55}
+    ul.sl li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;background:#a0aec0;border-radius:50%}
+    .hl{color:#2E5D9B;font-weight:600}
+    .badge{font-size:.74rem;color:#718096;background:#edf2f7;padding:1px 7px;border-radius:10px;margin-left:6px;vertical-align:middle}
+    /* SKILLS */
+    .sg{display:flex;flex-direction:column;gap:10px}
+    .sr{display:flex;align-items:flex-start;gap:12px}
+    .sl-label{font-weight:600;color:#1F3864;white-space:nowrap;min-width:210px;font-size:.83rem;padding-top:4px}
+    .tags{display:flex;flex-wrap:wrap;gap:6px}
+    .tag{background:#eef4ff;color:#2E5D9B;font-size:.76rem;font-weight:500;padding:3px 10px;border-radius:20px;border:1px solid #c3d9f7}
+    .tag.hi{background:#2E5D9B;color:#fff;border-color:#2E5D9B}
+    /* LANGUAGES */
+    .langs{display:flex;gap:28px;font-size:.88rem}
+    .lname{font-weight:600;color:#1F3864;margin-right:6px}
+    .llevel{color:#718096}
+    /* FOOTER */
+    .ft{background:#f7faff;border-top:1px solid #e2e8f0;padding:14px 52px;font-size:.75rem;color:#a0aec0;text-align:center}
+    /* PRINT */
+    @media print{
+      body{background:#fff}
+      .page{box-shadow:none;border-radius:0;margin:0;max-width:100%}
+      .hd{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+      .tag.hi{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+    }
+    @media(max-width:640px){
+      .hd{padding:32px 24px 24px}
+      .bd{padding:28px 24px 36px}
+      .hd-name{font-size:1.9rem}
+      .sl-label{min-width:130px}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hd">
+    <div class="hd-name">Nesi Haver</div>
+    <div class="hd-title">Program Delivery Manager &nbsp;|&nbsp; <span class="cred">MBA &middot; PMP</span></div>
+    <div class="hd-contact">
+      <span>Netanya, Israel</span>
+      <span class="sep">|</span>
+      <span>054-3024096</span>
+      <span class="sep">|</span>
+      <a href="mailto:nesihaver@gmail.com">nesihaver@gmail.com</a>
+      <span class="sep">|</span>
+      <a href="https://linkedin.com/in/nesi-haver-mba-pmp-a204b326/" target="_blank">linkedin.com/in/nesi-haver-mba-pmp-a204b326</a>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="bd">
+
+    <!-- SUMMARY -->
+    <section>
+      <div class="st">Professional Summary</div>
+      <div class="summary">
+        Program Delivery Leader with an engineering foundation and an active AI practice &mdash;
+        turning complex, multi-team R&amp;D programs into predictable outcomes from strategic planning
+        through production deployment on mission-critical systems.
+        Builds plans that make execution inevitable &mdash; across matrix organizations where authority
+        stops at the org chart.
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+      <div class="st">Experience</div>
+
+      <!-- Cognyte -->
+      <div class="co">
+        <div class="co-name">Cognyte</div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Product Delivery Manager (R&amp;D)</span>
+            <span class="rd">July 2022 &mdash; Present</span>
+          </div>
+          <ul class="bl">
+            <li>Owns delivery of a $30M+ flagship program for government and law enforcement customers &mdash; directing 8&ndash;12 cross-functional contributors across Architecture, Product, System Engineering, QA, System Integrators, and Business Units from scope definition through production deployment.</li>
+            <li>Governs scope, budget, and contractual commitments &mdash; enforcing KPI-gated milestone discipline to deliver on time and within budget.</li>
+            <li>Executes high-stakes infrastructure migrations on live production systems &mdash; phased delivery within committed windows, zero production incidents.</li>
+            <li>Runs the AI Champions group &mdash; cultivating team ideation and converting innovations into deployed AI agents that improve operations and feed the product roadmap.</li>
+          </ul>
+        </div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Project Delivery Manager &amp; Product Champion &mdash; Tactical Intelligence (GCO)</span>
+            <span class="rd">July 2020 &mdash; June 2022</span>
+          </div>
+          <ul class="bl">
+            <li>Managed a multi-region Tactical Intelligence portfolio &mdash; owning roadmap, budgets, and customer acceptance across global projects.</li>
+            <li>Maintained executive visibility on revenue recognition milestones across a multi-project regional portfolio.</li>
+            <li>Navigated dual accountability across customer delivery and R&amp;D &mdash; escalating to C-level when commitments conflicted.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- iMDsoft -->
+      <div class="co">
+        <div class="co-name">iMDsoft <span class="sub">(Healthcare)</span></div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Project Manager</span>
+            <span class="rd">October 2016 &mdash; June 2020</span>
+          </div>
+          <ul class="bl">
+            <li>Owned end-to-end delivery of a Nordic healthcare digital transformation program &mdash; managing the full cycle from development through on-site deployment across 11 hospitals, in close partnership with a local country implementation partner.</li>
+            <li>Enforced a zero-defect release standard across all deployments &mdash; driven by patient safety requirements across ICU, OR, anesthesia, and step-down environments.</li>
+            <li>Applied Agile and Waterfall methodologies, adapting delivery approach to each hospital&rsquo;s clinical readiness and regulatory context.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Starhome -->
+      <div class="co">
+        <div class="co-name">Starhome</div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Project Manager</span>
+            <span class="rd">January 2014 &mdash; September 2016</span>
+          </div>
+          <ul class="bl">
+            <li>Delivered end-to-end customer programs across African telecom accounts &mdash; translating requirements into scoped delivery plans and leading project teams to on-time, profitable completion through customer acceptance.</li>
+          </ul>
+        </div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Product Expert</span>
+            <span class="rd">January 2011 &mdash; December 2013</span>
+          </div>
+          <ul class="bl">
+            <li>Executed turnkey technical deployments for global telecom customers as in-house product SME &mdash; from solution design through go-live.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Comverse -->
+      <div class="co">
+        <div class="co-name">Comverse</div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">Senior Customer Support Engineer &amp; Project Engineer</span>
+            <span class="rd">January 2006 &mdash; December 2010</span>
+          </div>
+          <ul class="bl">
+            <li>Led Tier 3.5 customer support and on-premises implementations &mdash; managing site upgrades, defect resolution, RMA, and technical documentation (SOW, RCA).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Ness -->
+      <div class="co">
+        <div class="co-name">Ness Technology</div>
+        <div class="role">
+          <div class="rh">
+            <span class="rt">System Administrator</span>
+            <span class="rd">March 2003 &mdash; December 2005</span>
+          </div>
+          <ul class="bl">
+            <li>Network integration and system administration for mid-sized organizations.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section>
+      <div class="st">Certifications &amp; Professional Development</div>
+      <ul class="sl">
+        <li><span class="hl">PMP</span> &mdash; Project Management Institute, The Technion (2014)</li>
+        <li><span class="hl">Agile Certified Practitioner</span> &mdash; ACP-PMI (2020)</li>
+        <li><span class="hl">Certified Scrum Master</span> (2019)</li>
+        <li><span class="hl">AWS Cloud Essentials for Business Leaders</span> &mdash; AWS Skill Builder<span class="badge">In Progress</span></li>
+        <li><span class="hl">AI Platforms &amp; Agent Development</span> &mdash; Microsoft Copilot 365 &middot; Azure AI Foundry &middot; AWS Bedrock &middot; Claude Code (Anthropic) &middot; Gemini<span class="badge">2024&ndash;Present</span></li>
+      </ul>
+    </section>
+
+    <!-- EDUCATION -->
+    <section>
+      <div class="st">Education</div>
+      <ul class="sl">
+        <li><span class="hl">MBA</span>, Information Systems &amp; Marketing &mdash; Ono Academic College (2008&ndash;2009)</li>
+        <li><span class="hl">BA</span>, Business Administration, Systems Analysis &mdash; Ono Academic College (2003&ndash;2006)</li>
+      </ul>
+    </section>
+
+    <!-- SKILLS -->
+    <section>
+      <div class="st">Skills</div>
+      <div class="sg">
+        <div class="sr">
+          <div class="sl-label">Program &amp; Delivery Mgmt</div>
+          <div class="tags">
+            <span class="tag hi">End-to-End Program Ownership</span>
+            <span class="tag hi">Delivery Governance</span>
+            <span class="tag">Steering Committee Mgmt</span>
+            <span class="tag">Budget Management</span>
+            <span class="tag">Risk Management</span>
+            <span class="tag">Change Management</span>
+            <span class="tag">Revenue Recognition Tracking</span>
+            <span class="tag">Agile</span><span class="tag">Scrum</span>
+            <span class="tag">Waterfall</span><span class="tag">PMP</span><span class="tag">ACP-PMI</span>
+          </div>
+        </div>
+        <div class="sr">
+          <div class="sl-label">Leadership</div>
+          <div class="tags">
+            <span class="tag hi">Cross-functional Team Leadership</span>
+            <span class="tag hi">Multi-stakeholder Alignment</span>
+            <span class="tag">Executive Communication</span>
+            <span class="tag">Resource Allocation</span>
+            <span class="tag">Conflict Resolution</span>
+          </div>
+        </div>
+        <div class="sr">
+          <div class="sl-label">Product &amp; Technology</div>
+          <div class="tags">
+            <span class="tag hi">R&amp;D Program Management</span>
+            <span class="tag">SaaS &amp; On-Prem Delivery</span>
+            <span class="tag">Enterprise Product Delivery</span>
+            <span class="tag">Platform Migration</span>
+            <span class="tag">Big Data</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">Microservices</span>
+            <span class="tag">Go-to-Market Coordination</span>
+          </div>
+        </div>
+        <div class="sr">
+          <div class="sl-label">AI &amp; Data</div>
+          <div class="tags">
+            <span class="tag hi">AI Agent Development</span>
+            <span class="tag hi">Microsoft Copilot 365</span>
+            <span class="tag">AWS Bedrock</span>
+            <span class="tag">Claude Code (Anthropic)</span>
+            <span class="tag">Microsoft Azure AI Foundry</span>
+            <span class="tag">GitHub Copilot</span>
+          </div>
+        </div>
+        <div class="sr">
+          <div class="sl-label">Tools</div>
+          <div class="tags">
+            <span class="tag">Jira</span><span class="tag">MS Project</span>
+            <span class="tag">Confluence</span>
+            <span class="tag">Microsoft Copilot 365</span>
+            <span class="tag">Tableau</span>
+            <span class="tag">VS Code</span><span class="tag">GitHub</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section style="margin-bottom:0">
+      <div class="st">Languages</div>
+      <div class="langs">
+        <div><span class="lname">English</span><span class="llevel">Fluent</span></div>
+        <div><span class="lname">Hebrew</span><span class="llevel">Native</span></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="ft">
+    Nesi Haver &nbsp;&middot;&nbsp; Program Delivery Manager &nbsp;&middot;&nbsp;
+    nesihaver@gmail.com &nbsp;&middot;&nbsp; Netanya, Israel
+  </div>
+
+</div>
+</body>
+</html>

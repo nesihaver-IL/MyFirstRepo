@@ -1,5 +1,9 @@
 # CLAUDE.md - Personal Projects
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Purpose
 
 This directory contains personal learning projects and experiments for skill development.

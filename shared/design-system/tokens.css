@@ -1,0 +1,210 @@
+/* =============================================================================
+   DESIGN SYSTEM TOKENS - Nesi Haver Personal Design System
+   Single source of truth for all design tokens across this workspace.
+   Usage: @import url('../../shared/design-system/index.css');
+   ============================================================================= */
+
+/* ── FONT FACE: Geist (variable weight) ── */
+@font-face {
+  font-family: 'Geist';
+  src: url('../../assets/fonts/geist-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+
+  /* ────────────────────────────────────────────────────────
+     TYPOGRAPHY
+  ──────────────────────────────────────────────────────── */
+
+  --font-family-base: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-family-mono: 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+
+  /* Size scale - Tailwind standard */
+  --font-size-xs:   12px;
+  --font-size-sm:   14px;
+  --font-size-base: 16px;
+  --font-size-lg:   18px;
+  --font-size-xl:   20px;
+  --font-size-2xl:  24px;
+  --font-size-3xl:  30px;
+  --font-size-4xl:  36px;
+  --font-size-5xl:  48px;
+  --font-size-6xl:  60px;
+  --font-size-7xl:  72px;
+
+  /* Weights (Geist variable font - all weights supported) */
+  --font-weight-regular: 400;
+  --font-weight-medium:  500;
+  --font-weight-bold:    700;
+  --font-weight-display: 800;
+
+  /* Line heights */
+  --line-height-heading: 1.15;
+  --line-height-ui:      1.4;
+  --line-height-reading: 1.65;
+
+
+  /* ────────────────────────────────────────────────────────
+     COLORS - Light Mode
+  ──────────────────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --color-bg-primary:   #ffffff;
+  --color-bg-secondary: #f8fafc;
+  --color-bg-tertiary:  #f1f5f9;
+  --color-bg-overlay:   rgba(0, 0, 0, 0.05);
+
+  /* Accent - Electric blue (5-shade palette) */
+  --color-accent-50:      #eff6ff;
+  --color-accent-100:     #dbeafe;
+  --color-accent-500:     #3b82f6;
+  --color-accent-600:     #2563eb;
+  --color-accent-700:     #1d4ed8;
+
+  /* Semantic accent aliases */
+  --color-accent-primary: var(--color-accent-600);
+  --color-accent-hover:   var(--color-accent-700);
+  --color-accent-subtle:  var(--color-accent-50);
+  --color-accent-border:  var(--color-accent-100);
+
+  /* Text - Neutral gray scale */
+  --color-text-primary:   #111827;
+  --color-text-secondary: #6b7280;
+  --color-text-muted:     #9ca3af;
+  --color-text-disabled:  #d1d5db;
+  --color-text-inverse:   #ffffff;
+  --color-text-link:      var(--color-accent-600);
+  --color-text-link-hover: var(--color-accent-700);
+
+  /* Borders & dividers */
+  --color-border:       #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --color-divider:      #e5e7eb;
+
+  /* Status / semantic colors */
+  --color-success:        #16a34a;
+  --color-success-bg:     #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-warning:        #d97706;
+  --color-warning-bg:     #fffbeb;
+  --color-warning-border: #fde68a;
+  --color-error:          #dc2626;
+  --color-error-bg:       #fef2f2;
+  --color-error-border:   #fecaca;
+  --color-info:           #2563eb;
+  --color-info-bg:        #eff6ff;
+  --color-info-border:    #bfdbfe;
+
+
+  /* ────────────────────────────────────────────────────────
+     SPACING - 4px base scale
+  ──────────────────────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-px: 1px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Semantic spacing aliases */
+  --space-xs:  var(--space-1);
+  --space-sm:  var(--space-2);
+  --space-md:  var(--space-4);
+  --space-lg:  var(--space-6);
+  --space-xl:  var(--space-8);
+  --space-2xl: var(--space-12);
+  --space-3xl: var(--space-16);
+  --space-4xl: var(--space-20);
+
+
+  /* ────────────────────────────────────────────────────────
+     BORDER RADIUS - Rounded style
+  ──────────────────────────────────────────────────────── */
+
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+
+
+  /* ────────────────────────────────────────────────────────
+     LAYOUT - Container widths
+  ──────────────────────────────────────────────────────── */
+
+  --container-sm:   640px;
+  --container-md:   960px;
+  --container-lg:  1280px;
+  --container-xl:  1536px;
+
+
+  /* ────────────────────────────────────────────────────────
+     SHADOWS - Soft layered (light mode)
+  ──────────────────────────────────────────────────────── */
+
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.05);
+
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.07),
+    0 2px 4px -1px rgba(0, 0, 0, 0.04);
+
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.08),
+    0 4px 6px -2px rgba(0, 0, 0, 0.04);
+
+  --shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.10),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+
+  /* ────────────────────────────────────────────────────────
+     MOTION - Snappy transitions
+  ──────────────────────────────────────────────────────── */
+
+  --easing:    cubic-bezier(0.4, 0, 0.2, 1);
+  --t-fast:    150ms var(--easing);
+  --t-normal:  200ms var(--easing);
+  --t-slow:    300ms var(--easing);
+
+
+  /* ────────────────────────────────────────────────────────
+     GRADIENTS - Stripe + ClickUp inspired
+  ──────────────────────────────────────────────────────── */
+
+  /* Hero background: Stripe-style soft blurred wash from top edge */
+  --gradient-hero:
+    radial-gradient(ellipse 80% 60% at 50% 0%,
+      rgba(37, 99, 235, 0.10) 0%,
+      rgba(99, 102, 241, 0.07) 45%,
+      transparent 72%);
+
+  /* Text gradient: ClickUp-style blue-to-violet for display headlines */
+  --gradient-text: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+
+  /* Button gradient: blue-to-indigo for hero CTAs */
+  --gradient-btn:  linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+
+}
+
+/* ── UTILITY: gradient text ── */
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

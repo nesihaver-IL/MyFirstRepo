@@ -1,5 +1,9 @@
 # CLAUDE.md - Plans & Strategy
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Purpose
 
 This directory contains strategic planning documents, roadmaps, and research.

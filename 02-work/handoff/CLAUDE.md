@@ -1,4 +1,8 @@
-# handoff — Work Handoff & Knowledge Transfer
+# handoff - Work Handoff & Knowledge Transfer
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Overview
 Documentation and notes for handing off work, onboarding, and knowledge transfer between team members or sessions.

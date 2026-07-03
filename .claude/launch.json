@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "garmin-dashboard",
+      "runtimeExecutable": "streamlit",
+      "runtimeArgs": ["run", "01-personal/garmin-health/analytics/app.py", "--logger.level=warning"],
+      "port": 8501
+    }
+  ]
+}

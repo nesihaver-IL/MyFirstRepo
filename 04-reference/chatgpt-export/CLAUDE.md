@@ -1,5 +1,9 @@
 # ChatGPT Export Archive
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 This directory contains all archived ChatGPT Projects data, exported before cancelling the ChatGPT subscription.
 
 ## Contents

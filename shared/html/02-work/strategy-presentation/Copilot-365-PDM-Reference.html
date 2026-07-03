@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copilot 365 for PDMs — Complete Reference Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: #2C3E50;
+            background: linear-gradient(135deg, #F8F7F3 0%, #F3F0E8 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #6B9BD1 0%, #7BA886 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(107, 155, 209, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        nav h3 {
+            color: #6B9BD1;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.5rem;
+        }
+
+        nav a {
+            display: block;
+            padding: 0.7rem 1rem;
+            color: #6B9BD1;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            border-left: 3px solid #C19A6B;
+            padding-left: 0.8rem;
+        }
+
+        nav a:hover {
+            background: #F8F7F3;
+            color: #7BA886;
+            border-left-color: #7BA886;
+            transform: translateX(4px);
+        }
+
+        /* Sections */
+        section {
+            background: white;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            border-top: 4px solid #C19A6B;
+        }
+
+        section h2 {
+            color: #6B9BD1;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #7BA886;
+            padding-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        section h2::before {
+            content: '';
+            width: 4px;
+            height: 2rem;
+            background: #C19A6B;
+            border-radius: 2px;
+        }
+
+        section h3 {
+            color: #7BA886;
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        section h3::before {
+            content: '▸';
+            color: #C19A6B;
+            font-size: 1.8rem;
+        }
+
+        section h4 {
+            color: #2C3E50;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Enhancement Cards */
+        .enhancement {
+            background: linear-gradient(135deg, #F8F7F3 0%, #F3F0E8 100%);
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid #7BA886;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .enhancement:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(123, 168, 134, 0.15);
+        }
+
+        .enhancement h4 {
+            color: #6B9BD1;
+            margin-bottom: 0.8rem;
+        }
+
+        .enhancement-use {
+            color: #2C3E50;
+            font-style: italic;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #C19A6B;
+        }
+
+        /* Prompt Box */
+        .prompt-box {
+            background: #2C3E50;
+            color: #E8DCC8;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.2rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            border-left: 4px solid #C19A6B;
+        }
+
+        .prompt-box::before {
+            content: '💬 Prompt:';
+            display: block;
+            color: #C19A6B;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* Tip Box */
+        .tip-box {
+            background: #E8F3E8;
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin: 1.2rem 0;
+            border-left: 4px solid #7BA886;
+        }
+
+        .tip-box strong {
+            color: #7BA886;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        table th {
+            background: #6B9BD1;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 0.9rem 1rem;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        table tr:nth-child(even) {
+            background: #F8F7F3;
+        }
+
+        table tr:hover {
+            background: #F0EBE0;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #FAFAF8 0%, #F3F0E8 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-top: 4px solid #C19A6B;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(107, 155, 209, 0.15);
+        }
+
+        .feature-card h5 {
+            color: #6B9BD1;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #2C3E50;
+            font-size: 0.95rem;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: #F8F7F3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .checklist li {
+            list-style: none;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            color: #C19A6B;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2C3E50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-radius: 10px;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            nav ul {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            nav {
+                position: static;
+            }
+            section {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Highlight */
+        .highlight {
+            background: #FFF8DC;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            color: #2C3E50;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Copilot 365 for PDMs</h1>
+        <p>Daily Efficiency Tools for Cybersecurity R&D — Complete Reference Guide</p>
+    </header>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <h3>📑 Quick Navigation</h3>
+            <ul>
+                <li><a href="#uc7-teams">Teams 365</a></li>
+                <li><a href="#uc5-outlook">Outlook</a></li>
+                <li><a href="#uc3-excel">Excel</a></li>
+                <li><a href="#uc6-meetings">Meetings</a></li>
+                <li><a href="#uc9-researcher">Researcher</a></li>
+                <li><a href="#uc1-knowledge">Knowledge Agent</a></li>
+                <li><a href="#automation">Automation</a></li>
+            </ul>
+        </nav>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>Overview</h2>
+            <p>Copilot 365 is your AI assistant across Microsoft's productivity suite. This guide focuses on <span class="highlight">5 core use cases</span> that save PDMs 3-5 hours per week through smarter meeting notes, decision logging, email intelligence, risk scoring, and competitive research.</p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h5>🎯 Decision Capture</h5>
+                    <p>Auto-extract decisions, owners, and risks from every meeting.</p>
+                </div>
+                <div class="feature-card">
+                    <h5>📊 Risk Scoring</h5>
+                    <p>Turn raw threat data into prioritized risk scores instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <h5>🔍 Intelligence</h5>
+                    <p>Research competitive threats and personas in minutes.</p>
+                </div>
+                <div class="feature-card">
+                    <h5>⚡ Automation</h5>
+                    <p>Auto-route decisions, create tasks, send digests.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- UC7: Teams 365 -->
+        <section id="uc7-teams">
+            <h2>UC7: Teams 365 — Your Daily Command Center</h2>
+            <p>Teams is where decisions live. Copilot helps you capture, organize, and reference them—searchable forever.</p>
+
+            <div class="enhancement">
+                <h4>Enhancement 1: Facilitator — Meeting to Minutes</h4>
+                <div class="enhancement-use">
+                    💡 Start Facilitator at meeting open. It auto-tracks agenda, captures decisions in real-time, and generates structured minutes post-meeting.
+                </div>
+                <p><strong>How it works:</strong></p>
+                <ul>
+                    <li>During meeting: Facilitator displays agenda, participants see live notes on screen</li>
+                    <li>Post-meeting: Copilot extracts decisions with owners and flags risks</li>
+                    <li>Output: Recap tab in Teams with full transcript and action items</li>
+                </ul>
+                <div class="prompt-box">
+From this Teams meeting transcript, extract:
+
+1. **Minutes**: 2-3 sentence summary of discussion
+2. **Decisions Made**: What was decided? (with owner + confidence)
+3. **Assumptions**: What did we assume to be true?
+4. **Risks Identified**: What could go wrong? (impact, owner)
+5. **Action Items**: Specific tasks (owner, due date, context)
+6. **Open Questions**: What still needs clarification?
+
+Format: Concise, fact-based, no interpretation. If not discussed, omit.
+                </div>
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Use the "Follow Up" button during meeting to auto-create tasks with meeting context. No manual entry needed.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 2: Decision Logging in Channels</h4>
+                <div class="enhancement-use">
+                    📌 Pin meeting recap to dedicated decision channel. Creates searchable, accountable decision record.
+                </div>
+                <p><strong>Workflow:</strong></p>
+                <ol>
+                    <li>Meeting ends → Facilitator recap appears</li>
+                    <li>Ask Copilot to create decision card (see prompt below)</li>
+                    <li>Pin decision card to #threat-assessments or #decisions channel</li>
+                    <li>Result: Find any decision in 10 seconds, 6 months later</li>
+                </ol>
+                <div class="prompt-box">
+Create a decision card for this meeting:
+
+**Decision:** [What was decided?]
+**Owner:** [Who owns implementation?]
+**Deadline:** [When?]
+**Rationale:** [Why this approach? What were alternatives?]
+**Risks Flagged:** [Any concerns raised?]
+**Dependencies:** [What else needs to happen first?]
+**Success Criteria:** [How do we know we succeeded?]
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 3: Quick Chat Reactions & Threading</h4>
+                <div class="enhancement-use">
+                    ✅ Use emoji reactions for approvals (✅/❌/❓) and threads to keep conversations organized. Reduces notification spam.
+                </div>
+                <p><strong>Best Practices:</strong></p>
+                <ul>
+                    <li><span class="highlight">✅</span> = Approved, move forward</li>
+                    <li><span class="highlight">❌</span> = Concerns, needs discussion</li>
+                    <li><span class="highlight">❓</span> = Review needed, unclear</li>
+                    <li><span class="highlight">⏰</span> = Urgent, needs immediate attention</li>
+                </ul>
+                <div class="tip-box">
+                    <strong>Workflow Hack:</strong> Reply in thread to avoid @mention spam. React with emoji for quick decisions that don't need thread. Default to threads for security-sensitive topics.
+                </div>
+            </div>
+        </section>
+
+        <!-- UC5: Outlook -->
+        <section id="uc5-outlook">
+            <h2>UC5: Outlook — Email Intelligence</h2>
+            <p>Email is still critical for compliance and decision trails. Copilot helps you find and act on important messages faster.</p>
+
+            <div class="enhancement">
+                <h4>Enhancement 1: Prioritized Inbox</h4>
+                <div class="enhancement-use">
+                    🎯 Let Copilot auto-sort inbox by importance. VIP senders and critical keywords float to top. Runs overnight.
+                </div>
+                <p><strong>Setup (3 minutes):</strong></p>
+                <div class="prompt-box">
+Settings → Copilot → Prioritize Inbox → On
+
+Add your priorities:
+- VIP Senders: [manager, security lead, compliance officer]
+- Keywords: "threat", "critical", "approval", "blocker", "deadline"
+- External Domain: [key partners/vendors]
+- Exclude: newsletters, system alerts, low-priority notifications
+                </div>
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Let it learn for 3-5 days, then refine based on what it got wrong. Copilot gets better with feedback.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 2: Copilot Chat in Outlook</h4>
+                <div class="enhancement-use">
+                    💬 Ask Copilot questions about email threads without leaving Outlook. Summarize, extract action items, draft replies.
+                </div>
+                <p><strong>Common Prompts:</strong></p>
+                <div class="prompt-box">
+"Summarize my emails about [threat/project] from [timeframe].
+What decisions were made? Who owns what?"
+
+"Extract action items from this email thread.
+Who is responsible for each item? What are the deadlines?"
+
+"Draft a reply to [sender] covering [points].
+Keep tone [formal/collaborative/urgent]."
+
+"What's the status of [initiative]?
+Has [person] responded to the last email?"
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 3: Schedule Meeting from Email</h4>
+                <div class="enhancement-use">
+                    📅 Select email thread → ask Copilot to schedule follow-up. Auto-drafts agenda, finds time, creates invite.
+                </div>
+                <p><strong>Example:</strong> Instead of 10 minutes of scheduling back-and-forth, Copilot reads the email thread and creates a meeting invite in 30 seconds.</p>
+                <div class="tip-box">
+                    <strong>When to use:</strong> Escalations, unresolved discussions, decisions that need live debate. Perfect for async-to-sync handoff.
+                </div>
+            </div>
+        </section>
+
+        <!-- UC3: Excel -->
+        <section id="uc3-excel">
+            <h2>UC3: Excel — Risk & Project Scoring</h2>
+            <p>Turn threat trackers and project plans into smart spreadsheets with AI-driven scoring and forecasting.</p>
+
+            <div class="enhancement">
+                <h4>Enhancement 1: Agent Mode — Calculated Columns</h4>
+                <div class="enhancement-use">
+                    🧮 Add risk/priority scores automatically. Copilot writes formulas based on existing data (severity, exploitability, impact).
+                </div>
+                <p><strong>Example:</strong> Threat tracker with CVSS score, exploitability, business impact → Copilot creates "Risk Level" column with formula.</p>
+                <div class="prompt-box">
+Add a 'Risk Level' column (1-5 scale) based on:
+- Severity (CVSS or similar)
+- Exploitability (how likely to be used)
+- Business Impact (what breaks if this happens)
+
+Show me the formula you used.
+Weight severity 40%, exploitability 30%, impact 30%.
+                </div>
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Start with clean data (well-structured rows/columns). Ask Copilot to "Show insights" after scoring to find patterns.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 2: Show Insights</h4>
+                <div class="enhancement-use">
+                    🔍 Let Copilot auto-detect patterns you might miss. Identifies outliers, trends, and anomalies.
+                </div>
+                <div class="prompt-box">
+Analyze this threat tracker and identify:
+1. Top 3 threats by risk score
+2. Any trends (increasing, seasonal, related threats)
+3. Outliers or anomalies worth investigating
+4. Remediation gaps (high-risk items not yet resolved)
+5. Themes (e.g., "supply chain threats", "authentication risks")
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 3: Forecast Timeline</h4>
+                <div class="enhancement-use">
+                    📈 AI detects velocity patterns and predicts when you'll complete high-risk items. Flags timeline risks early.
+                </div>
+                <div class="prompt-box">
+Based on historical remediation times, forecast:
+1. When we'll complete all high-risk items
+2. Which items are at risk of missing deadline
+3. Velocity trend (getting faster or slower?)
+4. Bottlenecks (resources, complexity, dependencies)
+5. Recommended remediation order (critical path)
+                </div>
+            </div>
+        </section>
+
+        <!-- UC6: Meetings -->
+        <section id="uc6-meetings">
+            <h2>UC6: Teams Meeting Intelligence</h2>
+            <p>Copilot captures context during meetings and extracts actionable insights after. Two key moments: <span class="highlight">during</span> and <span class="highlight">after</span>.</p>
+
+            <div class="enhancement">
+                <h4>During Meeting — Real-Time Capture</h4>
+                <div class="enhancement-use">
+                    🎤 Ask Copilot mid-meeting to summarize discussion, identify disagreements, and flag open questions.
+                </div>
+                <div class="prompt-box">
+"Summarize the main discussion points so far.
+Where do we agree? Where do we disagree?
+What are the unresolved questions?"
+
+"Who has been assigned what?
+Summarize action items captured so far."
+
+"What are the key risks or concerns raised?"
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>After Meeting — Structured Extraction (⭐ KEY)</h4>
+                <div class="enhancement-use">
+                    📋 Post-meeting: Run extraction prompt to get minutes, decisions, assumptions, risks, and action items. Async team members catch up in 2 minutes.
+                </div>
+                <div class="prompt-box">
+**DETAILED EXTRACTION PROMPT:**
+
+From this Teams meeting transcript, extract:
+
+1. **Minutes**: 2-3 sentence summary of discussion
+2. **Decisions Made**: What was decided? (with owner + confidence level)
+3. **Assumptions**: What did we assume to be true?
+4. **Risks Identified**: What could go wrong? (severity, impact)
+5. **Action Items**: Specific tasks (owner, due date, context)
+6. **Open Questions**: What still needs clarification?
+7. **Dependencies**: What needs to happen first?
+
+Format: Concise, fact-based, no interpretation/bias.
+                </div>
+
+                <h4>Follow-Up Extraction (for Async Team):</h4>
+                <div class="prompt-box">
+**FOLLOW-UP PROMPT FOR TEAM MEMBERS WHO MISSED MEETING:**
+
+If I missed this meeting, tell me:
+1. Top 3 things I need to know
+2. Any decisions affecting my work specifically
+3. What am I responsible for (if anything)?
+4. When do I need to act?
+5. Who should I follow up with?
+                </div>
+
+                <div class="tip-box">
+                    <strong>Workflow:</strong> After meeting, pin the extraction to the Teams channel immediately. Non-attendees can catch up in 2 minutes. Decisions are logged before people forget context.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Recap by Speakers</h4>
+                <div class="enhancement-use">
+                    👥 See who said what. Helps with accountability and understanding individual perspectives.
+                </div>
+                <p><strong>How to use:</strong> Open Recap tab → scroll to "By Speakers" section → reference who owned each topic in follow-ups.</p>
+            </div>
+        </section>
+
+        <!-- UC9: Researcher -->
+        <section id="uc9-researcher">
+            <h2>UC9: Researcher Agent — Intelligence</h2>
+            <p>Deep multi-step research with citations. Sources: enterprise data (emails, files, meetings, chats) + web. Confidence-graded outputs.</p>
+
+            <div class="enhancement">
+                <h4>Enhancement 1: Persona Research (OSINT Dossier)</h4>
+                <div class="enhancement-use">
+                    🔎 Build intelligence dossier on researcher/competitor/threat actor. Useful before external meetings or threat briefings.
+                </div>
+                <div class="prompt-box">
+Research [name/organization]. Provide:
+1. Identity & Current Role
+2. Expertise Areas & Skills
+3. Public Presence (publications, talks, social profile)
+4. Known Activity (research areas, affiliations)
+5. Contact Pathways (how to reach them)
+6. Confidence Level for each finding
+
+Source everything. Flag what's public vs. internal.
+                </div>
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> Save this prompt to Prompt Library. Reuse for every new researcher/threat actor you need to understand.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 2: Competitive Analysis</h4>
+                <div class="enhancement-use">
+                    📊 Analyze competitor approaches, market positioning, and gaps. Informs threat modeling and strategic decisions.
+                </div>
+                <div class="prompt-box">
+Analyze [competitor/product/approach]. Cover:
+1. Product Positioning & Target Market
+2. Technical Differentiation & Strengths
+3. Known Vulnerabilities or Gaps
+4. Market Share Estimate & Pricing
+5. Strategic Partnerships
+6. SWOT vs. Our Approach
+7. What We Should Learn
+
+Source everything. Flag confidence levels.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 3: Prompt Library — Reuse & Share</h4>
+                <div class="enhancement-use">
+                    📚 Save effective prompts to library. Reuse with just variable changes. Team can adopt same research methodology.
+                </div>
+                <p><strong>How to:</strong></p>
+                <ol>
+                    <li>Run a research prompt → get good results</li>
+                    <li>Click "Save to Prompt Library"</li>
+                    <li>Later: Open "Your prompts" → adjust only variables (names, topics)</li>
+                    <li>Share with team → everyone uses consistent framework</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- UC1: Knowledge Agent -->
+        <section id="uc1-knowledge">
+            <h2>UC1: Project Knowledge Agent — RAG Search</h2>
+            <p>Unified search across all your project data (emails, chats, documents, decisions). Fast intelligence retrieval.</p>
+
+            <div class="enhancement">
+                <h4>Enhancement 1: Unified Search</h4>
+                <div class="enhancement-use">
+                    🔍 Find all context on a topic/project across Outlook, Teams, SharePoint, OneDrive in one search.
+                </div>
+                <div class="prompt-box">
+Find all documents, emails, and chats about [threat/project]
+from the last [timeframe].
+
+Show: Title, creation date, key context, link.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 2: Document Summarization</h4>
+                <div class="enhancement-use">
+                    📄 Quickly extract key info from project documents without reading entire file.
+                </div>
+                <div class="prompt-box">
+Summarize this project document. Extract:
+- Objective & Scope
+- Current Status & Progress
+- Key Risks & Blockers
+- Next Steps & Timeline
+- Owner & Stakeholders
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Enhancement 3: Trend Detection</h4>
+                <div class="enhancement-use">
+                    📈 Spot patterns across all your projects. What's trending? What risks repeat?
+                </div>
+                <div class="prompt-box">
+Across all my projects, identify:
+1. Most discussed topics (what's on everyone's mind?)
+2. Recurring risks (what keeps showing up?)
+3. Patterns in decision-making (fast/slow, who decides?)
+4. Gaps (what's NOT being discussed that should be?)
+                </div>
+            </div>
+        </section>
+
+        <!-- Automation Section -->
+        <section id="automation">
+            <h2>Automation Quick Wins</h2>
+            <p>5-minute setups via Power Automate. No coding required. Save 2-3 hours/week on routine tasks.</p>
+
+            <table>
+                <tr>
+                    <th>Automation</th>
+                    <th>Benefit</th>
+                    <th>How to Set Up</th>
+                    <th>Impact</th>
+                </tr>
+                <tr>
+                    <td><strong>Teams → Planner</strong></td>
+                    <td>Auto-create tasks from meeting action items</td>
+                    <td>Facilitator output → Planner (1-click export)</td>
+                    <td>Save 30 min/week on manual task entry</td>
+                </tr>
+                <tr>
+                    <td><strong>Email → Channel</strong></td>
+                    <td>Auto-pin VIP decisions to channel</td>
+                    <td>If (sender is VIP) AND (keyword: "decision") → pin to channel</td>
+                    <td>No missed decisions. Searchable trail.</td>
+                </tr>
+                <tr>
+                    <td><strong>Weekly Digest</strong></td>
+                    <td>Sunday email summarizing week's decisions</td>
+                    <td>Auto-pull from Teams + Outlook on Sunday 6pm</td>
+                    <td>One email = full week context for stakeholders</td>
+                </tr>
+                <tr>
+                    <td><strong>Escalation Alert</strong></td>
+                    <td>Flag unresolved high-priority items after 24h</td>
+                    <td>If (keyword: "urgent") + (unresolved for 24h) → escalate to manager</td>
+                    <td>Catches bottlenecks before they become crises</td>
+                </tr>
+                <tr>
+                    <td><strong>Decision Registry</strong></td>
+                    <td>Auto-log all major decisions to spreadsheet</td>
+                    <td>Meeting recap → Excel with date, owner, rationale</td>
+                    <td>Compliance trail. Searchable decision history.</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Your First 48 Hours -->
+        <section>
+            <h2>Your First 48 Hours</h2>
+            <p>Don't try to adopt everything at once. Start with these two days:</p>
+
+            <div class="checklist">
+                <h3>Day 1: Teams + Outlook Setup</h3>
+                <ul>
+                    <li>Turn on Prioritized Inbox (Settings → Copilot → 3 min setup)</li>
+                    <li>Add your VIP senders and keywords</li>
+                    <li>Run Facilitator in your next meeting (press "Start" at meeting open)</li>
+                    <li>Copy the meeting extraction prompt (save to Notes)</li>
+                    <li>After meeting: Ask Copilot to extract using your copied prompt</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h3>Day 2: Excel + Researcher</h3>
+                <ul>
+                    <li>Open your threat tracker in Excel</li>
+                    <li>Try "Analyze" or "Show Insights" feature</li>
+                    <li>Ask Copilot to add a Risk Level column (use prompt from UC3)</li>
+                    <li>Run one Researcher search (persona or competitive analysis)</li>
+                    <li>Save your best prompts to Prompt Library</li>
+                    <li>Pin one decision to your Teams channel</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <strong>✓ Success Metric:</strong> After 48 hours, you'll have 3 new workflows: Facilitator meetings, prioritized inbox, and one successful Excel analysis. You'll be 80% productive with Copilot baseline.
+            </div>
+        </section>
+
+        <!-- Workflow Frontier -->
+        <section>
+            <h2>Workflow Frontier — What's Coming</h2>
+            <p>Features on the horizon that will further supercharge your workflows:</p>
+
+            <ul>
+                <li><strong>Real-Time Advisor:</strong> Copilot suggests follow-up questions during meeting (helps with critical decisions)</li>
+                <li><strong>Auto-Routing:</strong> Assign tasks to right person based on historical patterns (learns who owns what)</li>
+                <li><strong>Sentiment Analysis:</strong> Detect team engagement/skepticism in meetings (flag tension early)</li>
+                <li><strong>Narrator Mode:</strong> AI voice reads meeting recap (accessibility + async catch-up for distributed teams)</li>
+                <li><strong>Smart Recap:</strong> Copilot suggests next meeting agenda based on unresolved questions</li>
+                <li><strong>AI-Driven Insights:</strong> Excel auto-detects patterns you might have missed (without you asking)</li>
+            </ul>
+        </section>
+
+        <!-- Prompt Library Examples -->
+        <section>
+            <h2>Save These Prompts to Your Library</h2>
+            <p>Create templates once, reuse forever with just variable changes:</p>
+
+            <div class="enhancement">
+                <h4>Template 1: Standard Meeting Extraction</h4>
+                <div class="prompt-box">
+From this Teams meeting transcript, extract:
+1. Minutes (2-3 sentences)
+2. Decisions (with owner)
+3. Assumptions
+4. Risks (severity, impact)
+5. Action Items (owner, due date)
+6. Open Questions
+
+Format: Concise, fact-based, no bias.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Template 2: Persona Research</h4>
+                <div class="prompt-box">
+Research [NAME/ORGANIZATION]. Provide:
+- Identity & Current Role
+- Expertise & Skills
+- Public Presence & Publications
+- Known Activity & Affiliations
+- Contact Pathways
+
+Source everything. Flag confidence levels.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Template 3: Risk Scoring</h4>
+                <div class="prompt-box">
+Add 'Risk Level' column (1-5) based on:
+- Severity [source: CVSS] (40% weight)
+- Exploitability (30% weight)
+- Business Impact (30% weight)
+
+Show formula. Then sort threats by risk.
+                </div>
+            </div>
+
+            <div class="enhancement">
+                <h4>Template 4: Weekly Status from Data</h4>
+                <div class="prompt-box">
+Draft a weekly status update covering:
+- 3 wins this week
+- 1 blocker we need help with
+- Timeline for next milestone
+- Risks (and who's managing each)
+- Decisions made (and who owns them)
+
+Tone: Professional but approachable.
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Practices -->
+        <section>
+            <h2>Best Practices & Tips</h2>
+
+            <h3>For Teams & Meetings</h3>
+            <ul>
+                <li><strong>Always use Facilitator.</strong> Start at meeting open (not mid-meeting) for best agenda context.</li>
+                <li><strong>Pin decisions immediately.</strong> Do it while meeting context is fresh. 6 months later, you'll thank yourself.</li>
+                <li><strong>Use threads for async discussions.</strong> Reduce @mention spam. Reserve threads for security-sensitive topics.</li>
+                <li><strong>Tag important speakers.</strong> During meeting, Copilot will highlight their contributions in recap.</li>
+            </ul>
+
+            <h3>For Outlook</h3>
+            <ul>
+                <li><strong>Let Prioritized Inbox learn.</strong> First 3-5 days, it'll make mistakes. Refine based on feedback.</li>
+                <li><strong>Use Copilot Chat for context.</strong> Before replying to a long thread, ask Copilot to summarize. Saves misunderstandings.</li>
+                <li><strong>Customize aggressively.</strong> Add your own keywords (e.g., "escalation", "compliance", "threat").</li>
+            </ul>
+
+            <h3>For Excel</h3>
+            <ul>
+                <li><strong>Start with clean data.</strong> Well-structured rows/columns. Copilot works best with consistent input.</li>
+                <li><strong>Always review formulas.</strong> Copilot-generated formulas are readable. Check the logic before you trust it.</li>
+                <li><strong>Use Show Insights.</strong> Let Copilot find patterns you might miss. Great for anomaly detection.</li>
+            </ul>
+
+            <h3>For Researcher</h3>
+            <ul>
+                <li><strong>Save working prompts to library.</strong> Reuse for consistency. Team gets same research quality.</li>
+                <li><strong>Ask for citations.</strong> Always include "Source everything" in research prompts. Compliance requirement.</li>
+                <li><strong>Combine with Excel.</strong> Research data → Excel for scoring/ranking. Researcher + Excel = powerful combo.</li>
+            </ul>
+        </section>
+
+        <!-- FAQ -->
+        <section>
+            <h2>FAQ</h2>
+
+            <h3>Q: Does Copilot work offline?</h3>
+            <p><strong>A:</strong> No. Copilot requires Microsoft 365 + Copilot license + internet connection. All features are cloud-based.</p>
+
+            <h3>Q: What's the difference between Facilitator and regular meeting notes?</h3>
+            <p><strong>A:</strong> Facilitator auto-structures notes, tracks agenda, flags decisions, and creates action items. Regular notes are just text. Facilitator adds AI context.</p>
+
+            <h3>Q: Can I train Copilot on my company's data?</h3>
+            <p><strong>A:</strong> Yes, via Copilot Studio (enterprise feature). You can build custom agents that know your systems, terminology, workflows.</p>
+
+            <h3>Q: What if Copilot extracts a decision incorrectly?</h3>
+            <p><strong>A:</strong> Edit the extraction. Copilot gives you the first draft. You're still in control. Review before you pin decisions to channels.</p>
+
+            <h3>Q: How much does Copilot cost?</h3>
+            <p><strong>A:</strong> Usually $30/user/month add-on to Microsoft 365 subscription. Check with your IT/procurement team.</p>
+
+            <h3>Q: Can I use this on mobile?</h3>
+            <p><strong>A:</strong> Facilitator has mobile version. Outlook, Teams, Excel have mobile Copilot access. Not all features on mobile (e.g., Agent Mode in Excel is web-only).</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>📖 <strong>Copilot 365 for PDMs — Complete Reference Guide</strong></p>
+        <p>Last Updated: May 30, 2026 | For Cybersecurity R&D Project Managers</p>
+        <p style="margin-top: 1.5rem; opacity: 0.8;">Print this page or share the link with your team. All prompts are copy-paste ready.</p>
+    </footer>
+</body>
+</html>

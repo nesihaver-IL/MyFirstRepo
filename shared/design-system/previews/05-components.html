@@ -1,0 +1,256 @@
+<!-- @dsCard group="Components" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Components - Nesi Haver Design System</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body { padding: 40px; max-width: 960px; }
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: var(--radius-md);
+      font-size: var(--font-size-sm); font-weight: var(--font-weight-medium);
+      cursor: pointer; border: 1.5px solid transparent;
+      transition: all var(--t-normal); text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--color-accent-primary);
+      color: var(--color-text-inverse);
+      border-color: var(--color-accent-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover { background: var(--color-accent-hover); border-color: var(--color-accent-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      border-color: var(--color-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-secondary:hover { border-color: var(--color-accent-primary); color: var(--color-accent-primary); box-shadow: var(--shadow-md); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-accent-primary);
+      border-color: transparent;
+    }
+    .btn-ghost:hover { background: var(--color-accent-subtle); }
+    .btn-danger {
+      background: var(--color-error);
+      color: var(--color-text-inverse);
+      border-color: var(--color-error);
+    }
+    .btn-danger:hover { opacity: 0.88; box-shadow: var(--shadow-md); }
+    .btn-gradient {
+      background: var(--gradient-btn);
+      color: var(--color-text-inverse);
+      border-color: transparent;
+      box-shadow: var(--shadow-md);
+    }
+    .btn-gradient:hover { background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%); box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+    .btn-sm { padding: 6px 14px; font-size: var(--font-size-xs); }
+    .btn-lg { padding: 14px 28px; font-size: var(--font-size-base); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* Badges */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: var(--radius-full);
+      font-size: var(--font-size-xs); font-weight: var(--font-weight-medium);
+    }
+    .badge-blue   { background: var(--color-accent-subtle); color: var(--color-accent-primary); border: 1px solid var(--color-accent-border); }
+    .badge-green  { background: var(--color-success-bg); color: var(--color-success); border: 1px solid var(--color-success-border); }
+    .badge-amber  { background: var(--color-warning-bg); color: var(--color-warning); border: 1px solid var(--color-warning-border); }
+    .badge-red    { background: var(--color-error-bg); color: var(--color-error); border: 1px solid var(--color-error-border); }
+    .badge-gray   { background: var(--color-bg-tertiary); color: var(--color-text-secondary); border: 1px solid var(--color-border); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block; }
+
+    /* Cards */
+    .card {
+      background: var(--color-bg-primary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--t-normal), transform var(--t-normal);
+    }
+    .card:hover { box-shadow: var(--shadow-md); }
+    .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .card-title { font-size: var(--font-size-lg); font-weight: var(--font-weight-bold); margin-bottom: 8px; }
+    .card-body { font-size: var(--font-size-sm); color: var(--color-text-secondary); line-height: var(--line-height-reading); }
+    .card-footer { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; }
+
+    /* Inputs */
+    .input {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-sm);
+      font-family: var(--font-family-base);
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      transition: border-color var(--t-fast), box-shadow var(--t-fast);
+      outline: none;
+    }
+    .input:focus { border-color: var(--color-accent-primary); box-shadow: 0 0 0 3px var(--color-accent-subtle); }
+    .input::placeholder { color: var(--color-text-muted); }
+    .input-error { border-color: var(--color-error); }
+    .input-error:focus { box-shadow: 0 0 0 3px var(--color-error-bg); }
+    .field-label { display: block; font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); margin-bottom: 6px; }
+    .field-hint { font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: 4px; }
+    .field-error { font-size: var(--font-size-xs); color: var(--color-error); margin-top: 4px; }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* Alerts */
+    .alert {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; border-radius: var(--radius-md);
+      font-size: var(--font-size-sm); margin-bottom: 10px;
+    }
+    .alert-icon { font-size: var(--font-size-lg); flex-shrink: 0; }
+    .alert-title { font-weight: var(--font-weight-medium); margin-bottom: 2px; }
+    .alert-body { opacity: 0.85; }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--color-border); margin: 0; }
+  </style>
+</head>
+<body>
+
+  <h1 style="font-size: var(--font-size-2xl); margin-bottom: 8px;">Components</h1>
+  <p style="color: var(--color-text-secondary); margin-bottom: 40px;">
+    All components built exclusively from design tokens. No hardcoded values.
+  </p>
+
+  <!-- Buttons -->
+  <div class="section">
+    <div class="section-label">Buttons</div>
+    <div class="row">
+      <button class="btn btn-primary">Primary Action</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-ghost">Ghost</button>
+      <button class="btn btn-danger">Delete</button>
+      <button class="btn btn-gradient">Get started free</button>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" disabled>Disabled Primary</button>
+      <button class="btn btn-secondary" disabled>Disabled Secondary</button>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom: 48px;">
+
+  <!-- Badges -->
+  <div class="section">
+    <div class="section-label">Badges</div>
+    <div class="row">
+      <span class="badge badge-blue"><span class="dot"></span> Active</span>
+      <span class="badge badge-green"><span class="dot"></span> Completed</span>
+      <span class="badge badge-amber"><span class="dot"></span> In Progress</span>
+      <span class="badge badge-red"><span class="dot"></span> Failed</span>
+      <span class="badge badge-gray">Draft</span>
+      <span class="badge badge-blue">feat: new feature</span>
+      <span class="badge badge-gray">v1.0.0</span>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom: 48px;">
+
+  <!-- Cards -->
+  <div class="section">
+    <div class="section-label">Cards</div>
+    <div class="card-grid">
+      <div class="card">
+        <div style="font-size: var(--font-size-2xl); margin-bottom: 12px;">📊</div>
+        <div class="card-title">Analytics</div>
+        <div class="card-body">Monitor key metrics and performance indicators across your projects.</div>
+        <div class="card-footer">
+          <span class="badge badge-green"><span class="dot"></span> Live</span>
+          <button class="btn btn-ghost btn-sm">View</button>
+        </div>
+      </div>
+      <div class="card">
+        <div style="font-size: var(--font-size-2xl); margin-bottom: 12px;">🤖</div>
+        <div class="card-title">AI Agent</div>
+        <div class="card-body">Automated workflows powered by AWS Bedrock and custom skill definitions.</div>
+        <div class="card-footer">
+          <span class="badge badge-blue">27 skills</span>
+          <button class="btn btn-ghost btn-sm">Configure</button>
+        </div>
+      </div>
+      <div class="card" style="background: var(--color-accent-primary); border-color: var(--color-accent-primary);">
+        <div style="font-size: var(--font-size-2xl); margin-bottom: 12px;">🚀</div>
+        <div class="card-title" style="color: var(--color-text-inverse);">Featured</div>
+        <div class="card-body" style="color: rgba(255,255,255,0.8);">Highlighted accent card variant for featured content or CTAs.</div>
+        <div class="card-footer" style="border-color: rgba(255,255,255,0.2);">
+          <span style="font-size: var(--font-size-xs); color: rgba(255,255,255,0.7);">Accent variant</span>
+          <button class="btn btn-sm" style="background: white; color: var(--color-accent-primary);">Get Started</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom: 48px;">
+
+  <!-- Inputs -->
+  <div class="section">
+    <div class="section-label">Form Inputs</div>
+    <div class="input-grid">
+      <div>
+        <label class="field-label">Project Name</label>
+        <input class="input" type="text" placeholder="e.g. garmin-health">
+        <p class="field-hint">Use lowercase letters and hyphens only.</p>
+      </div>
+      <div>
+        <label class="field-label">Email Address</label>
+        <input class="input input-error" type="email" value="invalid-email">
+        <p class="field-error">Please enter a valid email address.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" style="margin-bottom: 48px;">
+
+  <!-- Alerts -->
+  <div class="section">
+    <div class="section-label">Alerts</div>
+    <div class="alert" style="background: var(--color-success-bg); border: 1px solid var(--color-success-border); color: var(--color-success);">
+      <span class="alert-icon">✓</span>
+      <div><div class="alert-title">Database imported successfully</div><div class="alert-body">2205 sleep records and 851 activities processed.</div></div>
+    </div>
+    <div class="alert" style="background: var(--color-warning-bg); border: 1px solid var(--color-warning-border); color: var(--color-warning);">
+      <span class="alert-icon">⚠</span>
+      <div><div class="alert-title">Merge freeze active</div><div class="alert-body">Non-critical PRs should not be merged until after the mobile release cut.</div></div>
+    </div>
+    <div class="alert" style="background: var(--color-error-bg); border: 1px solid var(--color-error-border); color: var(--color-error);">
+      <span class="alert-icon">✕</span>
+      <div><div class="alert-title">Lambda deployment failed</div><div class="alert-body">Timeout after 30s. Check CloudWatch logs for details.</div></div>
+    </div>
+    <div class="alert" style="background: var(--color-info-bg); border: 1px solid var(--color-info-border); color: var(--color-info);">
+      <span class="alert-icon">ℹ</span>
+      <div><div class="alert-title">DesignSync is ready</div><div class="alert-body">5 preview files are staged and ready to publish to claude.ai/design.</div></div>
+    </div>
+  </div>
+
+</body>
+</html>

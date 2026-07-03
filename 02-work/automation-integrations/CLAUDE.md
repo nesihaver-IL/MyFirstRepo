@@ -1,5 +1,9 @@
 # CLAUDE.md - Automation Integrations
 
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
+
 ## Project Overview
 
 Collection of JIRA and Confluence automation integrations for enterprise workflow automation. Automates ticket creation, status transitions, document sync, and cross-platform notifications.

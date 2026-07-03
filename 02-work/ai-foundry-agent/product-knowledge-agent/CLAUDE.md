@@ -1,4 +1,8 @@
-# CLAUDE.md — Product Knowledge Agent
+# CLAUDE.md - Product Knowledge Agent
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## What This Is
 

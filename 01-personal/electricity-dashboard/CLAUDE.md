@@ -1,4 +1,8 @@
-# electricity-dashboard — Email & Electricity Cost Analyzer
+# electricity-dashboard - Email & Electricity Cost Analyzer
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Overview
 Personal utility for tracking electricity costs and analyzing email patterns. Fetches data from Gmail and generates HTML visualizations.

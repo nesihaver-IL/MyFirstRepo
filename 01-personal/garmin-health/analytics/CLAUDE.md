@@ -1,4 +1,8 @@
-# Garmin Health Analytics Dashboard — AI Context
+# Garmin Health Analytics Dashboard - AI Context
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Purpose
 Personal health analytics dashboard for a 47-year-old male athlete (1.80m, 70kg).

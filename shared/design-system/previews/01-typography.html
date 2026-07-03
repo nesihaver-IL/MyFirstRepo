@@ -1,0 +1,196 @@
+<!-- @dsCard group="Foundations" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Typography - Nesi Haver Design System</title>
+  <link rel="stylesheet" href="../index.css">
+  <style>
+    body { padding: 40px; max-width: 900px; }
+    .section { margin-bottom: 48px; }
+    .section-label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    .type-meta {
+      min-width: 180px;
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      font-family: var(--font-family-mono);
+    }
+    .type-sample { flex: 1; }
+    .weight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .weight-card {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+    .weight-card .label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+      font-family: var(--font-family-mono);
+      margin-bottom: 8px;
+    }
+    .lh-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+    .lh-box {
+      flex: 1;
+      background: var(--color-accent-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .lh-box .label {
+      font-size: var(--font-size-xs);
+      color: var(--color-accent-primary);
+      font-family: var(--font-family-mono);
+      margin-bottom: 8px;
+      font-weight: var(--font-weight-bold);
+    }
+    .mono-sample {
+      font-family: var(--font-family-mono);
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      font-size: var(--font-size-sm);
+      color: var(--color-accent-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="font-size: var(--font-size-2xl); margin-bottom: 8px;">Typography</h1>
+  <p style="color: var(--color-text-secondary); margin-bottom: 40px;">
+    Geist - variable weight. Tailwind size scale. 3 weights. 3 line heights.
+  </p>
+
+  <!-- Type Scale -->
+  <div class="section">
+    <div class="section-label">Type Scale</div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-7xl / 72px</div>
+      <div class="type-sample" style="font-size: var(--font-size-7xl); line-height: var(--line-height-heading); font-weight: var(--font-weight-bold);">Aa</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-6xl / 60px</div>
+      <div class="type-sample" style="font-size: var(--font-size-6xl); line-height: var(--line-height-heading); font-weight: var(--font-weight-bold);">Page Title</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-5xl / 48px</div>
+      <div class="type-sample" style="font-size: var(--font-size-5xl); line-height: var(--line-height-heading); font-weight: var(--font-weight-bold);">Hero Heading</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-4xl / 36px</div>
+      <div class="type-sample" style="font-size: var(--font-size-4xl); line-height: var(--line-height-heading); font-weight: var(--font-weight-bold);">Section Heading</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-3xl / 30px</div>
+      <div class="type-sample" style="font-size: var(--font-size-3xl); line-height: var(--line-height-heading); font-weight: var(--font-weight-bold);">Card Title</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-2xl / 24px</div>
+      <div class="type-sample" style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold);">Subsection Title</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-xl / 20px</div>
+      <div class="type-sample" style="font-size: var(--font-size-xl); font-weight: var(--font-weight-medium);">Large Label</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-lg / 18px</div>
+      <div class="type-sample" style="font-size: var(--font-size-lg);">Lead Paragraph Text</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-base / 16px</div>
+      <div class="type-sample" style="font-size: var(--font-size-base);">Body Text - The quick brown fox jumps over the lazy dog.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-sm / 14px</div>
+      <div class="type-sample" style="font-size: var(--font-size-sm); color: var(--color-text-secondary);">Supporting Text - Used for metadata, labels, and secondary content.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">--font-size-xs / 12px</div>
+      <div class="type-sample" style="font-size: var(--font-size-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: var(--font-weight-bold);">CAPTION / LABEL / OVERLINE</div>
+    </div>
+  </div>
+
+  <!-- Weights -->
+  <div class="section">
+    <div class="section-label">Font Weights</div>
+    <div class="weight-grid">
+      <div class="weight-card">
+        <div class="label">--font-weight-regular: 400</div>
+        <div style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-regular);">Regular</div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 8px; font-weight: 400;">Used for body text, descriptions, and long-form reading.</p>
+      </div>
+      <div class="weight-card">
+        <div class="label">--font-weight-medium: 500</div>
+        <div style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-medium);">Medium</div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 8px;">Used for UI labels, nav items, and emphasized body text.</p>
+      </div>
+      <div class="weight-card">
+        <div class="label">--font-weight-bold: 700</div>
+        <div style="font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold);">Bold</div>
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-secondary); margin-top: 8px;">Used for headings, buttons, and critical callouts.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Line Heights -->
+  <div class="section">
+    <div class="section-label">Line Heights</div>
+    <div class="lh-row">
+      <div class="lh-box">
+        <div class="label">--line-height-heading: 1.15</div>
+        <div style="font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); line-height: var(--line-height-heading);">
+          Tight for<br>Display Text
+        </div>
+      </div>
+      <div class="lh-box">
+        <div class="label">--line-height-ui: 1.4</div>
+        <div style="font-size: var(--font-size-base); line-height: var(--line-height-ui);">
+          Comfortable for UI labels,<br>buttons, and compact elements
+        </div>
+      </div>
+      <div class="lh-box">
+        <div class="label">--line-height-reading: 1.65</div>
+        <div style="font-size: var(--font-size-base); line-height: var(--line-height-reading);">
+          Relaxed for longer body text,<br>paragraphs, and descriptions where<br>readability is the priority.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mono -->
+  <div class="section">
+    <div class="section-label">Monospace</div>
+    <div class="mono-sample">
+      --font-family-mono: 'Monaco', 'Cascadia Code', 'Courier New', monospace;<br>
+      const designSystem = { tokens: 'tokens.css', version: '1.0.0' };<br>
+      npm install && python3 analytics/setup_database.py
+    </div>
+  </div>
+
+</body>
+</html>

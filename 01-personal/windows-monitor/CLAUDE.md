@@ -1,4 +1,8 @@
-# Windows System Monitor — AI Context
+# Windows System Monitor - AI Context
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Purpose
 Real-time Windows system monitoring dashboard with power consumption analysis.

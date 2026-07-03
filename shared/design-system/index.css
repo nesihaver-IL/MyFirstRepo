@@ -1,0 +1,10 @@
+/* =============================================================================
+   DESIGN SYSTEM - Entry point
+   Import this single file in any project:
+     @import url('../../shared/design-system/index.css');
+   Or for HTML:
+     <link rel="stylesheet" href="/shared/design-system/index.css">
+   ============================================================================= */
+
+@import url('./tokens.css');
+@import url('./reset.css');

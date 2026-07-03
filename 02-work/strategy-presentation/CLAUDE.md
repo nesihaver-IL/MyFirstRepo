@@ -1,4 +1,8 @@
-# strategy-presentation — Enigma Company Strategy & Planning
+# strategy-presentation - Enigma Company Strategy & Planning
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Overview
 Strategic planning documents, presentations, and project plans for Enigma company work. Includes business strategy decks, migration plans, task tracking, and milestone planning.

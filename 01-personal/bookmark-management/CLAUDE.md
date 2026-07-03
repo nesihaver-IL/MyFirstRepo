@@ -1,4 +1,8 @@
-# Bookmark Management Project — CLAUDE.md
+# Bookmark Management Project - CLAUDE.md
+
+## Output Formatting Rules
+
+- **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead.
 
 ## Project Overview
 
