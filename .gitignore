@@ -32,7 +32,8 @@ whatsapp-export/
 !whatsapp-export/album/photos/*.jpg
 
 # Windows metadata files (WSL copies from Windows)
-*:Zone.Identifier
+# Note: WSL uses a Unicode lookalike colon (U+F03A), so omit the colon to match both variants
+*Zone.Identifier
 
 # IDE settings (machine-specific)
 .vscode/
@@ -43,3 +44,27 @@ whatsapp-export/
 # Interview coach personal data
 01-personal/interview-coach/Nesi_Haver_PDM.pdf
 01-personal/interview-coach/memory/user_profile.md
+
+# Python virtual environment (versioned)
+.venv-1/
+
+# Database files (runtime data, never committed)
+*.db
+
+# Large raw Garmin data exports
+**/Garmin_full_Data_*/
+
+# Raw unprocessed source data (personal exports, chat logs)
+02-work/archive/genesis-feedback-storytelling/data/raw/
+
+# Skill symlinks (WSL symlinks - Windows git cannot stage these; commit via WSL git)
+.claude/skills/apply-comments
+.claude/skills/create-slide
+.claude/skills/create-theme
+.claude/skills/current-slide
+.claude/skills/slide-authoring
+
+# Teams 365 folder with special Unicode character in name (duplicate of tracked Teams 365/)
+# Pattern: [! ] matches any char that is NOT a space, so it catches the special-char variant
+# but skips the clean "Teams 365/" folder (which starts with a space after Teams)
+04-reference/Teams[! ]* 365/

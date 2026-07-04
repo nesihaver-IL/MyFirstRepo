@@ -1,0 +1,14 @@
+[submodule "01-personal/garmin-health/garmin-mcp-server"]
+	path = 01-personal/garmin-health/garmin-mcp-server
+	url = https://github.com/rahuljois/garmin-mcp
+	ignore = dirty
+
+[submodule "01-personal/interview-coach"]
+	path = 01-personal/interview-coach
+	url = https://github.com/nesihaver-IL/interview-coach.git
+	ignore = dirty
+
+[submodule "01-personal/token-optimizer"]
+	path = 01-personal/token-optimizer
+	url = https://github.com/alexgreensh/token-optimizer
+	ignore = dirty
