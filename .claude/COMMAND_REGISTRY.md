@@ -1,12 +1,11 @@
 # Command Registry
-# Auto-generated list of available slash commands
+# Available slash commands - 26 active skills, 4 agents
 
 ## Available Commands
 
 ### Full Command Names
 
 #### Core Workflow (use in order)
-- exploration-phase
 - create-plan
 - execute-plan
 - review
@@ -22,45 +21,35 @@
 - aws-strands
 - aws-agentcore
 - aws-step-functions
-- aws-eventbridge
 - aws-lambda
 - terraform-ops
 
-#### Domain Skills (added 2026-02-27)
+#### Domain Skills
 - streamlit-dash
 - data-pipeline
+- garmin-analyzer
 - jira-confluence
 
-#### Career & Professional Development (added 2026-03-13)
-- resume-optimizer
-
-#### Project Management (added 2026-02-28)
-- excel-pm-planner
-- cyber-exec-brief
-- pptx-builder
-
-#### Quality & Security (added 2026-02-27)
+#### Quality & Security
 - test-runner
 - security-audit
 
-#### Design & Utilities
-- figma
+#### Presentation & Design
+- slide-authoring
+- create-slide
+- create-theme
+- apply-comments
+- current-slide
+- html-sync
 - analytics-metrics
-- copilot-docs
-- nano-banana-pro
-- github-trending
 
 ### Aliases (Short Names)
-You can use these trigger phrases to activate commands:
 
 | Alias/Trigger | Full Command | Description |
 |---------------|--------------|-------------|
 | "create issue" | create-issue | Document bugs, features, ideas |
 | "log bug" | create-issue | Record a bug |
 | "track feature" | create-issue | Track new feature |
-| "explore" | exploration-phase | Understand task and code |
-| "explore codebase" | exploration-phase | Analyze existing code |
-| "understand task" | exploration-phase | Clarify requirements |
 | "plan" | create-plan | Create implementation plan |
 | "make plan" | create-plan | Design solution |
 | "implement plan" | execute-plan | Write the code |
@@ -79,168 +68,55 @@ You can use these trigger phrases to activate commands:
 | "agentcore" | aws-agentcore | Lambda tools, Bedrock orchestration |
 | "terraform plan" | terraform-ops | Plan infra changes (garmin + aws-ai-agent) |
 | "deploy infra" | terraform-ops | Apply Terraform (always plan first) |
-| "tfstate" | terraform-ops | Inspect Terraform state |
 | "infrastructure" | terraform-ops | AWS infrastructure management |
-| "deploy aws" | terraform-ops | Deploy Lambda + DynamoDB + API GW |
 | "streamlit" | streamlit-dash | Garmin analytics dashboard (01-personal/) |
 | "run dashboard" | streamlit-dash | Launch or update Streamlit app |
 | "garmin analytics" | streamlit-dash | Update health metrics dashboard |
 | "ingest data" | data-pipeline | Garmin data ingestion + ETL |
 | "pipeline" | data-pipeline | Data pipeline operations |
-| "migrate dataset" | data-pipeline | Move files to data/raw/ |
 | "garmin data" | data-pipeline | Garmin JSON export management |
-| "rag dataset" | data-pipeline | Update RAG ZIP batches |
+| "analyze training" | garmin-analyzer | Garmin training data analysis |
+| "garmin report" | garmin-analyzer | Generate health/fitness report |
 | "jira ticket" | jira-confluence | Create or update JIRA issue |
 | "confluence page" | jira-confluence | Create or update Confluence page |
 | "jira automation" | jira-confluence | Build JIRA automation workflow |
-| "update board" | jira-confluence | Read/update JIRA sprint board |
 | "run tests" | test-runner | Execute pytest across projects |
 | "pytest" | test-runner | Run Python test suite |
 | "test coverage" | test-runner | Check test coverage report |
-| "validate tests" | test-runner | Verify tests before commit |
 | "security scan" | security-audit | Scan for secrets + OWASP issues |
 | "check secrets" | security-audit | Detect hardcoded credentials |
-| "audit credentials" | security-audit | Verify no secrets in code |
 | "owasp" | security-audit | OWASP Top 10 compliance check |
 | "dashboard" | analytics-metrics | Data visualization / Recharts charts |
 | "chart" | analytics-metrics | KPI displays, metrics dashboards |
-| "copilot" | copilot-docs | GitHub Copilot custom instructions |
-| "figma" | figma | Figma API, design tokens, component gen |
-| "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
-| "trending" | github-trending | GitHub trending repos discovery |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
 | "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
 | "bedrock flows" | aws-bedrock | Visual agentic flow builder |
 | "converse api" | aws-bedrock | Bedrock Converse API + tool use |
-| "guardrails" | aws-bedrock | Content filtering + PII redaction |
 | "state machine" | aws-step-functions | Step Functions state machine design |
 | "step functions" | aws-step-functions | Orchestrate agentic pipelines |
-| "human approval" | aws-step-functions | Wait-for-task-token approval gate |
-| "event bus" | aws-eventbridge | EventBridge custom bus + rules |
-| "eventbridge" | aws-eventbridge | Event-driven agent triggers |
-| "cron trigger" | aws-eventbridge | Scheduled agent runs (Scheduler) |
-| "eventbridge pipes" | aws-eventbridge | SQS / DynamoDB Stream → agent |
 | "lambda tool" | aws-lambda | Lambda as Bedrock agent tool backend |
 | "lambda handler" | aws-lambda | Serverless function patterns |
-| "sam cli" | aws-lambda | Local Lambda testing with SAM |
 | "function url" | aws-lambda | Lambda HTTP endpoint for agents |
-| "exec brief" | cyber-exec-brief | Executive status update for cyber project |
-| "executive update" | cyber-exec-brief | Management-ready status communication |
-| "status report" | cyber-exec-brief | Project status report for management |
-| "cyber project update" | cyber-exec-brief | Cybersecurity B2C project update |
-| "risk brief" | cyber-exec-brief | Executive risk summary |
-| "milestone update" | cyber-exec-brief | Gate or milestone executive summary |
-| "board presentation" | cyber-exec-brief | Board / steering committee slide content |
-| "steering committee" | cyber-exec-brief | Steering committee update |
-| "gate review" | cyber-exec-brief | Phase gate review brief |
-| "roadmap summary" | cyber-exec-brief | Executive roadmap snapshot |
-| "build slides" | pptx-builder | Generate a PowerPoint deck from structured content |
-| "create presentation" | pptx-builder | Build an exec-ready .pptx file |
-| "powerpoint" | pptx-builder | PowerPoint slide generation |
-| "slide deck" | pptx-builder | Generate a slide deck |
-| "generate deck" | pptx-builder | Build a full presentation deck |
-| "make slides" | pptx-builder | Create PowerPoint slides |
-| "excel plan" | excel-pm-planner | Analyze PM Excel block-timeline plan |
-| "pm excel" | excel-pm-planner | Read discipline / platform / timeline lanes |
-| "timeline blocks" | excel-pm-planner | Extract and interpret block schedule |
-| "plan vs tracking" | excel-pm-planner | Compare planned vs. actual blocks |
-| "schedule review" | excel-pm-planner | Identify slips, gaps, and risks |
-| "discipline allocation" | excel-pm-planner | Who is working and when |
-| "block analysis" | excel-pm-planner | Block-based Gantt / schedule analysis |
-| "optimize resume" | resume-optimizer | Tailor resume against target role |
-| "tailor resume" | resume-optimizer | Resume fit analysis and rewrite |
-| "resume score" | resume-optimizer | ATS-aware resume optimization |
-| "cv optimization" | resume-optimizer | CV enhancement and benchmarking |
-| "career optimization" | resume-optimizer | Career positioning and role matching |
-| "position match" | resume-optimizer | Candidate-role fit analysis |
-| "job fit analysis" | resume-optimizer | Analyze fit and benchmark role |
-| "resume benchmark" | resume-optimizer | Market research + resume rewrite |
-| "resume talent" | resume-optimizer | Resume optimization for talent matching |
+| "create slide" | create-slide | Add a new slide to the active deck |
+| "new slide" | create-slide | Create a slide with layout + content |
+| "set theme" | create-theme | Apply or create a deck theme |
+| "current slide" | current-slide | Show the active/focused slide |
+| "apply comments" | apply-comments | Apply review comments to slides |
+| "html sync" | html-sync | Sync HTML deck to disk |
 
 ## Usage Examples
 
-### Short Form (Using Triggers)
 ```
-"explore the authentication system"
-→ Triggers: exploration-phase
-
-"create issue - login button broken"
-→ Triggers: create-issue
-
-"review the shopping cart code"
-→ Triggers: review
-
-"terraform plan the garmin backend changes"
-→ Triggers: terraform-ops
-
-"run the garmin backend tests"
-→ Triggers: test-runner
-
-"scan for secrets before I commit"
-→ Triggers: security-audit
-
-"update the streamlit dashboard charts"
-→ Triggers: streamlit-dash
+"create issue - login button broken"       -> create-issue
+"plan the garmin data migration"           -> create-plan
+"review the analytics module"              -> review
+"terraform plan the garmin backend"        -> terraform-ops
+"run tests before PR"                      -> test-runner
+"scan for secrets before I commit"         -> security-audit
+"update the streamlit dashboard charts"    -> streamlit-dash
+"analyze my training data"                 -> garmin-analyzer
+"create a JIRA ticket for this bug"        -> jira-confluence
 ```
-
-### Direct Invocation (Claude Code)
-```
-Use the terraform-ops skill to plan infra changes
-Use the test-runner skill to validate before PR
-Use the security-audit skill to gate this commit
-Use the streamlit-dash skill to update the dashboard
-Use the data-pipeline skill to migrate garmin files
-Use the jira-confluence skill to create the sprint ticket
-```
-
-### Cursor IDE
-```
-/create-issue
-/exploration-phase
-/create-plan
-/execute-plan
-/review
-/peer-review
-/update-docs
-/terraform-ops
-/test-runner
-/security-audit
-/streamlit-dash
-/data-pipeline
-/jira-confluence
-```
-
-## Auto-Loading
-
-### Claude Code
-Commands in `.claude/skills/` are **automatically loaded** on startup.
-No configuration needed!
-
-### Cursor IDE
-Commands in `.cursor/commands/` are **automatically detected** when you type `/`.
-
-## Troubleshooting
-
-### "Unknown slash command" Error
-
-**Problem**: Typed `/create` instead of `/create-issue`
-
-**Solutions**:
-1. Use the full command name: `/create-issue`
-2. Or use natural language: "create an issue for this bug"
-3. Check available commands: See list above
-
-### Commands Not Showing Up
-
-**Claude Code**:
-- Restart Claude Code
-- Verify files exist in `.claude/skills/*/SKILL.md`
-- Check YAML frontmatter has `name:` field
-
-**Cursor IDE**:
-- Restart Cursor
-- Type `/` to see all commands
-- Verify files exist in `.cursor/commands/*.md`
 
 ## Agents (Sub-Agent Specs)
 
@@ -254,13 +130,10 @@ Located in `.claude/agents/*/AGENT.md`.
 | `jira-confluence-agent` | `02-work/automation-integrations/` | JIRA/Confluence automation, sprint workflows |
 | `code-quality-agent` | All projects | Pre-PR quality gate, security scan, test validation |
 
-### Invoking Agents
-```
-"Garmin health agent: analyze my last month of training"
-"AWS infra agent: check why the Lambda is failing"
-"JIRA agent: build the sprint review automation"
-"Quality agent: run the full pre-PR check"
-```
+## Archived Skills
+
+Moved to `.claude/skills-archive/` - restore to `skills/` if needed:
+`exploration-phase`, `resume-optimizer`, `cyber-exec-brief`, `pptx-builder`, `excel-pm-planner`, `aws-eventbridge`, `figma`, `copilot-docs`, `nano-banana-pro`, `github-trending`, `content-to-reference`, `google-workspace-cli`, `xlsx`
 
 ## Diagnostic Scripts
 
@@ -269,11 +142,9 @@ Located in `.claude/agents/*/AGENT.md`.
 | `.claude/scripts/check-connectivity.sh` | Test internet, Anthropic API, CLI install, and auth |
 | `.claude/scripts/check-connectivity.bat` | Same as above, for Windows |
 
-Run before reporting login or connectivity issues.
+## Status
 
-## Command Status
-
-Last Updated: 2026-03-13
-Total Skills: 28
+Last Updated: 2026-07-04
+Total Active Skills: 26
+Total Archived Skills: 13
 Total Agents: 4
-Status: ✅ Active

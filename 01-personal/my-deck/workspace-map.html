@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyFirstRepo - Workspace Map</title>
+<style>
+/* ── DS TOKENS (inlined from themes/_theme-variables.css) ─────────── */
+:root {
+  --t-fast:   0.2s  cubic-bezier(0.4, 0, 0.2, 1);
+  --t-normal: 0.3s  cubic-bezier(0.4, 0, 0.2, 1);
+  --t-slow:   0.55s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --color-bg-primary:   #050510;
+  --color-bg-secondary: #0f0f1f;
+  --color-bg-tertiary:  #1a1a2e;
+
+  --color-accent-primary: #059669;
+  --color-accent-light:   #10a35f;
+  --color-accent-dark:    #047857;
+  --color-accent-subtle:  rgba(5, 150, 105, 0.15);
+  --color-accent-border:  rgba(5, 150, 105, 0.35);
+
+  --color-warning: #f59e0b;
+  --color-error:   #dc2626;
+  --color-info:    #3b82f6;
+
+  --color-text-primary:   #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.70);
+  --color-text-muted:     rgba(255, 255, 255, 0.45);
+  --color-text-disabled:  rgba(255, 255, 255, 0.25);
+
+  --color-border:       rgba(255, 255, 255, 0.12);
+  --color-border-light: rgba(255, 255, 255, 0.06);
+  --color-divider:      rgba(5, 150, 105, 0.25);
+
+  --glass-light:         rgba(255, 255, 255, 0.07);
+  --glass-light-border:  rgba(255, 255, 255, 0.12);
+  --glass-medium:        rgba(255, 255, 255, 0.12);
+  --glass-medium-border: rgba(255, 255, 255, 0.18);
+  --glass-dark:          rgba(255, 255, 255, 0.18);
+  --glass-dark-border:   rgba(255, 255, 255, 0.28);
+
+  --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Monaco', 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-lg:   17px;
+  --text-xl:   19px;
+  --text-2xl:  22px;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-black:    900;
+
+  --lh-tight:   1.0;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+
+  --r-sm:   8px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-full: 100px;
+
+  --blur-sm: 10px;
+  --blur-md: 14px;
+  --blur-lg: 20px;
+  --blur-xl: 24px;
+}
+
+/* ── RESET ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-base);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── HEADER ───────────────────────────────────────────────────────── */
+.header {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--sp-md) var(--sp-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(var(--blur-lg));
+}
+.header-title h1 {
+  font-size: var(--text-lg);
+  font-weight: var(--fw-semibold);
+}
+.header-title p {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+.header-stats {
+  display: flex;
+  gap: var(--sp-xl);
+  align-items: center;
+}
+.stat { text-align: center; }
+.stat-num {
+  display: block;
+  font-size: var(--text-2xl);
+  font-weight: var(--fw-black);
+  color: var(--color-accent-primary);
+  line-height: 1;
+}
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── CONTROLS BAR ─────────────────────────────────────────────────── */
+.controls {
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--sp-sm) var(--sp-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+.controls-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+.filter-btn {
+  background: var(--glass-light);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  padding: var(--sp-xs) var(--sp-md);
+  border-radius: var(--r-full);
+  cursor: pointer;
+  font-size: var(--text-xs);
+  font-family: var(--font-base);
+  transition: all var(--t-fast);
+}
+.filter-btn:hover {
+  border-color: var(--color-accent-primary);
+  color: var(--color-accent-primary);
+}
+.filter-btn.on {
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent-border);
+  color: var(--color-accent-primary);
+}
+
+/* ── TWO-COLUMN LAYOUT ────────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 272px 1fr;
+  height: calc(100vh - 88px);
+}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────────── */
+aside {
+  background: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  padding: var(--sp-md);
+}
+.aside-section { margin-bottom: var(--sp-xl); }
+.aside-label {
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: var(--sp-sm);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--sp-md);
+}
+
+/* Skill chips - DS chip style */
+.skill-chip {
+  display: inline-block;
+  background: var(--color-accent-subtle);
+  border: 1px solid var(--color-accent-border);
+  border-radius: var(--r-full);
+  font-size: var(--text-xs);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-primary);
+  padding: 3px 9px;
+  margin: 2px 2px 2px 0;
+  font-family: var(--font-mono);
+  backdrop-filter: blur(var(--blur-sm));
+  transition: all var(--t-fast);
+}
+.skill-chip:hover {
+  background: rgba(5, 150, 105, 0.25);
+  border-color: var(--color-accent-light);
+}
+.skill-chip.archived {
+  background: var(--glass-light);
+  border-color: var(--color-border-light);
+  color: var(--color-text-muted);
+}
+
+/* Agent cards - DS glass card style */
+.agent-card {
+  background: var(--glass-light);
+  border: 1px solid var(--glass-light-border);
+  border-left: 3px solid var(--color-accent-primary);
+  border-radius: var(--r-sm);
+  padding: var(--sp-sm) var(--sp-md);
+  margin-bottom: var(--sp-sm);
+  backdrop-filter: blur(var(--blur-md));
+  transition: all var(--t-fast);
+}
+.agent-card:hover {
+  background: var(--glass-medium);
+  border-left-color: var(--color-accent-light);
+}
+.agent-name {
+  font-size: var(--text-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--color-accent-primary);
+  font-family: var(--font-mono);
+}
+.agent-scope {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  line-height: var(--lh-normal);
+}
+
+/* Legend */
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-sm);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+.legend-swatch {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── MAIN CONTENT ─────────────────────────────────────────────────── */
+main {
+  overflow-y: auto;
+  padding: var(--sp-lg) var(--sp-xl);
+}
+
+.section-group { margin-bottom: var(--sp-xl); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-md);
+  padding-bottom: var(--sp-md);
+  border-bottom: 1px solid var(--color-border);
+}
+.section-header h2 {
+  font-size: var(--text-base);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-mono);
+}
+.section-icon { font-size: 15px; }
+.section-count {
+  margin-left: auto;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  background: var(--glass-light);
+  border: 1px solid var(--color-border);
+  padding: 2px var(--sp-sm);
+  border-radius: var(--r-full);
+}
+
+/* ── TREE ─────────────────────────────────────────────────────────── */
+ul.tree, ul.children { list-style: none; }
+
+.node-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 5px var(--sp-sm);
+  border-radius: var(--r-sm);
+  transition: background var(--t-fast);
+  cursor: default;
+}
+.node-row:hover { background: var(--glass-light); }
+
+.node-indent {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-border);
+  white-space: pre;
+  user-select: none;
+}
+.node-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--fw-medium);
+  flex-shrink: 0;
+}
+
+/* ── STATUS BADGES (Option B - DS palette only) ───────────────────── */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: var(--fw-bold);
+  padding: 1px 7px;
+  border-radius: var(--r-full);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-left: var(--sp-sm);
+  align-self: center;
+  flex-shrink: 0;
+}
+/* Active = emerald */
+.badge-active {
+  background: var(--color-accent-subtle);
+  color: var(--color-accent-primary);
+  border: 1px solid var(--color-accent-border);
+}
+/* Monitor = amber */
+.badge-monitor {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--color-warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+/* Archive = muted glass */
+.badge-archive {
+  background: var(--glass-light);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border-light);
+}
+/* System = medium glass */
+.badge-system {
+  background: var(--glass-medium);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--glass-medium-border);
+}
+
+.node-desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-left: var(--sp-md);
+  align-self: center;
+  line-height: var(--lh-normal);
+}
+.node-date {
+  margin-left: auto;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+  padding-left: var(--sp-lg);
+}
+
+/* ── ARCHIVE FILTER ───────────────────────────────────────────────── */
+body.hide-archive .is-archive { display: none; }
+body.hide-archive .archive-group { display: none; }
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-title">
+    <h1>MyFirstRepo - Workspace Map</h1>
+    <p>Updated 2026-07-04 - Personal AI development workspace</p>
+  </div>
+  <div class="header-stats">
+    <div class="stat"><span class="stat-num">26</span><span class="stat-label">Active Skills</span></div>
+    <div class="stat"><span class="stat-num">4</span><span class="stat-label">Agents</span></div>
+    <div class="stat"><span class="stat-num">11</span><span class="stat-label">Active Projects</span></div>
+    <div class="stat"><span class="stat-num">13</span><span class="stat-label">Archived Skills</span></div>
+  </div>
+</header>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <span class="controls-label">Show:</span>
+  <button class="filter-btn on" id="btn-all" onclick="showAll()">All folders</button>
+  <button class="filter-btn" id="btn-active" onclick="hideArchived()">Active only</button>
+</div>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside>
+
+    <div class="aside-section">
+      <div class="aside-label">Legend</div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--color-accent-primary)"></div>
+        Active - in use
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--color-warning)"></div>
+        Monitor - time-limited
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--color-text-muted)"></div>
+        Archived - completed/stale
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch" style="background:var(--glass-medium-border)"></div>
+        System - Claude tooling
+      </div>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-label">Active Skills (26)</div>
+      <span class="skill-chip">create-plan</span>
+      <span class="skill-chip">execute-plan</span>
+      <span class="skill-chip">review</span>
+      <span class="skill-chip">peer-review</span>
+      <span class="skill-chip">update-docs</span>
+      <span class="skill-chip">create-issue</span>
+      <span class="skill-chip">test-runner</span>
+      <span class="skill-chip">security-audit</span>
+      <span class="skill-chip">terraform-ops</span>
+      <span class="skill-chip">aws-bedrock</span>
+      <span class="skill-chip">aws-strands</span>
+      <span class="skill-chip">aws-agentcore</span>
+      <span class="skill-chip">aws-step-functions</span>
+      <span class="skill-chip">aws-lambda</span>
+      <span class="skill-chip">azure-ai-foundry</span>
+      <span class="skill-chip">streamlit-dash</span>
+      <span class="skill-chip">data-pipeline</span>
+      <span class="skill-chip">garmin-analyzer</span>
+      <span class="skill-chip">jira-confluence</span>
+      <span class="skill-chip">analytics-metrics</span>
+      <span class="skill-chip">html-sync</span>
+      <span class="skill-chip">slide-authoring</span>
+      <span class="skill-chip">create-slide</span>
+      <span class="skill-chip">create-theme</span>
+      <span class="skill-chip">apply-comments</span>
+      <span class="skill-chip">current-slide</span>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-label">Archived Skills (13)</div>
+      <span class="skill-chip archived">exploration-phase</span>
+      <span class="skill-chip archived">pptx-builder</span>
+      <span class="skill-chip archived">excel-pm-planner</span>
+      <span class="skill-chip archived">aws-eventbridge</span>
+      <span class="skill-chip archived">resume-optimizer</span>
+      <span class="skill-chip archived">cyber-exec-brief</span>
+      <span class="skill-chip archived">figma</span>
+      <span class="skill-chip archived">copilot-docs</span>
+      <span class="skill-chip archived">nano-banana-pro</span>
+      <span class="skill-chip archived">github-trending</span>
+      <span class="skill-chip archived">content-to-reference</span>
+      <span class="skill-chip archived">google-workspace-cli</span>
+      <span class="skill-chip archived">xlsx</span>
+    </div>
+
+    <div class="aside-section">
+      <div class="aside-label">Agents (4)</div>
+      <div class="agent-card">
+        <div class="agent-name">garmin-health-agent</div>
+        <div class="agent-scope">01-personal/garmin-health/ - Health analytics, training analysis</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-name">aws-infra-agent</div>
+        <div class="agent-scope">garmin-health/backend/ + aws-ai-agent/ - Terraform, Lambda, DynamoDB</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-name">jira-confluence-agent</div>
+        <div class="agent-scope">02-work/automation-integrations/ - JIRA/Confluence workflows</div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-name">code-quality-agent</div>
+        <div class="agent-scope">All projects - Pre-PR security, tests, quality gate</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN TREE -->
+  <main>
+
+    <!-- ROOT -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128193;</span>
+        <h2>MyFirstRepo/</h2>
+        <span class="section-count">Root</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">CLAUDE.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Primary workspace instructions for Claude Code</span>
+          <span class="node-date">Jun 28</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">README.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Workspace overview and onboarding</span>
+          <span class="node-date">Apr 11</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">TODO.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Workspace-level task tracker</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">DECISIONS.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Architectural decision log</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">.gitignore</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Git exclusion rules - venvs, .env, tfstate, Zone.Identifier</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- 01-PERSONAL -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#129514;</span>
+        <h2>01-personal/</h2>
+        <span class="section-count">Learning and experimentation</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">garmin-health/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">End-to-end health analytics - Garmin data - DynamoDB - AI dashboard</span>
+          <span class="node-date">Jul 3</span>
+        </div>
+        <ul class="children">
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">backend/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">AWS Lambda (4 fns), Terraform infra, OAuth, webhook handlers</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">analytics/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Streamlit dashboard - AI insights, charts, data_loader, metrics modules</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">garmin-mcp-server/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">MCP server for Garmin API integration</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">data/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Runtime data - raw, processed, exports (gitignored)</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">datasets/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">RAG vector datasets - activities, wellness, training ZIPs</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">agent/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Garmin health agent logic</span>
+          </div></li>
+        </ul></li>
+
+        <li><div class="node-row">
+          <span class="node-name">aws-ai-agent/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Generic AWS Bedrock agent framework - Strands/AgentCore patterns</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">math-practice/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Grade 5 math exam generator with Hebrew UI</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">interview-coach/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Career coaching skill and utility scripts (Node submodule)</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">my-deck/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Personal HTML presentation deck with design system themes</span>
+          <span class="node-date">Jul 4</span>
+        </div>
+        <ul class="children">
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">themes/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Design system CSS - _theme-variables, _components, _utilities, default, ds-document</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">workspace-map.html</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">This file - live workspace folder map</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">workspace-overview-ds.html</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Design system overview presentation</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">myfirstrepo-overview.html</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Repo overview presentation deck</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">garmindeepdive.html</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Garmin health project deep-dive presentation</span>
+          </div></li>
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">interviewcoaching.html</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Interview coaching session presentation</span>
+          </div></li>
+        </ul></li>
+
+        <li><div class="node-row">
+          <span class="node-name">electricity-dashboard/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Electricity usage monitoring and analytics dashboard</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">bookmark-management/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Browser bookmark organization and search tooling</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">windows-monitor/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Windows system monitoring utilities</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">tzofim-payments/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Scout group (tzofim) payment tracking system</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">token-optimizer/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">OpenClaw plugin - Claude Code token optimization (own .git)</span>
+          <span class="node-date">Apr 23</span>
+        </div></li>
+
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">Completed one-off personal projects</span>
+        </div>
+        <ul class="children">
+          <li><div class="node-row is-archive">
+            <span class="node-indent">  </span>
+            <span class="node-name">zohar-resume/</span>
+            <span class="badge badge-archive">archived</span>
+            <span class="node-desc">Third-party resume optimization (Mar 2026) - delivered</span>
+          </div></li>
+          <li><div class="node-row is-archive">
+            <span class="node-indent">  </span>
+            <span class="node-name">marketplace/</span>
+            <span class="badge badge-archive">archived</span>
+            <span class="node-desc">Facebook Marketplace listing HTML generator - standalone deliverable</span>
+          </div></li>
+        </ul></li>
+      </ul>
+    </div>
+
+    <!-- 02-WORK -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128188;</span>
+        <h2>02-work/</h2>
+        <span class="section-count">Professional deliverables</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">ai-foundry-agent/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Enterprise AI agent - Azure AI Foundry, Prompt Flow</span>
+          <span class="node-date">Jul 3</span>
+        </div>
+        <ul class="children">
+          <li><div class="node-row">
+            <span class="node-indent">  </span>
+            <span class="node-name">product-knowledge-agent/</span>
+            <span class="badge badge-active">active</span>
+            <span class="node-desc">Product knowledge RAG agent for enterprise use</span>
+          </div></li>
+        </ul></li>
+
+        <li><div class="node-row">
+          <span class="node-name">automation-integrations/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">JIRA/Confluence automation workflows (Python)</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">aws-cleanup/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">AWS resource cleanup scripts and cost management</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">strategy-presentation/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Work strategy and roadmap presentation materials</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+
+        <li><div class="node-row">
+          <span class="node-name">worldcup-2026-betting/</span>
+          <span class="badge badge-monitor">monitor</span>
+          <span class="node-desc">World Cup 2026 betting analysis - archive after tournament ends</span>
+          <span class="node-date">May 29</span>
+        </div></li>
+
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">Completed or stale work projects</span>
+        </div>
+        <ul class="children">
+          <li><div class="node-row is-archive">
+            <span class="node-indent">  </span>
+            <span class="node-name">genesis-feedback-storytelling/</span>
+            <span class="badge badge-archive">archived</span>
+            <span class="node-desc">Completed spike - stale since May 12, had own .venv</span>
+          </div></li>
+          <li><div class="node-row is-archive">
+            <span class="node-indent">  </span>
+            <span class="node-name">presentations/</span>
+            <span class="badge badge-archive">archived</span>
+            <span class="node-desc">Cognyte Hebrew presentation - delivered Jun 2026</span>
+          </div></li>
+          <li><div class="node-row is-archive">
+            <span class="node-indent">  </span>
+            <span class="node-name">handoff/</span>
+            <span class="badge badge-archive">archived</span>
+            <span class="node-desc">Stub placeholder from repo init - never developed</span>
+          </div></li>
+        </ul></li>
+      </ul>
+    </div>
+
+    <!-- 03-PLANS -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128506;</span>
+        <h2>03-plans/</h2>
+        <span class="section-count">Strategy and roadmaps</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">roadmaps/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Technical and product roadmap documents</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">research/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Technical research notes and feasibility studies</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">templates/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Plan and document templates</span>
+        </div></li>
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">Completed plans from Feb-Mar 2026 (Copilot migration, garmin, math-practice, etc.)</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- 04-REFERENCE -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128218;</span>
+        <h2>04-reference/</h2>
+        <span class="section-count">Knowledge base</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">cheatsheets/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Quick-reference cheatsheets - CLI, Python, AWS, etc.</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">learning/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Study notes, courses, and self-learning materials</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">patterns/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Architecture and design patterns reference</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">chatgpt-export/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Exported ChatGPT conversation archive (knowledge mining)</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">hyundai-service-center/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Hyundai service center documentation (Hebrew)</span>
+          <span class="node-date">Jun 6</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">Teams 365/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Microsoft Teams/M365 reference materials</span>
+          <span class="node-date">Jun 4</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">bookmarks/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Curated browser bookmark exports</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">Yellow-Paz/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Personal reference data</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">whatsapp-export/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">WhatsApp conversation exports for reference</span>
+        </div></li>
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">Older reference materials no longer actively consulted</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- .claude SYSTEM -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#9881;</span>
+        <h2>.claude/</h2>
+        <span class="section-count">Claude Code ecosystem</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">skills/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">26 active slash-command skills, auto-loaded on startup</span>
+          <span class="node-date">Jun 26</span>
+        </div></li>
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">skills-archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">13 retired skills - restore to skills/ to reactivate</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">agents/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">4 domain-specialized sub-agents (garmin, aws-infra, jira, code-quality)</span>
+          <span class="node-date">Jul 3</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">docs/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Claude Code documentation and resource links</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">scripts/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Diagnostic and connectivity check scripts</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">COMMAND_REGISTRY.md</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Master skill registry - 26 active, 13 archived</span>
+          <span class="node-date">Jul 4</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">settings.local.json</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Local Claude Code permissions and hooks</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- .plans -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128203;</span>
+        <h2>.plans/</h2>
+        <span class="section-count">Claude-generated execution plans</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">PLAN-personal-design-system.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Personal design system implementation plan</span>
+          <span class="node-date">Jun 30</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">PLAN-workspace-cleanup-and-folder-map.md</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Workspace cleanup plan - executed Jul 4</span>
+          <span class="node-date">Jul 4</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">PLAN-cognyte-presentation-final.md</span>
+          <span class="badge badge-monitor">monitor</span>
+          <span class="node-desc">Cognyte final presentation plan - completed, kept for reference</span>
+          <span class="node-date">Jun 8</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">PLAN-cognyte-presentation-hebrew.md</span>
+          <span class="badge badge-monitor">monitor</span>
+          <span class="node-desc">Cognyte Hebrew presentation plan - completed, kept for reference</span>
+          <span class="node-date">Jun 8</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">jira-free-text-flow.excalidraw</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">JIRA workflow diagram</span>
+        </div></li>
+        <li class="archive-group"><div class="node-row is-archive">
+          <span class="node-name">archive/</span>
+          <span class="badge badge-archive">archived</span>
+          <span class="node-desc">9 completed plans from Feb-Mar 2026</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- SHARED + UTILITIES -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128295;</span>
+        <h2>shared/ + utilities/ + scripts/</h2>
+        <span class="section-count">Tooling and infrastructure</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">shared/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">OpenClaw plugin source (openclaw, skills, hooks, commands)</span>
+          <span class="node-date">Apr 23</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">utilities/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">RTL patch, design system files, archived repo scripts</span>
+          <span class="node-date">Jul 4</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">scripts/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">html-sync.py, chatgpt-import, full-sync shell scripts</span>
+          <span class="node-date">Jun 26</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">assets/</span>
+          <span class="badge badge-active">active</span>
+          <span class="node-desc">Shared assets - images, icons, fonts</span>
+        </div></li>
+      </ul>
+    </div>
+
+    <!-- VENVS + NODE -->
+    <div class="section-group">
+      <div class="section-header">
+        <span class="section-icon">&#128013;</span>
+        <h2>Environments (gitignored)</h2>
+        <span class="section-count">Runtime dependencies</span>
+      </div>
+      <ul class="tree">
+        <li><div class="node-row">
+          <span class="node-name">.venv/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Primary Python virtual environment (Python 3.12)</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">.venv-1/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Secondary Python virtual environment</span>
+        </div></li>
+        <li><div class="node-row">
+          <span class="node-name">node_modules/</span>
+          <span class="badge badge-system">system</span>
+          <span class="node-desc">Node.js dependencies (interview-coach / openclaw)</span>
+        </div></li>
+      </ul>
+    </div>
+
+  </main>
+</div>
+
+<script>
+function showAll() {
+  document.body.classList.remove('hide-archive');
+  document.getElementById('btn-all').classList.add('on');
+  document.getElementById('btn-active').classList.remove('on');
+}
+function hideArchived() {
+  document.body.classList.add('hide-archive');
+  document.getElementById('btn-active').classList.add('on');
+  document.getElementById('btn-all').classList.remove('on');
+}
+</script>
+</body>
+</html>

@@ -6,6 +6,37 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - **NEVER use em dash "—"** in any output, content, or deliverable. Always use a regular hyphen "-" instead. This applies to all environments: VS Code extension, Claude Code desktop, chat responses, markdown files, code comments, commit messages, PR descriptions, plans, and presentations.
 
+## Design System Standard
+
+All HTML deliverables (tools, reports, maps, dashboards, presentations) **must** use the personal design system. Two modes:
+
+### Mode 1 - Linked (presentations and in-repo pages)
+Presentations in `01-personal/my-deck/`: link `themes/default.css` (relative path).
+Pages that can resolve the shared DS path: link `shared/design-system/index.css` (includes Geist font).
+
+### Mode 2 - Inlined (standalone / shareable HTML)
+Self-contained deliverables that may be opened anywhere or shared must inline the CSS tokens directly in a `<style>` block. Copy the token block from `01-personal/my-deck/themes/_theme-variables.css` and override the `default.css` body constraints (`overflow`, `height: 100vh`) for scrollable documents.
+
+### DS Token Reference (for inline use)
+- **Backgrounds**: `#050510` (primary) / `#0f0f1f` (surface) / `#1a1a2e` (tertiary)
+- **Accent**: `#059669` (emerald) - active/success states
+- **Warning/Monitor**: `#f59e0b` (amber)
+- **Error**: `#dc2626` (red)
+- **Text**: `#fff` primary / `rgba(255,255,255,0.70)` secondary / `rgba(255,255,255,0.45)` muted
+- **Border**: `rgba(255,255,255,0.12)`
+- **Glass surfaces**: `rgba(255,255,255,0.07)` light / `rgba(255,255,255,0.12)` medium
+- **Font**: `-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif`
+- **Mono**: `'Monaco', 'Cascadia Code', 'Fira Code', 'Courier New', monospace`
+
+### Status Badge Palette (Option B - DS only)
+- Active: emerald bg `rgba(5,150,105,0.15)`, text `#059669`, border `rgba(5,150,105,0.35)`
+- Monitor: amber bg `rgba(245,158,11,0.12)`, text `#f59e0b`, border `rgba(245,158,11,0.3)`
+- Archive: glass-light bg, muted text, light border
+- System: glass-medium bg, secondary text
+
+### Document variant
+For scrollable document-style pages (not slides), use `themes/ds-document.css` instead of `themes/default.css`. It imports the same tokens without the `overflow: hidden` / `height: 100vh` presentation constraints.
+
 ## Workspace Overview
 
 This is a sophisticated multi-project workspace for AI agent development, containing:
