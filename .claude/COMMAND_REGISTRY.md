@@ -48,6 +48,7 @@
 - analytics-metrics
 - copilot-docs
 - nano-banana-pro
+- content-to-image
 - github-trending
 
 ### Aliases (Short Names)
@@ -107,6 +108,8 @@ You can use these trigger phrases to activate commands:
 | "copilot" | copilot-docs | GitHub Copilot custom instructions |
 | "figma" | figma | Figma API, design tokens, component gen |
 | "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
+| "turn this into an image" | content-to-image | Content-to-image via nano-banana-studio |
+| "visualize this" | content-to-image | Draft prompt from content, then render |
 | "trending" | github-trending | GitHub trending repos discovery |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
 | "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
