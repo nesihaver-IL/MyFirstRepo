@@ -196,29 +196,32 @@
     font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
   }
   .arrow-btn:disabled{opacity:.35; cursor:default;}
-  .tracker-strip{
-    display:flex; gap:8px; overflow-x:auto; padding:6px 2px 16px;
-    scroll-behavior:smooth;
+  .calendar-wrap{
+    display:flex; gap:18px; flex-wrap:wrap; padding:6px 2px 16px; align-items:flex-start;
   }
-  .day-chip{
-    flex:0 0 auto;
-    min-width:74px;
-    border-radius:14px;
-    padding:10px 8px;
-    text-align:center;
-    cursor:pointer;
-    border:2px solid transparent;
-    background:#fff;
+  .calendar-month{
+    flex:1 1 320px; min-width:280px;
+    background:#fff; border-radius:16px; padding:16px 16px 18px;
     box-shadow:0 2px 8px rgba(11,46,58,.08);
-    transition:transform .15s ease;
   }
-  .day-chip:hover{transform:translateY(-2px);}
-  .day-chip .dnum{font-size:1.15rem; font-weight:800;}
-  .day-chip .dmon{font-size:.68rem; opacity:.65; text-transform:uppercase;}
-  .day-chip .dtag{font-size:.62rem; margin-top:4px; font-weight:700; border-radius:6px; padding:2px 4px; display:inline-block;}
-  .day-chip.is-today{border-color:var(--coral); box-shadow:0 0 0 3px rgba(255,107,74,.2);}
-  .day-chip.is-selected{background:var(--sea); color:#fff;}
-  .day-chip.is-selected .dmon{color:#fff; opacity:.8;}
+  .calendar-month h4{margin:0 0 10px; font-size:1.05rem; text-align:center;}
+  .calendar-grid{
+    display:grid; grid-template-columns:repeat(7, 1fr); gap:4px;
+  }
+  .calendar-weekday{
+    text-align:center; font-size:.68rem; font-weight:700; opacity:.55; padding-bottom:4px; text-transform:uppercase;
+  }
+  .calendar-cell{
+    aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+    border-radius:10px; border:2px solid transparent; font-size:.85rem; font-weight:700;
+  }
+  .calendar-cell.empty{visibility:hidden;}
+  .calendar-cell.out-of-trip{opacity:.28;}
+  .calendar-cell.in-trip{cursor:pointer; background:var(--sand); transition:transform .12s ease;}
+  .calendar-cell.in-trip:hover{transform:translateY(-1px); background:#f0e7d4;}
+  .calendar-cell.is-today{border-color:var(--coral); box-shadow:0 0 0 3px rgba(255,107,74,.2);}
+  .calendar-cell.is-selected{background:var(--sea); color:#fff;}
+  .cal-dot{width:6px; height:6px; border-radius:50%;}
 
   .day-detail{
     background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
@@ -297,6 +300,7 @@
   .card .ctag{
     align-self:flex-start; background:var(--sand); border-radius:999px; padding:3px 10px; font-size:.72rem; font-weight:700; color:var(--sea-dark);
   }
+  .card .ctag.price-tag{ background:#fff1c9; color:#8a6209; }
   .card .cdesc{font-size:.88rem; opacity:.8; margin:0; flex:1;}
   .card .clink{font-size:.82rem; font-weight:700; color:var(--coral); text-decoration:none; margin-top:6px;}
   .card .clink:hover{text-decoration:underline;}
@@ -346,6 +350,7 @@
 
 
 
+
 <div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand">תאילנד 2026</span></div>
@@ -389,18 +394,18 @@
       <button class="arrow-btn" id="nextDay" type="button">›</button>
     </div>
   </div>
-  <div class="tracker-strip" id="trackerStrip"><div class="day-chip is-selected"><div class="dnum">17</div><div class="dmon">אוג</div><div class="dtag" style="background:#ffe3d9;color:#c73f22">טיסה</div></div><div class="day-chip"><div class="dnum">18</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 1)</div></div><div class="day-chip"><div class="dnum">19</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 1)</div></div><div class="day-chip"><div class="dnum">20</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 1)</div></div><div class="day-chip"><div class="dnum">21</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 1)</div></div><div class="day-chip"><div class="dnum">22</div><div class="dmon">אוג</div><div class="dtag" style="background:#fff1c9;color:#8a6209">מעבר</div></div><div class="day-chip"><div class="dnum">23</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קרבי</div></div><div class="day-chip"><div class="dnum">24</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קרבי</div></div><div class="day-chip"><div class="dnum">25</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קרבי</div></div><div class="day-chip"><div class="dnum">26</div><div class="dmon">אוג</div><div class="dtag" style="background:#fff1c9;color:#8a6209">מעבר</div></div><div class="day-chip"><div class="dnum">27</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קאולק</div></div><div class="day-chip"><div class="dnum">28</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קאולק</div></div><div class="day-chip"><div class="dnum">29</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">קאולק</div></div><div class="day-chip"><div class="dnum">30</div><div class="dmon">אוג</div><div class="dtag" style="background:#fff1c9;color:#8a6209">מעבר</div></div><div class="day-chip"><div class="dnum">31</div><div class="dmon">אוג</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 2)</div></div><div class="day-chip"><div class="dnum">1</div><div class="dmon">ספט</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 2)</div></div><div class="day-chip"><div class="dnum">2</div><div class="dmon">ספט</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 2)</div></div><div class="day-chip"><div class="dnum">3</div><div class="dmon">ספט</div><div class="dtag" style="background:#d9f0ea;color:#0c5c73">פוקט (חלק 2)</div></div><div class="day-chip"><div class="dnum">4</div><div class="dmon">ספט</div><div class="dtag" style="background:#ffe3d9;color:#c73f22">טיסה</div></div></div>
+  <div class="calendar-wrap" id="calendarWrap"><div class="calendar-month"><h4>אוג 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">1</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">2</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">3</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">4</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">5</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">6</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">7</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">8</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">9</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">10</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">11</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">12</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">13</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">14</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">15</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">16</span></div><div class="calendar-cell in-trip is-selected" data-date="2026-08-17"><span class="cal-daynum">17</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell in-trip" data-date="2026-08-18"><span class="cal-daynum">18</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-19"><span class="cal-daynum">19</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-20"><span class="cal-daynum">20</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-21"><span class="cal-daynum">21</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-22"><span class="cal-daynum">22</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-23"><span class="cal-daynum">23</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-24"><span class="cal-daynum">24</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-25"><span class="cal-daynum">25</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-26"><span class="cal-daynum">26</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-27"><span class="cal-daynum">27</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-28"><span class="cal-daynum">28</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-29"><span class="cal-daynum">29</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-30"><span class="cal-daynum">30</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-31"><span class="cal-daynum">31</span><span class="cal-dot" style="background:#0c5c73"></span></div></div></div><div class="calendar-month"><h4>ספט 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell in-trip" data-date="2026-09-01"><span class="cal-daynum">1</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-02"><span class="cal-daynum">2</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-03"><span class="cal-daynum">3</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-04"><span class="cal-daynum">4</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">5</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">6</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">7</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">8</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">9</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">10</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">11</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">12</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">13</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">14</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">15</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">16</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">17</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">18</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">19</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">20</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">21</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">22</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">23</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">24</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">25</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">26</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">27</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">28</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">29</span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">30</span></div></div></div></div>
   <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
 </div>
 
 <div id="destinations"><section class="dest" id="phuket1">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background:linear-gradient(135deg, #0c5c73, #3f8f6a)"></div>
+          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Patong%20beach%2C%20Phuket%2C%20Thailand.jpg?width=1400')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">18 אוג — 22 אוג</span>
-            <h2>פוקט (חלק 1)</h2>
+            <h2>Phuket (Part 1)</h2>
             <div class="dates">🏨 Dinso Resort &amp; Villas Phuket, Vignette Collection</div>
           </div>
         </div>
@@ -418,6 +423,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">הבודהה הגדול של פוקט</p>
+                <span class="ctag price-tag">כניסה חינם</span>
                 <p class="cdesc">פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.</p>
                 <a class="clink" href="https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -427,6 +433,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">זיפליין ו-ATV ביער הטרופי</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
                 <p class="cdesc">מסלול זיפליין בחופת הג׳ונגל (21 תחנות, 2 ק״מ) בשילוב רכיבת ATV — אטרקציית אדרנלין מעולה לבני נוער.</p>
                 <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g2315806-d2091139-Reviews-Cable_Jungle_Adventure-Si_Sunthon_Thalang_District_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -436,7 +443,8 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">רחוב באנגלה ושוק הלילה</p>
-                <p class="cdesc">הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם פירות ים על האש, ובלילה רחוב הבידור המרכזי של האי.</p>
+                <span class="ctag price-tag">כניסה חינם (אוכל בתשלום)</span>
+                <p class="cdesc">הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם אוכל, ובלילה רחוב הבידור המרכזי של האי.</p>
                 <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g297930-d20160170-Reviews-Bangla_Night_Market-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
@@ -445,6 +453,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">טיול יום לאיי פי-פי</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
                 <p class="cdesc">טיול סירת מהירות לארכיפלג פי-פי — שנורקלינג במפרץ פילה ובאי במבוק, עצירה במאיה ביי, ארוחת צהריים כלולה.</p>
                 <a class="clink" href="https://www.viator.com/tours/Phuket/Phi-Phi-Island-Hopping-Day-Trip-by-Speed-Boat-from-Phuket/d349-9574P490" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -454,6 +463,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">איי ג׳יימס בונד ומפרץ פאנגה</p>
+                <span class="ctag price-tag">$$$ · ~1,500–2,200 ฿ לאדם</span>
                 <p class="cdesc">שיט בין נופי קארסט מרהיבים, קיאקים במעברים נסתרים, עצירה באי "ג׳יימס בונד" ובכפר הדייגים קוה פאניי.</p>
                 <a class="clink" href="https://www.viator.com/Phuket-attractions/James-Bond-Island-Khao-Phing-Kan/d349-a15586" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -466,10 +476,20 @@
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Savoey Seafood Restaurant</p>
-                <span class="ctag">פירות ים</span>
-                <p class="cdesc">אולם פירות ים ותיק (מ-1980) בפאטונג, עם תצוגת דגים טרייה ותפריט משפחתי ענק.</p>
-                <a class="clink" href="https://www.savoeyseafoodpatong.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">EuroThai Restaurant</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">מסעדה משפחתית קטנה וחמימה בסמטת ד״ר ואטאנה בפאטונג — פאד תאי אמיתי וקארי צהוב טעים, לא מתויר.</p>
+                <a class="clink" href="https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <div class="thumb placeholder">🍜</div>
+              <div class="body">
+                <p class="cname">Baan Pad Thaï</p>
+                <span class="ctag">תאילנדי, פאד תאי</span>
+                <p class="cdesc">מסעדה קטנה בפאטונג המדורגת 5.0/5 בטריפאדוויזור — האורז המטוגן והפאד תאי הכי טובים בעיר, הכל טרי.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -478,7 +498,7 @@
               <div class="body">
                 <p class="cname">Kaab Gluay</p>
                 <span class="ctag">תאילנדי אותנטי</span>
-                <p class="cdesc">אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים וקארי אדום עם שרימפס במחירים הוגנים.</p>
+                <p class="cdesc">אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים, קארי אדום ומוקפצים במחירים הוגנים.</p>
                 <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27179265-Reviews-Kaabgluay-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
@@ -486,30 +506,32 @@
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Baan Rim Pa</p>
-                <span class="ctag">תאילנדי מלכותי</span>
-                <p class="cdesc">בית טיק על צוק מול מפרץ פאטונג, מטבח תאילנדי מלכותי מעודן עם פסנתרן חי — ארוחת "ערב מיוחד".</p>
-                <a class="clink" href="https://www.baanrimpa.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">שוק באנזאן — קומת הרחוב</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">הקומה השנייה של שוק באנזאן בפאטונג — עשרות דוכני רחוב אותנטיים, פאד תאי בכ-100 ฿, טום יאם עוף ועוד.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">ג׳אנגסילון (Jungceylon)</p>
+                <p class="cdesc">הקניון הענק והמרכזי של פאטונג — מותגים בינלאומיים ומקומיים, סופרמרקט Big C, קולנוע ופודקורט גדול.</p>
+                <a class="clink" href="https://www.jungceylon.com/en" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
-              <div class="thumb placeholder">🍜</div>
+              <div class="thumb placeholder">🛍️</div>
               <div class="body">
-                <p class="cname">Pan Yaah Seaview</p>
-                <span class="ctag">פירות ים תאילנדי</span>
-                <p class="cdesc">מקום אהוב על מקומיים מעל המים במפרץ קאלים — צדפות בחמאה, דג בסיר חרס ונוף לשקיעה.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d5461826-Reviews-Kalim_Rim_Lay-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
-              </div>
-            </div>
-          
-            <div class="card">
-              <div class="thumb placeholder">🍜</div>
-              <div class="body">
-                <p class="cname">Crab Corner</p>
-                <span class="ctag">פירות ים קייג׳ן-תאילנדי</span>
-                <p class="cdesc">קונספט פירות ים "מבושל" כיפי ליד באנגלה — סרטנים ולובסטר בתיבול קייג׳ן-תאילנדי, אהוב על בני נוער.</p>
-                <a class="clink" href="https://crabcorner.co.th/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">שוק באנזאן</p>
+                <p class="cdesc">שוק מקומי תוסס עם פירות, תבלינים, בדים ומזכרות — חוויית קניות תאילנדית אמיתית, לצד קומת אוכל הרחוב.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -518,11 +540,11 @@
     </section><section class="dest" id="krabi">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background:linear-gradient(135deg, #7a4fae, #0c5c73)"></div>
+          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Ao%20Nang%20beach%20panorama%201.jpg?width=1400')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">22 אוג — 26 אוג</span>
-            <h2>קרבי</h2>
+            <h2>Krabi</h2>
             <div class="dates">🏨 Dusit Thani Krabi Beach Resort</div>
           </div>
         </div>
@@ -540,6 +562,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">חוף ריילי (Railay)</p>
+                <span class="ctag price-tag">$$ · ~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿</span>
                 <p class="cdesc">חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.</p>
                 <a class="clink" href="https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -549,6 +572,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">טיול ארבעת האיים</p>
+                <span class="ctag price-tag">$$ · ~800–1,200 ฿ לאדם</span>
                 <p class="cdesc">טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.</p>
                 <a class="clink" href="https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -558,6 +582,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">מקדש מערת הנמר</p>
+                <span class="ctag price-tag">כניסה חינם (תרומה)</span>
                 <p class="cdesc">מקדש על גבעה שמגיעים אליו ב-1,237 מדרגות, לפסל בודהה זהוב ולנוף פנורמי — אתגר כיפי לבני נוער. כניסה חינם.</p>
                 <a class="clink" href="https://www.tourismthailand.org/Attraction/wat-tham-suea" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -567,6 +592,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">הבריכה האזמרגדית והכחולה</p>
+                <span class="ctag price-tag">$ · ~200 ฿ כניסה לפארק</span>
                 <p class="cdesc">שמורת ג׳ונגל עם בריכת מעיינות טורקיז לשחייה, ובריכה כחולה מרהיבה במרחק הליכה קצרה (ללא שחייה).</p>
                 <a class="clink" href="https://www.tourismthailand.org/Attraction/sa-morakot-emerald-pool" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -576,6 +602,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">עיירת אאו-נאנג ושוק הלילה</p>
+                <span class="ctag price-tag">כניסה חינם</span>
                 <p class="cdesc">המרכז התיירותי של האזור, עם שוק לילה תוסס — אוכל רחוב, מלאכת יד, מוזיקה חיה ומופעי מואי תאי.</p>
                 <a class="clink" href="https://en.wikipedia.org/wiki/Ao_Nang" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -588,50 +615,62 @@
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Krua Thara</p>
-                <span class="ctag">פירות ים</span>
-                <p class="cdesc">מסעדת פירות ים אהובה וללא יומרות ליד רציף הדייגים, עם אקווריום חי ומנות דרום-תאילנדיות קלאסיות.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g1507054-d1982719-Reviews-Krua_Thara-Ao_Nang_Krabi_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Amp &amp; Aing</p>
+                <span class="ctag">תאילנדי משפחתי</span>
+                <p class="cdesc">מסעדה משפחתית עם אוכל טוב ומחירים הוגנים — הרבה מקומיים אוכלים כאן, לא רק תיירים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Amp+%26+Aing+Restaurant+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Lae Lay Grill</p>
-                <span class="ctag">פירות ים ונוף שקיעה</span>
-                <p class="cdesc">מסעדה על גבעה מעל מפרץ אאו-נאנג עם נוף שקיעה פנורמי, ידועה בלובסטר ובדג ים צלוי בעלה בננה.</p>
-                <a class="clink" href="https://www.laelaygrill.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">KoDam Kitchen</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">אחת המסעדות התאילנדיות האהובות באאו-נאנג — אוכל טעים במחירים בלתי מנוצחים ואווירה נעימה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/KoDam+Kitchen+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Carnivore Steak &amp; Grill</p>
-                <span class="ctag">סטייקהאוס</span>
-                <p class="cdesc">מוסד ותיק באאו-נאנג עם בקר וכבש מיובאים — הפסקה נעימה לבני הנוער מהאוכל התאילנדי.</p>
-                <a class="clink" href="https://carnivore-thailand.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Mama Kitchen</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">מקום פשוט למתי שאוהבים מטבח תאילנדי אמיתי, ממוקם מחוץ לאזור התיירותי המרכזי.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Mama+Kitchen+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">E-San Seafood</p>
-                <span class="ctag">פירות ים איסאן</span>
-                <p class="cdesc">מסעדה מדורגת גבוה עם דוכן פירות ים טרי וצלייה על האש בסגנון חוף — בוחרים את התפיסה ורואים אותה מוכנה.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g1507054-d3673260-Reviews-E_San_Seafood-Ao_Nang_Krabi_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Ao Nang Boat Noodle &amp; Thai Food</p>
+                <span class="ctag">נודלס תאילנדי</span>
+                <p class="cdesc">ידועה במיוחד בזכות מנות הנודלס הטעימות שלה, במחירים זולים ונוחים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Boat+Noodle+and+Thai+Food+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">שוק הלילה של אאו-נאנג (Landmark)</p>
+                <p class="cdesc">שוק לילה תוסס עם חנויות קטנות לבגדים, פריטי דקורציה ומזכרות אישיות, מוזיקה חיה ומופע אש.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Landmark+Night+Market+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
-              <div class="thumb placeholder">🍜</div>
+              <div class="thumb placeholder">🛍️</div>
               <div class="body">
-                <p class="cname">May and Mark's House</p>
-                <span class="ctag">תאילנדי-בינלאומי</span>
-                <p class="cdesc">מסעדת-קפה ביתית וידידותית למשפחות, משלבת קלאסיקות תאילנדיות עם אוכל נוחות בינלאומי וקפה טוב.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297927-d3738140-Reviews-May_and_Mark_s_House-Krabi_Town_Krabi_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">שוק הטיילת של אאו-נאנג</p>
+                <p class="cdesc">שוק תוסס ליד החוף — מזכרות מקומיות, פירות טריים ואמנות יד, עם נוף לים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Beach+Walk+Market+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -640,11 +679,11 @@
     </section><section class="dest" id="khaolak">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background:linear-gradient(135deg, #3f8f6a, #f2a33d)"></div>
+          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Khao%20Sok%2C%20Cheow%20Lan%20Lake%2C%20Rock%20formations%2C%20Thailand.jpg?width=1400')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">26 אוג — 30 אוג</span>
-            <h2>קאולק</h2>
+            <h2>Khao Lak</h2>
             <div class="dates">🏨 JW Marriott Khao Lak Resort &amp; Spa</div>
           </div>
         </div>
@@ -662,6 +701,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">מפרץ פאנגה ואי ג׳יימס בונד</p>
+                <span class="ctag price-tag">$$$ · ~1,500–2,000 ฿ לאדם</span>
                 <p class="cdesc">איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".</p>
                 <a class="clink" href="https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -671,6 +711,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">פארק לאומי קאו סוק</p>
+                <span class="ctag price-tag">$$$ · ~2,000–2,500 ฿ לאדם</span>
                 <p class="cdesc">יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.</p>
                 <a class="clink" href="https://en.wikipedia.org/wiki/Khao_Sok_National_Park" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -680,6 +721,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">פארק חאו-לאק לאם-רו והמפל</p>
+                <span class="ctag price-tag">$ · ~200 ฿ כניסה לפארק</span>
                 <p class="cdesc">פארק לאומי חופי-יערי ליד קאולק, עם מפל בן 5 מפלים (Ton Chong Fa) ותצפית נופית על החוף — טיול חצי-יום פעיל.</p>
                 <a class="clink" href="https://www.tourismthailand.org/Attraction/khao-lak-lam-ru-national-park" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -689,6 +731,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">אנדרטת הצונאמי — סירת המשטרה 813</p>
+                <span class="ctag price-tag">כניסה חינם</span>
                 <p class="cdesc">אנדרטה נוגעת ללב לצונאמי 2004: סירת משטרה שנסחפה כ-2 ק״מ פנימה, כיום מוצבת כאנדרטה — חוויה משמעותית לבני נוער.</p>
                 <a class="clink" href="https://www.tourismthailand.org/Attraction/tsunami-police-boat-813-memorials" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -698,6 +741,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">מקלט פילים אתי</p>
+                <span class="ctag price-tag">$$$ · ~2,000–3,000 ฿ לאדם</span>
                 <p class="cdesc">מקלט אתי אמיתי לפילים מוצלים — ללא רכיבה וללא מופעים, צפייה בפילים משוטטים במערכת "מגע מוגן".</p>
                 <a class="clink" href="https://khaolak-elephantsanctuary.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -710,50 +754,62 @@
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Mali Restaurant</p>
-                <span class="ctag">פירות ים על האש</span>
-                <p class="cdesc">מקום פופולרי בבאנג ניאנג הידוע בבשר ופירות ים על גריל פחמים, פאד תאי ואורז באננס.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297914-d2040585-Reviews-Mali_Restaurant-Khao_Lak_Takua_Pa_Phang_Nga_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Ten Star Coffee and Food</p>
+                <span class="ctag">תאילנדי וקפה</span>
+                <p class="cdesc">ברחוב פט קסם, קארי ומוקפצים טעימים לצד קפה טוב — פתוח כל היום עד 23:00.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ten+Star+Coffee+and+Food+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Rabeang Restaurant</p>
-                <span class="ctag">תאילנדי אותנטי</span>
-                <p class="cdesc">מסעדה מקומית ותיקה ואהודה למנות תאילנדיות אותנטיות במחירים סבירים, עם ישיבה בחוץ.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297914-d1730578-Reviews-Rabeang_Restaurant-Khao_Lak_Takua_Pa_Phang_Nga_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Walkers</p>
+                <span class="ctag">תאילנדי</span>
+                <p class="cdesc">ידועה בעוף בגריל ובקארי מסמן — סלט המנגו וטום-יאם עוף מקבלים ביקורות מצוינות.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Walkers+Restaurant+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Hill Tribe Restaurant</p>
-                <span class="ctag">תאילנדי צפוני</span>
-                <p class="cdesc">המסעדה הראשונה בקאולק המגישה מטבח תאילנדי-צפוני, ידועה בעוף לימון ובנגיעה תרבותית שמעניינת גם בני נוער.</p>
-                <a class="clink" href="https://hilltribe-restaurant.com" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Patty's Restaurant</p>
+                <span class="ctag">תאילנדי</span>
+                <p class="cdesc">פאד תאי במחיר ידידותי (כ-80 ฿), נוף יפה על קאולק, אווירה נעימה ורגועה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Pattys+Restaurant+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Thai Seafood Restaurant &amp; Bar</p>
-                <span class="ctag">פירות ים</span>
-                <p class="cdesc">מסעדת פירות ים תאילנדית מסורתית, מהוללת כאחת הטובות באזור — פשוטה, טרייה וקזואלית.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297914-d7249336-Reviews-Thai_Seafood_Restaurant_Bar-Khao_Lak_Takua_Pa_Phang_Nga_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">שוק הלילה של באנג-ניאנג</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">מו-פינג (שיפודי חזיר בגריל) עם אורז דביק, רוטי ומטעמי רחוב תאילנדיים אותנטיים, במחירים מקומיים.</p>
+                <a class="clink" href="https://bangniangmarket.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">שוק באנג-ניאנג</p>
+                <p class="cdesc">שוק הלילה המרכזי של קאולק — יותר מ-300 דוכנים של מזכרות, בגדים, מלאכת יד ומוצרי טיפוח תאילנדיים.</p>
+                <a class="clink" href="https://bangniangmarket.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
-              <div class="thumb placeholder">🍜</div>
+              <div class="thumb placeholder">🛍️</div>
               <div class="body">
-                <p class="cname">Baan Khao Lak Seafood</p>
-                <span class="ctag">פירות ים הרפתקני</span>
-                <p class="cdesc">פנינה מקומית עם פירות ים חיים שבוחרים בעצמכם לפני הבישול — בחירה כיפית והרפתקנית.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g2237680-d8737651-Reviews-Baan_Khao_Lak_Seafood-Thai_Mueang_Phang_Nga_Province.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">באנג-ניאנג פלאזה</p>
+                <p class="cdesc">פלאזה פתוחה עם מזכרות, בגדי חוף ומשי תאילנדי — קניות מקומיות רגועות יותר משוק הלילה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Bang+Niang+Plaza+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -762,11 +818,11 @@
     </section><section class="dest" id="phuket2">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background:linear-gradient(135deg, #e04f30, #7a4fae)"></div>
+          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg?width=1400')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">30 אוג — 4 ספט</span>
-            <h2>פוקט (חלק 2)</h2>
+            <h2>Phuket (Part 2)</h2>
             <div class="dates">🏨 Phuket Marriott Resort &amp; Spa, Merlin Beach</div>
           </div>
         </div>
@@ -784,6 +840,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">חוף פרידום</p>
+                <span class="ctag price-tag">$ · ~300–600 ฿ (סירה הלוך-חזור)</span>
                 <p class="cdesc">מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.</p>
                 <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -793,6 +850,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">העיר העתיקה של פוקט</p>
+                <span class="ctag price-tag">חינם (סיור עצמאי)</span>
                 <p class="cdesc">הליכה בין בתי מסחר ססגוניים בסגנון סינו-פורטוגזי ברחוב טאלאנג וסוי רומאני, עם בתי קפה ואמנות רחוב.</p>
                 <a class="clink" href="https://www.machupicchu.org/old-phuket-town-guide-sino-portuguese-architecture-culture.htm" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -802,6 +860,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">שנורקלינג באי ראצ׳ה</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
                 <p class="cdesc">טיול יום בסירת מהירות לאי בתולי עם שוניות אלמוגים רדודות, מתאים לכל הרמות, כולל ארוחת צהריים על החוף.</p>
                 <a class="clink" href="https://www.viator.com/tours/Phuket/Coral-Island-and-Racha-Island-Snorkeling-Tour-By-Speedboat-From-Phuket/d349-110534P183" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -811,6 +870,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">פאראסיילינג וג׳ט-סקי</p>
+                <span class="ctag price-tag">$$ · ~600–1,500 ฿ לפעילות</span>
                 <p class="cdesc">ספורט ימי מהיר ומלא אדרנלין ממש מול חוף פאטונג — פעילות מצוינת של חצי שעה בין ימי חוף.</p>
                 <a class="clink" href="https://phuketwatersports.com/sport/parasailing/" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -820,6 +880,7 @@
               <div class="thumb placeholder">🌺</div>
               <div class="body">
                 <p class="cname">חוף קאלים ונקודת שקיעה</p>
+                <span class="ctag price-tag">חינם</span>
                 <p class="cdesc">רצועת חוף שקטה וסלעית מצפון לפאטונג, ידועה בשנורקלינג בעונה השקטה ובנופי שקיעה מהיפים בחוף.</p>
                 <a class="clink" href="https://www.phuket101.net/kalim-beach/" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
@@ -832,40 +893,20 @@
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">Kalim Rim Lay</p>
-                <span class="ctag">פירות ים תאילנדי</span>
-                <p class="cdesc">ביתני במבוק ממש על קו המים במפרץ קאלים — טום יאם, קארי ירוק ופירות ים על האש, אווירה מיוחדת בשקיעה.</p>
-                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d5461826-Reviews-Kalim_Rim_Lay-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">EuroThai Restaurant</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">נסיעה קצרה מקאלים לפאטונג — פאד תאי אמיתי וקארי צהוב טעים במקום משפחתי וחמים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
             <div class="card">
               <div class="thumb placeholder">🍜</div>
               <div class="body">
-                <p class="cname">L'Arôme by the Sea</p>
-                <span class="ctag">צרפתי יוקרתי</span>
-                <p class="cdesc">מסעדה צרפתית מול הים, מוכרת ע״י מדריך מישלן תאילנד — ארוחת ערב "מבוגרת" נחמדה עם נוף שקיעה.</p>
-                <a class="clink" href="https://en.laromegroup.com/laromebythesea" target="_blank" rel="noopener">לפרטים נוספים →</a>
-              </div>
-            </div>
-          
-            <div class="card">
-              <div class="thumb placeholder">🍜</div>
-              <div class="body">
-                <p class="cname">Sea Salt Lounge &amp; Grill</p>
-                <span class="ctag">גריל ופירות ים</span>
-                <p class="cdesc">לאונג׳ גריל רגוע מול הים תחת עצים גבוהים, מתמקד בפירות ים ובשר על גחלים — טוב לבררנים.</p>
-                <a class="clink" href="https://www.whatsoninphuket.com/restaurants-kalim/" target="_blank" rel="noopener">לפרטים נוספים →</a>
-              </div>
-            </div>
-          
-            <div class="card">
-              <div class="thumb placeholder">🍜</div>
-              <div class="body">
-                <p class="cname">Crab Corner</p>
-                <span class="ctag">פירות ים קייג׳ן-תאילנדי</span>
-                <p class="cdesc">אותו מקום כיפי לפירות ים "מבושלים" מהשהות הראשונה — כדאי לחזור, ליד רחוב באנגלה.</p>
-                <a class="clink" href="https://crabcorner.co.th/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+                <p class="cname">Baan Pad Thaï</p>
+                <span class="ctag">תאילנדי, פאד תאי</span>
+                <p class="cdesc">מדורגת 5.0/5 בטריפאדוויזור — אורז מטוגן ופאד תאי טריים, מומלץ לחזור לכאן גם בשהות השנייה.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -876,6 +917,38 @@
                 <span class="ctag">תאילנדי</span>
                 <p class="cdesc">סניף גבעה של מסעדה מקומית ותיקה, עם נוף פנורמי לפאטונג לצד מנות תאילנדיות נדיבות.</p>
                 <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d2256384-Reviews-No_6_Restaurant-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <div class="thumb placeholder">🍜</div>
+              <div class="body">
+                <p class="cname">שוק באנזאן — קומת הרחוב</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">עשרות דוכני רחוב אותנטיים בפאטונג — פאד תאי בכ-100 ฿, טום יאם עוף ועוד, ממש כמו בשהות הראשונה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">ג׳אנגסילון (Jungceylon)</p>
+                <p class="cdesc">נסיעה קצרה מקאלים — הקניון המרכזי של פאטונג, מותגים, סופרמרקט Big C ופודקורט גדול.</p>
+                <a class="clink" href="https://www.jungceylon.com/en" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">שוק באנזאן</p>
+                <p class="cdesc">שוק מקומי עם פירות, תבלינים ומזכרות — הזדמנות נוספת לחוויית קניות תאילנדית אמיתית לפני הטיסה הביתה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
               </div>
             </div>
           
@@ -1085,7 +1158,7 @@ const I18N = {
     transferNote: (from,to) => `יום מעבר: יציאה מ${from} והגעה ל${to}`,
     flightOutTag: 'טיסת הלוך', flightRetTag: 'טיסת חזור', transferTag: 'מעבר',
     seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים',
-    attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות',
+    attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
     areaPhotoNote: 'תמונה: נוף האזור',
     showImages: '🖼️ הצג תמונות', hideImages: '🖼️ הסתר תמונות',
   },
@@ -1110,18 +1183,12 @@ const I18N = {
     transferNote: (from,to) => `Transfer day: checkout from ${from}, arriving in ${to}`,
     flightOutTag: 'Outbound flight', flightRetTag: 'Return flight', transferTag: 'Transfer',
     seeOfficial: 'Official hotel site', seeMore: 'More info',
-    attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants',
+    attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
     areaPhotoNote: 'Photo: the surrounding area',
     showImages: '🖼️ Show photos', hideImages: '🖼️ Hide photos',
   }
 };
 
-const DEST_THEME = {
-  phuket1: 'linear-gradient(135deg, #0c5c73, #3f8f6a)',
-  krabi:   'linear-gradient(135deg, #7a4fae, #0c5c73)',
-  khaolak: 'linear-gradient(135deg, #3f8f6a, #f2a33d)',
-  phuket2: 'linear-gradient(135deg, #e04f30, #7a4fae)',
-};
 
 const DESTINATIONS = [
   {
@@ -1136,18 +1203,21 @@ const DESTINATIONS = [
       link:'https://www.dinsoresort.com/phuket/'
     },
     attractions:[
-      {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img: WM('The Big Buddha, Phuket.jpg')},
-      {nameHe:'זיפליין ו-ATV ביער הטרופי', nameEn:'Cable Jungle Adventure — Zipline & ATV', descHe:'מסלול זיפליין בחופת הג׳ונגל (21 תחנות, 2 ק״מ) בשילוב רכיבת ATV — אטרקציית אדרנלין מעולה לבני נוער.', descEn:'A jungle-canopy zipline (21 stations, 2km) often combined with ATV off-road rides — great teen-friendly adrenaline stop.', link:'https://www.tripadvisor.com/Attraction_Review-g2315806-d2091139-Reviews-Cable_Jungle_Adventure-Si_Sunthon_Thalang_District_Phuket.html', img:null},
-      {nameHe:'רחוב באנגלה ושוק הלילה', nameEn:'Bangla Road & Night Market', descHe:'הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם פירות ים על האש, ובלילה רחוב הבידור המרכזי של האי.', descEn:'Patong\'s famous street — a lively food market by early evening, the island\'s main entertainment strip by night.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d20160170-Reviews-Bangla_Night_Market-Patong_Kathu_Phuket.html', img: WM('Bars at Bangla Road, Patong, Thailand.jpg')},
-      {nameHe:'טיול יום לאיי פי-פי', nameEn:'Phi Phi Islands Day Trip', descHe:'טיול סירת מהירות לארכיפלג פי-פי — שנורקלינג במפרץ פילה ובאי במבוק, עצירה במאיה ביי, ארוחת צהריים כלולה.', descEn:'Speedboat day trip to the iconic Phi Phi archipelago — snorkeling at Pileh Lagoon & Bamboo Island, a Maya Bay stop, lunch included.', link:'https://www.viator.com/tours/Phuket/Phi-Phi-Island-Hopping-Day-Trip-by-Speed-Boat-from-Phuket/d349-9574P490', img: WM('A View from Maya Bay, Phi Phi Le.jpg')},
-      {nameHe:'איי ג׳יימס בונד ומפרץ פאנגה', nameEn:'James Bond Island & Phang Nga Bay', descHe:'שיט בין נופי קארסט מרהיבים, קיאקים במעברים נסתרים, עצירה באי "ג׳יימס בונד" ובכפר הדייגים קוה פאניי.', descEn:'A boat day through dramatic limestone karsts, sea-canoeing through hidden lagoons, a stop at "James Bond Island" and Koh Panyee stilt village.', link:'https://www.viator.com/Phuket-attractions/James-Bond-Island-Khao-Phing-Kan/d349-a15586', img: WM('Ko Tapu (James Bond) Island in Phang Nga Bay, Thailand.jpg')},
+      {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img: WM('The Big Buddha, Phuket.jpg'), tier:0, priceHe:'כניסה חינם', priceEn:'Free entry'},
+      {nameHe:'זיפליין ו-ATV ביער הטרופי', nameEn:'Cable Jungle Adventure — Zipline & ATV', descHe:'מסלול זיפליין בחופת הג׳ונגל (21 תחנות, 2 ק״מ) בשילוב רכיבת ATV — אטרקציית אדרנלין מעולה לבני נוער.', descEn:'A jungle-canopy zipline (21 stations, 2km) often combined with ATV off-road rides — great teen-friendly adrenaline stop.', link:'https://www.tripadvisor.com/Attraction_Review-g2315806-d2091139-Reviews-Cable_Jungle_Adventure-Si_Sunthon_Thalang_District_Phuket.html', img:null, tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'רחוב באנגלה ושוק הלילה', nameEn:'Bangla Road & Night Market', descHe:'הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם אוכל, ובלילה רחוב הבידור המרכזי של האי.', descEn:'Patong\'s famous street — a lively food market by early evening, the island\'s main entertainment strip by night.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d20160170-Reviews-Bangla_Night_Market-Patong_Kathu_Phuket.html', img: WM('Bars at Bangla Road, Patong, Thailand.jpg'), tier:0, priceHe:'כניסה חינם (אוכל בתשלום)', priceEn:'Free to enter (food extra)'},
+      {nameHe:'טיול יום לאיי פי-פי', nameEn:'Phi Phi Islands Day Trip', descHe:'טיול סירת מהירות לארכיפלג פי-פי — שנורקלינג במפרץ פילה ובאי במבוק, עצירה במאיה ביי, ארוחת צהריים כלולה.', descEn:'Speedboat day trip to the iconic Phi Phi archipelago — snorkeling at Pileh Lagoon & Bamboo Island, a Maya Bay stop, lunch included.', link:'https://www.viator.com/tours/Phuket/Phi-Phi-Island-Hopping-Day-Trip-by-Speed-Boat-from-Phuket/d349-9574P490', img: WM('A View from Maya Bay, Phi Phi Le.jpg'), tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'איי ג׳יימס בונד ומפרץ פאנגה', nameEn:'James Bond Island & Phang Nga Bay', descHe:'שיט בין נופי קארסט מרהיבים, קיאקים במעברים נסתרים, עצירה באי "ג׳יימס בונד" ובכפר הדייגים קוה פאניי.', descEn:'A boat day through dramatic limestone karsts, sea-canoeing through hidden lagoons, a stop at "James Bond Island" and Koh Panyee stilt village.', link:'https://www.viator.com/Phuket-attractions/James-Bond-Island-Khao-Phing-Kan/d349-a15586', img: WM('Ko Tapu (James Bond) Island in Phang Nga Bay, Thailand.jpg'), tier:3, priceHe:'~1,500–2,200 ฿ לאדם', priceEn:'~1,500–2,200 THB/person'},
     ],
     restaurants:[
-      {nameHe:'Savoey Seafood Restaurant', nameEn:'Savoey Seafood Restaurant', cuisineHe:'פירות ים', cuisineEn:'Seafood', descHe:'אולם פירות ים ותיק (מ-1980) בפאטונג, עם תצוגת דגים טרייה ותפריט משפחתי ענק.', descEn:'Long-running (since 1980) seafood hall in Patong with a huge fresh-catch display and family-friendly menu.', link:'https://www.savoeyseafoodpatong.com/'},
-      {nameHe:'Kaab Gluay', nameEn:'Kaab Gluay (Banana Leaf Rib)', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים וקארי אדום עם שרימפס במחירים הוגנים.', descEn:'One of the few genuinely local Thai spots in Patong — spicy salads and red-curry prawns at honest prices.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27179265-Reviews-Kaabgluay-Patong_Kathu_Phuket.html'},
-      {nameHe:'Baan Rim Pa', nameEn:'Baan Rim Pa', cuisineHe:'תאילנדי מלכותי', cuisineEn:'Royal Thai fine dining', descHe:'בית טיק על צוק מול מפרץ פאטונג, מטבח תאילנדי מלכותי מעודן עם פסנתרן חי — ארוחת "ערב מיוחד".', descEn:'A cliffside teak house overlooking Patong Bay with refined Royal Thai cuisine and a nightly pianist.', link:'https://www.baanrimpa.com/'},
-      {nameHe:'Pan Yaah Seaview', nameEn:'Pan Yaah Seaview Restaurant', cuisineHe:'פירות ים תאילנדי', cuisineEn:'Thai seafood', descHe:'מקום אהוב על מקומיים מעל המים במפרץ קאלים — צדפות בחמאה, דג בסיר חרס ונוף לשקיעה.', descEn:'A local favorite perched over the water in Kalim Bay — butter scallops, clay-pot fish and sunset views.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d5461826-Reviews-Kalim_Rim_Lay-Patong_Kathu_Phuket.html'},
-      {nameHe:'Crab Corner', nameEn:'Crab Corner', cuisineHe:'פירות ים קייג׳ן-תאילנדי', cuisineEn:'Thai-Cajun seafood boil', descHe:'קונספט פירות ים "מבושל" כיפי ליד באנגלה — סרטנים ולובסטר בתיבול קייג׳ן-תאילנדי, אהוב על בני נוער.', descEn:'A fun seafood-boil concept near Bangla Road — crab and lobster in Thai-Cajun spice, a hit with teens.', link:'https://crabcorner.co.th/'},
+      {nameHe:'EuroThai Restaurant', nameEn:'EuroThai Restaurant', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'מסעדה משפחתית קטנה וחמימה בסמטת ד״ר ואטאנה בפאטונג — פאד תאי אמיתי וקארי צהוב טעים, לא מתויר.', descEn:'A tiny, warm family-run spot on Soi Dr. Wattana in Patong, known for genuinely authentic pad Thai and a tasty yellow curry — real Thai flavor, not westernized.', link:'https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket'},
+      {nameHe:'Baan Pad Thaï', nameEn:'Baan Pad Thaï', cuisineHe:'תאילנדי, פאד תאי', cuisineEn:'Thai, pad Thai specialist', descHe:'מסעדה קטנה בפאטונג המדורגת 5.0/5 בטריפאדוויזור — האורז המטוגן והפאד תאי הכי טובים בעיר, הכל טרי.', descEn:'A small Patong spot rated 5.0/5 on Tripadvisor — some of the best fried rice and pad Thai in town, everything cooked fresh.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html'},
+      {nameHe:'Kaab Gluay', nameEn:'Kaab Gluay (Banana Leaf Rib)', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים, קארי אדום ומוקפצים במחירים הוגנים.', descEn:'One of the few genuinely local Thai spots in Patong — spicy salads, red curry and stir-fries at honest prices.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27179265-Reviews-Kaabgluay-Patong_Kathu_Phuket.html'},
+      {nameHe:'שוק באנזאן — קומת הרחוב', nameEn:'Banzaan Market — Street Food Floor', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'הקומה השנייה של שוק באנזאן בפאטונג — עשרות דוכני רחוב אותנטיים, פאד תאי בכ-100 ฿, טום יאם עוף ועוד.', descEn:'The upper floor of Banzaan Market in Patong — dozens of authentic street-food stalls, pad Thai for about 100 THB, chicken tom yum and more.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket'},
+    ],
+    shopping:[
+      {nameHe:'ג׳אנגסילון (Jungceylon)', nameEn:'Jungceylon Shopping Center', descHe:'הקניון הענק והמרכזי של פאטונג — מותגים בינלאומיים ומקומיים, סופרמרקט Big C, קולנוע ופודקורט גדול.', descEn:'Patong\'s massive central mall — international and local brands, a Big C supermarket, a cinema, and a large food court.', link:'https://www.jungceylon.com/en'},
+      {nameHe:'שוק באנזאן', nameEn:'Banzaan Fresh Market', descHe:'שוק מקומי תוסס עם פירות, תבלינים, בדים ומזכרות — חוויית קניות תאילנדית אמיתית, לצד קומת אוכל הרחוב.', descEn:'A lively local market with fruit, spices, fabrics and souvenirs — a genuine Thai shopping experience, alongside the street-food floor.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket'},
     ]
   },
   {
@@ -1162,18 +1232,21 @@ const DESTINATIONS = [
       link:'https://www.dusit.com/dusitthani-krabibeachresort/'
     },
     attractions:[
-      {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img: WM('Phra Nang cave, Rai Leh, Thailand 2018 2.jpg')},
-      {nameHe:'טיול ארבעת האיים', nameEn:'Four Islands Tour', descHe:'טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.', descEn:'A full-day boat-hopping tour — snorkeling, the famous sandbar between Chicken and Tup Islands, and a beach picnic.', link:'https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97', img: WM('Phra Nang cave P1120058.JPG')},
-      {nameHe:'מקדש מערת הנמר', nameEn:'Tiger Cave Temple (Wat Tham Suea)', descHe:'מקדש על גבעה שמגיעים אליו ב-1,237 מדרגות, לפסל בודהה זהוב ולנוף פנורמי — אתגר כיפי לבני נוער. כניסה חינם.', descEn:'A hilltop temple reached via 1,237 steps to a giant golden Buddha and panoramic views — a fun challenge for active teens. Free entry.', link:'https://www.tourismthailand.org/Attraction/wat-tham-suea', img: WM('Wat Tham Sua 18.jpg')},
-      {nameHe:'הבריכה האזמרגדית והכחולה', nameEn:'Emerald Pool & Blue Pool', descHe:'שמורת ג׳ונגל עם בריכת מעיינות טורקיז לשחייה, ובריכה כחולה מרהיבה במרחק הליכה קצרה (ללא שחייה).', descEn:'A jungle reserve with a swimmable turquoise mineral pool, and a striking sapphire Blue Pool nearby (no swimming there).', link:'https://www.tourismthailand.org/Attraction/sa-morakot-emerald-pool', img: WM('Emerald Pool (Sa Morakot).jpg')},
-      {nameHe:'עיירת אאו-נאנג ושוק הלילה', nameEn:'Ao Nang Town & Night Market', descHe:'המרכז התיירותי של האזור, עם שוק לילה תוסס — אוכל רחוב, מלאכת יד, מוזיקה חיה ומופעי מואי תאי.', descEn:'The area\'s tourist hub with a lively nightly market — street food, handicrafts, live music and Muay Thai shows.', link:'https://en.wikipedia.org/wiki/Ao_Nang', img:null},
+      {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img: WM('Phra Nang cave, Rai Leh, Thailand 2018 2.jpg'), tier:2, priceHe:'~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿', priceEn:'~150–200 THB boat; guided climbing ~1,500 THB'},
+      {nameHe:'טיול ארבעת האיים', nameEn:'Four Islands Tour', descHe:'טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.', descEn:'A full-day boat-hopping tour — snorkeling, the famous sandbar between Chicken and Tup Islands, and a beach picnic.', link:'https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97', img: WM('Phra Nang cave P1120058.JPG'), tier:2, priceHe:'~800–1,200 ฿ לאדם', priceEn:'~800–1,200 THB/person'},
+      {nameHe:'מקדש מערת הנמר', nameEn:'Tiger Cave Temple (Wat Tham Suea)', descHe:'מקדש על גבעה שמגיעים אליו ב-1,237 מדרגות, לפסל בודהה זהוב ולנוף פנורמי — אתגר כיפי לבני נוער. כניסה חינם.', descEn:'A hilltop temple reached via 1,237 steps to a giant golden Buddha and panoramic views — a fun challenge for active teens. Free entry.', link:'https://www.tourismthailand.org/Attraction/wat-tham-suea', img: WM('Wat Tham Sua 18.jpg'), tier:0, priceHe:'כניסה חינם (תרומה)', priceEn:'Free entry (donation)'},
+      {nameHe:'הבריכה האזמרגדית והכחולה', nameEn:'Emerald Pool & Blue Pool', descHe:'שמורת ג׳ונגל עם בריכת מעיינות טורקיז לשחייה, ובריכה כחולה מרהיבה במרחק הליכה קצרה (ללא שחייה).', descEn:'A jungle reserve with a swimmable turquoise mineral pool, and a striking sapphire Blue Pool nearby (no swimming there).', link:'https://www.tourismthailand.org/Attraction/sa-morakot-emerald-pool', img: WM('Emerald Pool (Sa Morakot).jpg'), tier:1, priceHe:'~200 ฿ כניסה לפארק', priceEn:'~200 THB park entry'},
+      {nameHe:'עיירת אאו-נאנג ושוק הלילה', nameEn:'Ao Nang Town & Night Market', descHe:'המרכז התיירותי של האזור, עם שוק לילה תוסס — אוכל רחוב, מלאכת יד, מוזיקה חיה ומופעי מואי תאי.', descEn:'The area\'s tourist hub with a lively nightly market — street food, handicrafts, live music and Muay Thai shows.', link:'https://en.wikipedia.org/wiki/Ao_Nang', img:null, tier:0, priceHe:'כניסה חינם', priceEn:'Free'},
     ],
     restaurants:[
-      {nameHe:'Krua Thara', nameEn:'Krua Thara', cuisineHe:'פירות ים', cuisineEn:'Thai seafood', descHe:'מסעדת פירות ים אהובה וללא יומרות ליד רציף הדייגים, עם אקווריום חי ומנות דרום-תאילנדיות קלאסיות.', descEn:'A beloved, no-frills seafood spot by the fishing pier, with a live tank and classic southern-Thai dishes.', link:'https://www.tripadvisor.com/Restaurant_Review-g1507054-d1982719-Reviews-Krua_Thara-Ao_Nang_Krabi_Province.html'},
-      {nameHe:'Lae Lay Grill', nameEn:'Lae Lay Grill', cuisineHe:'פירות ים ונוף שקיעה', cuisineEn:'Seafood, sunset views', descHe:'מסעדה על גבעה מעל מפרץ אאו-נאנג עם נוף שקיעה פנורמי, ידועה בלובסטר ובדג ים צלוי בעלה בננה.', descEn:'A hillside restaurant above Ao Nang Bay with panoramic sunset views, known for lobster and banana-leaf grilled fish.', link:'https://www.laelaygrill.com/'},
-      {nameHe:'Carnivore Steak & Grill', nameEn:'Carnivore Steak & Grill', cuisineHe:'סטייקהאוס', cuisineEn:'Steakhouse', descHe:'מוסד ותיק באאו-נאנג עם בקר וכבש מיובאים — הפסקה נעימה לבני הנוער מהאוכל התאילנדי.', descEn:'An Ao Nang institution serving imported beef and lamb — a welcome change of pace for teens.', link:'https://carnivore-thailand.com/'},
-      {nameHe:'E-San Seafood', nameEn:'E-San Seafood', cuisineHe:'פירות ים איסאן', cuisineEn:'Isaan-style seafood', descHe:'מסעדה מדורגת גבוה עם דוכן פירות ים טרי וצלייה על האש בסגנון חוף — בוחרים את התפיסה ורואים אותה מוכנה.', descEn:'A top-rated spot with a fresh seafood counter and beachside BBQ grilling.', link:'https://www.tripadvisor.com/Restaurant_Review-g1507054-d3673260-Reviews-E_San_Seafood-Ao_Nang_Krabi_Province.html'},
-      {nameHe:"May and Mark's House", nameEn:"May and Mark's House", cuisineHe:'תאילנדי-בינלאומי', cuisineEn:'Thai/international fusion', descHe:'מסעדת-קפה ביתית וידידותית למשפחות, משלבת קלאסיקות תאילנדיות עם אוכל נוחות בינלאומי וקפה טוב.', descEn:'A cozy, family-friendly café blending Thai classics with international comfort food and good coffee.', link:'https://www.tripadvisor.com/Restaurant_Review-g297927-d3738140-Reviews-May_and_Mark_s_House-Krabi_Town_Krabi_Province.html'},
+      {nameHe:'Amp & Aing', nameEn:'Amp & Aing', cuisineHe:'תאילנדי משפחתי', cuisineEn:'Family-run Thai', descHe:'מסעדה משפחתית עם אוכל טוב ומחירים הוגנים — הרבה מקומיים אוכלים כאן, לא רק תיירים.', descEn:'A family-run spot with genuinely good food at fair prices — plenty of locals eat here too, not just tourists.', link:'https://www.google.com/maps/search/Amp+%26+Aing+Restaurant+Ao+Nang+Krabi'},
+      {nameHe:'KoDam Kitchen', nameEn:'KoDam Kitchen', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'אחת המסעדות התאילנדיות האהובות באאו-נאנג — אוכל טעים במחירים בלתי מנוצחים ואווירה נעימה.', descEn:'One of the best-loved Thai restaurants in Ao Nang — delicious food at unbeatable prices and a pleasant atmosphere.', link:'https://www.google.com/maps/search/KoDam+Kitchen+Ao+Nang+Krabi'},
+      {nameHe:'Mama Kitchen', nameEn:'Mama Kitchen', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'מקום פשוט למתי שאוהבים מטבח תאילנדי אמיתי, ממוקם מחוץ לאזור התיירותי המרכזי.', descEn:'A simple spot for lovers of authentic Thai cuisine, located just outside the main tourist strip.', link:'https://www.google.com/maps/search/Mama+Kitchen+Ao+Nang+Krabi'},
+      {nameHe:'Ao Nang Boat Noodle & Thai Food', nameEn:'Ao Nang Boat Noodle & Thai Food', cuisineHe:'נודלס תאילנדי', cuisineEn:'Thai noodles', descHe:'ידועה במיוחד בזכות מנות הנודלס הטעימות שלה, במחירים זולים ונוחים.', descEn:'Known especially for its delicious noodle dishes, at cheap and easy prices.', link:'https://www.google.com/maps/search/Ao+Nang+Boat+Noodle+and+Thai+Food+Krabi'},
+    ],
+    shopping:[
+      {nameHe:'שוק הלילה של אאו-נאנג (Landmark)', nameEn:'Ao Nang Landmark Night Market', descHe:'שוק לילה תוסס עם חנויות קטנות לבגדים, פריטי דקורציה ומזכרות אישיות, מוזיקה חיה ומופע אש.', descEn:'A lively night market with small shops for clothes, decor and personalized souvenirs, live music, and a fire show.', link:'https://www.google.com/maps/search/Ao+Nang+Landmark+Night+Market+Krabi'},
+      {nameHe:'שוק הטיילת של אאו-נאנג', nameEn:'Ao Nang Beach Walk Market', descHe:'שוק תוסס ליד החוף — מזכרות מקומיות, פירות טריים ואמנות יד, עם נוף לים.', descEn:'A vibrant market near the beach — local souvenirs, fresh fruit and handicrafts, with sea views.', link:'https://www.google.com/maps/search/Ao+Nang+Beach+Walk+Market+Krabi'},
     ]
   },
   {
@@ -1188,18 +1261,21 @@ const DESTINATIONS = [
       link:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/'
     },
     attractions:[
-      {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img: WM('Ko Tapu (James Bond) Island in Phang Nga Bay, Thailand.jpg')},
-      {nameHe:'פארק לאומי קאו סוק', nameEn:'Khao Sok National Park', descHe:'יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.', descEn:'Ancient rainforest with dramatic karsts; day tours include a longtail boat ride across Cheow Lan Lake and lunch on a floating raft.', link:'https://en.wikipedia.org/wiki/Khao_Sok_National_Park', img: WM('Khao Sok, Cheow Lan Lake, Rock formations, Thailand.jpg')},
-      {nameHe:'פארק חאו-לאק לאם-רו והמפל', nameEn:'Khao Lak–Lam Ru National Park', descHe:'פארק לאומי חופי-יערי ליד קאולק, עם מפל בן 5 מפלים (Ton Chong Fa) ותצפית נופית על החוף — טיול חצי-יום פעיל.', descEn:'A coastal/jungle national park with a 5-tier waterfall (Ton Chong Fa) and a scenic coastal viewpoint — a great half-day outing.', link:'https://www.tourismthailand.org/Attraction/khao-lak-lam-ru-national-park', img: WM('Khao Lak-Lam Ru National Park, Rainforest, Thailand.jpg')},
-      {nameHe:'אנדרטת הצונאמי — סירת המשטרה 813', nameEn:'Tsunami Memorial — Police Boat 813', descHe:'אנדרטה נוגעת ללב לצונאמי 2004: סירת משטרה שנסחפה כ-2 ק״מ פנימה, כיום מוצבת כאנדרטה — חוויה משמעותית לבני נוער.', descEn:'A moving memorial to the 2004 tsunami: a police boat swept ~2km inland, now standing as a monument — meaningful for teens.', link:'https://www.tourismthailand.org/Attraction/tsunami-police-boat-813-memorials', img: WM('Khao Lak Police Boat 813.jpg')},
-      {nameHe:'מקלט פילים אתי', nameEn:'Khaolak Elephant Sanctuary (ethical)', descHe:'מקלט אתי אמיתי לפילים מוצלים — ללא רכיבה וללא מופעים, צפייה בפילים משוטטים במערכת "מגע מוגן".', descEn:'A genuinely ethical sanctuary for rescued elephants — no rides, no shows, protected-contact observation only.', link:'https://khaolak-elephantsanctuary.com/', img:null},
+      {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img: WM('Ko Tapu (James Bond) Island in Phang Nga Bay, Thailand.jpg'), tier:3, priceHe:'~1,500–2,000 ฿ לאדם', priceEn:'~1,500–2,000 THB/person'},
+      {nameHe:'פארק לאומי קאו סוק', nameEn:'Khao Sok National Park', descHe:'יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.', descEn:'Ancient rainforest with dramatic karsts; day tours include a longtail boat ride across Cheow Lan Lake and lunch on a floating raft.', link:'https://en.wikipedia.org/wiki/Khao_Sok_National_Park', img: WM('Khao Sok, Cheow Lan Lake, Rock formations, Thailand.jpg'), tier:3, priceHe:'~2,000–2,500 ฿ לאדם', priceEn:'~2,000–2,500 THB/person'},
+      {nameHe:'פארק חאו-לאק לאם-רו והמפל', nameEn:'Khao Lak–Lam Ru National Park', descHe:'פארק לאומי חופי-יערי ליד קאולק, עם מפל בן 5 מפלים (Ton Chong Fa) ותצפית נופית על החוף — טיול חצי-יום פעיל.', descEn:'A coastal/jungle national park with a 5-tier waterfall (Ton Chong Fa) and a scenic coastal viewpoint — a great half-day outing.', link:'https://www.tourismthailand.org/Attraction/khao-lak-lam-ru-national-park', img: WM('Khao Lak-Lam Ru National Park, Rainforest, Thailand.jpg'), tier:1, priceHe:'~200 ฿ כניסה לפארק', priceEn:'~200 THB park entry'},
+      {nameHe:'אנדרטת הצונאמי — סירת המשטרה 813', nameEn:'Tsunami Memorial — Police Boat 813', descHe:'אנדרטה נוגעת ללב לצונאמי 2004: סירת משטרה שנסחפה כ-2 ק״מ פנימה, כיום מוצבת כאנדרטה — חוויה משמעותית לבני נוער.', descEn:'A moving memorial to the 2004 tsunami: a police boat swept ~2km inland, now standing as a monument — meaningful for teens.', link:'https://www.tourismthailand.org/Attraction/tsunami-police-boat-813-memorials', img: WM('Khao Lak Police Boat 813.jpg'), tier:0, priceHe:'כניסה חינם', priceEn:'Free'},
+      {nameHe:'מקלט פילים אתי', nameEn:'Khaolak Elephant Sanctuary (ethical)', descHe:'מקלט אתי אמיתי לפילים מוצלים — ללא רכיבה וללא מופעים, צפייה בפילים משוטטים במערכת "מגע מוגן".', descEn:'A genuinely ethical sanctuary for rescued elephants — no rides, no shows, protected-contact observation only.', link:'https://khaolak-elephantsanctuary.com/', img:null, tier:3, priceHe:'~2,000–3,000 ฿ לאדם', priceEn:'~2,000–3,000 THB/person'},
     ],
     restaurants:[
-      {nameHe:'Mali Restaurant', nameEn:'Mali Restaurant', cuisineHe:'פירות ים על האש', cuisineEn:'Thai BBQ seafood', descHe:'מקום פופולרי בבאנג ניאנג הידוע בבשר ופירות ים על גריל פחמים, פאד תאי ואורז באננס.', descEn:'A popular spot known for charcoal-grilled BBQ seafood and meats, pad Thai and pineapple rice.', link:'https://www.tripadvisor.com/Restaurant_Review-g297914-d2040585-Reviews-Mali_Restaurant-Khao_Lak_Takua_Pa_Phang_Nga_Province.html'},
-      {nameHe:'Rabeang Restaurant', nameEn:'Rabeang Restaurant', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'מסעדה מקומית ותיקה ואהודה למנות תאילנדיות אותנטיות במחירים סבירים, עם ישיבה בחוץ.', descEn:'A long-standing local favorite for authentic Thai dishes at reasonable prices, with outdoor seating.', link:'https://www.tripadvisor.com/Restaurant_Review-g297914-d1730578-Reviews-Rabeang_Restaurant-Khao_Lak_Takua_Pa_Phang_Nga_Province.html'},
-      {nameHe:'Hill Tribe Restaurant', nameEn:'Hill Tribe Restaurant', cuisineHe:'תאילנדי צפוני', cuisineEn:'Northern Thai', descHe:'המסעדה הראשונה בקאולק המגישה מטבח תאילנדי-צפוני, ידועה בעוף לימון ובנגיעה תרבותית שמעניינת גם בני נוער.', descEn:'Khao Lak\'s first Northern-Thai restaurant, known for lemon chicken and a cultural touch teens find interesting.', link:'https://hilltribe-restaurant.com'},
-      {nameHe:'Thai Seafood Restaurant & Bar', nameEn:'Thai Seafood Restaurant & Bar', cuisineHe:'פירות ים', cuisineEn:'Seafood', descHe:'מסעדת פירות ים תאילנדית מסורתית, מהוללת כאחת הטובות באזור — פשוטה, טרייה וקזואלית.', descEn:'A traditional Thai seafood house praised as some of the best in the region — simple, fresh and casual.', link:'https://www.tripadvisor.com/Restaurant_Review-g297914-d7249336-Reviews-Thai_Seafood_Restaurant_Bar-Khao_Lak_Takua_Pa_Phang_Nga_Province.html'},
-      {nameHe:'Baan Khao Lak Seafood', nameEn:'Baan Khao Lak Seafood', cuisineHe:'פירות ים הרפתקני', cuisineEn:'Adventurous seafood', descHe:'פנינה מקומית עם פירות ים חיים שבוחרים בעצמכם לפני הבישול — בחירה כיפית והרפתקנית.', descEn:'A local gem with live seafood you pick yourself before it\'s cooked — a fun, adventurous pick.', link:'https://www.tripadvisor.com/Restaurant_Review-g2237680-d8737651-Reviews-Baan_Khao_Lak_Seafood-Thai_Mueang_Phang_Nga_Province.html'},
+      {nameHe:'Ten Star Coffee and Food', nameEn:'Ten Star Coffee and Food', cuisineHe:'תאילנדי וקפה', cuisineEn:'Thai & coffee', descHe:'ברחוב פט קסם, קארי ומוקפצים טעימים לצד קפה טוב — פתוח כל היום עד 23:00.', descEn:'On Phet Kasem Road — flavorful curries and stir-fries alongside good coffee, open all day until 23:00.', link:'https://www.google.com/maps/search/Ten+Star+Coffee+and+Food+Khao+Lak'},
+      {nameHe:'Walkers', nameEn:'Walkers', cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'ידועה בעוף בגריל ובקארי מסמן — סלט המנגו וטום-יאם עוף מקבלים ביקורות מצוינות.', descEn:'Known for chicken dinners and massaman curry — the mango salad and chicken tom yum get excellent reviews.', link:'https://www.google.com/maps/search/Walkers+Restaurant+Khao+Lak'},
+      {nameHe:"Patty's Restaurant", nameEn:"Patty's Restaurant", cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'פאד תאי במחיר ידידותי (כ-80 ฿), נוף יפה על קאולק, אווירה נעימה ורגועה.', descEn:'Friendly-priced pad Thai (around 80 THB), lovely views over Khao Lak, relaxed atmosphere.', link:'https://www.google.com/maps/search/Pattys+Restaurant+Khao+Lak'},
+      {nameHe:'שוק הלילה של באנג-ניאנג', nameEn:'Bang Niang Night Market — Street Food', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'מו-פינג (שיפודי חזיר בגריל) עם אורז דביק, רוטי ומטעמי רחוב תאילנדיים אותנטיים, במחירים מקומיים.', descEn:'Moo ping (grilled pork skewers) with sticky rice, roti, and authentic Thai street snacks at local prices.', link:'https://bangniangmarket.com/'},
+    ],
+    shopping:[
+      {nameHe:'שוק באנג-ניאנג', nameEn:'Bang Niang Market', descHe:'שוק הלילה המרכזי של קאולק — יותר מ-300 דוכנים של מזכרות, בגדים, מלאכת יד ומוצרי טיפוח תאילנדיים.', descEn:'Khao Lak\'s main night market — 300+ stalls of souvenirs, clothing, handicrafts and Thai wellness products.', link:'https://bangniangmarket.com/'},
+      {nameHe:'באנג-ניאנג פלאזה', nameEn:'Bang Niang Plaza', descHe:'פלאזה פתוחה עם מזכרות, בגדי חוף ומשי תאילנדי — קניות מקומיות רגועות יותר משוק הלילה.', descEn:'An open-air plaza with souvenirs, beachwear and Thai silk — a calmer local shopping alternative to the night market.', link:'https://www.google.com/maps/search/Bang+Niang+Plaza+Khao+Lak'},
     ]
   },
   {
@@ -1214,18 +1290,21 @@ const DESTINATIONS = [
       link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/'
     },
     attractions:[
-      {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:null},
-      {nameHe:'העיר העתיקה של פוקט', nameEn:'Old Phuket Town', descHe:'הליכה בין בתי מסחר ססגוניים בסגנון סינו-פורטוגזי ברחוב טאלאנג וסוי רומאני, עם בתי קפה ואמנות רחוב.', descEn:'A walk through colorful Sino-Portuguese shophouses on Thalang Road and Soi Romanee, with cafés and street art.', link:'https://www.machupicchu.org/old-phuket-town-guide-sino-portuguese-architecture-culture.htm', img: WM('Thalang Road, Old Phuket Town.jpg')},
-      {nameHe:'שנורקלינג באי ראצ׳ה', nameEn:'Racha (Raya) Island Snorkeling', descHe:'טיול יום בסירת מהירות לאי בתולי עם שוניות אלמוגים רדודות, מתאים לכל הרמות, כולל ארוחת צהריים על החוף.', descEn:'A speedboat day trip to a pristine island with shallow coral reefs, ideal for all levels, plus a beach lunch.', link:'https://www.viator.com/tours/Phuket/Coral-Island-and-Racha-Island-Snorkeling-Tour-By-Speedboat-From-Phuket/d349-110534P183', img:null},
-      {nameHe:'פאראסיילינג וג׳ט-סקי', nameEn:'Parasailing & Jet Skiing', descHe:'ספורט ימי מהיר ומלא אדרנלין ממש מול חוף פאטונג — פעילות מצוינת של חצי שעה בין ימי חוף.', descEn:'Quick-hit adrenaline water sports right off Patong Beach — a great half-hour activity between beach days.', link:'https://phuketwatersports.com/sport/parasailing/', img:null},
-      {nameHe:'חוף קאלים ונקודת שקיעה', nameEn:'Kalim Beach Viewpoint & Sunset', descHe:'רצועת חוף שקטה וסלעית מצפון לפאטונג, ידועה בשנורקלינג בעונה השקטה ובנופי שקיעה מהיפים בחוף.', descEn:'A quiet rocky stretch north of Patong, known for calm-season snorkeling and some of the best sunset views on the coast.', link:'https://www.phuket101.net/kalim-beach/', img: WM('Sunset at Patong beach Phuket Thailand.jpg')},
+      {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:null, tier:1, priceHe:'~300–600 ฿ (סירה הלוך-חזור)', priceEn:'~300–600 THB (round-trip boat)'},
+      {nameHe:'העיר העתיקה של פוקט', nameEn:'Old Phuket Town', descHe:'הליכה בין בתי מסחר ססגוניים בסגנון סינו-פורטוגזי ברחוב טאלאנג וסוי רומאני, עם בתי קפה ואמנות רחוב.', descEn:'A walk through colorful Sino-Portuguese shophouses on Thalang Road and Soi Romanee, with cafés and street art.', link:'https://www.machupicchu.org/old-phuket-town-guide-sino-portuguese-architecture-culture.htm', img: WM('Thalang Road, Old Phuket Town.jpg'), tier:0, priceHe:'חינם (סיור עצמאי)', priceEn:'Free (self-guided)'},
+      {nameHe:'שנורקלינג באי ראצ׳ה', nameEn:'Racha (Raya) Island Snorkeling', descHe:'טיול יום בסירת מהירות לאי בתולי עם שוניות אלמוגים רדודות, מתאים לכל הרמות, כולל ארוחת צהריים על החוף.', descEn:'A speedboat day trip to a pristine island with shallow coral reefs, ideal for all levels, plus a beach lunch.', link:'https://www.viator.com/tours/Phuket/Coral-Island-and-Racha-Island-Snorkeling-Tour-By-Speedboat-From-Phuket/d349-110534P183', img:null, tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'פאראסיילינג וג׳ט-סקי', nameEn:'Parasailing & Jet Skiing', descHe:'ספורט ימי מהיר ומלא אדרנלין ממש מול חוף פאטונג — פעילות מצוינת של חצי שעה בין ימי חוף.', descEn:'Quick-hit adrenaline water sports right off Patong Beach — a great half-hour activity between beach days.', link:'https://phuketwatersports.com/sport/parasailing/', img:null, tier:2, priceHe:'~600–1,500 ฿ לפעילות', priceEn:'~600–1,500 THB/activity'},
+      {nameHe:'חוף קאלים ונקודת שקיעה', nameEn:'Kalim Beach Viewpoint & Sunset', descHe:'רצועת חוף שקטה וסלעית מצפון לפאטונג, ידועה בשנורקלינג בעונה השקטה ובנופי שקיעה מהיפים בחוף.', descEn:'A quiet rocky stretch north of Patong, known for calm-season snorkeling and some of the best sunset views on the coast.', link:'https://www.phuket101.net/kalim-beach/', img: WM('Sunset at Patong beach Phuket Thailand.jpg'), tier:0, priceHe:'חינם', priceEn:'Free'},
     ],
     restaurants:[
-      {nameHe:'Kalim Rim Lay', nameEn:'Kalim Rim Lay', cuisineHe:'פירות ים תאילנדי', cuisineEn:'Thai seafood', descHe:'ביתני במבוק ממש על קו המים במפרץ קאלים — טום יאם, קארי ירוק ופירות ים על האש, אווירה מיוחדת בשקיעה.', descEn:'Bamboo pavilions right at the water\'s edge — tom yum, green curry, grilled seafood, especially at sunset.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d5461826-Reviews-Kalim_Rim_Lay-Patong_Kathu_Phuket.html'},
-      {nameHe:"L'Arôme by the Sea", nameEn:"L'Arôme by the Sea", cuisineHe:'צרפתי יוקרתי', cuisineEn:'French fine dining', descHe:'מסעדה צרפתית מול הים, מוכרת ע״י מדריך מישלן תאילנד — ארוחת ערב "מבוגרת" נחמדה עם נוף שקיעה.', descEn:'An oceanfront French restaurant recognized by the Michelin Guide Thailand, with sunset views over the Andaman Sea.', link:'https://en.laromegroup.com/laromebythesea'},
-      {nameHe:'Sea Salt Lounge & Grill', nameEn:'Sea Salt Lounge & Grill', cuisineHe:'גריל ופירות ים', cuisineEn:'Grill & seafood', descHe:'לאונג׳ גריל רגוע מול הים תחת עצים גבוהים, מתמקד בפירות ים ובשר על גחלים — טוב לבררנים.', descEn:'A relaxed sea-facing grill under tall trees, focused on charcoal-grilled seafood and meats.', link:'https://www.whatsoninphuket.com/restaurants-kalim/'},
-      {nameHe:'Crab Corner', nameEn:'Crab Corner', cuisineHe:'פירות ים קייג׳ן-תאילנדי', cuisineEn:'Thai-Cajun seafood boil', descHe:'אותו מקום כיפי לפירות ים "מבושלים" מהשהות הראשונה — כדאי לחזור, ליד רחוב באנגלה.', descEn:'The same fun seafood-boil spot from Stay 1 — worth a repeat visit, just off Bangla Road.', link:'https://crabcorner.co.th/'},
+      {nameHe:'EuroThai Restaurant', nameEn:'EuroThai Restaurant', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'נסיעה קצרה מקאלים לפאטונג — פאד תאי אמיתי וקארי צהוב טעים במקום משפחתי וחמים.', descEn:'A short ride from Kalim into Patong — genuinely authentic pad Thai and a tasty yellow curry at a warm, family-run spot.', link:'https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket'},
+      {nameHe:'Baan Pad Thaï', nameEn:'Baan Pad Thaï', cuisineHe:'תאילנדי, פאד תאי', cuisineEn:'Thai, pad Thai specialist', descHe:'מדורגת 5.0/5 בטריפאדוויזור — אורז מטוגן ופאד תאי טריים, מומלץ לחזור לכאן גם בשהות השנייה.', descEn:'Rated 5.0/5 on Tripadvisor — fresh fried rice and pad Thai, worth returning to on this second stay too.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html'},
       {nameHe:'No.6 Restaurant "Up The Hill"', nameEn:'No.6 Restaurant "Up The Hill"', cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'סניף גבעה של מסעדה מקומית ותיקה, עם נוף פנורמי לפאטונג לצד מנות תאילנדיות נדיבות.', descEn:'A hillside outpost of a longtime local favorite, with panoramic views over Patong and generous Thai plates.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d2256384-Reviews-No_6_Restaurant-Patong_Kathu_Phuket.html'},
+      {nameHe:'שוק באנזאן — קומת הרחוב', nameEn:'Banzaan Market — Street Food Floor', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'עשרות דוכני רחוב אותנטיים בפאטונג — פאד תאי בכ-100 ฿, טום יאם עוף ועוד, ממש כמו בשהות הראשונה.', descEn:'Dozens of authentic street-food stalls in Patong — pad Thai for about 100 THB, chicken tom yum and more, just like in Stay 1.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket'},
+    ],
+    shopping:[
+      {nameHe:'ג׳אנגסילון (Jungceylon)', nameEn:'Jungceylon Shopping Center', descHe:'נסיעה קצרה מקאלים — הקניון המרכזי של פאטונג, מותגים, סופרמרקט Big C ופודקורט גדול.', descEn:'A short ride from Kalim — Patong\'s central mall, brands, a Big C supermarket and a large food court.', link:'https://www.jungceylon.com/en'},
+      {nameHe:'שוק באנזאן', nameEn:'Banzaan Fresh Market', descHe:'שוק מקומי עם פירות, תבלינים ומזכרות — הזדמנות נוספת לחוויית קניות תאילנדית אמיתית לפני הטיסה הביתה.', descEn:'A local market with fruit, spices and souvenirs — one more chance for a genuine Thai shopping experience before the flight home.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket'},
     ]
   }
 ];
@@ -1334,6 +1413,9 @@ function destForDate(dateStr){
 /* ============================= RENDER ============================= */
 const MONTHS_HE = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
 const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const WEEKDAYS_HE = ['א','ב','ג','ד','ה','ו','ש'];
+const WEEKDAYS_EN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const CALENDAR_MONTHS = [{y:2026,m:7},{y:2026,m:8}]; // August & September 2026 (0-indexed month)
 
 function todayIso(){
   // Intentionally local (not iso()/UTC): "today" should match the viewer's
@@ -1365,7 +1447,7 @@ function render(){
   });
 
   safeRun('renderTodayBadge', renderTodayBadge);
-  safeRun('renderTracker', renderTracker);
+  safeRun('renderCalendar', renderCalendar);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
   safeRun('renderFlights', renderFlights);
@@ -1396,34 +1478,48 @@ function dayTag(dateStr){
   return {label: LANG==='he'?info.dest.nameHe:info.dest.nameEn, color:'#d9f0ea', fg:'#0c5c73'};
 }
 
-function renderTracker(){
-  const strip = document.getElementById('trackerStrip');
-  strip.innerHTML = '';
+function renderCalendar(){
+  const wrap = document.getElementById('calendarWrap');
+  wrap.innerHTML = '';
   const today = todayIso();
   if (!SELECTED_DATE){
     SELECTED_DATE = (today >= TRIP_META.start && today <= TRIP_META.end) ? today : TRIP_META.start;
   }
   const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
-  ALL_DAYS.forEach(dateStr=>{
-    const d = toDate(dateStr);
-    const chip = document.createElement('div');
-    chip.className = 'day-chip';
-    if (dateStr === today) chip.classList.add('is-today');
-    if (dateStr === SELECTED_DATE) chip.classList.add('is-selected');
-    const tag = dayTag(dateStr);
-    chip.innerHTML = `<div class="dnum">${d.getUTCDate()}</div><div class="dmon">${months[d.getUTCMonth()]}</div><div class="dtag" style="background:${tag.color};color:${tag.fg}">${tag.label}</div>`;
-    chip.addEventListener('click', ()=>{ SELECTED_DATE = dateStr; render(); scrollToSelected(); });
-    strip.appendChild(chip);
-  });
-}
+  const weekdays = LANG==='he' ? WEEKDAYS_HE : WEEKDAYS_EN;
 
-function scrollToSelected(){
-  const strip = document.getElementById('trackerStrip');
-  const idx = ALL_DAYS.indexOf(SELECTED_DATE);
-  const chip = strip.children[idx];
-  if (!chip) return;
-  const target = chip.offsetLeft - (strip.clientWidth - chip.clientWidth) / 2;
-  strip.scrollTo({ left: target, behavior: 'smooth' });
+  CALENDAR_MONTHS.forEach(({y,m})=>{
+    const firstWeekday = new Date(Date.UTC(y,m,1)).getUTCDay();
+    const daysInMonth = new Date(Date.UTC(y,m+1,0)).getUTCDate();
+
+    let cellsHtml = weekdays.map(w=>`<div class="calendar-weekday">${w}</div>`).join('');
+    for (let i=0;i<firstWeekday;i++) cellsHtml += `<div class="calendar-cell empty"></div>`;
+    for (let day=1; day<=daysInMonth; day++){
+      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+      const inTrip = dateStr >= TRIP_META.start && dateStr <= TRIP_META.end;
+      let classes = 'calendar-cell';
+      let dotHtml = '';
+      if (inTrip){
+        classes += ' in-trip';
+        if (dateStr === today) classes += ' is-today';
+        if (dateStr === SELECTED_DATE) classes += ' is-selected';
+        const tag = dayTag(dateStr);
+        dotHtml = `<span class="cal-dot" style="background:${tag.fg}"></span>`;
+      } else {
+        classes += ' out-of-trip';
+      }
+      cellsHtml += `<div class="${classes}" data-date="${inTrip?dateStr:''}"><span class="cal-daynum">${day}</span>${dotHtml}</div>`;
+    }
+
+    const monthBox = document.createElement('div');
+    monthBox.className = 'calendar-month';
+    monthBox.innerHTML = `<h4>${months[m]} ${y}</h4><div class="calendar-grid">${cellsHtml}</div>`;
+    wrap.appendChild(monthBox);
+  });
+
+  wrap.querySelectorAll('.calendar-cell.in-trip').forEach(cell=>{
+    cell.addEventListener('click', ()=>{ SELECTED_DATE = cell.dataset.date; render(); });
+  });
 }
 
 function renderDayDetail(){
@@ -1466,12 +1562,15 @@ function cardImg(img, altText){
   return `<div class="thumb placeholder">🌺</div>`;
 }
 
+const TIER_LABEL = ['', '$', '$$', '$$$'];
+
 function renderDestinations(){
   const t = I18N[LANG];
   const wrap = document.getElementById('destinations');
   wrap.innerHTML = '';
   DESTINATIONS.forEach(dest=>{
-    const name = LANG==='he' ? dest.nameHe : dest.nameEn;
+    // Place names always shown in English in the destination headers, regardless of the language toggle.
+    const name = dest.nameEn;
     const hotel = dest.hotel;
     const section = document.createElement('section');
     section.className = 'dest';
@@ -1482,7 +1581,7 @@ function renderDestinations(){
     section.innerHTML = `
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="${SHOW_IMAGES ? `background-image:url('${dest.heroImg}')` : `background:${DEST_THEME[dest.id]}`}"></div>
+          <div class="hero-bg" style="background-image:url('${dest.heroImg}')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">${dRange}</span>
@@ -1504,6 +1603,7 @@ function renderDestinations(){
               ${cardImg(a.img, LANG==='he'?a.nameHe:a.nameEn)}
               <div class="body">
                 <p class="cname">${LANG==='he'?a.nameHe:a.nameEn}</p>
+                <span class="ctag price-tag">${TIER_LABEL[a.tier] ? TIER_LABEL[a.tier] + ' · ' : ''}${LANG==='he'?a.priceHe:a.priceEn}</span>
                 <p class="cdesc">${LANG==='he'?a.descHe:a.descEn}</p>
                 <a class="clink" href="${a.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
               </div>
@@ -1520,6 +1620,19 @@ function renderDestinations(){
                 <span class="ctag">${LANG==='he'?r.cuisineHe:r.cuisineEn}</span>
                 <p class="cdesc">${LANG==='he'?r.descHe:r.descEn}</p>
                 <a class="clink" href="${r.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>${t.shoppingHead}</span></h3>
+        <div class="cards-grid">
+          ${dest.shopping.map(s=>`
+            <div class="card">
+              <div class="thumb placeholder">🛍️</div>
+              <div class="body">
+                <p class="cname">${LANG==='he'?s.nameHe:s.nameEn}</p>
+                <p class="cdesc">${LANG==='he'?s.descHe:s.descEn}</p>
+                <a class="clink" href="${s.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
               </div>
             </div>
           `).join('')}
@@ -1607,16 +1720,19 @@ safeRun('init:listeners', () => {
   });
   document.getElementById('prevDay').addEventListener('click', ()=>{
     const idx = ALL_DAYS.indexOf(SELECTED_DATE);
-    if (idx > 0){ SELECTED_DATE = ALL_DAYS[idx-1]; render(); scrollToSelected(); }
+    if (idx > 0){ SELECTED_DATE = ALL_DAYS[idx-1]; render(); }
   });
   document.getElementById('nextDay').addEventListener('click', ()=>{
     const idx = ALL_DAYS.indexOf(SELECTED_DATE);
-    if (idx < ALL_DAYS.length-1){ SELECTED_DATE = ALL_DAYS[idx+1]; render(); scrollToSelected(); }
+    if (idx < ALL_DAYS.length-1){ SELECTED_DATE = ALL_DAYS[idx+1]; render(); }
   });
 });
 
-safeRun('init:render', () => { render(); scrollToSelected(); });
+safeRun('init:render', () => { render(); });
 </script>
+
+
+
 
 
 
