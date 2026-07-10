@@ -345,6 +345,7 @@
 <body>
 
 
+
 <div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand">תאילנד 2026</span></div>
@@ -1295,10 +1296,14 @@ let LANG = 'he';
 let SELECTED_DATE = null; // yyyy-mm-dd
 let SHOW_IMAGES = safeGet('thailand-show-images', '0') === '1';
 
-function toDate(s){ return new Date(s + 'T00:00:00'); }
-function fmt(s){ const d = toDate(s); return d; }
-function iso(d){ return d.toISOString().slice(0,10); }
-function addDays(s,n){ const d = toDate(s); d.setDate(d.getDate()+n); return iso(d); }
+// All trip-day arithmetic is anchored in UTC on purpose: mixing a local-time
+// Date construction with a UTC-based serialization (the previous version)
+// makes addDays() a no-op in any UTC+ timezone (local midnight of "tomorrow"
+// is still "today" in UTC), which turns buildDayList()'s loop into an
+// infinite loop that never reaches TRIP_META.end.
+function toDate(s){ const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d)); }
+function iso(d){ return d.getUTCFullYear() + '-' + String(d.getUTCMonth()+1).padStart(2,'0') + '-' + String(d.getUTCDate()).padStart(2,'0'); }
+function addDays(s,n){ const d = toDate(s); d.setUTCDate(d.getUTCDate()+n); return iso(d); }
 
 function buildDayList(){
   const days = [];
@@ -1331,8 +1336,10 @@ const MONTHS_HE = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול
 const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
 function todayIso(){
+  // Intentionally local (not iso()/UTC): "today" should match the viewer's
+  // own calendar day, not UTC's.
   const now = new Date();
-  return iso(now);
+  return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
 }
 
 function safeRun(label, fn){
@@ -1404,7 +1411,7 @@ function renderTracker(){
     if (dateStr === today) chip.classList.add('is-today');
     if (dateStr === SELECTED_DATE) chip.classList.add('is-selected');
     const tag = dayTag(dateStr);
-    chip.innerHTML = `<div class="dnum">${d.getDate()}</div><div class="dmon">${months[d.getMonth()]}</div><div class="dtag" style="background:${tag.color};color:${tag.fg}">${tag.label}</div>`;
+    chip.innerHTML = `<div class="dnum">${d.getUTCDate()}</div><div class="dmon">${months[d.getUTCMonth()]}</div><div class="dtag" style="background:${tag.color};color:${tag.fg}">${tag.label}</div>`;
     chip.addEventListener('click', ()=>{ SELECTED_DATE = dateStr; render(); scrollToSelected(); });
     strip.appendChild(chip);
   });
@@ -1425,7 +1432,7 @@ function renderDayDetail(){
   const box = document.getElementById('dayDetail');
   const d = toDate(SELECTED_DATE);
   const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
-  const dateLabel = `${d.getDate()} ${months[d.getMonth()]}`;
+  const dateLabel = `${d.getUTCDate()} ${months[d.getUTCMonth()]}`;
 
   let pill, title, sub;
   if (info.type === 'flight-out'){
@@ -1526,7 +1533,7 @@ function renderDestinations(){
 function fmtRange(s,e){
   const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
   const ds = toDate(s), de = toDate(e);
-  return `${ds.getDate()} ${months[ds.getMonth()]} — ${de.getDate()} ${months[de.getMonth()]}`;
+  return `${ds.getUTCDate()} ${months[ds.getUTCMonth()]} — ${de.getUTCDate()} ${months[de.getUTCMonth()]}`;
 }
 
 function renderFlights(){
@@ -1537,7 +1544,7 @@ function renderFlights(){
     const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
     return `<div class="flight-row">
       <div class="ficon">✈️</div>
-      <div class="fdate">${d.getDate()} ${months[d.getMonth()]}</div>
+      <div class="fdate">${d.getUTCDate()} ${months[d.getUTCMonth()]}</div>
       <div style="flex:1">
         <div class="froute">${LANG==='he'?f.titleHe:f.titleEn}</div>
         <div class="fnote">${LANG==='he'?f.descHe:f.descEn}</div>
@@ -1610,6 +1617,9 @@ safeRun('init:listeners', () => {
 
 safeRun('init:render', () => { render(); scrollToSelected(); });
 </script>
+
+
+
 
 
 
