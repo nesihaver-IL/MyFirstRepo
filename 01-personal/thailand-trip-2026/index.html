@@ -43,9 +43,34 @@
     align-items:flex-end;
     color:#fff;
     background:
+      radial-gradient(circle at 20% 20%, rgba(255,179,71,.35), transparent 55%),
+      radial-gradient(circle at 85% 15%, rgba(255,107,74,.3), transparent 50%),
+      linear-gradient(160deg, var(--sea-dark) 0%, var(--sea) 55%, #0a2530 100%);
+    padding-bottom:48px;
+  }
+  .hero.has-photo{
+    background:
       linear-gradient(180deg, rgba(8,28,36,.25) 0%, rgba(8,28,36,.55) 55%, rgba(8,28,36,.92) 100%),
       url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg?width=1600') center/cover no-repeat;
-    padding-bottom:48px;
+  }
+  .img-toggle{
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.5);
+    color:#fff;
+    border-radius:999px;
+    padding:8px 16px;
+    font-weight:700;
+    cursor:pointer;
+    backdrop-filter: blur(4px);
+    margin-inline-end:8px;
+  }
+  .img-toggle:hover{background:rgba(255,255,255,.28);}
+  .dest-header .hero-bg{position:absolute; inset:0; z-index:0;}
+  .dest-header .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.35) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+    opacity:.25;
   }
   .hero-top{
     position:absolute; top:0; left:0; right:0;
@@ -203,7 +228,7 @@
     margin-bottom:34px;
     box-shadow:var(--shadow);
   }
-  .dest-header img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;}
+  .dest-header .hero-bg{background-size:cover; background-position:center;}
   .dest-header .overlay{
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(180deg, rgba(8,28,36,.15), rgba(8,28,36,.88));
@@ -300,10 +325,13 @@
 </head>
 <body>
 
-<div class="hero">
+<div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand"></span></div>
-    <button class="lang-toggle" id="langToggle" type="button">EN</button>
+    <div>
+      <button class="img-toggle" id="imgToggle" type="button"></button>
+      <button class="lang-toggle" id="langToggle" type="button">EN</button>
+    </div>
   </div>
   <div class="container hero-content">
     <span class="eyebrow" data-i18n="heroEyebrow"></span>
@@ -393,6 +421,7 @@ const I18N = {
     seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים',
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות',
     areaPhotoNote: 'תמונה: נוף האזור',
+    showImages: '🖼️ הצג תמונות', hideImages: '🖼️ הסתר תמונות',
   },
   en: {
     brand: 'Thailand 2026',
@@ -417,7 +446,15 @@ const I18N = {
     seeOfficial: 'Official hotel site', seeMore: 'More info',
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants',
     areaPhotoNote: 'Photo: the surrounding area',
+    showImages: '🖼️ Show photos', hideImages: '🖼️ Hide photos',
   }
+};
+
+const DEST_THEME = {
+  phuket1: 'linear-gradient(135deg, #0c5c73, #3f8f6a)',
+  krabi:   'linear-gradient(135deg, #7a4fae, #0c5c73)',
+  khaolak: 'linear-gradient(135deg, #3f8f6a, #f2a33d)',
+  phuket2: 'linear-gradient(135deg, #e04f30, #7a4fae)',
 };
 
 const DESTINATIONS = [
@@ -584,6 +621,7 @@ const PREP_LIST = [
 /* ============================= STATE ============================= */
 let LANG = 'he';
 let SELECTED_DATE = null; // yyyy-mm-dd
+let SHOW_IMAGES = localStorage.getItem('thailand-show-images') === '1';
 
 function toDate(s){ return new Date(s + 'T00:00:00'); }
 function fmt(s){ const d = toDate(s); return d; }
@@ -630,6 +668,8 @@ function render(){
   document.documentElement.lang = LANG;
   document.documentElement.dir = LANG === 'he' ? 'rtl' : 'ltr';
   document.getElementById('langToggle').textContent = LANG === 'he' ? 'EN' : 'עב';
+  document.getElementById('imgToggle').textContent = SHOW_IMAGES ? t.hideImages : t.showImages;
+  document.getElementById('hero').classList.toggle('has-photo', SHOW_IMAGES);
 
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key = el.getAttribute('data-i18n');
@@ -693,7 +733,9 @@ function scrollToSelected(){
   const strip = document.getElementById('trackerStrip');
   const idx = ALL_DAYS.indexOf(SELECTED_DATE);
   const chip = strip.children[idx];
-  if (chip) chip.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  if (!chip) return;
+  const target = chip.offsetLeft - (strip.clientWidth - chip.clientWidth) / 2;
+  strip.scrollTo({ left: target, behavior: 'smooth' });
 }
 
 function renderDayDetail(){
@@ -730,7 +772,7 @@ function renderDayDetail(){
 }
 
 function cardImg(img, altText){
-  if (img){
+  if (SHOW_IMAGES && img){
     return `<img class="thumb" src="${img}" alt="${altText}" loading="lazy">`;
   }
   return `<div class="thumb placeholder">🌺</div>`;
@@ -752,7 +794,7 @@ function renderDestinations(){
     section.innerHTML = `
       <div class="container">
         <div class="dest-header">
-          <img src="${dest.heroImg}" alt="${name}" loading="lazy">
+          <div class="hero-bg" style="${SHOW_IMAGES ? `background-image:url('${dest.heroImg}')` : `background:${DEST_THEME[dest.id]}`}"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">${dRange}</span>
@@ -867,6 +909,11 @@ function updatePrepProgress(){
 /* ============================= INIT ============================= */
 document.getElementById('langToggle').addEventListener('click', ()=>{
   LANG = LANG === 'he' ? 'en' : 'he';
+  render();
+});
+document.getElementById('imgToggle').addEventListener('click', ()=>{
+  SHOW_IMAGES = !SHOW_IMAGES;
+  localStorage.setItem('thailand-show-images', SHOW_IMAGES ? '1' : '0');
   render();
 });
 document.getElementById('prevDay').addEventListener('click', ()=>{
