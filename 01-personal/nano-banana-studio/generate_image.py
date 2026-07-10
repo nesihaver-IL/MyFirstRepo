@@ -17,12 +17,18 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from google import genai
-from google.genai import types
+from google.genai import errors, types
 
 load_dotenv()
 
 MODEL_NAME = "gemini-3-pro-image-preview"
 OUTPUT_DIR = Path(__file__).parent / "outputs"
+
+BILLING_HINT = (
+    "gemini-3-pro-image-preview has no free API tier — billing must be "
+    "enabled on the Google Cloud project behind your API key. "
+    "See https://console.cloud.google.com/billing"
+)
 
 
 def get_client() -> genai.Client:
@@ -34,13 +40,37 @@ def get_client() -> genai.Client:
     return genai.Client(api_key=api_key)
 
 
+def describe_api_error(e: errors.APIError) -> str:
+    """Turn a raw Gemini API error into an actionable message."""
+    status = e.status or ""
+    if e.code in (401, 403) or status == "PERMISSION_DENIED":
+        return f"Permission denied ({e.code} {status}): {e.message}\n{BILLING_HINT}"
+    if e.code == 429 or status == "RESOURCE_EXHAUSTED":
+        return (
+            f"Quota or rate limit exceeded ({e.code} {status}): {e.message}\n"
+            f"{BILLING_HINT}"
+        )
+    if e.code == 400 or status == "FAILED_PRECONDITION":
+        return f"Request rejected ({e.code} {status}): {e.message}\n{BILLING_HINT}"
+    return f"Gemini API error ({e.code} {status}): {e.message}"
+
+
 def save_image(response, output_path: Path) -> Path:
+    if not response.candidates:
+        feedback = getattr(response, "prompt_feedback", None)
+        raise RuntimeError(f"No candidates returned — prompt may have been blocked: {feedback}")
+
+    text_parts = []
     for part in response.candidates[0].content.parts:
         if part.inline_data is not None:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             output_path.write_bytes(part.inline_data.data)
             return output_path
-    raise RuntimeError("No image returned in response")
+        if part.text:
+            text_parts.append(part.text)
+
+    detail = " ".join(text_parts) or response.candidates[0].finish_reason
+    raise RuntimeError(f"No image returned — model responded instead with: {detail}")
 
 
 def build_config(aspect_ratio: str, resolution: str, enable_search: bool) -> types.GenerateContentConfig:
@@ -106,13 +136,20 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    if args.interactive:
-        interactive(args.prompt, args.aspect_ratio, args.resolution)
-    else:
-        path = generate(
-            args.prompt, args.aspect_ratio, args.resolution, args.search, args.output
-        )
-        print(f"Saved: {path}")
+    try:
+        if args.interactive:
+            interactive(args.prompt, args.aspect_ratio, args.resolution)
+        else:
+            path = generate(
+                args.prompt, args.aspect_ratio, args.resolution, args.search, args.output
+            )
+            print(f"Saved: {path}")
+    except errors.APIError as e:
+        raise SystemExit(describe_api_error(e))
+    except RuntimeError as e:
+        raise SystemExit(str(e))
+    except (ConnectionError, TimeoutError) as e:
+        raise SystemExit(f"Network error reaching the Gemini API: {e}")
 
 
 if __name__ == "__main__":
