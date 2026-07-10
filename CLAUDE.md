@@ -9,7 +9,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - **Work projects** (`02-work/`) for professional deliverables using Azure AI Foundry and enterprise automation
 - **Planning & research** (`03-plans/`) for strategy documents and technical roadmaps
 - **Reference materials** (`04-reference/`) for knowledge base, cheatsheets, and archived data
-- **Claude Code ecosystem** (`.claude/`) with 27 registered skills and 4 domain-specialized agents
+- **Claude Code ecosystem** (`.claude/`) with 28 registered skills and 4 domain-specialized agents
 
 ## Project Architecture Map
 
@@ -21,6 +21,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **AWS AI Agent** | `01-personal/aws-ai-agent/` | Python, AWS Bedrock, LangChain | Generic AWS Bedrock agent framework using Strands/AgentCore patterns |
 | **Math Practice** | `01-personal/math-practice/` | Python, JavaScript | Grade 5 math exam generator with Hebrew UI |
 | **Interview Coach** | `01-personal/interview-coach/` | JavaScript (Node submodule) | Career coaching skill and utility scripts |
+| **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
 
@@ -119,6 +120,7 @@ Use the skill system (invoke via natural language or slash commands):
 | AWS infrastructure | `terraform-ops` + `aws-bedrock` + `aws-lambda` | "terraform plan the garmin backend" |
 | Azure Foundry work | `azure-ai-foundry` | "build an agent in Azure AI Foundry" |
 | JIRA/Confluence | `jira-confluence` | "create a JIRA ticket for this" |
+| Content → image generation | `content-to-image` | "turn this into an image" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
 
 ### Domain-Specialized Agents
@@ -247,7 +249,7 @@ Reserve Bash for: running processes, git commands, system utilities, and anythin
 
 ## Skill & Agent Registry
 
-Full listing: `.claude/COMMAND_REGISTRY.md` (27 skills, 4 agents, auto-loaded on startup)
+Full listing: `.claude/COMMAND_REGISTRY.md` (28 skills, 4 agents, auto-loaded on startup)
 
 Use short trigger phrases in conversation: "run tests", "terraform plan", "create issue", "update docs", etc.
 
