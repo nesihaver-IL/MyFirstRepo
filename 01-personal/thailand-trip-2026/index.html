@@ -44,7 +44,7 @@
     color:#fff;
     background:
       linear-gradient(180deg, rgba(8,28,36,.25) 0%, rgba(8,28,36,.55) 55%, rgba(8,28,36,.92) 100%),
-      url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg') center/cover no-repeat;
+      url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg?width=1600') center/cover no-repeat;
     padding-bottom:48px;
   }
   .hero-top{
@@ -367,7 +367,7 @@
 <script>
 /* ============================= DATA ============================= */
 const TRIP_META = { start: '2026-08-17', end: '2026-09-04' };
-const WM = (name) => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name);
+const WM = (name, width=640) => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name) + '?width=' + width;
 
 const I18N = {
   he: {
@@ -424,7 +424,7 @@ const DESTINATIONS = [
   {
     id:'phuket1', start:'2026-08-18', end:'2026-08-22',
     nameHe:'פוקט (חלק 1)', nameEn:'Phuket (Part 1)',
-    heroImg: WM('Patong beach, Phuket, Thailand.jpg'),
+    heroImg: WM('Patong beach, Phuket, Thailand.jpg', 1400),
     hotel:{
       nameHe:'Dinso Resort & Villas Phuket, Vignette Collection',
       nameEn:'Dinso Resort & Villas Phuket, Vignette Collection',
@@ -450,7 +450,7 @@ const DESTINATIONS = [
   {
     id:'krabi', start:'2026-08-22', end:'2026-08-26',
     nameHe:'קרבי', nameEn:'Krabi',
-    heroImg: WM('Ao Nang beach panorama 1.jpg'),
+    heroImg: WM('Ao Nang beach panorama 1.jpg', 1400),
     hotel:{
       nameHe:'Dusit Thani Krabi Beach Resort',
       nameEn:'Dusit Thani Krabi Beach Resort',
@@ -476,7 +476,7 @@ const DESTINATIONS = [
   {
     id:'khaolak', start:'2026-08-26', end:'2026-08-30',
     nameHe:'קאולק', nameEn:'Khao Lak',
-    heroImg: WM('Khao Sok, Cheow Lan Lake, Rock formations, Thailand.jpg'),
+    heroImg: WM('Khao Sok, Cheow Lan Lake, Rock formations, Thailand.jpg', 1400),
     hotel:{
       nameHe:'JW Marriott Khao Lak Resort & Spa',
       nameEn:'JW Marriott Khao Lak Resort & Spa',
@@ -502,7 +502,7 @@ const DESTINATIONS = [
   {
     id:'phuket2', start:'2026-08-30', end:'2026-09-04',
     nameHe:'פוקט (חלק 2)', nameEn:'Phuket (Part 2)',
-    heroImg: WM('Sunset at Patong beach Phuket Thailand.jpg'),
+    heroImg: WM('Sunset at Patong beach Phuket Thailand.jpg', 1400),
     hotel:{
       nameHe:'Phuket Marriott Resort & Spa, Merlin Beach',
       nameEn:'Phuket Marriott Resort & Spa, Merlin Beach',
