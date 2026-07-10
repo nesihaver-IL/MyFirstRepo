@@ -619,9 +619,16 @@ const PREP_LIST = [
 ];
 
 /* ============================= STATE ============================= */
+function safeGet(key, fallback){
+  try { return localStorage.getItem(key) ?? fallback; } catch(e){ return fallback; }
+}
+function safeSet(key, value){
+  try { localStorage.setItem(key, value); } catch(e){ /* ignore — e.g. file:// storage restrictions */ }
+}
+
 let LANG = 'he';
 let SELECTED_DATE = null; // yyyy-mm-dd
-let SHOW_IMAGES = localStorage.getItem('thailand-show-images') === '1';
+let SHOW_IMAGES = safeGet('thailand-show-images', '0') === '1';
 
 function toDate(s){ return new Date(s + 'T00:00:00'); }
 function fmt(s){ const d = toDate(s); return d; }
@@ -868,7 +875,7 @@ function renderFlights(){
 function renderPrep(){
   const t = I18N[LANG];
   const grid = document.getElementById('prepGrid');
-  const saved = JSON.parse(localStorage.getItem('thailand-prep-2026') || '{}');
+  const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
   grid.innerHTML = PREP_LIST.map(cat=>`
     <div class="prep-cat">
       <h4>${cat.icon} ${LANG==='he'?cat.nameHe:cat.nameEn}</h4>
@@ -887,9 +894,9 @@ function renderPrep(){
 
   grid.querySelectorAll('input[type=checkbox]').forEach(cb=>{
     cb.addEventListener('change', ()=>{
-      const saved = JSON.parse(localStorage.getItem('thailand-prep-2026') || '{}');
+      const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
       saved[cb.dataset.id] = cb.checked;
-      localStorage.setItem('thailand-prep-2026', JSON.stringify(saved));
+      safeSet('thailand-prep-2026', JSON.stringify(saved));
       cb.closest('li').classList.toggle('checked', cb.checked);
       updatePrepProgress();
     });
@@ -899,7 +906,7 @@ function renderPrep(){
 
 function updatePrepProgress(){
   const total = PREP_LIST.reduce((a,c)=>a+c.items.length,0);
-  const saved = JSON.parse(localStorage.getItem('thailand-prep-2026') || '{}');
+  const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
   const done = Object.values(saved).filter(Boolean).length;
   document.getElementById('prepProgress').textContent = LANG==='he'
     ? `${done} מתוך ${total} פריטים סומנו`
@@ -913,7 +920,7 @@ document.getElementById('langToggle').addEventListener('click', ()=>{
 });
 document.getElementById('imgToggle').addEventListener('click', ()=>{
   SHOW_IMAGES = !SHOW_IMAGES;
-  localStorage.setItem('thailand-show-images', SHOW_IMAGES ? '1' : '0');
+  safeSet('thailand-show-images', SHOW_IMAGES ? '1' : '0');
   render();
 });
 document.getElementById('prevDay').addEventListener('click', ()=>{
