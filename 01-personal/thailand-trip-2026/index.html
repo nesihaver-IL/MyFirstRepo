@@ -237,7 +237,7 @@
     position:absolute; inset:0; z-index:1;
     background:linear-gradient(180deg, rgba(8,28,36,.15), rgba(8,28,36,.88));
   }
-  .dest-header .inner{position:relative; z-index:2; padding:30px 32px;}
+  .dest-header .inner{position:relative; z-index:2; padding:30px 32px; direction:ltr; text-align:left;}
   .dest-tag{
     background:var(--coral); display:inline-block; padding:5px 14px; border-radius:999px; font-weight:700; font-size:.78rem; margin-bottom:10px;
   }
@@ -1467,8 +1467,12 @@ function renderCalendar(){
     const firstWeekday = new Date(Date.UTC(y,m,1)).getUTCDay();
     const daysInMonth = new Date(Date.UTC(y,m+1,0)).getUTCDate();
 
-    let cellsHtml = weekdays.map(w=>`<div class="calendar-weekday">${w}</div>`).join('');
-    for (let i=0;i<firstWeekday;i++) cellsHtml += `<div class="calendar-cell empty"></div>`;
+    // Build full weeks (rows of 7 cells) first, then drop any week that has
+    // zero in-trip days - keeps the calendar's grid/weekday alignment intact
+    // while trimming away the empty pre/post-trip space on the page.
+    const weeks = [];
+    let cur = [];
+    for (let i=0;i<firstWeekday;i++) cur.push({html:'<div class="calendar-cell empty"></div>', inTrip:false});
     for (let day=1; day<=daysInMonth; day++){
       const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
       const inTrip = dateStr >= TRIP_META.start && dateStr <= TRIP_META.end;
@@ -1483,8 +1487,19 @@ function renderCalendar(){
       } else {
         classes += ' out-of-trip';
       }
-      cellsHtml += `<div class="${classes}" data-date="${inTrip?dateStr:''}"><span class="cal-daynum">${day}</span>${dotHtml}</div>`;
+      cur.push({html:`<div class="${classes}" data-date="${inTrip?dateStr:''}"><span class="cal-daynum">${day}</span>${dotHtml}</div>`, inTrip});
+      if (cur.length === 7){ weeks.push(cur); cur = []; }
     }
+    if (cur.length){
+      while (cur.length < 7) cur.push({html:'<div class="calendar-cell empty"></div>', inTrip:false});
+      weeks.push(cur);
+    }
+
+    const keptWeeks = weeks.filter(week => week.some(c => c.inTrip));
+    const cellsHtml = weekdays.map(w=>`<div class="calendar-weekday">${w}</div>`).join('') +
+      keptWeeks.map(week => week.map(c=>c.html).join('')).join('');
+
+    if (!keptWeeks.length) return; // no trip days this month - skip it entirely
 
     const monthBox = document.createElement('div');
     monthBox.className = 'calendar-month';
@@ -1619,9 +1634,13 @@ function renderDestinations(){
 }
 
 function fmtRange(s,e){
-  const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
+  // Always English, regardless of the page language toggle - matches the
+  // destination banner's English place name and left-to-right layout.
   const ds = toDate(s), de = toDate(e);
-  return `${ds.getUTCDate()} ${months[ds.getUTCMonth()]} — ${de.getUTCDate()} ${months[de.getUTCMonth()]}`;
+  if (ds.getUTCMonth() === de.getUTCMonth()){
+    return `${MONTHS_EN[ds.getUTCMonth()]} ${ds.getUTCDate()}–${de.getUTCDate()}`;
+  }
+  return `${MONTHS_EN[ds.getUTCMonth()]} ${ds.getUTCDate()} — ${MONTHS_EN[de.getUTCMonth()]} ${de.getUTCDate()}`;
 }
 
 function renderFlights(){
