@@ -62,28 +62,10 @@
     align-items:flex-end;
     color:#fff;
     background:
-      radial-gradient(circle at 20% 20%, rgba(255,179,71,.35), transparent 55%),
-      radial-gradient(circle at 85% 15%, rgba(255,107,74,.3), transparent 50%),
-      linear-gradient(160deg, var(--sea-dark) 0%, var(--sea) 55%, #0a2530 100%);
+      linear-gradient(180deg, rgba(8,28,36,.25) 0%, rgba(8,28,36,.55) 55%, rgba(8,28,36,.92) 100%),
+      url('images/hero/cover.jpg') center/cover no-repeat;
     padding-bottom:48px;
   }
-  .hero.has-photo{
-    background:
-      linear-gradient(180deg, rgba(8,28,36,.25) 0%, rgba(8,28,36,.55) 55%, rgba(8,28,36,.92) 100%),
-      url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg?width=1600') center/cover no-repeat;
-  }
-  .img-toggle{
-    background:rgba(255,255,255,.15);
-    border:1px solid rgba(255,255,255,.5);
-    color:#fff;
-    border-radius:999px;
-    padding:8px 16px;
-    font-weight:700;
-    cursor:pointer;
-    backdrop-filter: blur(4px);
-    margin-inline-end:8px;
-  }
-  .img-toggle:hover{background:rgba(255,255,255,.28);}
   .dest-header .hero-bg{position:absolute; inset:0; z-index:0;}
   .dest-header .hero-bg::after{
     content:''; position:absolute; inset:0;
@@ -352,11 +334,11 @@
 
 
 
+
 <div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand">תאילנד 2026</span></div>
     <div>
-      <button class="img-toggle" id="imgToggle" type="button">🖼️ הצג תמונות</button>
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </div>
   </div>
@@ -402,7 +384,7 @@
 <div id="destinations"><section class="dest" id="phuket1">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Patong%20beach%2C%20Phuket%2C%20Thailand.jpg?width=1400')"></div>
+          <div class="hero-bg" style="background-image:url('images/hero/phuket1-banner.jpg')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">18 אוג — 22 אוג</span>
@@ -541,7 +523,7 @@
     </section><section class="dest" id="krabi">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Ao%20Nang%20beach%20panorama%201.jpg?width=1400')"></div>
+          <div class="hero-bg" style="background-image:url('images/hero/krabi-banner.jpg')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">22 אוג — 26 אוג</span>
@@ -680,7 +662,7 @@
     </section><section class="dest" id="khaolak">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Khao%20Sok%2C%20Cheow%20Lan%20Lake%2C%20Rock%20formations%2C%20Thailand.jpg?width=1400')"></div>
+          <div class="hero-bg" style="background-image:url('images/hero/khaolak-banner.jpg')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">26 אוג — 30 אוג</span>
@@ -819,7 +801,7 @@
     </section><section class="dest" id="phuket2">
       <div class="container">
         <div class="dest-header">
-          <div class="hero-bg" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Patong%20beach%20Phuket%20Thailand.jpg?width=1400')"></div>
+          <div class="hero-bg" style="background-image:url('images/hero/phuket2-banner.jpg')"></div>
           <div class="overlay"></div>
           <div class="inner">
             <span class="dest-tag">30 אוג — 4 ספט</span>
@@ -1135,7 +1117,6 @@
 <script>
 /* ============================= DATA ============================= */
 const TRIP_META = { start: '2026-08-17', end: '2026-09-04' };
-const WM = (name, width=640) => 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(name) + '?width=' + width;
 
 const I18N = {
   he: {
@@ -1160,8 +1141,6 @@ const I18N = {
     flightOutTag: 'טיסת הלוך', flightRetTag: 'טיסת חזור', transferTag: 'מעבר',
     seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים',
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
-    areaPhotoNote: 'תמונה: נוף האזור',
-    showImages: '🖼️ הצג תמונות', hideImages: '🖼️ הסתר תמונות',
   },
   en: {
     brand: 'Thailand 2026',
@@ -1185,8 +1164,6 @@ const I18N = {
     flightOutTag: 'Outbound flight', flightRetTag: 'Return flight', transferTag: 'Transfer',
     seeOfficial: 'Official hotel site', seeMore: 'More info',
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
-    areaPhotoNote: 'Photo: the surrounding area',
-    showImages: '🖼️ Show photos', hideImages: '🖼️ Hide photos',
   }
 };
 
@@ -1195,7 +1172,7 @@ const DESTINATIONS = [
   {
     id:'phuket1', start:'2026-08-18', end:'2026-08-22',
     nameHe:'פוקט (חלק 1)', nameEn:'Phuket (Part 1)',
-    heroImg: WM('Patong beach, Phuket, Thailand.jpg', 1400),
+    heroImg: 'images/hero/phuket1-banner.jpg',
     hotel:{
       nameHe:'Dinso Resort & Villas Phuket, Vignette Collection',
       nameEn:'Dinso Resort & Villas Phuket, Vignette Collection',
@@ -1224,7 +1201,7 @@ const DESTINATIONS = [
   {
     id:'krabi', start:'2026-08-22', end:'2026-08-26',
     nameHe:'קרבי', nameEn:'Krabi',
-    heroImg: WM('Ao Nang beach panorama 1.jpg', 1400),
+    heroImg: 'images/hero/krabi-banner.jpg',
     hotel:{
       nameHe:'Dusit Thani Krabi Beach Resort',
       nameEn:'Dusit Thani Krabi Beach Resort',
@@ -1253,7 +1230,7 @@ const DESTINATIONS = [
   {
     id:'khaolak', start:'2026-08-26', end:'2026-08-30',
     nameHe:'קאולק', nameEn:'Khao Lak',
-    heroImg: WM('Khao Sok, Cheow Lan Lake, Rock formations, Thailand.jpg', 1400),
+    heroImg: 'images/hero/khaolak-banner.jpg',
     hotel:{
       nameHe:'JW Marriott Khao Lak Resort & Spa',
       nameEn:'JW Marriott Khao Lak Resort & Spa',
@@ -1282,7 +1259,7 @@ const DESTINATIONS = [
   {
     id:'phuket2', start:'2026-08-30', end:'2026-09-04',
     nameHe:'פוקט (חלק 2)', nameEn:'Phuket (Part 2)',
-    heroImg: WM('Sunset at Patong beach Phuket Thailand.jpg', 1400),
+    heroImg: 'images/hero/phuket2-banner.jpg',
     hotel:{
       nameHe:'Phuket Marriott Resort & Spa, Merlin Beach',
       nameEn:'Phuket Marriott Resort & Spa, Merlin Beach',
@@ -1374,7 +1351,6 @@ function safeSet(key, value){
 
 let LANG = 'he';
 let SELECTED_DATE = null; // yyyy-mm-dd
-let SHOW_IMAGES = safeGet('thailand-show-images', '0') === '1';
 
 // All trip-day arithmetic is anchored in UTC on purpose: mixing a local-time
 // Date construction with a UTC-based serialization (the previous version)
@@ -1438,8 +1414,6 @@ function render(){
     document.documentElement.lang = LANG;
     document.documentElement.dir = LANG === 'he' ? 'rtl' : 'ltr';
     document.getElementById('langToggle').textContent = LANG === 'he' ? 'EN' : 'עב';
-    document.getElementById('imgToggle').textContent = SHOW_IMAGES ? t.hideImages : t.showImages;
-    document.getElementById('hero').classList.toggle('has-photo', SHOW_IMAGES);
 
     document.querySelectorAll('[data-i18n]').forEach(el=>{
       const key = el.getAttribute('data-i18n');
@@ -1557,9 +1531,6 @@ function renderDayDetail(){
 }
 
 function cardImg(img, altText){
-  // Attraction images are local files (generated once, no network dependency),
-  // so they're always shown regardless of the images toggle - only the
-  // hotlinked hero photo is gated behind SHOW_IMAGES.
   if (img){
     return `<img class="thumb" src="${img}" alt="${altText}" loading="lazy">`;
   }
@@ -1717,11 +1688,6 @@ safeRun('init:listeners', () => {
     LANG = LANG === 'he' ? 'en' : 'he';
     render();
   });
-  document.getElementById('imgToggle').addEventListener('click', ()=>{
-    SHOW_IMAGES = !SHOW_IMAGES;
-    safeSet('thailand-show-images', SHOW_IMAGES ? '1' : '0');
-    render();
-  });
   document.getElementById('prevDay').addEventListener('click', ()=>{
     const idx = ALL_DAYS.indexOf(SELECTED_DATE);
     if (idx > 0){ SELECTED_DATE = ALL_DAYS[idx-1]; render(); }
@@ -1734,6 +1700,9 @@ safeRun('init:listeners', () => {
 
 safeRun('init:render', () => { render(); });
 </script>
+
+
+
 
 
 
