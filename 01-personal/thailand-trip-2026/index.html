@@ -289,14 +289,57 @@
 
   /* ===== Flights ===== */
   .flights{padding:60px 0;}
-  .flight-row{
-    display:flex; gap:18px; align-items:center; background:var(--sea-dark); color:#fff; border-radius:18px; padding:22px 26px; margin-bottom:16px;
+  .booking-ref{
+    background:var(--sand-card); border:1px dashed var(--sea); border-radius:14px; padding:12px 18px;
+    font-weight:700; margin-bottom:24px; display:inline-block;
+  }
+  .flights h4{margin:34px 0 14px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
+  .leg-card{
+    display:flex; gap:18px; align-items:center; background:var(--sea-dark); color:#fff; border-radius:18px; padding:22px 26px; margin-bottom:12px;
     flex-wrap:wrap;
   }
-  .flight-row .ficon{font-size:1.8rem;}
-  .flight-row .fdate{font-weight:800; min-width:120px;}
-  .flight-row .froute{font-weight:700; font-size:1.05rem;}
-  .flight-row .fnote{opacity:.8; font-size:.85rem;}
+  .leg-card .ficon{font-size:1.8rem;}
+  .leg-card .leg-main{flex:1; min-width:240px;}
+  .leg-card .leg-flightno{font-weight:800; font-size:1.05rem;}
+  .leg-card .leg-aircraft{opacity:.85; font-size:.85rem; margin-bottom:8px;}
+  .leg-card .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
+  .leg-card .leg-route .city{font-size:1rem;}
+  .leg-card .leg-route .time{font-size:1.3rem; font-weight:800;}
+  .leg-card .leg-route .airport-sub{font-weight:400; opacity:.75; font-size:.78rem; display:block;}
+  .leg-card .leg-meta{margin-inline-start:auto; text-align:end; font-size:.85rem; opacity:.9;}
+  .layover-note{
+    text-align:center; font-size:.85rem; opacity:.7; padding:8px; font-style:italic;
+  }
+  .aircraft-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px; margin-bottom:10px;}
+  .aircraft-card{
+    background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .aircraft-card h5{margin:0 0 10px; font-size:1.05rem; display:flex; align-items:center; gap:8px;}
+  .aircraft-card ul{margin:0; padding-inline-start:20px; font-size:.88rem; line-height:1.7;}
+
+  /* ===== Flight route map ===== */
+  .flight-map-wrap{
+    background:var(--sand-card); border-radius:20px; padding:24px; margin-bottom:10px; box-shadow:var(--shadow);
+    direction:ltr;
+  }
+  .flight-map-controls{display:flex; gap:8px; margin-bottom:12px; justify-content:center;}
+  .map-btn{
+    background:var(--sand); border:2px solid transparent; border-radius:999px; padding:8px 18px; font-weight:700;
+    cursor:pointer; font-size:.85rem; direction:rtl;
+  }
+  .map-btn.active{background:var(--sea); color:#fff;}
+  .flight-map{width:100%; height:auto; display:block;}
+  .flight-map .route-path{fill:none; stroke:var(--line); stroke-width:3; stroke-dasharray:7,7;}
+  .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
+  .flight-map .airport-label{font-size:15px; font-weight:700; fill:var(--ink); direction:rtl;}
+  .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
+  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
+  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
+  @keyframes fly-out{ from{offset-distance:0%;} to{offset-distance:100%;} }
+  @keyframes fly-ret{ from{offset-distance:100%;} to{offset-distance:0%;} }
+  .flight-map-legend{
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:10px; font-size:.82rem; opacity:.8; font-weight:600;
+  }
 
   /* ===== Prep list ===== */
   .prep{
@@ -329,6 +372,7 @@
 </style>
 </head>
 <body>
+
 
 
 
@@ -940,23 +984,112 @@
       </div>
     </section></div>
 
-<section class="flights container" id="flights">
-  <h3 class="block-title"><span class="icon">✈️</span><span data-i18n="flightsTitle">הטיסות שלנו</span></h3>
-  <div id="flightsList"><div class="flight-row">
-      <div class="ficon">✈️</div>
-      <div class="fdate">17 אוג</div>
-      <div style="flex:1">
-        <div class="froute">תל אביב ✈ אבו דאבי ✈ פוקט</div>
-        <div class="fnote">Etihad Airways · ~3:15 ש׳ TLV-AUH, קונקשן, ~6:50 ש׳ AUH-HKT. יום נסיעה ארוך — כדאי להתכונן עם הילדים.</div>
+<section class="flights container" id="flights" dir="rtl" lang="he">
+  <h3 class="block-title"><span class="icon">✈️</span><span>הטיסות שלנו והמטוסים שלנו</span></h3>
+  <div class="booking-ref">🎫 מספר הזמנה: <b>9B5Q44</b> · Etihad Airways</div>
+
+  <div class="flight-map-wrap">
+    <div class="flight-map-controls">
+      <button class="map-btn active" id="mapBtnOut" type="button">✈️ טיסת הלוך</button>
+      <button class="map-btn" id="mapBtnRet" type="button">✈️ טיסת חזור</button>
+    </div>
+    <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
+      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
+      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
+      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
+      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarker" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+    </svg>
+    <div class="flight-map-legend">
+      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
+      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
+      <span>סה״כ כל כיוון: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
+    </div>
+  </div>
+
+  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 598 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
       </div>
-    </div><div class="flight-row">
-      <div class="ficon">✈️</div>
-      <div class="fdate">4 ספט</div>
-      <div style="flex:1">
-        <div class="froute">פוקט ✈ אבו דאבי ✈ תל אביב</div>
-        <div class="fnote">Etihad Airways · טיסת חזרה באותה מסלול, דרך אבו דאבי.</div>
+    </div>
+    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
+  </div>
+  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 416 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
       </div>
-    </div></div>
+    </div>
+    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
+  </div>
+
+  <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 417 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות<br>מרחק: כ-4,977 ק״מ</div>
+  </div>
+  <div class="layover-note">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 599 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות<br>מרחק: כ-2,110 ק״מ</div>
+  </div>
+
+  <h4>🛩️ קצת על המטוסים שלנו</h4>
+  <div class="aircraft-grid">
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321neo</h5>
+      <ul>
+        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+      </ul>
+    </div>
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+      <ul>
+        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <section class="prep" id="prep">
@@ -1128,7 +1261,6 @@ const I18N = {
     statDays: 'ימי טיול', statStops: 'תחנות', statPeople: 'נוסעים',
     navTracker: 'ציר זמן', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlights: 'טיסות', navPrep: 'רשימת ציוד',
     trackerTitle: 'איפה אנחנו בכל יום',
-    flightsTitle: 'הטיסות שלנו',
     prepTitle: 'רשימת ציוד — מה לא לשכוח',
     prepSub: 'רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.',
     footer: 'נבנה באהבה למשפחה שלנו · טיול תאילנד 17.8–4.9.2026',
@@ -1151,7 +1283,6 @@ const I18N = {
     statDays: 'trip days', statStops: 'stops', statPeople: 'travelers',
     navTracker: 'Timeline', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlights: 'Flights', navPrep: 'Prep List',
     trackerTitle: 'Where we are each day',
-    flightsTitle: 'Our Flights',
     prepTitle: 'Prep List — Don\'t Forget',
     prepSub: 'A categorized checklist. Check items off while packing — your progress is saved automatically in this browser.',
     footer: 'Built with love for our family · Thailand trip Aug 17 – Sep 4, 2026',
@@ -1288,10 +1419,6 @@ const DESTINATIONS = [
   }
 ];
 
-const FLIGHTS = [
-  {id:'out', date:'2026-08-17', titleHe:'תל אביב ✈ אבו דאבי ✈ פוקט', titleEn:'Tel Aviv ✈ Abu Dhabi ✈ Phuket', descHe:'Etihad Airways · ~3:15 ש׳ TLV-AUH, קונקשן, ~6:50 ש׳ AUH-HKT. יום נסיעה ארוך — כדאי להתכונן עם הילדים.', descEn:'Etihad Airways · ~3h15m TLV-AUH, connection, ~6h50m AUH-HKT. A long travel day — plan for the kids accordingly.'},
-  {id:'ret', date:'2026-09-04', titleHe:'פוקט ✈ אבו דאבי ✈ תל אביב', titleEn:'Phuket ✈ Abu Dhabi ✈ Tel Aviv', descHe:'Etihad Airways · טיסת חזרה באותה מסלול, דרך אבו דאבי.', descEn:'Etihad Airways · Return routing via Abu Dhabi.'}
-];
 
 const PREP_LIST = [
   {key:'docs', icon:'🛂', nameHe:'מסמכים וכסף', nameEn:'Documents & Money', items:[
@@ -1426,7 +1553,6 @@ function render(){
   safeRun('renderCalendar', renderCalendar);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
-  safeRun('renderFlights', renderFlights);
   safeRun('renderPrep', renderPrep);
 }
 
@@ -1644,23 +1770,6 @@ function fmtRange(s,e){
   return `${MONTHS_EN[ds.getUTCMonth()]} ${ds.getUTCDate()} — ${MONTHS_EN[de.getUTCMonth()]} ${de.getUTCDate()}`;
 }
 
-function renderFlights(){
-  const t = I18N[LANG];
-  const list = document.getElementById('flightsList');
-  list.innerHTML = FLIGHTS.map(f=>{
-    const d = toDate(f.date);
-    const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
-    return `<div class="flight-row">
-      <div class="ficon">✈️</div>
-      <div class="fdate">${d.getUTCDate()} ${months[d.getUTCMonth()]}</div>
-      <div style="flex:1">
-        <div class="froute">${LANG==='he'?f.titleHe:f.titleEn}</div>
-        <div class="fnote">${LANG==='he'?f.descHe:f.descEn}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
 function renderPrep(){
   const t = I18N[LANG];
   const grid = document.getElementById('prepGrid');
@@ -1716,10 +1825,26 @@ safeRun('init:listeners', () => {
     const idx = ALL_DAYS.indexOf(SELECTED_DATE);
     if (idx < ALL_DAYS.length-1){ SELECTED_DATE = ALL_DAYS[idx+1]; render(); }
   });
+
+  const planeMarker = document.getElementById('planeMarker');
+  const mapBtnOut = document.getElementById('mapBtnOut');
+  const mapBtnRet = document.getElementById('mapBtnRet');
+  function setFlightDirection(dir){
+    mapBtnOut.classList.toggle('active', dir === 'out');
+    mapBtnRet.classList.toggle('active', dir === 'ret');
+    planeMarker.classList.remove('anim-out', 'anim-ret');
+    void planeMarker.offsetWidth; // restart the CSS animation from scratch
+    planeMarker.classList.add(dir === 'out' ? 'anim-out' : 'anim-ret');
+  }
+  mapBtnOut.addEventListener('click', () => setFlightDirection('out'));
+  mapBtnRet.addEventListener('click', () => setFlightDirection('ret'));
 });
 
 safeRun('init:render', () => { render(); });
 </script>
+
+
+
 
 
 
