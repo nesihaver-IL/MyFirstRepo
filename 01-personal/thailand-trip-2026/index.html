@@ -231,6 +231,7 @@
     color:#fff;
     margin-bottom:34px;
     box-shadow:var(--shadow);
+    direction:ltr;
   }
   .dest-header .hero-bg{background-size:cover; background-position:center;}
   .dest-header .overlay{
@@ -322,12 +323,6 @@
     background:var(--sand-card); border-radius:20px; padding:24px; margin-bottom:10px; box-shadow:var(--shadow);
     direction:ltr;
   }
-  .flight-map-controls{display:flex; gap:8px; margin-bottom:12px; justify-content:center;}
-  .map-btn{
-    background:var(--sand); border:2px solid transparent; border-radius:999px; padding:8px 18px; font-weight:700;
-    cursor:pointer; font-size:.85rem; direction:rtl;
-  }
-  .map-btn.active{background:var(--sea); color:#fff;}
   .flight-map{width:100%; height:auto; display:block;}
   .flight-map .route-path{fill:none; stroke:var(--line); stroke-width:3; stroke-dasharray:7,7;}
   .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
@@ -403,11 +398,12 @@
   <div class="navbar-inner">
     <div class="nav-links">
       <a href="#tracker" data-i18n="navTracker">ציר זמן</a>
+      <a href="#flightsOut" data-i18n="navFlightsOut">טיסת הלוך</a>
       <a href="#phuket1" data-i18n="navPhuket1">פוקט 1</a>
       <a href="#krabi" data-i18n="navKrabi">קרבי</a>
       <a href="#khaolak" data-i18n="navKhaolak">קאולק</a>
       <a href="#phuket2" data-i18n="navPhuket2">פוקט 2</a>
-      <a href="#flights" data-i18n="navFlights">טיסות</a>
+      <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
       <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
     </div>
     <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 37 ימים</span></div>
@@ -425,6 +421,81 @@
   <div class="calendar-wrap" id="calendarWrap"><div class="calendar-month"><h4>אוג 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">16</span></div><div class="calendar-cell in-trip is-selected" data-date="2026-08-17"><span class="cal-daynum">17</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell in-trip" data-date="2026-08-18"><span class="cal-daynum">18</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-19"><span class="cal-daynum">19</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-20"><span class="cal-daynum">20</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-21"><span class="cal-daynum">21</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-22"><span class="cal-daynum">22</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-23"><span class="cal-daynum">23</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-24"><span class="cal-daynum">24</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-25"><span class="cal-daynum">25</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-26"><span class="cal-daynum">26</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-27"><span class="cal-daynum">27</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-28"><span class="cal-daynum">28</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-29"><span class="cal-daynum">29</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-30"><span class="cal-daynum">30</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-31"><span class="cal-daynum">31</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div></div></div><div class="calendar-month"><h4>ספט 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell in-trip" data-date="2026-09-01"><span class="cal-daynum">1</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-02"><span class="cal-daynum">2</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-03"><span class="cal-daynum">3</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-04"><span class="cal-daynum">4</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">5</span></div></div></div></div>
   <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
 </div>
+
+<section class="flights container" id="flightsOut" dir="rtl" lang="he">
+  <h3 class="block-title"><span class="icon">✈️</span><span>טיסת הלוך — תל אביב ← פוקט</span></h3>
+  <div class="booking-ref">🎫 מספר הזמנה: <b>9B5Q44</b> · Etihad Airways</div>
+
+  <div class="flight-map-wrap">
+    <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
+      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
+      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
+      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
+      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+    </svg>
+    <div class="flight-map-legend">
+      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
+      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
+      <span>סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
+    </div>
+  </div>
+
+  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 598 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
+  </div>
+  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 416 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
+  </div>
+
+  <h4>🛩️ קצת על המטוסים שלנו</h4>
+  <div class="aircraft-grid">
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321neo</h5>
+      <ul>
+        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+      </ul>
+    </div>
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+      <ul>
+        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
 <div id="destinations"><section class="dest" id="phuket1">
       <div class="container">
@@ -984,15 +1055,10 @@
       </div>
     </section></div>
 
-<section class="flights container" id="flights" dir="rtl" lang="he">
-  <h3 class="block-title"><span class="icon">✈️</span><span>הטיסות שלנו והמטוסים שלנו</span></h3>
-  <div class="booking-ref">🎫 מספר הזמנה: <b>9B5Q44</b> · Etihad Airways</div>
+<section class="flights container" id="flightsRet" dir="rtl" lang="he">
+  <h3 class="block-title"><span class="icon">✈️</span><span>טיסת חזור — פוקט ← תל אביב</span></h3>
 
   <div class="flight-map-wrap">
-    <div class="flight-map-controls">
-      <button class="map-btn active" id="mapBtnOut" type="button">✈️ טיסת הלוך</button>
-      <button class="map-btn" id="mapBtnRet" type="button">✈️ טיסת חזור</button>
-    </div>
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
       <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
       <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
@@ -1001,42 +1067,13 @@
       <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
       <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
       <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
-      <text id="planeMarker" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
     </svg>
     <div class="flight-map-legend">
-      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
-      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
-      <span>סה״כ כל כיוון: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
+      <span>פוקט → אבו דאבי: כ-4,977 ק״מ</span>
+      <span>אבו דאבי → תל אביב: כ-2,110 ק״מ</span>
+      <span>סה״כ כיוון חזור: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
     </div>
-  </div>
-
-  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 598 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-      </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
-  </div>
-  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 416 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
-      </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
   </div>
 
   <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
@@ -1066,29 +1103,6 @@
       </div>
     </div>
     <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות<br>מרחק: כ-2,110 ק״מ</div>
-  </div>
-
-  <h4>🛩️ קצת על המטוסים שלנו</h4>
-  <div class="aircraft-grid">
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321neo</h5>
-      <ul>
-        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
-        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
-        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
-        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
-        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
-      </ul>
-    </div>
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
-      <ul>
-        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
-        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
-        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
-        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -1259,7 +1273,7 @@ const I18N = {
     heroTitle: 'המסע המשפחתי שלנו בתאילנד',
     heroSub: 'פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.',
     statDays: 'ימי טיול', statStops: 'תחנות', statPeople: 'נוסעים',
-    navTracker: 'ציר זמן', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlights: 'טיסות', navPrep: 'רשימת ציוד',
+    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navPrep: 'רשימת ציוד',
     trackerTitle: 'איפה אנחנו בכל יום',
     prepTitle: 'רשימת ציוד — מה לא לשכוח',
     prepSub: 'רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.',
@@ -1281,7 +1295,7 @@ const I18N = {
     heroTitle: 'Our Family Journey Through Thailand',
     heroSub: 'Phuket → Krabi → Khao Lak → Phuket. 19 days of beaches, islands, flavors and adventures — all in one place, with a live day-by-day tracker.',
     statDays: 'trip days', statStops: 'stops', statPeople: 'travelers',
-    navTracker: 'Timeline', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlights: 'Flights', navPrep: 'Prep List',
+    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navPrep: 'Prep List',
     trackerTitle: 'Where we are each day',
     prepTitle: 'Prep List — Don\'t Forget',
     prepSub: 'A categorized checklist. Check items off while packing — your progress is saved automatically in this browser.',
@@ -1826,18 +1840,6 @@ safeRun('init:listeners', () => {
     if (idx < ALL_DAYS.length-1){ SELECTED_DATE = ALL_DAYS[idx+1]; render(); }
   });
 
-  const planeMarker = document.getElementById('planeMarker');
-  const mapBtnOut = document.getElementById('mapBtnOut');
-  const mapBtnRet = document.getElementById('mapBtnRet');
-  function setFlightDirection(dir){
-    mapBtnOut.classList.toggle('active', dir === 'out');
-    mapBtnRet.classList.toggle('active', dir === 'ret');
-    planeMarker.classList.remove('anim-out', 'anim-ret');
-    void planeMarker.offsetWidth; // restart the CSS animation from scratch
-    planeMarker.classList.add(dir === 'out' ? 'anim-out' : 'anim-ret');
-  }
-  mapBtnOut.addEventListener('click', () => setFlightDirection('out'));
-  mapBtnRet.addEventListener('click', () => setFlightDirection('ret'));
 });
 
 safeRun('init:render', () => { render(); });
