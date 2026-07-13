@@ -291,8 +291,9 @@
   /* ===== Flights ===== */
   .flights{padding:60px 0;}
   .booking-ref{
-    background:var(--sand-card); border:1px dashed var(--sea); border-radius:14px; padding:12px 18px;
-    font-weight:700; margin-bottom:24px; display:inline-block;
+    position:absolute; top:12px; right:16px; z-index:2;
+    background:var(--sea); color:#fff; border-radius:999px; padding:5px 14px;
+    font-weight:700; font-size:.78rem; box-shadow:0 2px 8px rgba(0,0,0,.18);
   }
   .flights h4{margin:34px 0 14px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
   .leg-card{
@@ -320,7 +321,8 @@
 
   /* ===== Flight route map ===== */
   .flight-map-wrap{
-    background:var(--sand-card); border-radius:20px; padding:24px; margin-bottom:10px; box-shadow:var(--shadow);
+    position:relative; background:var(--sand-card); border-radius:18px; padding:16px 18px 12px;
+    margin:0 auto 10px; max-width:560px; box-shadow:var(--shadow);
     direction:ltr;
   }
   .flight-map{width:100%; height:auto; display:block;}
@@ -424,9 +426,9 @@
 
 <section class="flights container" id="flightsOut" dir="rtl" lang="he">
   <h3 class="block-title"><span class="icon">✈️</span><span>טיסת הלוך — תל אביב ← פוקט</span></h3>
-  <div class="booking-ref">🎫 מספר הזמנה: <b>9B5Q44</b> · Etihad Airways</div>
 
   <div class="flight-map-wrap">
+    <div class="booking-ref">🎫 <b>9B5Q44</b> · Etihad Airways</div>
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
       <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
       <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
