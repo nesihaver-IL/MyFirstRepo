@@ -4,9 +4,9 @@
 
 **Integration Details:**
 - Workspace: MyFirstRepo
-- Skills Available: 14 ([COMMAND_REGISTRY.md](.claude/COMMAND_REGISTRY.md))
-- Agents: Configured and ready
-- Last Check: April 8, 2026
+- Skills Available: see [COMMAND_REGISTRY.md](.claude/COMMAND_REGISTRY.md) for the current count (36 as of this update — don't hardcode a number here again, it goes stale)
+- Agents: Configured and ready (4 — see `.claude/agents/`)
+- Last Check: July 16, 2026
 
 **Network Status:**
 - Repository Sync: ✅ Working

@@ -9,7 +9,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - **Work projects** (`02-work/`) for professional deliverables using Azure AI Foundry and enterprise automation
 - **Planning & research** (`03-plans/`) for strategy documents and technical roadmaps
 - **Reference materials** (`04-reference/`) for knowledge base, cheatsheets, and archived data
-- **Claude Code ecosystem** (`.claude/`) with 27 registered skills and 4 domain-specialized agents
+- **Claude Code ecosystem** (`.claude/`) with skills and agents auto-loaded — see `.claude/COMMAND_REGISTRY.md` for the current count (36 skills, 4 agents as of 2026-07-16; don't hardcode a number here, it goes stale)
 
 ## Project Architecture Map
 
@@ -23,6 +23,26 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **Interview Coach** | `01-personal/interview-coach/` | JavaScript (Node submodule) | Career coaching skill and utility scripts |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
+
+### Other Project Folders (undocumented until 2026-07-16)
+
+These exist in the work tree but were missing from the table above — added here rather than left
+undocumented. Verify each is still active before treating it as such; several show no commits since
+early-to-mid April 2026.
+
+| Project | Location | Notes |
+|---------|----------|-------|
+| **Zohar Resume** | `01-personal/zohar-resume/` | Resume tooling |
+| **Windows Monitor** | `01-personal/windows-monitor/` | System monitoring utility |
+| **Bookmark Management** | `01-personal/bookmark-management/` | Bookmark tooling |
+| **Electricity Dashboard** | `01-personal/electricity-dashboard/` | Gmail API bill extraction (see root TODO.md) |
+| **Tzofim Payments** | `01-personal/tzofim-payments/` | Payments-related utility |
+| **Strategy Presentation** | `02-work/strategy-presentation/` | Contains tracked `.xlsx` planning files |
+| **AWS Cleanup** | `02-work/aws-cleanup/` | AWS account cleanup scripts |
+| **Handoff** | `02-work/handoff/` | Handoff documentation/materials |
+
+`sandbox` and `marketplace` were archived to `01-personal/archive/` on 2026-07-16 (idle since
+2026-01-09 and 2026-02-17 respectively) rather than documented here.
 
 ### Architecture Highlights
 
@@ -247,7 +267,7 @@ Reserve Bash for: running processes, git commands, system utilities, and anythin
 
 ## Skill & Agent Registry
 
-Full listing: `.claude/COMMAND_REGISTRY.md` (27 skills, 4 agents, auto-loaded on startup)
+Full listing: `.claude/COMMAND_REGISTRY.md` (36 skills, 4 agents as of 2026-07-16, auto-loaded on startup)
 
 Use short trigger phrases in conversation: "run tests", "terraform plan", "create issue", "update docs", etc.
 
