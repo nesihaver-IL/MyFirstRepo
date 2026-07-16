@@ -261,6 +261,21 @@
   .btn.coral:hover{background:var(--coral-dark);}
   .btn.small{padding:7px 14px; font-size:.78rem;}
 
+  /* ===== Map preview card ===== */
+  .map-card{
+    position:relative; overflow:hidden; border-radius:18px; margin-bottom:38px;
+    background:
+      radial-gradient(circle, rgba(12,92,115,.16) 1.6px, transparent 1.6px) 0 0/24px 24px,
+      linear-gradient(135deg, #e7f2f1, #dcecef);
+    border:1px solid var(--line);
+    padding:26px 24px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    max-width:280px;
+  }
+  .map-card .map-pin{font-size:2.4rem; line-height:1;}
+  .map-card .map-name{font-weight:800; font-size:1rem; margin:2px 0 0;}
+  .map-card .map-sub{font-size:.8rem; opacity:.7; margin:0 0 4px;}
+
   h3.block-title{
     font-size:1.35rem; margin:0 0 16px; display:flex; align-items:center; gap:10px;
   }
@@ -408,7 +423,7 @@
       <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
       <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
     </div>
-    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 37 ימים</span></div>
+    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 32 ימים</span></div>
   </div>
 </div>
 
@@ -516,6 +531,12 @@
             <p class="hdesc">ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.</p>
           </div>
           <a class="btn" href="https://www.dinsoresort.com/phuket/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
+          <p class="map-sub">פאטונג, פוקט</p>
+          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -656,6 +677,12 @@
           </div>
           <a class="btn" href="https://www.dusit.com/dusitthani-krabibeachresort/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <p class="map-name">Dusit Thani Krabi Beach Resort</p>
+          <p class="map-sub">קרבי, תאילנד</p>
+          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -795,6 +822,12 @@
           </div>
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
+          <p class="map-sub">קאולק, תאילנד</p>
+          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -933,6 +966,12 @@
             <p class="hdesc">ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.</p>
           </div>
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
+          <p class="map-sub">קלים, פוקט</p>
+          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -1288,7 +1327,7 @@ const I18N = {
     dayOf: (n,total) => `יום ${n} מתוך ${total}`,
     transferNote: (from,to) => `יום מעבר: יציאה מ${from} והגעה ל${to}`,
     flightOutTag: 'טיסת הלוך', flightRetTag: 'טיסת חזור', transferTag: 'מעבר',
-    seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים',
+    seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים', openMaps: '🗺️ פתיחה ב-Google Maps',
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
   },
   en: {
@@ -1310,7 +1349,7 @@ const I18N = {
     dayOf: (n,total) => `Day ${n} of ${total}`,
     transferNote: (from,to) => `Transfer day: checkout from ${from}, arriving in ${to}`,
     flightOutTag: 'Outbound flight', flightRetTag: 'Return flight', transferTag: 'Transfer',
-    seeOfficial: 'Official hotel site', seeMore: 'More info',
+    seeOfficial: 'Official hotel site', seeMore: 'More info', openMaps: '🗺️ Open in Google Maps',
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
   }
 };
@@ -1326,7 +1365,8 @@ const DESTINATIONS = [
       nameEn:'Dinso Resort & Villas Phuket, Vignette Collection',
       descHe:'ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.',
       descEn:'A Wabi-Sabi–inspired boutique resort on a lush hillside above Patong — about a 10-minute ride from Patong Beach and 600m from Jungceylon Shopping Center.',
-      link:'https://www.dinsoresort.com/phuket/'
+      link:'https://www.dinsoresort.com/phuket/',
+      mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket'
     },
     attractions:[
       {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img:'images/phuket1/big-buddha.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free entry'},
@@ -1355,7 +1395,8 @@ const DESTINATIONS = [
       nameEn:'Dusit Thani Krabi Beach Resort',
       descHe:'ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.',
       descEn:'A beachfront luxury resort on Klong Muang Beach (adjacent to Tubkaek Beach), framed by limestone cliffs and tropical gardens.',
-      link:'https://www.dusit.com/dusitthani-krabibeachresort/'
+      link:'https://www.dusit.com/dusitthani-krabibeachresort/',
+      mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand'
     },
     attractions:[
       {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img:'images/krabi/railay-beach.jpg', tier:2, priceHe:'~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿', priceEn:'~150–200 THB boat; guided climbing ~1,500 THB'},
@@ -1384,7 +1425,8 @@ const DESTINATIONS = [
       nameEn:'JW Marriott Khao Lak Resort & Spa',
       descHe:'ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.',
       descEn:'A beachfront luxury resort set among tropical gardens facing the Andaman Sea, with family suites and spa facilities.',
-      link:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/'
+      link:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/',
+      mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand'
     },
     attractions:[
       {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img:'images/khaolak/phang-nga-canoe.jpg', tier:3, priceHe:'~1,500–2,000 ฿ לאדם', priceEn:'~1,500–2,000 THB/person'},
@@ -1413,7 +1455,8 @@ const DESTINATIONS = [
       nameEn:'Phuket Marriott Resort & Spa, Merlin Beach',
       descHe:'ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.',
       descEn:'A 5-star beachfront resort on secluded Merlin (Tri-Trang) Beach, minutes south of Patong — the only hotel on its own private cove.',
-      link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/'
+      link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/',
+      mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket'
     },
     attractions:[
       {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:'images/phuket2/freedom-beach.jpg', tier:1, priceHe:'~300–600 ฿ (סירה הלוך-חזור)', priceEn:'~300–600 THB (round-trip boat)'},
@@ -1729,6 +1772,12 @@ function renderDestinations(){
           </div>
           <a class="btn" href="${hotel.link}" target="_blank" rel="noopener">${t.seeOfficial}</a>
         </div>
+        <div class="map-card">
+          <span class="map-pin">📍</span>
+          <p class="map-name">${LANG==='he'?hotel.nameHe:hotel.nameEn}</p>
+          <p class="map-sub">${LANG==='he'?hotel.mapAreaHe:hotel.mapAreaEn}</p>
+          <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.mapQuery)}" target="_blank" rel="noopener">${t.openMaps}</a>
+        </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>${t.attractionsHead}</span></h3>
         <div class="cards-grid">
           ${dest.attractions.map(a=>`
@@ -1846,6 +1895,8 @@ safeRun('init:listeners', () => {
 
 safeRun('init:render', () => { render(); });
 </script>
+
+
 
 
 
