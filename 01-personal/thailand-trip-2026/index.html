@@ -125,17 +125,12 @@
     opacity:.95;
     margin:0 0 26px;
   }
-  .hero-stats{display:flex; flex-wrap:wrap; gap:14px;}
-  .hero-stat{
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.35);
-    border-radius:14px;
-    padding:12px 18px;
-    backdrop-filter: blur(6px);
-    min-width:120px;
+  .hero p.sub-route{
+    font-size:clamp(1rem,2.2vw,1.3rem); font-weight:700; opacity:.95; margin:0 0 8px;
   }
-  .hero-stat b{display:block; font-size:1.3rem;}
-  .hero-stat span{font-size:.8rem; opacity:.85;}
+  .hero p.sub-tagline{
+    font-size:clamp(1rem,2.2vw,1.2rem); opacity:.85; margin:0;
+  }
 
   /* ===== Sticky nav ===== */
   .navbar{
@@ -436,13 +431,9 @@
   <div class="hero-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
   <div class="container hero-content">
     <span class="eyebrow" data-i18n="heroEyebrow">17.8 – 4.9.2026 · טיול משפחתי</span>
-    <h1 data-i18n="heroTitle">משפחת חבר יוצאת ל-HaVenture בתאילנד</h1>
-    <p class="sub" data-i18n="heroSub">פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><b>19</b><span data-i18n="statDays">ימי טיול</span></div>
-      <div class="hero-stat"><b>4</b><span data-i18n="statStops">תחנות</span></div>
-      <div class="hero-stat"><b>5</b><span data-i18n="statPeople">נוסעים</span></div>
-    </div>
+    <h1 data-i18n="heroTitle">HaVenture בתאילנד 2026</h1>
+    <p class="sub-route" data-i18n="heroRoute">פוקט ← קרבי ← קאולק ← פוקט</p>
+    <p class="sub-tagline" data-i18n="heroTagline">המדריך לחופשה מתחיל כאן</p>
   </div>
 </div>
 
@@ -1450,9 +1441,9 @@ const I18N = {
   he: {
     brand: 'HaVenture',
     heroEyebrow: '17.8 – 4.9.2026 · טיול משפחתי',
-    heroTitle: 'משפחת חבר יוצאת ל-HaVenture בתאילנד',
-    heroSub: 'פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.',
-    statDays: 'ימי טיול', statStops: 'תחנות', statPeople: 'נוסעים',
+    heroTitle: 'HaVenture בתאילנד 2026',
+    heroRoute: 'פוקט ← קרבי ← קאולק ← פוקט',
+    heroTagline: 'המדריך לחופשה מתחיל כאן',
     navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navPrep: 'רשימת ציוד',
     trackerTitle: 'איפה אנחנו בכל יום',
     prepTitle: 'רשימת ציוד — מה לא לשכוח',
@@ -1474,9 +1465,9 @@ const I18N = {
   en: {
     brand: 'HaVenture',
     heroEyebrow: 'Aug 17 – Sep 4, 2026 · Family Trip',
-    heroTitle: 'The Haver Family HaVenture — Thailand 2026',
-    heroSub: 'Phuket → Krabi → Khao Lak → Phuket. 19 days of beaches, islands, flavors and adventures — all in one place, with a live day-by-day tracker.',
-    statDays: 'trip days', statStops: 'stops', statPeople: 'travelers',
+    heroTitle: 'HaVenture in Thailand 2026',
+    heroRoute: 'Phuket → Krabi → Khao Lak → Phuket',
+    heroTagline: 'Your tour guide starts here.',
     navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navPrep: 'Prep List',
     trackerTitle: 'Where we are each day',
     prepTitle: 'Prep List — Don\'t Forget',
