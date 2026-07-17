@@ -178,32 +178,31 @@
     font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
   }
   .arrow-btn:disabled{opacity:.35; cursor:default;}
-  .calendar-wrap{
-    display:flex; gap:18px; flex-wrap:wrap; padding:6px 2px 16px; align-items:flex-start;
+  .timeline-strip{
+    position:relative; display:flex; gap:4px; overflow-x:auto; padding:26px 10px 18px;
+    scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; direction:ltr;
   }
-  .calendar-month{
-    flex:1 1 320px; min-width:280px;
-    background:#fff; border-radius:16px; padding:16px 16px 18px;
-    box-shadow:0 2px 8px rgba(11,46,58,.08);
+  .timeline-strip::before{
+    content:''; position:absolute; left:16px; right:16px; top:44px; height:3px;
+    background:var(--line); border-radius:2px; z-index:0;
   }
-  .calendar-month h4{margin:0 0 10px; font-size:1.05rem; text-align:center;}
-  .calendar-grid{
-    display:grid; grid-template-columns:repeat(7, 1fr); gap:4px;
+  .timeline-strip::-webkit-scrollbar{height:6px;}
+  .timeline-strip::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+  .timeline-node{
+    position:relative; z-index:1; flex:0 0 auto; scroll-snap-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer;
+    width:58px; padding-top:2px; background:none; border:none; font-family:inherit;
   }
-  .calendar-weekday{
-    text-align:center; font-size:.68rem; font-weight:700; opacity:.55; padding-bottom:4px; text-transform:uppercase;
+  .timeline-node .tl-dot{
+    width:16px; height:16px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px var(--line);
+    transition:transform .12s ease;
   }
-  .calendar-cell{
-    aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
-    border-radius:10px; border:2px solid transparent; font-size:.85rem; font-weight:700;
-  }
-  .calendar-cell.empty{visibility:hidden;}
-  .calendar-cell.out-of-trip{opacity:.28;}
-  .calendar-cell.in-trip{cursor:pointer; background:var(--sand); transition:transform .12s ease;}
-  .calendar-cell.in-trip:hover{transform:translateY(-1px); background:#f0e7d4;}
-  .calendar-cell.is-today{border-color:var(--coral); box-shadow:0 0 0 3px rgba(255,107,74,.2);}
-  .calendar-cell.is-selected{background:var(--sea); color:#fff;}
-  .cal-dot{width:6px; height:6px; border-radius:50%;}
+  .timeline-node:hover .tl-dot{transform:scale(1.15);}
+  .timeline-node .tl-day{font-size:.78rem; font-weight:700; opacity:.65;}
+  .timeline-node .tl-date{font-size:.66rem; opacity:.5;}
+  .timeline-node.is-today .tl-dot{box-shadow:0 0 0 4px rgba(255,107,74,.35); border-color:var(--coral);}
+  .timeline-node.is-selected .tl-dot{transform:scale(1.3);}
+  .timeline-node.is-selected .tl-day, .timeline-node.is-selected .tl-date{opacity:1; color:var(--sea-dark);}
 
   .day-detail{
     background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
@@ -262,8 +261,9 @@
   .btn.small{padding:7px 14px; font-size:.78rem;}
 
   /* ===== Map preview card ===== */
+  .location-row{display:flex; flex-wrap:wrap; gap:18px; margin-bottom:38px;}
   .map-card{
-    position:relative; overflow:hidden; border-radius:18px; margin-bottom:38px;
+    position:relative; overflow:hidden; border-radius:18px;
     background:
       radial-gradient(circle, rgba(12,92,115,.16) 1.6px, transparent 1.6px) 0 0/24px 24px,
       linear-gradient(135deg, #e7f2f1, #dcecef);
@@ -275,6 +275,33 @@
   .map-card .map-pin{font-size:2.4rem; line-height:1;}
   .map-card .map-name{font-weight:800; font-size:1rem; margin:2px 0 0;}
   .map-card .map-sub{font-size:.8rem; opacity:.7; margin:0 0 4px;}
+
+  .weather-card{
+    position:relative; overflow:hidden; border-radius:18px;
+    background:linear-gradient(135deg, #fff6e2, #ffeccb);
+    border:1px solid var(--line);
+    padding:20px 24px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    max-width:220px; min-width:180px;
+  }
+  .weather-card .wc-main{display:flex; align-items:center; gap:8px;}
+  .weather-card .wc-emoji{font-size:2.1rem; line-height:1;}
+  .weather-card .wc-temp{font-weight:800; font-size:1.6rem;}
+  .weather-card .wc-sub{font-size:.82rem; opacity:.75; font-weight:600;}
+  .weather-card .wc-range{font-size:.78rem; opacity:.7;}
+  .weather-card .wc-uv{font-weight:700;}
+  .weather-card.weather-loading, .weather-card.weather-error{font-size:.85rem; opacity:.65; flex-direction:row; gap:8px;}
+
+  .timeout-card{
+    display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
+    background:#0b0b0b; color:#fff !important; border-radius:16px; padding:18px 22px; margin-bottom:36px;
+    border-inline-start:6px solid #ff0038;
+  }
+  .timeout-card .to-icon{font-size:1.8rem;}
+  .timeout-card .to-title{font-weight:800; margin:0 0 2px; font-size:1.02rem;}
+  .timeout-card .to-sub{margin:0; font-size:.8rem; opacity:.7;}
+  .timeout-card .to-arrow{margin-inline-start:auto; font-size:1.3rem; opacity:.8;}
+  .timeout-card:hover{opacity:.92;}
 
   h3.block-title{
     font-size:1.35rem; margin:0 0 16px; display:flex; align-items:center; gap:10px;
@@ -423,7 +450,7 @@
       <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
       <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
     </div>
-    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 32 ימים</span></div>
+    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 31 ימים</span></div>
   </div>
 </div>
 
@@ -435,7 +462,83 @@
       <button class="arrow-btn" id="nextDay" type="button">›</button>
     </div>
   </div>
-  <div class="calendar-wrap" id="calendarWrap"><div class="calendar-month"><h4>אוג 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">16</span></div><div class="calendar-cell in-trip is-selected" data-date="2026-08-17"><span class="cal-daynum">17</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell in-trip" data-date="2026-08-18"><span class="cal-daynum">18</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-19"><span class="cal-daynum">19</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-20"><span class="cal-daynum">20</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-21"><span class="cal-daynum">21</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-22"><span class="cal-daynum">22</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-23"><span class="cal-daynum">23</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-24"><span class="cal-daynum">24</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-25"><span class="cal-daynum">25</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-26"><span class="cal-daynum">26</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-27"><span class="cal-daynum">27</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-28"><span class="cal-daynum">28</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-29"><span class="cal-daynum">29</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-08-30"><span class="cal-daynum">30</span><span class="cal-dot" style="background:#8a6209"></span></div><div class="calendar-cell in-trip" data-date="2026-08-31"><span class="cal-daynum">31</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div></div></div><div class="calendar-month"><h4>ספט 2026</h4><div class="calendar-grid"><div class="calendar-weekday">א</div><div class="calendar-weekday">ב</div><div class="calendar-weekday">ג</div><div class="calendar-weekday">ד</div><div class="calendar-weekday">ה</div><div class="calendar-weekday">ו</div><div class="calendar-weekday">ש</div><div class="calendar-cell empty"></div><div class="calendar-cell empty"></div><div class="calendar-cell in-trip" data-date="2026-09-01"><span class="cal-daynum">1</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-02"><span class="cal-daynum">2</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-03"><span class="cal-daynum">3</span><span class="cal-dot" style="background:#0c5c73"></span></div><div class="calendar-cell in-trip" data-date="2026-09-04"><span class="cal-daynum">4</span><span class="cal-dot" style="background:#c73f22"></span></div><div class="calendar-cell out-of-trip" data-date=""><span class="cal-daynum">5</span></div></div></div></div>
+  <div class="timeline-strip" id="timelineStrip"><button type="button" class="timeline-node is-selected" data-date="2026-08-17">
+      <span class="tl-dot" style="background:#c73f22"></span>
+      <span class="tl-day">17</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-18">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">18</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-19">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">19</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-20">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">20</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-21">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">21</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-22">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">22</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-23">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">23</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-24">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">24</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-25">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">25</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-26">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">26</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-27">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">27</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-28">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">28</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-29">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">29</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-30">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">30</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-31">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">31</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-01">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">1</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-02">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">2</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-03">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">3</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-04">
+      <span class="tl-dot" style="background:#c73f22"></span>
+      <span class="tl-day">4</span>
+      <span class="tl-date">ספט</span>
+    </button></div>
   <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
 </div>
 
@@ -522,7 +625,6 @@
           <div class="inner">
             <span class="dest-tag">Aug 18–22</span>
             <h2>Phuket (Part 1)</h2>
-            <div class="dates">🏨 Dinso Resort &amp; Villas Phuket, Vignette Collection</div>
           </div>
         </div>
         <div class="hotel-card">
@@ -532,11 +634,14 @@
           </div>
           <a class="btn" href="https://www.dinsoresort.com/phuket/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
-        <div class="map-card">
-          <span class="map-pin">📍</span>
-          <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
-          <p class="map-sub">פאטונג, פוקט</p>
-          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
+            <p class="map-sub">פאטונג, פוקט</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -592,6 +697,15 @@
             </div>
           
         </div>
+        
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">המדריך של Time Out לפוקט</p>
+            <p class="to-sub">עוד המלצות של מגזין הטיולים · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -667,7 +781,6 @@
           <div class="inner">
             <span class="dest-tag">Aug 22–26</span>
             <h2>Krabi</h2>
-            <div class="dates">🏨 Dusit Thani Krabi Beach Resort</div>
           </div>
         </div>
         <div class="hotel-card">
@@ -677,11 +790,14 @@
           </div>
           <a class="btn" href="https://www.dusit.com/dusitthani-krabibeachresort/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
-        <div class="map-card">
-          <span class="map-pin">📍</span>
-          <p class="map-name">Dusit Thani Krabi Beach Resort</p>
-          <p class="map-sub">קרבי, תאילנד</p>
-          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Dusit Thani Krabi Beach Resort</p>
+            <p class="map-sub">קרבי, תאילנד</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -737,6 +853,7 @@
             </div>
           
         </div>
+        
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -812,7 +929,6 @@
           <div class="inner">
             <span class="dest-tag">Aug 26–30</span>
             <h2>Khao Lak</h2>
-            <div class="dates">🏨 JW Marriott Khao Lak Resort &amp; Spa</div>
           </div>
         </div>
         <div class="hotel-card">
@@ -822,11 +938,14 @@
           </div>
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
-        <div class="map-card">
-          <span class="map-pin">📍</span>
-          <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
-          <p class="map-sub">קאולק, תאילנד</p>
-          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
+            <p class="map-sub">קאולק, תאילנד</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -882,6 +1001,7 @@
             </div>
           
         </div>
+        
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -957,7 +1077,6 @@
           <div class="inner">
             <span class="dest-tag">Aug 30 — Sep 4</span>
             <h2>Phuket (Part 2)</h2>
-            <div class="dates">🏨 Phuket Marriott Resort &amp; Spa, Merlin Beach</div>
           </div>
         </div>
         <div class="hotel-card">
@@ -967,11 +1086,14 @@
           </div>
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
-        <div class="map-card">
-          <span class="map-pin">📍</span>
-          <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
-          <p class="map-sub">קלים, פוקט</p>
-          <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
+            <p class="map-sub">קלים, פוקט</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -1027,6 +1149,15 @@
             </div>
           
         </div>
+        
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">המדריך של Time Out לפוקט</p>
+            <p class="to-sub">עוד המלצות של מגזין הטיולים · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
@@ -1329,6 +1460,8 @@ const I18N = {
     flightOutTag: 'טיסת הלוך', flightRetTag: 'טיסת חזור', transferTag: 'מעבר',
     seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים', openMaps: '🗺️ פתיחה ב-Google Maps',
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
+    weatherLoading: 'טוען מזג אוויר...', weatherUnavailable: 'מזג האוויר לא זמין כרגע',
+    timeOutTitle: 'המדריך של Time Out לפוקט', timeOutSub: 'עוד המלצות של מגזין הטיולים',
   },
   en: {
     brand: 'Thailand 2026',
@@ -1351,6 +1484,8 @@ const I18N = {
     flightOutTag: 'Outbound flight', flightRetTag: 'Return flight', transferTag: 'Transfer',
     seeOfficial: 'Official hotel site', seeMore: 'More info', openMaps: '🗺️ Open in Google Maps',
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
+    weatherLoading: 'Loading weather...', weatherUnavailable: 'Weather unavailable right now',
+    timeOutTitle: 'The Time Out Guide to Phuket', timeOutSub: 'More picks from the travel magazine',
   }
 };
 
@@ -1366,7 +1501,8 @@ const DESTINATIONS = [
       descHe:'ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.',
       descEn:'A Wabi-Sabi–inspired boutique resort on a lush hillside above Patong — about a 10-minute ride from Patong Beach and 600m from Jungceylon Shopping Center.',
       link:'https://www.dinsoresort.com/phuket/',
-      mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket'
+      mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket',
+      mapLat:7.8965, mapLon:98.2965
     },
     attractions:[
       {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img:'images/phuket1/big-buddha.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free entry'},
@@ -1396,7 +1532,8 @@ const DESTINATIONS = [
       descHe:'ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.',
       descEn:'A beachfront luxury resort on Klong Muang Beach (adjacent to Tubkaek Beach), framed by limestone cliffs and tropical gardens.',
       link:'https://www.dusit.com/dusitthani-krabibeachresort/',
-      mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand'
+      mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand',
+      mapLat:8.1600, mapLon:98.7590
     },
     attractions:[
       {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img:'images/krabi/railay-beach.jpg', tier:2, priceHe:'~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿', priceEn:'~150–200 THB boat; guided climbing ~1,500 THB'},
@@ -1426,7 +1563,8 @@ const DESTINATIONS = [
       descHe:'ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.',
       descEn:'A beachfront luxury resort set among tropical gardens facing the Andaman Sea, with family suites and spa facilities.',
       link:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/',
-      mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand'
+      mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand',
+      mapLat:8.7000, mapLon:98.2530
     },
     attractions:[
       {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img:'images/khaolak/phang-nga-canoe.jpg', tier:3, priceHe:'~1,500–2,000 ฿ לאדם', priceEn:'~1,500–2,000 THB/person'},
@@ -1456,7 +1594,8 @@ const DESTINATIONS = [
       descHe:'ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.',
       descEn:'A 5-star beachfront resort on secluded Merlin (Tri-Trang) Beach, minutes south of Patong — the only hotel on its own private cove.',
       link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/',
-      mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket'
+      mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket',
+      mapLat:7.9070, mapLon:98.2985
     },
     attractions:[
       {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:'images/phuket2/freedom-beach.jpg', tier:1, priceHe:'~300–600 ฿ (סירה הלוך-חזור)', priceEn:'~300–600 THB (round-trip boat)'},
@@ -1577,9 +1716,6 @@ function destForDate(dateStr){
 /* ============================= RENDER ============================= */
 const MONTHS_HE = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
 const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const WEEKDAYS_HE = ['א','ב','ג','ד','ה','ו','ש'];
-const WEEKDAYS_EN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-const CALENDAR_MONTHS = [{y:2026,m:7},{y:2026,m:8}]; // August & September 2026 (0-indexed month)
 
 function todayIso(){
   // Intentionally local (not iso()/UTC): "today" should match the viewer's
@@ -1609,7 +1745,7 @@ function render(){
   });
 
   safeRun('renderTodayBadge', renderTodayBadge);
-  safeRun('renderCalendar', renderCalendar);
+  safeRun('renderTimeline', renderTimeline);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
   safeRun('renderPrep', renderPrep);
@@ -1639,63 +1775,33 @@ function dayTag(dateStr){
   return {label: LANG==='he'?info.dest.nameHe:info.dest.nameEn, color:'#d9f0ea', fg:'#0c5c73'};
 }
 
-function renderCalendar(){
-  const wrap = document.getElementById('calendarWrap');
-  wrap.innerHTML = '';
+function renderTimeline(){
+  const strip = document.getElementById('timelineStrip');
   const today = todayIso();
   if (!SELECTED_DATE){
     SELECTED_DATE = (today >= TRIP_META.start && today <= TRIP_META.end) ? today : TRIP_META.start;
   }
   const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
-  const weekdays = LANG==='he' ? WEEKDAYS_HE : WEEKDAYS_EN;
 
-  CALENDAR_MONTHS.forEach(({y,m})=>{
-    const firstWeekday = new Date(Date.UTC(y,m,1)).getUTCDay();
-    const daysInMonth = new Date(Date.UTC(y,m+1,0)).getUTCDate();
+  strip.innerHTML = ALL_DAYS.map(dateStr=>{
+    const d = toDate(dateStr);
+    const tag = dayTag(dateStr);
+    let classes = 'timeline-node';
+    if (dateStr === today) classes += ' is-today';
+    if (dateStr === SELECTED_DATE) classes += ' is-selected';
+    return `<button type="button" class="${classes}" data-date="${dateStr}">
+      <span class="tl-dot" style="background:${tag.fg}"></span>
+      <span class="tl-day">${d.getUTCDate()}</span>
+      <span class="tl-date">${months[d.getUTCMonth()]}</span>
+    </button>`;
+  }).join('');
 
-    // Build full weeks (rows of 7 cells) first, then drop any week that has
-    // zero in-trip days - keeps the calendar's grid/weekday alignment intact
-    // while trimming away the empty pre/post-trip space on the page.
-    const weeks = [];
-    let cur = [];
-    for (let i=0;i<firstWeekday;i++) cur.push({html:'<div class="calendar-cell empty"></div>', inTrip:false});
-    for (let day=1; day<=daysInMonth; day++){
-      const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-      const inTrip = dateStr >= TRIP_META.start && dateStr <= TRIP_META.end;
-      let classes = 'calendar-cell';
-      let dotHtml = '';
-      if (inTrip){
-        classes += ' in-trip';
-        if (dateStr === today) classes += ' is-today';
-        if (dateStr === SELECTED_DATE) classes += ' is-selected';
-        const tag = dayTag(dateStr);
-        dotHtml = `<span class="cal-dot" style="background:${tag.fg}"></span>`;
-      } else {
-        classes += ' out-of-trip';
-      }
-      cur.push({html:`<div class="${classes}" data-date="${inTrip?dateStr:''}"><span class="cal-daynum">${day}</span>${dotHtml}</div>`, inTrip});
-      if (cur.length === 7){ weeks.push(cur); cur = []; }
-    }
-    if (cur.length){
-      while (cur.length < 7) cur.push({html:'<div class="calendar-cell empty"></div>', inTrip:false});
-      weeks.push(cur);
-    }
-
-    const keptWeeks = weeks.filter(week => week.some(c => c.inTrip));
-    const cellsHtml = weekdays.map(w=>`<div class="calendar-weekday">${w}</div>`).join('') +
-      keptWeeks.map(week => week.map(c=>c.html).join('')).join('');
-
-    if (!keptWeeks.length) return; // no trip days this month - skip it entirely
-
-    const monthBox = document.createElement('div');
-    monthBox.className = 'calendar-month';
-    monthBox.innerHTML = `<h4>${months[m]} ${y}</h4><div class="calendar-grid">${cellsHtml}</div>`;
-    wrap.appendChild(monthBox);
+  strip.querySelectorAll('.timeline-node').forEach(node=>{
+    node.addEventListener('click', ()=>{ SELECTED_DATE = node.dataset.date; render(); });
   });
 
-  wrap.querySelectorAll('.calendar-cell.in-trip').forEach(cell=>{
-    cell.addEventListener('click', ()=>{ SELECTED_DATE = cell.dataset.date; render(); });
-  });
+  const selectedNode = strip.querySelector('.timeline-node.is-selected');
+  if (selectedNode) selectedNode.scrollIntoView({ block:'nearest', inline:'center' });
 }
 
 function renderDayDetail(){
@@ -1740,6 +1846,71 @@ function cardImg(img, altText){
 
 const TIER_LABEL = ['', '$', '$$', '$$$'];
 
+/* ===== Live weather (Open-Meteo, no API key) ===== */
+const WEATHER_CACHE = {}; // dest.id -> {temp, code, hi, lo, uv} | 'error' | undefined (not loaded yet)
+
+const WEATHER_CODE_MAP = {
+  0:{emoji:'☀️', he:'שמיים בהירים', en:'Clear sky'},
+  1:{emoji:'🌤️', he:'בהיר בעיקר', en:'Mainly clear'},
+  2:{emoji:'⛅', he:'מעונן חלקית', en:'Partly cloudy'},
+  3:{emoji:'☁️', he:'מעונן', en:'Overcast'},
+  45:{emoji:'🌫️', he:'ערפל', en:'Fog'}, 48:{emoji:'🌫️', he:'ערפל קופא', en:'Fog'},
+  51:{emoji:'🌦️', he:'טפטוף קל', en:'Light drizzle'}, 53:{emoji:'🌦️', he:'טפטוף', en:'Drizzle'}, 55:{emoji:'🌦️', he:'טפטוף חזק', en:'Dense drizzle'},
+  61:{emoji:'🌧️', he:'גשם קל', en:'Slight rain'}, 63:{emoji:'🌧️', he:'גשם', en:'Moderate rain'}, 65:{emoji:'🌧️', he:'גשם חזק', en:'Heavy rain'},
+  80:{emoji:'🌦️', he:'ממטרים קלים', en:'Slight showers'}, 81:{emoji:'🌧️', he:'ממטרים', en:'Showers'}, 82:{emoji:'⛈️', he:'ממטרים חזקים', en:'Violent showers'},
+  95:{emoji:'⛈️', he:'סופת רעמים', en:'Thunderstorm'}, 96:{emoji:'⛈️', he:'סופת רעמים עם ברד', en:'Thunderstorm w/ hail'}, 99:{emoji:'⛈️', he:'סופת רעמים עם ברד', en:'Thunderstorm w/ hail'},
+};
+function weatherIcon(code){ return WEATHER_CODE_MAP[code] || {emoji:'🌡️', he:'', en:''}; }
+function uvBand(uv){
+  if (uv == null || Number.isNaN(uv)) return null;
+  if (uv < 3) return {he:'נמוך', en:'Low'};
+  if (uv < 6) return {he:'בינוני', en:'Moderate'};
+  if (uv < 8) return {he:'גבוה', en:'High'};
+  if (uv < 11) return {he:'גבוה מאוד', en:'Very High'};
+  return {he:'קיצוני', en:'Extreme'};
+}
+
+function weatherCardHtml(dest, t){
+  const w = WEATHER_CACHE[dest.id];
+  if (w === 'error'){
+    return `<div class="weather-card weather-error">🌡️ <span>${t.weatherUnavailable}</span></div>`;
+  }
+  if (!w){
+    return `<div class="weather-card weather-loading">🌡️ <span>${t.weatherLoading}</span></div>`;
+  }
+  const icon = weatherIcon(w.code);
+  const uv = uvBand(w.uv);
+  return `<div class="weather-card">
+    <div class="wc-main"><span class="wc-emoji">${icon.emoji}</span><span class="wc-temp">${Math.round(w.temp)}°</span></div>
+    <div class="wc-sub">${LANG==='he'?icon.he:icon.en}</div>
+    <div class="wc-range">${Math.round(w.lo)}°–${Math.round(w.hi)}° <span class="wc-uv">${uv ? ('UV ' + (LANG==='he'?uv.he:uv.en)) : ''}</span></div>
+  </div>`;
+}
+
+function loadWeather(){
+  DESTINATIONS.forEach(dest=>{
+    if (WEATHER_CACHE[dest.id]) return; // already loaded or already failed
+    const {mapLat:lat, mapLon:lon} = dest.hotel;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Asia%2FBangkok`;
+    fetch(url)
+      .then(r => { if (!r.ok) throw new Error('weather http ' + r.status); return r.json(); })
+      .then(data => {
+        WEATHER_CACHE[dest.id] = {
+          temp: data.current.temperature_2m,
+          code: data.current.weather_code,
+          hi: data.daily.temperature_2m_max[0],
+          lo: data.daily.temperature_2m_min[0],
+          uv: data.daily.uv_index_max[0],
+        };
+        safeRun('renderDestinations', renderDestinations);
+      })
+      .catch(() => {
+        WEATHER_CACHE[dest.id] = 'error';
+        safeRun('renderDestinations', renderDestinations);
+      });
+  });
+}
+
 function renderDestinations(){
   const t = I18N[LANG];
   const wrap = document.getElementById('destinations');
@@ -1762,7 +1933,6 @@ function renderDestinations(){
           <div class="inner">
             <span class="dest-tag">${dRange}</span>
             <h2>${name}</h2>
-            <div class="dates">🏨 ${LANG==='he'?hotel.nameHe:hotel.nameEn}</div>
           </div>
         </div>
         <div class="hotel-card">
@@ -1772,11 +1942,14 @@ function renderDestinations(){
           </div>
           <a class="btn" href="${hotel.link}" target="_blank" rel="noopener">${t.seeOfficial}</a>
         </div>
-        <div class="map-card">
-          <span class="map-pin">📍</span>
-          <p class="map-name">${LANG==='he'?hotel.nameHe:hotel.nameEn}</p>
-          <p class="map-sub">${LANG==='he'?hotel.mapAreaHe:hotel.mapAreaEn}</p>
-          <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.mapQuery)}" target="_blank" rel="noopener">${t.openMaps}</a>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">${LANG==='he'?hotel.nameHe:hotel.nameEn}</p>
+            <p class="map-sub">${LANG==='he'?hotel.mapAreaHe:hotel.mapAreaEn}</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.mapQuery)}" target="_blank" rel="noopener">${t.openMaps}</a>
+          </div>
+          ${weatherCardHtml(dest, t)}
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>${t.attractionsHead}</span></h3>
         <div class="cards-grid">
@@ -1792,6 +1965,15 @@ function renderDestinations(){
             </div>
           `).join('')}
         </div>
+        ${(dest.id==='phuket1'||dest.id==='phuket2') ? `
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">${t.timeOutTitle}</p>
+            <p class="to-sub">${t.timeOutSub} · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>` : ''}
         <h3 class="block-title"><span class="icon">🍽️</span><span>${t.restaurantsHead}</span></h3>
         <div class="cards-grid">
           ${dest.restaurants.map(r=>`
@@ -1894,7 +2076,10 @@ safeRun('init:listeners', () => {
 });
 
 safeRun('init:render', () => { render(); });
+safeRun('init:loadWeather', () => { loadWeather(); });
 </script>
+
+
 
 
 
