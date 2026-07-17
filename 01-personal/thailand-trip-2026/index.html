@@ -369,10 +369,16 @@
     margin:0 auto 10px; max-width:560px; box-shadow:var(--shadow);
     direction:ltr;
   }
-  .flight-map{width:100%; height:auto; display:block;}
-  .flight-map .route-path{fill:none; stroke:var(--line); stroke-width:3; stroke-dasharray:7,7;}
+  .flight-map{width:100%; height:auto; display:block; border-radius:12px; overflow:hidden;}
+  .flight-map .map-ocean{fill:#dcedf1;}
+  .flight-map .map-grid line{stroke:#0c5c73; stroke-width:1; opacity:.08;}
+  .flight-map .map-land{fill:#e3dabd; stroke:#cabb92; stroke-width:1.2; stroke-linejoin:round;}
+  .flight-map .route-path{fill:none; stroke:var(--coral); stroke-width:2.5; stroke-dasharray:7,6;}
   .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
-  .flight-map .airport-label{font-size:15px; font-weight:700; fill:var(--ink); direction:rtl;}
+  .flight-map .airport-label{
+    font-size:14px; font-weight:800; fill:var(--ink); direction:rtl;
+    paint-order:stroke; stroke:#fdfaf3; stroke-width:4px; stroke-linejoin:round;
+  }
   .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
   .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
   .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
@@ -547,14 +553,28 @@
   <div class="flight-map-wrap">
     <div class="booking-ref">🎫 <b>9B5Q44</b> · Etihad Airways</div>
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
-      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
-      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
-      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
-      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
-      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
-      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
-      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
-      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+      <rect class="map-ocean" x="0" y="0" width="800" height="240"></rect>
+      <g class="map-grid">
+        <line x1="0" y1="60" x2="800" y2="60"></line>
+        <line x1="0" y1="120" x2="800" y2="120"></line>
+        <line x1="0" y1="180" x2="800" y2="180"></line>
+        <line x1="200" y1="0" x2="200" y2="240"></line>
+        <line x1="400" y1="0" x2="400" y2="240"></line>
+        <line x1="600" y1="0" x2="600" y2="240"></line>
+      </g>
+      <path class="map-land" d="M94.1,25.0 C97.2,20.0 111.4,34.2 122.4,35.0 C133.4,35.8 144.3,35.0 160.0,30.0 C175.7,25.0 196.1,9.2 216.5,5.0 C236.9,0.8 263.6,0.8 282.4,5.0 C301.2,9.2 316.9,21.7 329.4,30.0 C341.9,38.3 360.7,49.2 357.6,55.0 C354.5,60.8 324.7,62.5 310.6,65.0 C296.5,67.5 285.4,67.5 272.9,70.0 C260.3,72.5 251.0,73.3 235.3,80.0 C219.6,86.7 191.4,102.5 178.8,110.0 C166.2,117.5 160.0,121.7 160.0,125.0 C160.0,128.3 169.4,130.8 178.8,130.0 C188.2,129.2 203.9,123.3 216.5,120.0 C229.1,116.7 241.5,115.0 254.1,110.0 C266.6,105.0 291.8,96.7 291.8,90.0 C291.8,83.3 269.8,68.3 254.1,70.0 C238.4,71.7 216.4,94.2 197.6,100.0 C178.8,105.8 156.9,110.8 141.2,105.0 C125.5,99.2 111.3,78.3 103.5,65.0 C95.7,51.7 90.9,30.0 94.1,25.0 Z"></path>
+      <path class="map-land" d="M423.5,15.0 C436.1,10.8 454.9,20.8 470.6,25.0 C486.3,29.2 501.9,35.0 517.6,40.0 C533.3,45.0 552.2,49.2 564.7,55.0 C577.2,60.8 589.8,66.7 592.9,75.0 C596.0,83.3 589.8,96.7 583.5,105.0 C577.2,113.3 566.3,118.3 555.3,125.0 C544.3,131.7 527.0,141.7 517.6,145.0 C508.2,148.3 505.1,145.8 498.8,145.0 C492.5,144.2 486.3,142.5 480.0,140.0 C473.7,137.5 467.5,134.2 461.2,130.0 C454.9,125.8 448.7,120.8 442.4,115.0 C436.1,109.2 429.8,102.5 423.5,95.0 C417.2,87.5 409.4,77.5 404.7,70.0 C400.0,62.5 392.2,59.2 395.3,50.0 C398.4,40.8 410.9,19.2 423.5,15.0 Z"></path>
+      <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
+      <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
+      <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <path class="route-path" d="M93,30 Q186,20 279,68 Q484,60 690,149"></path>
+      <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
+      <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="279" cy="68" r="6"></circle>
+      <text class="airport-label" x="279" y="44" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="690" cy="149" r="6"></circle>
+      <text class="airport-label" x="690" y="129" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
       <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
@@ -1231,14 +1251,28 @@
 
   <div class="flight-map-wrap">
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
-      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
-      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
-      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
-      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
-      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
-      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
-      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
-      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+      <rect class="map-ocean" x="0" y="0" width="800" height="240"></rect>
+      <g class="map-grid">
+        <line x1="0" y1="60" x2="800" y2="60"></line>
+        <line x1="0" y1="120" x2="800" y2="120"></line>
+        <line x1="0" y1="180" x2="800" y2="180"></line>
+        <line x1="200" y1="0" x2="200" y2="240"></line>
+        <line x1="400" y1="0" x2="400" y2="240"></line>
+        <line x1="600" y1="0" x2="600" y2="240"></line>
+      </g>
+      <path class="map-land" d="M94.1,25.0 C97.2,20.0 111.4,34.2 122.4,35.0 C133.4,35.8 144.3,35.0 160.0,30.0 C175.7,25.0 196.1,9.2 216.5,5.0 C236.9,0.8 263.6,0.8 282.4,5.0 C301.2,9.2 316.9,21.7 329.4,30.0 C341.9,38.3 360.7,49.2 357.6,55.0 C354.5,60.8 324.7,62.5 310.6,65.0 C296.5,67.5 285.4,67.5 272.9,70.0 C260.3,72.5 251.0,73.3 235.3,80.0 C219.6,86.7 191.4,102.5 178.8,110.0 C166.2,117.5 160.0,121.7 160.0,125.0 C160.0,128.3 169.4,130.8 178.8,130.0 C188.2,129.2 203.9,123.3 216.5,120.0 C229.1,116.7 241.5,115.0 254.1,110.0 C266.6,105.0 291.8,96.7 291.8,90.0 C291.8,83.3 269.8,68.3 254.1,70.0 C238.4,71.7 216.4,94.2 197.6,100.0 C178.8,105.8 156.9,110.8 141.2,105.0 C125.5,99.2 111.3,78.3 103.5,65.0 C95.7,51.7 90.9,30.0 94.1,25.0 Z"></path>
+      <path class="map-land" d="M423.5,15.0 C436.1,10.8 454.9,20.8 470.6,25.0 C486.3,29.2 501.9,35.0 517.6,40.0 C533.3,45.0 552.2,49.2 564.7,55.0 C577.2,60.8 589.8,66.7 592.9,75.0 C596.0,83.3 589.8,96.7 583.5,105.0 C577.2,113.3 566.3,118.3 555.3,125.0 C544.3,131.7 527.0,141.7 517.6,145.0 C508.2,148.3 505.1,145.8 498.8,145.0 C492.5,144.2 486.3,142.5 480.0,140.0 C473.7,137.5 467.5,134.2 461.2,130.0 C454.9,125.8 448.7,120.8 442.4,115.0 C436.1,109.2 429.8,102.5 423.5,95.0 C417.2,87.5 409.4,77.5 404.7,70.0 C400.0,62.5 392.2,59.2 395.3,50.0 C398.4,40.8 410.9,19.2 423.5,15.0 Z"></path>
+      <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
+      <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
+      <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <path class="route-path" d="M93,30 Q186,20 279,68 Q484,60 690,149"></path>
+      <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
+      <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="279" cy="68" r="6"></circle>
+      <text class="airport-label" x="279" y="44" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="690" cy="149" r="6"></circle>
+      <text class="airport-label" x="690" y="129" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
       <span>פוקט → אבו דאבי: כ-4,977 ק״מ</span>
