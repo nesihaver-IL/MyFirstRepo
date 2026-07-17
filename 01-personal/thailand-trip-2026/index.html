@@ -381,6 +381,13 @@
     font-size:14px; font-weight:800; fill:var(--ink); direction:rtl;
     paint-order:stroke; stroke:#fdfaf3; stroke-width:4px; stroke-linejoin:round;
   }
+  .flight-map .country-label{
+    font-size:11px; font-weight:700; fill:#8a7a4f; opacity:.65; direction:rtl;
+    paint-order:stroke; stroke:#e3dabd; stroke-width:3px; stroke-linejoin:round;
+  }
+  .flight-map .continent-label{
+    font-size:10px; font-weight:800; fill:#0c5c73; opacity:.4; letter-spacing:.06em; direction:rtl;
+  }
   .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
   .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
   .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
@@ -566,7 +573,7 @@
       <span class="tl-date">ספט</span>
       <span class="tl-weekday">שישי</span>
     </button></div>
-  <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
+  <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב ← אבו דאבי ← פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
 </div>
 
 <section class="flights container" id="flightsOut" dir="rtl" lang="he">
@@ -589,6 +596,11 @@
       <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
       <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
       <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <text class="continent-label" x="60" y="215" text-anchor="middle">אסיה</text>
+      <text class="country-label" x="150" y="78" text-anchor="middle">סעודיה</text>
+      <text class="country-label" x="255" y="16" text-anchor="middle">איראן</text>
+      <text class="country-label" x="480" y="108" text-anchor="middle">הודו</text>
+      <text class="country-label" x="665" y="112" text-anchor="middle">תאילנד</text>
       <path class="route-path" d="M93,30 Q186,20 279,68 Q484,60 690,149"></path>
       <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
       <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
@@ -599,11 +611,11 @@
       <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
-      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
-      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
+      <span>תל אביב ← אבו דאבי: כ-2,110 ק״מ</span>
+      <span>אבו דאבי ← פוקט: כ-4,977 ק״מ</span>
       <span>סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
     </div>
-    <a class="btn small map-explore-link" href="https://www.gcmap.com/mapui?P=TLV-AUH-HKT" target="_blank" rel="noopener">🌍 המסלול במפה אינטראקטיבית — זום וסיבוב חופשי</a>
+    <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Tel+Aviv,+Israel/Abu+Dhabi,+United+Arab+Emirates/Phuket,+Thailand" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
   <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
@@ -1292,6 +1304,11 @@
       <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
       <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
       <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <text class="continent-label" x="60" y="215" text-anchor="middle">אסיה</text>
+      <text class="country-label" x="150" y="78" text-anchor="middle">סעודיה</text>
+      <text class="country-label" x="255" y="16" text-anchor="middle">איראן</text>
+      <text class="country-label" x="480" y="108" text-anchor="middle">הודו</text>
+      <text class="country-label" x="665" y="112" text-anchor="middle">תאילנד</text>
       <path class="route-path" d="M93,30 Q186,20 279,68 Q484,60 690,149"></path>
       <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
       <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
@@ -1302,11 +1319,11 @@
       <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
-      <span>פוקט → אבו דאבי: כ-4,977 ק״מ</span>
-      <span>אבו דאבי → תל אביב: כ-2,110 ק״מ</span>
+      <span>פוקט ← אבו דאבי: כ-4,977 ק״מ</span>
+      <span>אבו דאבי ← תל אביב: כ-2,110 ק״מ</span>
       <span>סה״כ כיוון חזור: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
     </div>
-    <a class="btn small map-explore-link" href="https://www.gcmap.com/mapui?P=HKT-AUH-TLV" target="_blank" rel="noopener">🌍 המסלול במפה אינטראקטיבית — זום וסיבוב חופשי</a>
+    <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Phuket,+Thailand/Abu+Dhabi,+United+Arab+Emirates/Tel+Aviv,+Israel" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
   <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
@@ -1879,9 +1896,9 @@ function renderDayDetail(){
 
   let pill, title, sub;
   if (info.type === 'flight-out'){
-    pill = t.flightOutTag; title = LANG==='he'?'טיסה לתאילנד':'Flight to Thailand'; sub = LANG==='he'?'תל אביב → אבו דאבי → פוקט':'Tel Aviv → Abu Dhabi → Phuket';
+    pill = t.flightOutTag; title = LANG==='he'?'טיסה לתאילנד':'Flight to Thailand'; sub = LANG==='he'?'תל אביב ← אבו דאבי ← פוקט':'Tel Aviv → Abu Dhabi → Phuket';
   } else if (info.type === 'flight-return'){
-    pill = t.flightRetTag; title = LANG==='he'?'טיסה הביתה':'Flight home'; sub = LANG==='he'?'פוקט → אבו דאבי → תל אביב':'Phuket → Abu Dhabi → Tel Aviv';
+    pill = t.flightRetTag; title = LANG==='he'?'טיסה הביתה':'Flight home'; sub = LANG==='he'?'פוקט ← אבו דאבי ← תל אביב':'Phuket → Abu Dhabi → Tel Aviv';
   } else {
     const dest = info.dest;
     const dayNum = Math.round((toDate(SELECTED_DATE) - toDate(dest.start))/86400000) + 1;
