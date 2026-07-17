@@ -94,13 +94,14 @@
   }
   .lang-toggle:hover{background:rgba(255,255,255,.28);}
   .hero-content{position:relative; z-index:1;}
-  .hero-avatar{
-    position:absolute; top:78px; right:24px; z-index:2;
-    width:84px; height:84px; border-radius:50%; overflow:hidden;
-    border:3px solid rgba(255,255,255,.9); box-shadow:0 6px 20px rgba(0,0,0,.35);
+  .avatar-badge{
+    width:112px; height:112px; border-radius:50%; overflow:hidden;
+    border:4px solid rgba(255,255,255,.9); box-shadow:0 6px 20px rgba(0,0,0,.35);
     background:#fff;
   }
-  .hero-avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+  .avatar-badge img{width:100%; height:100%; object-fit:cover; display:block;}
+  .hero-avatar{position:absolute; top:66px; right:24px; z-index:2;}
+  .dest-avatar{position:absolute; top:20px; right:24px; z-index:3;}
   .eyebrow{
     display:inline-block;
     background:var(--coral);
@@ -388,6 +389,7 @@
   .flight-map-legend{
     display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:10px; font-size:.82rem; opacity:.8; font-weight:600;
   }
+  .map-explore-link{display:block; text-align:center; margin-top:14px;}
 
   /* ===== Prep list ===== */
   .prep{
@@ -435,7 +437,7 @@
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </div>
   </div>
-  <div class="hero-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
+  <div class="avatar-badge hero-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
   <div class="container hero-content">
     <span class="eyebrow" data-i18n="heroEyebrow">17.8 – 4.9.2026 · טיול משפחתי</span>
     <h1 data-i18n="heroTitle">HaVenture בתאילנד 2026</h1>
@@ -601,6 +603,7 @@
       <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
       <span>סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
     </div>
+    <a class="btn small map-explore-link" href="https://www.gcmap.com/mapui?P=TLV-AUH-HKT" target="_blank" rel="noopener">🌍 המסלול במפה אינטראקטיבית — זום וסיבוב חופשי</a>
   </div>
 
   <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
@@ -661,6 +664,7 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/phuket1-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 18–22</span>
             <h2>Phuket (Part 1)</h2>
@@ -817,6 +821,7 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/krabi-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 22–26</span>
             <h2>Krabi</h2>
@@ -965,6 +970,7 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/khaolak-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 26–30</span>
             <h2>Khao Lak</h2>
@@ -1113,6 +1119,7 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/phuket2-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 30 — Sep 4</span>
             <h2>Phuket (Part 2)</h2>
@@ -1299,6 +1306,7 @@
       <span>אבו דאבי → תל אביב: כ-2,110 ק״מ</span>
       <span>סה״כ כיוון חזור: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
     </div>
+    <a class="btn small map-explore-link" href="https://www.gcmap.com/mapui?P=HKT-AUH-TLV" target="_blank" rel="noopener">🌍 המסלול במפה אינטראקטיבית — זום וסיבוב חופשי</a>
   </div>
 
   <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
@@ -1987,6 +1995,7 @@ function renderDestinations(){
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('${dest.heroImg}')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">${dRange}</span>
             <h2>${name}</h2>
@@ -2135,6 +2144,8 @@ safeRun('init:listeners', () => {
 safeRun('init:render', () => { render(); });
 safeRun('init:loadWeather', () => { loadWeather(); });
 </script>
+
+
 
 
 
