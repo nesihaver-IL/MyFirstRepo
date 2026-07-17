@@ -1,0 +1,2107 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HaVenture 🌴 — משפחת חבר בתאילנד</title>
+<script>
+  // Registered first, before anything else can throw, so any failure anywhere
+  // on the page (this file being opened over file://, WSL paths, etc.) is
+  // reported visibly instead of silently leaving a blank/partial page.
+  window.__showFatalError = function(label, err){
+    var box = document.getElementById('fatalErrorBox');
+    if (!box){
+      box = document.createElement('div');
+      box.id = 'fatalErrorBox';
+      box.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#c0392b;color:#fff;' +
+        'font:13px/1.5 monospace;padding:12px 16px;direction:ltr;text-align:left;white-space:pre-wrap;max-height:40vh;overflow:auto;';
+      document.documentElement.appendChild(box);
+    }
+    box.textContent += '⚠ ' + label + ': ' + (err && err.message ? err.message : err) + '\n';
+  };
+  window.addEventListener('error', function(e){
+    window.__showFatalError('JS error (' + (e.filename||'') + ':' + (e.lineno||'') + ')', e.error || e.message);
+  });
+</script>
+<style>
+  :root{
+    --ink:#0b2e3a;
+    --sea:#0c5c73;
+    --sea-dark:#083c4c;
+    --sand:#faf3e7;
+    --sand-card:#ffffff;
+    --coral:#ff6b4a;
+    --coral-dark:#e04f30;
+    --gold:#f2a33d;
+    --leaf:#3f8f6a;
+    --line:#e7ddca;
+    --shadow: 0 10px 30px rgba(11,46,58,.12);
+    --radius: 18px;
+    font-size: 16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--sand);
+    color:var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  html[dir="ltr"] body{ font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; }
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .container{max-width:1180px; margin:0 auto; padding:0 20px;}
+  .hidden{display:none !important;}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    min-height:78vh;
+    display:flex;
+    align-items:flex-end;
+    color:#fff;
+    background:
+      linear-gradient(180deg, rgba(8,28,36,.25) 0%, rgba(8,28,36,.55) 55%, rgba(8,28,36,.92) 100%),
+      url('images/hero/cover.jpg') center/cover no-repeat;
+    padding-bottom:48px;
+  }
+  .dest-header .hero-bg{position:absolute; inset:0; z-index:0;}
+  .dest-header .hero-bg::after{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.35) 1.5px, transparent 1.5px);
+    background-size: 26px 26px;
+    opacity:.25;
+  }
+  .hero-top{
+    position:absolute; top:0; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 20px;
+  }
+  .brand{
+    font-weight:800; letter-spacing:.08em; font-size:.95rem; text-transform:uppercase;
+    display:flex; align-items:center; gap:8px;
+  }
+  .lang-toggle{
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.5);
+    color:#fff;
+    border-radius:999px;
+    padding:8px 16px;
+    font-weight:700;
+    cursor:pointer;
+    backdrop-filter: blur(4px);
+  }
+  .lang-toggle:hover{background:rgba(255,255,255,.28);}
+  .hero-content{position:relative; z-index:1;}
+  .eyebrow{
+    display:inline-block;
+    background:var(--coral);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.85rem;
+    letter-spacing:.03em;
+    margin-bottom:16px;
+  }
+  .hero h1{
+    font-size:clamp(2.2rem, 6vw, 4.2rem);
+    margin:0 0 12px;
+    font-weight:800;
+    line-height:1.05;
+    text-shadow:0 4px 24px rgba(0,0,0,.35);
+  }
+  .hero p.sub{
+    font-size:clamp(1rem,2.2vw,1.35rem);
+    max-width:640px;
+    opacity:.95;
+    margin:0 0 26px;
+  }
+  .hero-stats{display:flex; flex-wrap:wrap; gap:14px;}
+  .hero-stat{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:14px;
+    padding:12px 18px;
+    backdrop-filter: blur(6px);
+    min-width:120px;
+  }
+  .hero-stat b{display:block; font-size:1.3rem;}
+  .hero-stat span{font-size:.8rem; opacity:.85;}
+
+  /* ===== Sticky nav ===== */
+  .navbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,243,231,.94);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:10px 20px; flex-wrap:wrap;
+  }
+  .nav-links{display:flex; gap:6px; flex-wrap:wrap;}
+  .nav-links a{
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:.88rem;
+    color:var(--sea-dark);
+    white-space:nowrap;
+  }
+  .nav-links a:hover{background:#fff; box-shadow:var(--shadow);}
+  .today-badge{
+    display:flex; align-items:center; gap:8px;
+    background:var(--sea);
+    color:#fff;
+    padding:8px 14px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.85rem;
+    white-space:nowrap;
+  }
+  .today-badge .dot{width:8px; height:8px; border-radius:50%; background:#7CFFB2; box-shadow:0 0 0 4px rgba(124,255,178,.25);}
+
+  /* ===== Day tracker ===== */
+  .tracker{
+    padding:26px 0 8px;
+  }
+  .tracker-head{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; gap:10px; flex-wrap:wrap;
+  }
+  .tracker-head h2{margin:0; font-size:1.4rem;}
+  .tracker-controls{display:flex; gap:8px; align-items:center;}
+  .arrow-btn{
+    background:var(--sea); color:#fff; border:none; width:38px; height:38px; border-radius:50%;
+    font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  }
+  .arrow-btn:disabled{opacity:.35; cursor:default;}
+  .timeline-strip{
+    position:relative; display:flex; gap:4px; overflow-x:auto; padding:26px 10px 18px;
+    scroll-snap-type:x proximity; -webkit-overflow-scrolling:touch; direction:ltr;
+  }
+  .timeline-strip::before{
+    content:''; position:absolute; left:16px; right:16px; top:44px; height:3px;
+    background:var(--line); border-radius:2px; z-index:0;
+  }
+  .timeline-strip::-webkit-scrollbar{height:6px;}
+  .timeline-strip::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+  .timeline-node{
+    position:relative; z-index:1; flex:0 0 auto; scroll-snap-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer;
+    width:58px; padding-top:2px; background:none; border:none; font-family:inherit;
+  }
+  .timeline-node .tl-dot{
+    width:16px; height:16px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px var(--line);
+    transition:transform .12s ease;
+  }
+  .timeline-node:hover .tl-dot{transform:scale(1.15);}
+  .timeline-node .tl-day{font-size:.78rem; font-weight:700; opacity:.65;}
+  .timeline-node .tl-date{font-size:.66rem; opacity:.5;}
+  .timeline-node.is-today .tl-dot{box-shadow:0 0 0 4px rgba(255,107,74,.35); border-color:var(--coral);}
+  .timeline-node.is-selected .tl-dot{transform:scale(1.3);}
+  .timeline-node.is-selected .tl-day, .timeline-node.is-selected .tl-date{opacity:1; color:var(--sea-dark);}
+
+  .day-detail{
+    background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-top:6px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .day-detail .pill{
+    background:var(--sand); border-radius:999px; padding:6px 14px; font-weight:700; font-size:.82rem;
+  }
+  .day-detail h3{margin:0; font-size:1.15rem;}
+  .day-detail p{margin:2px 0 0; opacity:.75; font-size:.92rem;}
+
+  /* ===== Section shell ===== */
+  section.dest{
+    padding:70px 0 20px;
+    scroll-margin-top:74px;
+  }
+  section.dest:nth-of-type(even){background:#fff3e4;}
+  .dest-header{
+    position:relative;
+    border-radius:24px;
+    overflow:hidden;
+    min-height:340px;
+    display:flex;
+    align-items:flex-end;
+    color:#fff;
+    margin-bottom:34px;
+    box-shadow:var(--shadow);
+    direction:ltr;
+  }
+  .dest-header .hero-bg{background-size:cover; background-position:center;}
+  .dest-header .overlay{
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(8,28,36,.15), rgba(8,28,36,.88));
+  }
+  .dest-header .inner{position:relative; z-index:2; padding:30px 32px; direction:ltr; text-align:left;}
+  .dest-tag{
+    background:var(--coral); display:inline-block; padding:5px 14px; border-radius:999px; font-weight:700; font-size:.78rem; margin-bottom:10px;
+  }
+  .dest-header h2{font-size:clamp(1.7rem,4vw,2.6rem); margin:0 0 6px;}
+  .dest-header .dates{font-weight:700; opacity:.95;}
+  .hotel-card{
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+    background:var(--sand-card); border:1px solid var(--line); border-radius:16px; padding:18px 22px; margin-bottom:38px;
+    box-shadow:var(--shadow);
+  }
+  .hotel-card .hname{font-size:1.15rem; font-weight:800; margin:0 0 4px;}
+  .hotel-card .hdesc{margin:0; opacity:.8; font-size:.92rem; max-width:640px;}
+  .btn{
+    display:inline-block; background:var(--sea); color:#fff !important; text-decoration:none;
+    padding:10px 20px; border-radius:999px; font-weight:700; font-size:.88rem; white-space:nowrap;
+  }
+  .btn:hover{background:var(--sea-dark);}
+  .btn.outline{background:transparent; border:2px solid var(--sea); color:var(--sea) !important;}
+  .btn.coral{background:var(--coral);}
+  .btn.coral:hover{background:var(--coral-dark);}
+  .btn.small{padding:7px 14px; font-size:.78rem;}
+
+  /* ===== Map preview card ===== */
+  .location-row{display:flex; flex-wrap:wrap; gap:18px; margin-bottom:38px;}
+  .map-card{
+    position:relative; overflow:hidden; border-radius:18px;
+    background:
+      radial-gradient(circle, rgba(12,92,115,.16) 1.6px, transparent 1.6px) 0 0/24px 24px,
+      linear-gradient(135deg, #e7f2f1, #dcecef);
+    border:1px solid var(--line);
+    padding:26px 24px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    max-width:280px;
+  }
+  .map-card .map-pin{font-size:2.4rem; line-height:1;}
+  .map-card .map-name{font-weight:800; font-size:1rem; margin:2px 0 0;}
+  .map-card .map-sub{font-size:.8rem; opacity:.7; margin:0 0 4px;}
+
+  .weather-card{
+    position:relative; overflow:hidden; border-radius:18px;
+    background:linear-gradient(135deg, #fff6e2, #ffeccb);
+    border:1px solid var(--line);
+    padding:20px 24px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
+    max-width:220px; min-width:180px;
+  }
+  .weather-card .wc-main{display:flex; align-items:center; gap:8px;}
+  .weather-card .wc-emoji{font-size:2.1rem; line-height:1;}
+  .weather-card .wc-temp{font-weight:800; font-size:1.6rem;}
+  .weather-card .wc-sub{font-size:.82rem; opacity:.75; font-weight:600;}
+  .weather-card .wc-range{font-size:.78rem; opacity:.7;}
+  .weather-card .wc-uv{font-weight:700;}
+  .weather-card.weather-loading, .weather-card.weather-error{font-size:.85rem; opacity:.65; flex-direction:row; gap:8px;}
+
+  .timeout-card{
+    display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
+    background:#0b0b0b; color:#fff !important; border-radius:16px; padding:18px 22px; margin-bottom:36px;
+    border-inline-start:6px solid #ff0038;
+  }
+  .timeout-card .to-icon{font-size:1.8rem;}
+  .timeout-card .to-title{font-weight:800; margin:0 0 2px; font-size:1.02rem;}
+  .timeout-card .to-sub{margin:0; font-size:.8rem; opacity:.7;}
+  .timeout-card .to-arrow{margin-inline-start:auto; font-size:1.3rem; opacity:.8;}
+  .timeout-card:hover{opacity:.92;}
+
+  h3.block-title{
+    font-size:1.35rem; margin:0 0 16px; display:flex; align-items:center; gap:10px;
+  }
+  h3.block-title .icon{font-size:1.2rem;}
+  .cards-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:18px; margin-bottom:40px;
+  }
+  .card{
+    background:var(--sand-card); border-radius:16px; overflow:hidden; box-shadow:var(--shadow);
+    display:flex; flex-direction:column;
+  }
+  .card .thumb{
+    height:150px; width:100%; object-fit:cover; background:linear-gradient(135deg, var(--sea), var(--leaf));
+  }
+  .card .thumb.placeholder{
+    display:flex; align-items:center; justify-content:center; font-size:2.4rem;
+  }
+  .card .body{padding:16px 16px 18px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .card .cname{font-weight:800; font-size:1.02rem; margin:0;}
+  .card .ctag{
+    align-self:flex-start; background:var(--sand); border-radius:999px; padding:3px 10px; font-size:.72rem; font-weight:700; color:var(--sea-dark);
+  }
+  .card .ctag.price-tag{ background:#fff1c9; color:#8a6209; }
+  .card .cdesc{font-size:.88rem; opacity:.8; margin:0; flex:1;}
+  .card .clink{font-size:.82rem; font-weight:700; color:var(--coral); text-decoration:none; margin-top:6px;}
+  .card .clink:hover{text-decoration:underline;}
+
+  /* ===== Flights ===== */
+  .flights{padding:60px 0;}
+  .booking-ref{
+    position:absolute; top:12px; right:16px; z-index:2;
+    background:var(--sea); color:#fff; border-radius:999px; padding:5px 14px;
+    font-weight:700; font-size:.78rem; box-shadow:0 2px 8px rgba(0,0,0,.18);
+  }
+  .flights h4{margin:34px 0 14px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
+  .leg-card{
+    display:flex; gap:18px; align-items:center; background:var(--sea-dark); color:#fff; border-radius:18px; padding:22px 26px; margin-bottom:12px;
+    flex-wrap:wrap;
+  }
+  .leg-card .ficon{font-size:1.8rem;}
+  .leg-card .leg-main{flex:1; min-width:240px;}
+  .leg-card .leg-flightno{font-weight:800; font-size:1.05rem;}
+  .leg-card .leg-aircraft{opacity:.85; font-size:.85rem; margin-bottom:8px;}
+  .leg-card .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
+  .leg-card .leg-route .city{font-size:1rem;}
+  .leg-card .leg-route .time{font-size:1.3rem; font-weight:800;}
+  .leg-card .leg-route .airport-sub{font-weight:400; opacity:.75; font-size:.78rem; display:block;}
+  .leg-card .leg-meta{margin-inline-start:auto; text-align:end; font-size:.85rem; opacity:.9;}
+  .layover-note{
+    text-align:center; font-size:.85rem; opacity:.7; padding:8px; font-style:italic;
+  }
+  .aircraft-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px; margin-bottom:10px;}
+  .aircraft-card{
+    background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .aircraft-card h5{margin:0 0 10px; font-size:1.05rem; display:flex; align-items:center; gap:8px;}
+  .aircraft-card ul{margin:0; padding-inline-start:20px; font-size:.88rem; line-height:1.7;}
+
+  /* ===== Flight route map ===== */
+  .flight-map-wrap{
+    position:relative; background:var(--sand-card); border-radius:18px; padding:16px 18px 12px;
+    margin:0 auto 10px; max-width:560px; box-shadow:var(--shadow);
+    direction:ltr;
+  }
+  .flight-map{width:100%; height:auto; display:block;}
+  .flight-map .route-path{fill:none; stroke:var(--line); stroke-width:3; stroke-dasharray:7,7;}
+  .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
+  .flight-map .airport-label{font-size:15px; font-weight:700; fill:var(--ink); direction:rtl;}
+  .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
+  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
+  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
+  @keyframes fly-out{ from{offset-distance:0%;} to{offset-distance:100%;} }
+  @keyframes fly-ret{ from{offset-distance:100%;} to{offset-distance:0%;} }
+  .flight-map-legend{
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:10px; font-size:.82rem; opacity:.8; font-weight:600;
+  }
+
+  /* ===== Prep list ===== */
+  .prep{
+    padding:60px 0 90px;
+    background: linear-gradient(180deg, #fff3e4, var(--sand));
+  }
+  .prep-head{text-align:center; max-width:640px; margin:0 auto 34px;}
+  .prep-head h2{font-size:2rem; margin:0 0 8px;}
+  .prep-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;}
+  .prep-cat{
+    background:#fff; border-radius:16px; padding:18px 20px; box-shadow:var(--shadow);
+  }
+  .prep-cat h4{margin:0 0 10px; display:flex; align-items:center; gap:8px; font-size:1.05rem;}
+  .prep-cat ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
+  .prep-cat li{display:flex; align-items:flex-start; gap:8px; font-size:.9rem;}
+  .prep-cat input[type=checkbox]{margin-top:3px; accent-color:var(--coral); width:16px; height:16px; flex:0 0 auto;}
+  .prep-cat li.checked label{text-decoration:line-through; opacity:.5;}
+  .prep-progress{max-width:640px; margin:0 auto 26px; text-align:center; font-weight:700; color:var(--sea-dark);}
+
+  footer{
+    text-align:center; padding:30px 20px 40px; font-size:.85rem; opacity:.6;
+  }
+
+  @media (max-width: 720px){
+    .navbar-inner{flex-direction:column; align-items:stretch;}
+    .nav-links{justify-content:center;}
+    .today-badge{justify-content:center;}
+    .dest-header{min-height:260px;}
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+<div class="hero" id="hero">
+  <div class="hero-top">
+    <div class="brand">🌴 <span data-i18n="brand">HaVenture</span></div>
+    <div>
+      <button class="lang-toggle" id="langToggle" type="button">EN</button>
+    </div>
+  </div>
+  <div class="container hero-content">
+    <span class="eyebrow" data-i18n="heroEyebrow">17.8 – 4.9.2026 · טיול משפחתי</span>
+    <h1 data-i18n="heroTitle">משפחת חבר יוצאת ל-HaVenture בתאילנד</h1>
+    <p class="sub" data-i18n="heroSub">פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>19</b><span data-i18n="statDays">ימי טיול</span></div>
+      <div class="hero-stat"><b>4</b><span data-i18n="statStops">תחנות</span></div>
+      <div class="hero-stat"><b>5</b><span data-i18n="statPeople">נוסעים</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="nav-links">
+      <a href="#tracker" data-i18n="navTracker">ציר זמן</a>
+      <a href="#flightsOut" data-i18n="navFlightsOut">טיסת הלוך</a>
+      <a href="#phuket1" data-i18n="navPhuket1">פוקט 1</a>
+      <a href="#krabi" data-i18n="navKrabi">קרבי</a>
+      <a href="#khaolak" data-i18n="navKhaolak">קאולק</a>
+      <a href="#phuket2" data-i18n="navPhuket2">פוקט 2</a>
+      <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
+      <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
+    </div>
+    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 31 ימים</span></div>
+  </div>
+</div>
+
+<div class="container tracker" id="tracker">
+  <div class="tracker-head">
+    <h2 data-i18n="trackerTitle">איפה אנחנו בכל יום</h2>
+    <div class="tracker-controls">
+      <button class="arrow-btn" id="prevDay" type="button" disabled="">‹</button>
+      <button class="arrow-btn" id="nextDay" type="button">›</button>
+    </div>
+  </div>
+  <div class="timeline-strip" id="timelineStrip"><button type="button" class="timeline-node is-selected" data-date="2026-08-17">
+      <span class="tl-dot" style="background:#c73f22"></span>
+      <span class="tl-day">17</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-18">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">18</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-19">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">19</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-20">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">20</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-21">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">21</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-22">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">22</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-23">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">23</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-24">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">24</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-25">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">25</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-26">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">26</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-27">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">27</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-28">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">28</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-29">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">29</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-30">
+      <span class="tl-dot" style="background:#8a6209"></span>
+      <span class="tl-day">30</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-08-31">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">31</span>
+      <span class="tl-date">אוג</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-01">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">1</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-02">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">2</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-03">
+      <span class="tl-dot" style="background:#0c5c73"></span>
+      <span class="tl-day">3</span>
+      <span class="tl-date">ספט</span>
+    </button><button type="button" class="timeline-node" data-date="2026-09-04">
+      <span class="tl-dot" style="background:#c73f22"></span>
+      <span class="tl-day">4</span>
+      <span class="tl-date">ספט</span>
+    </button></div>
+  <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
+</div>
+
+<section class="flights container" id="flightsOut" dir="rtl" lang="he">
+  <h3 class="block-title"><span class="icon">✈️</span><span>טיסת הלוך — תל אביב ← פוקט</span></h3>
+
+  <div class="flight-map-wrap">
+    <div class="booking-ref">🎫 <b>9B5Q44</b> · Etihad Airways</div>
+    <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
+      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
+      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
+      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
+      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+    </svg>
+    <div class="flight-map-legend">
+      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
+      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
+      <span>סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
+    </div>
+  </div>
+
+  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 598 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
+  </div>
+  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 416 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
+  </div>
+
+  <h4>🛩️ קצת על המטוסים שלנו</h4>
+  <div class="aircraft-grid">
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321neo</h5>
+      <ul>
+        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+      </ul>
+    </div>
+    <div class="aircraft-card">
+      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+      <ul>
+        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div id="destinations"><section class="dest" id="phuket1">
+      <div class="container">
+        <div class="dest-header">
+          <div class="hero-bg" style="background-image:url('images/hero/phuket1-banner.jpg')"></div>
+          <div class="overlay"></div>
+          <div class="inner">
+            <span class="dest-tag">Aug 18–22</span>
+            <h2>Phuket (Part 1)</h2>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <div>
+            <p class="hname">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
+            <p class="hdesc">ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.</p>
+          </div>
+          <a class="btn" href="https://www.dinsoresort.com/phuket/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
+            <p class="map-sub">פאטונג, פוקט</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+        </div>
+        <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket1/big-buddha.jpg" alt="הבודהה הגדול של פוקט" loading="lazy">
+              <div class="body">
+                <p class="cname">הבודהה הגדול של פוקט</p>
+                <span class="ctag price-tag">כניסה חינם</span>
+                <p class="cdesc">פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.</p>
+                <a class="clink" href="https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket1/cable-jungle-zipline.jpg" alt="זיפליין ו-ATV ביער הטרופי" loading="lazy">
+              <div class="body">
+                <p class="cname">זיפליין ו-ATV ביער הטרופי</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
+                <p class="cdesc">מסלול זיפליין בחופת הג׳ונגל (21 תחנות, 2 ק״מ) בשילוב רכיבת ATV — אטרקציית אדרנלין מעולה לבני נוער.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g2315806-d2091139-Reviews-Cable_Jungle_Adventure-Si_Sunthon_Thalang_District_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket1/bangla-road.jpg" alt="רחוב באנגלה ושוק הלילה" loading="lazy">
+              <div class="body">
+                <p class="cname">רחוב באנגלה ושוק הלילה</p>
+                <span class="ctag price-tag">כניסה חינם (אוכל בתשלום)</span>
+                <p class="cdesc">הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם אוכל, ובלילה רחוב הבידור המרכזי של האי.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g297930-d20160170-Reviews-Bangla_Night_Market-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket1/phi-phi-islands.jpg" alt="טיול יום לאיי פי-פי" loading="lazy">
+              <div class="body">
+                <p class="cname">טיול יום לאיי פי-פי</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
+                <p class="cdesc">טיול סירת מהירות לארכיפלג פי-פי — שנורקלינג במפרץ פילה ובאי במבוק, עצירה במאיה ביי, ארוחת צהריים כלולה.</p>
+                <a class="clink" href="https://www.viator.com/tours/Phuket/Phi-Phi-Island-Hopping-Day-Trip-by-Speed-Boat-from-Phuket/d349-9574P490" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket1/james-bond-island.jpg" alt="איי ג׳יימס בונד ומפרץ פאנגה" loading="lazy">
+              <div class="body">
+                <p class="cname">איי ג׳יימס בונד ומפרץ פאנגה</p>
+                <span class="ctag price-tag">$$$ · ~1,500–2,200 ฿ לאדם</span>
+                <p class="cdesc">שיט בין נופי קארסט מרהיבים, קיאקים במעברים נסתרים, עצירה באי "ג׳יימס בונד" ובכפר הדייגים קוה פאניי.</p>
+                <a class="clink" href="https://www.viator.com/Phuket-attractions/James-Bond-Island-Khao-Phing-Kan/d349-a15586" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">המדריך של Time Out לפוקט</p>
+            <p class="to-sub">עוד המלצות של מגזין הטיולים · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>
+        <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
+              <div class="body">
+                <p class="cname">EuroThai Restaurant</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">מסעדה משפחתית קטנה וחמימה בסמטת ד״ר ואטאנה בפאטונג — פאד תאי אמיתי וקארי צהוב טעים, לא מתויר.</p>
+                <a class="clink" href="https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
+              <div class="body">
+                <p class="cname">Baan Pad Thaï</p>
+                <span class="ctag">תאילנדי, פאד תאי</span>
+                <p class="cdesc">מסעדה קטנה בפאטונג המדורגת 5.0/5 בטריפאדוויזור — האורז המטוגן והפאד תאי הכי טובים בעיר, הכל טרי.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/kaab-gluay.jpg" alt="Kaab Gluay" loading="lazy">
+              <div class="body">
+                <p class="cname">Kaab Gluay</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים, קארי אדום ומוקפצים במחירים הוגנים.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27179265-Reviews-Kaabgluay-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק באנזאן — קומת הרחוב</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">הקומה השנייה של שוק באנזאן בפאטונג — עשרות דוכני רחוב אותנטיים, פאד תאי בכ-100 ฿, טום יאם עוף ועוד.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
+              <div class="body">
+                <p class="cname">ג׳אנגסילון (Jungceylon)</p>
+                <p class="cdesc">הקניון הענק והמרכזי של פאטונג — מותגים בינלאומיים ומקומיים, סופרמרקט Big C, קולנוע ופודקורט גדול.</p>
+                <a class="clink" href="https://www.jungceylon.com/en" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק באנזאן</p>
+                <p class="cdesc">שוק מקומי תוסס עם פירות, תבלינים, בדים ומזכרות — חוויית קניות תאילנדית אמיתית, לצד קומת אוכל הרחוב.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </section><section class="dest" id="krabi">
+      <div class="container">
+        <div class="dest-header">
+          <div class="hero-bg" style="background-image:url('images/hero/krabi-banner.jpg')"></div>
+          <div class="overlay"></div>
+          <div class="inner">
+            <span class="dest-tag">Aug 22–26</span>
+            <h2>Krabi</h2>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <div>
+            <p class="hname">Dusit Thani Krabi Beach Resort</p>
+            <p class="hdesc">ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.</p>
+          </div>
+          <a class="btn" href="https://www.dusit.com/dusitthani-krabibeachresort/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Dusit Thani Krabi Beach Resort</p>
+            <p class="map-sub">קרבי, תאילנד</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+        </div>
+        <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/railay-beach.jpg" alt="חוף ריילי (Railay)" loading="lazy">
+              <div class="body">
+                <p class="cname">חוף ריילי (Railay)</p>
+                <span class="ctag price-tag">$$ · ~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿</span>
+                <p class="cdesc">חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.</p>
+                <a class="clink" href="https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/four-islands-tour.jpg" alt="טיול ארבעת האיים" loading="lazy">
+              <div class="body">
+                <p class="cname">טיול ארבעת האיים</p>
+                <span class="ctag price-tag">$$ · ~800–1,200 ฿ לאדם</span>
+                <p class="cdesc">טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.</p>
+                <a class="clink" href="https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/tiger-cave-temple.jpg" alt="מקדש מערת הנמר" loading="lazy">
+              <div class="body">
+                <p class="cname">מקדש מערת הנמר</p>
+                <span class="ctag price-tag">כניסה חינם (תרומה)</span>
+                <p class="cdesc">מקדש על גבעה שמגיעים אליו ב-1,237 מדרגות, לפסל בודהה זהוב ולנוף פנורמי — אתגר כיפי לבני נוער. כניסה חינם.</p>
+                <a class="clink" href="https://www.tourismthailand.org/Attraction/wat-tham-suea" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/emerald-pool.jpg" alt="הבריכה האזמרגדית והכחולה" loading="lazy">
+              <div class="body">
+                <p class="cname">הבריכה האזמרגדית והכחולה</p>
+                <span class="ctag price-tag">$ · ~200 ฿ כניסה לפארק</span>
+                <p class="cdesc">שמורת ג׳ונגל עם בריכת מעיינות טורקיז לשחייה, ובריכה כחולה מרהיבה במרחק הליכה קצרה (ללא שחייה).</p>
+                <a class="clink" href="https://www.tourismthailand.org/Attraction/sa-morakot-emerald-pool" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/ao-nang-market.jpg" alt="עיירת אאו-נאנג ושוק הלילה" loading="lazy">
+              <div class="body">
+                <p class="cname">עיירת אאו-נאנג ושוק הלילה</p>
+                <span class="ctag price-tag">כניסה חינם</span>
+                <p class="cdesc">המרכז התיירותי של האזור, עם שוק לילה תוסס — אוכל רחוב, מלאכת יד, מוזיקה חיה ומופעי מואי תאי.</p>
+                <a class="clink" href="https://en.wikipedia.org/wiki/Ao_Nang" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        
+        <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/amp-aing.jpg" alt="Amp &amp; Aing" loading="lazy">
+              <div class="body">
+                <p class="cname">Amp &amp; Aing</p>
+                <span class="ctag">תאילנדי משפחתי</span>
+                <p class="cdesc">מסעדה משפחתית עם אוכל טוב ומחירים הוגנים — הרבה מקומיים אוכלים כאן, לא רק תיירים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Amp+%26+Aing+Restaurant+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/kodam-kitchen.jpg" alt="KoDam Kitchen" loading="lazy">
+              <div class="body">
+                <p class="cname">KoDam Kitchen</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">אחת המסעדות התאילנדיות האהובות באאו-נאנג — אוכל טעים במחירים בלתי מנוצחים ואווירה נעימה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/KoDam+Kitchen+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/mama-kitchen.jpg" alt="Mama Kitchen" loading="lazy">
+              <div class="body">
+                <p class="cname">Mama Kitchen</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">מקום פשוט למתי שאוהבים מטבח תאילנדי אמיתי, ממוקם מחוץ לאזור התיירותי המרכזי.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Mama+Kitchen+Ao+Nang+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/ao-nang-boat-noodle.jpg" alt="Ao Nang Boat Noodle &amp; Thai Food" loading="lazy">
+              <div class="body">
+                <p class="cname">Ao Nang Boat Noodle &amp; Thai Food</p>
+                <span class="ctag">נודלס תאילנדי</span>
+                <p class="cdesc">ידועה במיוחד בזכות מנות הנודלס הטעימות שלה, במחירים זולים ונוחים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Boat+Noodle+and+Thai+Food+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/ao-nang-landmark-market.jpg" alt="שוק הלילה של אאו-נאנג (Landmark)" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק הלילה של אאו-נאנג (Landmark)</p>
+                <p class="cdesc">שוק לילה תוסס עם חנויות קטנות לבגדים, פריטי דקורציה ומזכרות אישיות, מוזיקה חיה ומופע אש.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Landmark+Night+Market+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/krabi/ao-nang-beach-walk-market.jpg" alt="שוק הטיילת של אאו-נאנג" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק הטיילת של אאו-נאנג</p>
+                <p class="cdesc">שוק תוסס ליד החוף — מזכרות מקומיות, פירות טריים ואמנות יד, עם נוף לים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ao+Nang+Beach+Walk+Market+Krabi" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </section><section class="dest" id="khaolak">
+      <div class="container">
+        <div class="dest-header">
+          <div class="hero-bg" style="background-image:url('images/hero/khaolak-banner.jpg')"></div>
+          <div class="overlay"></div>
+          <div class="inner">
+            <span class="dest-tag">Aug 26–30</span>
+            <h2>Khao Lak</h2>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <div>
+            <p class="hname">JW Marriott Khao Lak Resort &amp; Spa</p>
+            <p class="hdesc">ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.</p>
+          </div>
+          <a class="btn" href="https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
+            <p class="map-sub">קאולק, תאילנד</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+        </div>
+        <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/phang-nga-canoe.jpg" alt="מפרץ פאנגה ואי ג׳יימס בונד" loading="lazy">
+              <div class="body">
+                <p class="cname">מפרץ פאנגה ואי ג׳יימס בונד</p>
+                <span class="ctag price-tag">$$$ · ~1,500–2,000 ฿ לאדם</span>
+                <p class="cdesc">איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".</p>
+                <a class="clink" href="https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/khao-sok.jpg" alt="פארק לאומי קאו סוק" loading="lazy">
+              <div class="body">
+                <p class="cname">פארק לאומי קאו סוק</p>
+                <span class="ctag price-tag">$$$ · ~2,000–2,500 ฿ לאדם</span>
+                <p class="cdesc">יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.</p>
+                <a class="clink" href="https://en.wikipedia.org/wiki/Khao_Sok_National_Park" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/lam-ru-waterfall.jpg" alt="פארק חאו-לאק לאם-רו והמפל" loading="lazy">
+              <div class="body">
+                <p class="cname">פארק חאו-לאק לאם-רו והמפל</p>
+                <span class="ctag price-tag">$ · ~200 ฿ כניסה לפארק</span>
+                <p class="cdesc">פארק לאומי חופי-יערי ליד קאולק, עם מפל בן 5 מפלים (Ton Chong Fa) ותצפית נופית על החוף — טיול חצי-יום פעיל.</p>
+                <a class="clink" href="https://www.tourismthailand.org/Attraction/khao-lak-lam-ru-national-park" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/tsunami-memorial.jpg" alt="אנדרטת הצונאמי — סירת המשטרה 813" loading="lazy">
+              <div class="body">
+                <p class="cname">אנדרטת הצונאמי — סירת המשטרה 813</p>
+                <span class="ctag price-tag">כניסה חינם</span>
+                <p class="cdesc">אנדרטה נוגעת ללב לצונאמי 2004: סירת משטרה שנסחפה כ-2 ק״מ פנימה, כיום מוצבת כאנדרטה — חוויה משמעותית לבני נוער.</p>
+                <a class="clink" href="https://www.tourismthailand.org/Attraction/tsunami-police-boat-813-memorials" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/elephant-sanctuary.jpg" alt="מקלט פילים אתי" loading="lazy">
+              <div class="body">
+                <p class="cname">מקלט פילים אתי</p>
+                <span class="ctag price-tag">$$$ · ~2,000–3,000 ฿ לאדם</span>
+                <p class="cdesc">מקלט אתי אמיתי לפילים מוצלים — ללא רכיבה וללא מופעים, צפייה בפילים משוטטים במערכת "מגע מוגן".</p>
+                <a class="clink" href="https://khaolak-elephantsanctuary.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        
+        <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/ten-star.jpg" alt="Ten Star Coffee and Food" loading="lazy">
+              <div class="body">
+                <p class="cname">Ten Star Coffee and Food</p>
+                <span class="ctag">תאילנדי וקפה</span>
+                <p class="cdesc">ברחוב פט קסם, קארי ומוקפצים טעימים לצד קפה טוב — פתוח כל היום עד 23:00.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Ten+Star+Coffee+and+Food+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/walkers.jpg" alt="Walkers" loading="lazy">
+              <div class="body">
+                <p class="cname">Walkers</p>
+                <span class="ctag">תאילנדי</span>
+                <p class="cdesc">ידועה בעוף בגריל ובקארי מסמן — סלט המנגו וטום-יאם עוף מקבלים ביקורות מצוינות.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Walkers+Restaurant+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/pattys.jpg" alt="Patty's Restaurant" loading="lazy">
+              <div class="body">
+                <p class="cname">Patty's Restaurant</p>
+                <span class="ctag">תאילנדי</span>
+                <p class="cdesc">פאד תאי במחיר ידידותי (כ-80 ฿), נוף יפה על קאולק, אווירה נעימה ורגועה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Pattys+Restaurant+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/bang-niang-night-market-food.jpg" alt="שוק הלילה של באנג-ניאנג" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק הלילה של באנג-ניאנג</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">מו-פינג (שיפודי חזיר בגריל) עם אורז דביק, רוטי ומטעמי רחוב תאילנדיים אותנטיים, במחירים מקומיים.</p>
+                <a class="clink" href="https://bangniangmarket.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/bang-niang-market.jpg" alt="שוק באנג-ניאנג" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק באנג-ניאנג</p>
+                <p class="cdesc">שוק הלילה המרכזי של קאולק — יותר מ-300 דוכנים של מזכרות, בגדים, מלאכת יד ומוצרי טיפוח תאילנדיים.</p>
+                <a class="clink" href="https://bangniangmarket.com/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/khaolak/bang-niang-plaza.jpg" alt="באנג-ניאנג פלאזה" loading="lazy">
+              <div class="body">
+                <p class="cname">באנג-ניאנג פלאזה</p>
+                <p class="cdesc">פלאזה פתוחה עם מזכרות, בגדי חוף ומשי תאילנדי — קניות מקומיות רגועות יותר משוק הלילה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Bang+Niang+Plaza+Khao+Lak" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </section><section class="dest" id="phuket2">
+      <div class="container">
+        <div class="dest-header">
+          <div class="hero-bg" style="background-image:url('images/hero/phuket2-banner.jpg')"></div>
+          <div class="overlay"></div>
+          <div class="inner">
+            <span class="dest-tag">Aug 30 — Sep 4</span>
+            <h2>Phuket (Part 2)</h2>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <div>
+            <p class="hname">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
+            <p class="hdesc">ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.</p>
+          </div>
+          <a class="btn" href="https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
+        </div>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
+            <p class="map-sub">קלים, פוקט</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
+          </div>
+          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+        </div>
+        <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket2/freedom-beach.jpg" alt="חוף פרידום" loading="lazy">
+              <div class="body">
+                <p class="cname">חוף פרידום</p>
+                <span class="ctag price-tag">$ · ~300–600 ฿ (סירה הלוך-חזור)</span>
+                <p class="cdesc">מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket2/old-phuket-town.jpg" alt="העיר העתיקה של פוקט" loading="lazy">
+              <div class="body">
+                <p class="cname">העיר העתיקה של פוקט</p>
+                <span class="ctag price-tag">חינם (סיור עצמאי)</span>
+                <p class="cdesc">הליכה בין בתי מסחר ססגוניים בסגנון סינו-פורטוגזי ברחוב טאלאנג וסוי רומאני, עם בתי קפה ואמנות רחוב.</p>
+                <a class="clink" href="https://www.machupicchu.org/old-phuket-town-guide-sino-portuguese-architecture-culture.htm" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket2/racha-island.jpg" alt="שנורקלינג באי ראצ׳ה" loading="lazy">
+              <div class="body">
+                <p class="cname">שנורקלינג באי ראצ׳ה</p>
+                <span class="ctag price-tag">$$$ · ~1,800–2,500 ฿ לאדם</span>
+                <p class="cdesc">טיול יום בסירת מהירות לאי בתולי עם שוניות אלמוגים רדודות, מתאים לכל הרמות, כולל ארוחת צהריים על החוף.</p>
+                <a class="clink" href="https://www.viator.com/tours/Phuket/Coral-Island-and-Racha-Island-Snorkeling-Tour-By-Speedboat-From-Phuket/d349-110534P183" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket2/parasailing.jpg" alt="פאראסיילינג וג׳ט-סקי" loading="lazy">
+              <div class="body">
+                <p class="cname">פאראסיילינג וג׳ט-סקי</p>
+                <span class="ctag price-tag">$$ · ~600–1,500 ฿ לפעילות</span>
+                <p class="cdesc">ספורט ימי מהיר ומלא אדרנלין ממש מול חוף פאטונג — פעילות מצוינת של חצי שעה בין ימי חוף.</p>
+                <a class="clink" href="https://phuketwatersports.com/sport/parasailing/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/phuket2/kalim-sunset.jpg" alt="חוף קאלים ונקודת שקיעה" loading="lazy">
+              <div class="body">
+                <p class="cname">חוף קאלים ונקודת שקיעה</p>
+                <span class="ctag price-tag">חינם</span>
+                <p class="cdesc">רצועת חוף שקטה וסלעית מצפון לפאטונג, ידועה בשנורקלינג בעונה השקטה ובנופי שקיעה מהיפים בחוף.</p>
+                <a class="clink" href="https://www.phuket101.net/kalim-beach/" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">המדריך של Time Out לפוקט</p>
+            <p class="to-sub">עוד המלצות של מגזין הטיולים · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>
+        <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
+              <div class="body">
+                <p class="cname">EuroThai Restaurant</p>
+                <span class="ctag">תאילנדי אותנטי</span>
+                <p class="cdesc">נסיעה קצרה מקאלים לפאטונג — פאד תאי אמיתי וקארי צהוב טעים במקום משפחתי וחמים.</p>
+                <a class="clink" href="https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
+              <div class="body">
+                <p class="cname">Baan Pad Thaï</p>
+                <span class="ctag">תאילנדי, פאד תאי</span>
+                <p class="cdesc">מדורגת 5.0/5 בטריפאדוויזור — אורז מטוגן ופאד תאי טריים, מומלץ לחזור לכאן גם בשהות השנייה.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/no6-up-the-hill.jpg" alt="No.6 Restaurant " up="" the="" hill""="" loading="lazy">
+              <div class="body">
+                <p class="cname">No.6 Restaurant "Up The Hill"</p>
+                <span class="ctag">תאילנדי</span>
+                <p class="cdesc">סניף גבעה של מסעדה מקומית ותיקה, עם נוף פנורמי לפאטונג לצד מנות תאילנדיות נדיבות.</p>
+                <a class="clink" href="https://www.tripadvisor.com/Restaurant_Review-g297930-d2256384-Reviews-No_6_Restaurant-Patong_Kathu_Phuket.html" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק באנזאן — קומת הרחוב</p>
+                <span class="ctag">רחוב תאילנדי</span>
+                <p class="cdesc">עשרות דוכני רחוב אותנטיים בפאטונג — פאד תאי בכ-100 ฿, טום יאם עוף ועוד, ממש כמו בשהות הראשונה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
+        <div class="cards-grid">
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
+              <div class="body">
+                <p class="cname">ג׳אנגסילון (Jungceylon)</p>
+                <p class="cdesc">נסיעה קצרה מקאלים — הקניון המרכזי של פאטונג, מותגים, סופרמרקט Big C ופודקורט גדול.</p>
+                <a class="clink" href="https://www.jungceylon.com/en" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+            <div class="card">
+              <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
+              <div class="body">
+                <p class="cname">שוק באנזאן</p>
+                <p class="cdesc">שוק מקומי עם פירות, תבלינים ומזכרות — הזדמנות נוספת לחוויית קניות תאילנדית אמיתית לפני הטיסה הביתה.</p>
+                <a class="clink" href="https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket" target="_blank" rel="noopener">לפרטים נוספים →</a>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    </section></div>
+
+<section class="flights container" id="flightsRet" dir="rtl" lang="he">
+  <h3 class="block-title"><span class="icon">✈️</span><span>טיסת חזור — פוקט ← תל אביב</span></h3>
+
+  <div class="flight-map-wrap">
+    <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
+      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
+      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
+      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
+      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
+      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+    </svg>
+    <div class="flight-map-legend">
+      <span>פוקט → אבו דאבי: כ-4,977 ק״מ</span>
+      <span>אבו דאבי → תל אביב: כ-2,110 ק״מ</span>
+      <span>סה״כ כיוון חזור: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
+    </div>
+  </div>
+
+  <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 417 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות<br>מרחק: כ-4,977 ק״מ</div>
+  </div>
+  <div class="layover-note">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
+  <div class="leg-card">
+    <div class="ficon">✈️</div>
+    <div class="leg-main">
+      <div class="leg-flightno">EY 599 · Etihad Airways</div>
+      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+      <div class="leg-route">
+        <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+        <span>✈</span>
+        <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+      </div>
+    </div>
+    <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות<br>מרחק: כ-2,110 ק״מ</div>
+  </div>
+</section>
+
+<section class="prep" id="prep">
+  <div class="container">
+    <div class="prep-head">
+      <h2 data-i18n="prepTitle">רשימת ציוד — מה לא לשכוח</h2>
+      <p data-i18n="prepSub">רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.</p>
+    </div>
+    <div class="prep-progress" id="prepProgress">0 מתוך 36 פריטים סומנו</div>
+    <div class="prep-grid" id="prepGrid">
+    <div class="prep-cat">
+      <h4>🛂 מסמכים וכסף</h4>
+      <ul>
+        <li class="">
+            <input type="checkbox" id="docs-0" data-id="docs-0">
+            <label for="docs-0">דרכונים בתוקף (6+ חודשים) + עותקים</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-1" data-id="docs-1">
+            <label for="docs-1">בדיקת ויזת מעבר באבו דאבי</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-2" data-id="docs-2">
+            <label for="docs-2">ביטוח נסיעות עם כיסוי שנורקלינג/סירות</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-3" data-id="docs-3">
+            <label for="docs-3">כרטיסי טיסה דיגיטליים + גיבוי מודפס</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-4" data-id="docs-4">
+            <label for="docs-4">אישורי הזמנת מלונות</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-5" data-id="docs-5">
+            <label for="docs-5">כרטיסי אשראי (לעדכן בנק) + גיבוי</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-6" data-id="docs-6">
+            <label for="docs-6">מזומן — דולרים ובאט תאילנדי</label>
+          </li><li class="">
+            <input type="checkbox" id="docs-7" data-id="docs-7">
+            <label for="docs-7">אנשי קשר לחירום ופרטי שגרירות</label>
+          </li>
+      </ul>
+    </div>
+  
+    <div class="prep-cat">
+      <h4>👕 ביגוד</h4>
+      <ul>
+        <li class="">
+            <input type="checkbox" id="clothes-0" data-id="clothes-0">
+            <label for="clothes-0">בגדים קלים ומתייבשים מהר</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-1" data-id="clothes-1">
+            <label for="clothes-1">מעיל גשם קל / פונצ׳ו</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-2" data-id="clothes-2">
+            <label for="clothes-2">בגדי ים (2-3 סטים לאדם)</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-3" data-id="clothes-3">
+            <label for="clothes-3">חולצת שנורקלינג עם הגנת UV</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-4" data-id="clothes-4">
+            <label for="clothes-4">ביגוד צנוע לביקור בטמפלים</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-5" data-id="clothes-5">
+            <label for="clothes-5">כפכפים ונעלי מים</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-6" data-id="clothes-6">
+            <label for="clothes-6">זוג נעליים נוחות להליכה</label>
+          </li><li class="">
+            <input type="checkbox" id="clothes-7" data-id="clothes-7">
+            <label for="clothes-7">כובע/מצחייה + מגבת מתייבשת מהר</label>
+          </li>
+      </ul>
+    </div>
+  
+    <div class="prep-cat">
+      <h4>🔌 אלקטרוניקה</h4>
+      <ul>
+        <li class="">
+            <input type="checkbox" id="electronics-0" data-id="electronics-0">
+            <label for="electronics-0">מטענים + מתאם חשמל אוניברסלי (220V)</label>
+          </li><li class="">
+            <input type="checkbox" id="electronics-1" data-id="electronics-1">
+            <label for="electronics-1">פאוור בנק</label>
+          </li><li class="">
+            <input type="checkbox" id="electronics-2" data-id="electronics-2">
+            <label for="electronics-2">נרתיק אטום למים לטלפון</label>
+          </li><li class="">
+            <input type="checkbox" id="electronics-3" data-id="electronics-3">
+            <label for="electronics-3">מצלמה/גופרו + כרטיסי זיכרון</label>
+          </li><li class="">
+            <input type="checkbox" id="electronics-4" data-id="electronics-4">
+            <label for="electronics-4">אוזניות מבטלות רעש לטיסות</label>
+          </li><li class="">
+            <input type="checkbox" id="electronics-5" data-id="electronics-5">
+            <label for="electronics-5">מטען USB מרובה יציאות</label>
+          </li>
+      </ul>
+    </div>
+  
+    <div class="prep-cat">
+      <h4>☀️ בריאות וציוד לים</h4>
+      <ul>
+        <li class="">
+            <input type="checkbox" id="health-0" data-id="health-0">
+            <label for="health-0">קרם הגנה ידידותי לשוניות, SPF גבוה</label>
+          </li><li class="">
+            <input type="checkbox" id="health-1" data-id="health-1">
+            <label for="health-1">ג׳ל אלוורה לאחרי שמש</label>
+          </li><li class="">
+            <input type="checkbox" id="health-2" data-id="health-2">
+            <label for="health-2">דוחה יתושים (DEND — עונת גשמים)</label>
+          </li><li class="">
+            <input type="checkbox" id="health-3" data-id="health-3">
+            <label for="health-3">ערכת עזרה ראשונה + תרופה לשלשולים</label>
+          </li><li class="">
+            <input type="checkbox" id="health-4" data-id="health-4">
+            <label for="health-4">תרופות אישיות ומרשמים</label>
+          </li><li class="">
+            <input type="checkbox" id="health-5" data-id="health-5">
+            <label for="health-5">תיק יבש (dry bag) לטיולי סירה</label>
+          </li><li class="">
+            <input type="checkbox" id="health-6" data-id="health-6">
+            <label for="health-6">אטמי אוזניים</label>
+          </li>
+      </ul>
+    </div>
+  
+    <div class="prep-cat">
+      <h4>🎧 לבני הנוער</h4>
+      <ul>
+        <li class="">
+            <input type="checkbox" id="teens-0" data-id="teens-0">
+            <label for="teens-0">פאוור בנק אישי</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-1" data-id="teens-1">
+            <label for="teens-1">אוזניות/אירבדס</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-2" data-id="teens-2">
+            <label for="teens-2">רמקול בלוטות׳ נייד</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-3" data-id="teens-3">
+            <label for="teens-3">ספרים/סדרות מוכנות מראש לטיסות</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-4" data-id="teens-4">
+            <label for="teens-4">חטיפים אישיים</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-5" data-id="teens-5">
+            <label for="teens-5">בגדי ים נוספים (יציאות תכופות מהמים)</label>
+          </li><li class="">
+            <input type="checkbox" id="teens-6" data-id="teens-6">
+            <label for="teens-6">תיק גב קטן אישי</label>
+          </li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</section>
+
+<footer data-i18n="footer">נבנה באהבה למשפחה שלנו · טיול תאילנד 17.8–4.9.2026</footer>
+
+<script>
+/* ============================= DATA ============================= */
+const TRIP_META = { start: '2026-08-17', end: '2026-09-04' };
+
+const I18N = {
+  he: {
+    brand: 'HaVenture',
+    heroEyebrow: '17.8 – 4.9.2026 · טיול משפחתי',
+    heroTitle: 'משפחת חבר יוצאת ל-HaVenture בתאילנד',
+    heroSub: 'פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.',
+    statDays: 'ימי טיול', statStops: 'תחנות', statPeople: 'נוסעים',
+    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navPrep: 'רשימת ציוד',
+    trackerTitle: 'איפה אנחנו בכל יום',
+    prepTitle: 'רשימת ציוד — מה לא לשכוח',
+    prepSub: 'רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.',
+    footer: 'נבנה באהבה למשפחה שלנו · טיול תאילנד 17.8–4.9.2026',
+    todayBefore: (d) => `הטיול מתחיל בעוד ${d} ימים`,
+    todayAfter: 'הטיול הסתיים — איזה כיף שהיה!',
+    todayFlightOut: 'היום: יום טיסה לתאילנד ✈️',
+    todayFlightRet: 'היום: יום טיסה הביתה ✈️',
+    todayAt: (name) => `היום אנחנו ב${name}`,
+    dayOf: (n,total) => `יום ${n} מתוך ${total}`,
+    transferNote: (from,to) => `יום מעבר: יציאה מ${from} והגעה ל${to}`,
+    flightOutTag: 'טיסת הלוך', flightRetTag: 'טיסת חזור', transferTag: 'מעבר',
+    seeOfficial: 'אתר המלון הרשמי', seeMore: 'לפרטים נוספים', openMaps: '🗺️ פתיחה ב-Google Maps',
+    attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
+    weatherLoading: 'טוען מזג אוויר...', weatherUnavailable: 'מזג האוויר לא זמין כרגע',
+    timeOutTitle: 'המדריך של Time Out לפוקט', timeOutSub: 'עוד המלצות של מגזין הטיולים',
+  },
+  en: {
+    brand: 'HaVenture',
+    heroEyebrow: 'Aug 17 – Sep 4, 2026 · Family Trip',
+    heroTitle: 'The Haver Family HaVenture — Thailand 2026',
+    heroSub: 'Phuket → Krabi → Khao Lak → Phuket. 19 days of beaches, islands, flavors and adventures — all in one place, with a live day-by-day tracker.',
+    statDays: 'trip days', statStops: 'stops', statPeople: 'travelers',
+    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navPrep: 'Prep List',
+    trackerTitle: 'Where we are each day',
+    prepTitle: 'Prep List — Don\'t Forget',
+    prepSub: 'A categorized checklist. Check items off while packing — your progress is saved automatically in this browser.',
+    footer: 'Built with love for our family · Thailand trip Aug 17 – Sep 4, 2026',
+    todayBefore: (d) => `Trip starts in ${d} days`,
+    todayAfter: 'The trip is over — what a journey!',
+    todayFlightOut: 'Today: flight day to Thailand ✈️',
+    todayFlightRet: 'Today: flight day home ✈️',
+    todayAt: (name) => `Today we're in ${name}`,
+    dayOf: (n,total) => `Day ${n} of ${total}`,
+    transferNote: (from,to) => `Transfer day: checkout from ${from}, arriving in ${to}`,
+    flightOutTag: 'Outbound flight', flightRetTag: 'Return flight', transferTag: 'Transfer',
+    seeOfficial: 'Official hotel site', seeMore: 'More info', openMaps: '🗺️ Open in Google Maps',
+    attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
+    weatherLoading: 'Loading weather...', weatherUnavailable: 'Weather unavailable right now',
+    timeOutTitle: 'The Time Out Guide to Phuket', timeOutSub: 'More picks from the travel magazine',
+  }
+};
+
+
+const DESTINATIONS = [
+  {
+    id:'phuket1', start:'2026-08-18', end:'2026-08-22',
+    nameHe:'פוקט (חלק 1)', nameEn:'Phuket (Part 1)',
+    heroImg: 'images/hero/phuket1-banner.jpg',
+    hotel:{
+      nameHe:'Dinso Resort & Villas Phuket, Vignette Collection',
+      nameEn:'Dinso Resort & Villas Phuket, Vignette Collection',
+      descHe:'ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.',
+      descEn:'A Wabi-Sabi–inspired boutique resort on a lush hillside above Patong — about a 10-minute ride from Patong Beach and 600m from Jungceylon Shopping Center.',
+      link:'https://www.dinsoresort.com/phuket/',
+      mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket',
+      mapLat:7.8965, mapLon:98.2965
+    },
+    attractions:[
+      {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img:'images/phuket1/big-buddha.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free entry'},
+      {nameHe:'זיפליין ו-ATV ביער הטרופי', nameEn:'Cable Jungle Adventure — Zipline & ATV', descHe:'מסלול זיפליין בחופת הג׳ונגל (21 תחנות, 2 ק״מ) בשילוב רכיבת ATV — אטרקציית אדרנלין מעולה לבני נוער.', descEn:'A jungle-canopy zipline (21 stations, 2km) often combined with ATV off-road rides — great teen-friendly adrenaline stop.', link:'https://www.tripadvisor.com/Attraction_Review-g2315806-d2091139-Reviews-Cable_Jungle_Adventure-Si_Sunthon_Thalang_District_Phuket.html', img:'images/phuket1/cable-jungle-zipline.jpg', tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'רחוב באנגלה ושוק הלילה', nameEn:'Bangla Road & Night Market', descHe:'הרחוב התוסס של פאטונג — בערב מוקדם שוק רחוב עם אוכל, ובלילה רחוב הבידור המרכזי של האי.', descEn:'Patong\'s famous street — a lively food market by early evening, the island\'s main entertainment strip by night.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d20160170-Reviews-Bangla_Night_Market-Patong_Kathu_Phuket.html', img:'images/phuket1/bangla-road.jpg', tier:0, priceHe:'כניסה חינם (אוכל בתשלום)', priceEn:'Free to enter (food extra)'},
+      {nameHe:'טיול יום לאיי פי-פי', nameEn:'Phi Phi Islands Day Trip', descHe:'טיול סירת מהירות לארכיפלג פי-פי — שנורקלינג במפרץ פילה ובאי במבוק, עצירה במאיה ביי, ארוחת צהריים כלולה.', descEn:'Speedboat day trip to the iconic Phi Phi archipelago — snorkeling at Pileh Lagoon & Bamboo Island, a Maya Bay stop, lunch included.', link:'https://www.viator.com/tours/Phuket/Phi-Phi-Island-Hopping-Day-Trip-by-Speed-Boat-from-Phuket/d349-9574P490', img:'images/phuket1/phi-phi-islands.jpg', tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'איי ג׳יימס בונד ומפרץ פאנגה', nameEn:'James Bond Island & Phang Nga Bay', descHe:'שיט בין נופי קארסט מרהיבים, קיאקים במעברים נסתרים, עצירה באי "ג׳יימס בונד" ובכפר הדייגים קוה פאניי.', descEn:'A boat day through dramatic limestone karsts, sea-canoeing through hidden lagoons, a stop at "James Bond Island" and Koh Panyee stilt village.', link:'https://www.viator.com/Phuket-attractions/James-Bond-Island-Khao-Phing-Kan/d349-a15586', img:'images/phuket1/james-bond-island.jpg', tier:3, priceHe:'~1,500–2,200 ฿ לאדם', priceEn:'~1,500–2,200 THB/person'},
+    ],
+    restaurants:[
+      {nameHe:'EuroThai Restaurant', nameEn:'EuroThai Restaurant', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'מסעדה משפחתית קטנה וחמימה בסמטת ד״ר ואטאנה בפאטונג — פאד תאי אמיתי וקארי צהוב טעים, לא מתויר.', descEn:'A tiny, warm family-run spot on Soi Dr. Wattana in Patong, known for genuinely authentic pad Thai and a tasty yellow curry — real Thai flavor, not westernized.', link:'https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket', img:'images/shared/eurothai.jpg'},
+      {nameHe:'Baan Pad Thaï', nameEn:'Baan Pad Thaï', cuisineHe:'תאילנדי, פאד תאי', cuisineEn:'Thai, pad Thai specialist', descHe:'מסעדה קטנה בפאטונג המדורגת 5.0/5 בטריפאדוויזור — האורז המטוגן והפאד תאי הכי טובים בעיר, הכל טרי.', descEn:'A small Patong spot rated 5.0/5 on Tripadvisor — some of the best fried rice and pad Thai in town, everything cooked fresh.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html', img:'images/shared/baan-pad-thai.jpg'},
+      {nameHe:'Kaab Gluay', nameEn:'Kaab Gluay (Banana Leaf Rib)', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'אחת המסעדות המקומיות האותנטיות בפאטונג — סלטים חריפים, קארי אדום ומוקפצים במחירים הוגנים.', descEn:'One of the few genuinely local Thai spots in Patong — spicy salads, red curry and stir-fries at honest prices.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27179265-Reviews-Kaabgluay-Patong_Kathu_Phuket.html', img:'images/shared/kaab-gluay.jpg'},
+      {nameHe:'שוק באנזאן — קומת הרחוב', nameEn:'Banzaan Market — Street Food Floor', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'הקומה השנייה של שוק באנזאן בפאטונג — עשרות דוכני רחוב אותנטיים, פאד תאי בכ-100 ฿, טום יאם עוף ועוד.', descEn:'The upper floor of Banzaan Market in Patong — dozens of authentic street-food stalls, pad Thai for about 100 THB, chicken tom yum and more.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket', img:'images/shared/banzaan-street-food.jpg'},
+    ],
+    shopping:[
+      {nameHe:'ג׳אנגסילון (Jungceylon)', nameEn:'Jungceylon Shopping Center', descHe:'הקניון הענק והמרכזי של פאטונג — מותגים בינלאומיים ומקומיים, סופרמרקט Big C, קולנוע ופודקורט גדול.', descEn:'Patong\'s massive central mall — international and local brands, a Big C supermarket, a cinema, and a large food court.', link:'https://www.jungceylon.com/en', img:'images/shared/jungceylon.jpg'},
+      {nameHe:'שוק באנזאן', nameEn:'Banzaan Fresh Market', descHe:'שוק מקומי תוסס עם פירות, תבלינים, בדים ומזכרות — חוויית קניות תאילנדית אמיתית, לצד קומת אוכל הרחוב.', descEn:'A lively local market with fruit, spices, fabrics and souvenirs — a genuine Thai shopping experience, alongside the street-food floor.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket', img:'images/shared/banzaan-market-shopping.jpg'},
+    ]
+  },
+  {
+    id:'krabi', start:'2026-08-22', end:'2026-08-26',
+    nameHe:'קרבי', nameEn:'Krabi',
+    heroImg: 'images/hero/krabi-banner.jpg',
+    hotel:{
+      nameHe:'Dusit Thani Krabi Beach Resort',
+      nameEn:'Dusit Thani Krabi Beach Resort',
+      descHe:'ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.',
+      descEn:'A beachfront luxury resort on Klong Muang Beach (adjacent to Tubkaek Beach), framed by limestone cliffs and tropical gardens.',
+      link:'https://www.dusit.com/dusitthani-krabibeachresort/',
+      mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand',
+      mapLat:8.1600, mapLon:98.7590
+    },
+    attractions:[
+      {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img:'images/krabi/railay-beach.jpg', tier:2, priceHe:'~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿', priceEn:'~150–200 THB boat; guided climbing ~1,500 THB'},
+      {nameHe:'טיול ארבעת האיים', nameEn:'Four Islands Tour', descHe:'טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.', descEn:'A full-day boat-hopping tour — snorkeling, the famous sandbar between Chicken and Tup Islands, and a beach picnic.', link:'https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97', img:'images/krabi/four-islands-tour.jpg', tier:2, priceHe:'~800–1,200 ฿ לאדם', priceEn:'~800–1,200 THB/person'},
+      {nameHe:'מקדש מערת הנמר', nameEn:'Tiger Cave Temple (Wat Tham Suea)', descHe:'מקדש על גבעה שמגיעים אליו ב-1,237 מדרגות, לפסל בודהה זהוב ולנוף פנורמי — אתגר כיפי לבני נוער. כניסה חינם.', descEn:'A hilltop temple reached via 1,237 steps to a giant golden Buddha and panoramic views — a fun challenge for active teens. Free entry.', link:'https://www.tourismthailand.org/Attraction/wat-tham-suea', img:'images/krabi/tiger-cave-temple.jpg', tier:0, priceHe:'כניסה חינם (תרומה)', priceEn:'Free entry (donation)'},
+      {nameHe:'הבריכה האזמרגדית והכחולה', nameEn:'Emerald Pool & Blue Pool', descHe:'שמורת ג׳ונגל עם בריכת מעיינות טורקיז לשחייה, ובריכה כחולה מרהיבה במרחק הליכה קצרה (ללא שחייה).', descEn:'A jungle reserve with a swimmable turquoise mineral pool, and a striking sapphire Blue Pool nearby (no swimming there).', link:'https://www.tourismthailand.org/Attraction/sa-morakot-emerald-pool', img:'images/krabi/emerald-pool.jpg', tier:1, priceHe:'~200 ฿ כניסה לפארק', priceEn:'~200 THB park entry'},
+      {nameHe:'עיירת אאו-נאנג ושוק הלילה', nameEn:'Ao Nang Town & Night Market', descHe:'המרכז התיירותי של האזור, עם שוק לילה תוסס — אוכל רחוב, מלאכת יד, מוזיקה חיה ומופעי מואי תאי.', descEn:'The area\'s tourist hub with a lively nightly market — street food, handicrafts, live music and Muay Thai shows.', link:'https://en.wikipedia.org/wiki/Ao_Nang', img:'images/krabi/ao-nang-market.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free'},
+    ],
+    restaurants:[
+      {nameHe:'Amp & Aing', nameEn:'Amp & Aing', cuisineHe:'תאילנדי משפחתי', cuisineEn:'Family-run Thai', descHe:'מסעדה משפחתית עם אוכל טוב ומחירים הוגנים — הרבה מקומיים אוכלים כאן, לא רק תיירים.', descEn:'A family-run spot with genuinely good food at fair prices — plenty of locals eat here too, not just tourists.', link:'https://www.google.com/maps/search/Amp+%26+Aing+Restaurant+Ao+Nang+Krabi', img:'images/krabi/amp-aing.jpg'},
+      {nameHe:'KoDam Kitchen', nameEn:'KoDam Kitchen', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'אחת המסעדות התאילנדיות האהובות באאו-נאנג — אוכל טעים במחירים בלתי מנוצחים ואווירה נעימה.', descEn:'One of the best-loved Thai restaurants in Ao Nang — delicious food at unbeatable prices and a pleasant atmosphere.', link:'https://www.google.com/maps/search/KoDam+Kitchen+Ao+Nang+Krabi', img:'images/krabi/kodam-kitchen.jpg'},
+      {nameHe:'Mama Kitchen', nameEn:'Mama Kitchen', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'מקום פשוט למתי שאוהבים מטבח תאילנדי אמיתי, ממוקם מחוץ לאזור התיירותי המרכזי.', descEn:'A simple spot for lovers of authentic Thai cuisine, located just outside the main tourist strip.', link:'https://www.google.com/maps/search/Mama+Kitchen+Ao+Nang+Krabi', img:'images/krabi/mama-kitchen.jpg'},
+      {nameHe:'Ao Nang Boat Noodle & Thai Food', nameEn:'Ao Nang Boat Noodle & Thai Food', cuisineHe:'נודלס תאילנדי', cuisineEn:'Thai noodles', descHe:'ידועה במיוחד בזכות מנות הנודלס הטעימות שלה, במחירים זולים ונוחים.', descEn:'Known especially for its delicious noodle dishes, at cheap and easy prices.', link:'https://www.google.com/maps/search/Ao+Nang+Boat+Noodle+and+Thai+Food+Krabi', img:'images/krabi/ao-nang-boat-noodle.jpg'},
+    ],
+    shopping:[
+      {nameHe:'שוק הלילה של אאו-נאנג (Landmark)', nameEn:'Ao Nang Landmark Night Market', descHe:'שוק לילה תוסס עם חנויות קטנות לבגדים, פריטי דקורציה ומזכרות אישיות, מוזיקה חיה ומופע אש.', descEn:'A lively night market with small shops for clothes, decor and personalized souvenirs, live music, and a fire show.', link:'https://www.google.com/maps/search/Ao+Nang+Landmark+Night+Market+Krabi', img:'images/krabi/ao-nang-landmark-market.jpg'},
+      {nameHe:'שוק הטיילת של אאו-נאנג', nameEn:'Ao Nang Beach Walk Market', descHe:'שוק תוסס ליד החוף — מזכרות מקומיות, פירות טריים ואמנות יד, עם נוף לים.', descEn:'A vibrant market near the beach — local souvenirs, fresh fruit and handicrafts, with sea views.', link:'https://www.google.com/maps/search/Ao+Nang+Beach+Walk+Market+Krabi', img:'images/krabi/ao-nang-beach-walk-market.jpg'},
+    ]
+  },
+  {
+    id:'khaolak', start:'2026-08-26', end:'2026-08-30',
+    nameHe:'קאולק', nameEn:'Khao Lak',
+    heroImg: 'images/hero/khaolak-banner.jpg',
+    hotel:{
+      nameHe:'JW Marriott Khao Lak Resort & Spa',
+      nameEn:'JW Marriott Khao Lak Resort & Spa',
+      descHe:'ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.',
+      descEn:'A beachfront luxury resort set among tropical gardens facing the Andaman Sea, with family suites and spa facilities.',
+      link:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/',
+      mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand',
+      mapLat:8.7000, mapLon:98.2530
+    },
+    attractions:[
+      {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img:'images/khaolak/phang-nga-canoe.jpg', tier:3, priceHe:'~1,500–2,000 ฿ לאדם', priceEn:'~1,500–2,000 THB/person'},
+      {nameHe:'פארק לאומי קאו סוק', nameEn:'Khao Sok National Park', descHe:'יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.', descEn:'Ancient rainforest with dramatic karsts; day tours include a longtail boat ride across Cheow Lan Lake and lunch on a floating raft.', link:'https://en.wikipedia.org/wiki/Khao_Sok_National_Park', img:'images/khaolak/khao-sok.jpg', tier:3, priceHe:'~2,000–2,500 ฿ לאדם', priceEn:'~2,000–2,500 THB/person'},
+      {nameHe:'פארק חאו-לאק לאם-רו והמפל', nameEn:'Khao Lak–Lam Ru National Park', descHe:'פארק לאומי חופי-יערי ליד קאולק, עם מפל בן 5 מפלים (Ton Chong Fa) ותצפית נופית על החוף — טיול חצי-יום פעיל.', descEn:'A coastal/jungle national park with a 5-tier waterfall (Ton Chong Fa) and a scenic coastal viewpoint — a great half-day outing.', link:'https://www.tourismthailand.org/Attraction/khao-lak-lam-ru-national-park', img:'images/khaolak/lam-ru-waterfall.jpg', tier:1, priceHe:'~200 ฿ כניסה לפארק', priceEn:'~200 THB park entry'},
+      {nameHe:'אנדרטת הצונאמי — סירת המשטרה 813', nameEn:'Tsunami Memorial — Police Boat 813', descHe:'אנדרטה נוגעת ללב לצונאמי 2004: סירת משטרה שנסחפה כ-2 ק״מ פנימה, כיום מוצבת כאנדרטה — חוויה משמעותית לבני נוער.', descEn:'A moving memorial to the 2004 tsunami: a police boat swept ~2km inland, now standing as a monument — meaningful for teens.', link:'https://www.tourismthailand.org/Attraction/tsunami-police-boat-813-memorials', img:'images/khaolak/tsunami-memorial.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free'},
+      {nameHe:'מקלט פילים אתי', nameEn:'Khaolak Elephant Sanctuary (ethical)', descHe:'מקלט אתי אמיתי לפילים מוצלים — ללא רכיבה וללא מופעים, צפייה בפילים משוטטים במערכת "מגע מוגן".', descEn:'A genuinely ethical sanctuary for rescued elephants — no rides, no shows, protected-contact observation only.', link:'https://khaolak-elephantsanctuary.com/', img:'images/khaolak/elephant-sanctuary.jpg', tier:3, priceHe:'~2,000–3,000 ฿ לאדם', priceEn:'~2,000–3,000 THB/person'},
+    ],
+    restaurants:[
+      {nameHe:'Ten Star Coffee and Food', nameEn:'Ten Star Coffee and Food', cuisineHe:'תאילנדי וקפה', cuisineEn:'Thai & coffee', descHe:'ברחוב פט קסם, קארי ומוקפצים טעימים לצד קפה טוב — פתוח כל היום עד 23:00.', descEn:'On Phet Kasem Road — flavorful curries and stir-fries alongside good coffee, open all day until 23:00.', link:'https://www.google.com/maps/search/Ten+Star+Coffee+and+Food+Khao+Lak', img:'images/khaolak/ten-star.jpg'},
+      {nameHe:'Walkers', nameEn:'Walkers', cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'ידועה בעוף בגריל ובקארי מסמן — סלט המנגו וטום-יאם עוף מקבלים ביקורות מצוינות.', descEn:'Known for chicken dinners and massaman curry — the mango salad and chicken tom yum get excellent reviews.', link:'https://www.google.com/maps/search/Walkers+Restaurant+Khao+Lak', img:'images/khaolak/walkers.jpg'},
+      {nameHe:"Patty's Restaurant", nameEn:"Patty's Restaurant", cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'פאד תאי במחיר ידידותי (כ-80 ฿), נוף יפה על קאולק, אווירה נעימה ורגועה.', descEn:'Friendly-priced pad Thai (around 80 THB), lovely views over Khao Lak, relaxed atmosphere.', link:'https://www.google.com/maps/search/Pattys+Restaurant+Khao+Lak', img:'images/khaolak/pattys.jpg'},
+      {nameHe:'שוק הלילה של באנג-ניאנג', nameEn:'Bang Niang Night Market — Street Food', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'מו-פינג (שיפודי חזיר בגריל) עם אורז דביק, רוטי ומטעמי רחוב תאילנדיים אותנטיים, במחירים מקומיים.', descEn:'Moo ping (grilled pork skewers) with sticky rice, roti, and authentic Thai street snacks at local prices.', link:'https://bangniangmarket.com/', img:'images/khaolak/bang-niang-night-market-food.jpg'},
+    ],
+    shopping:[
+      {nameHe:'שוק באנג-ניאנג', nameEn:'Bang Niang Market', descHe:'שוק הלילה המרכזי של קאולק — יותר מ-300 דוכנים של מזכרות, בגדים, מלאכת יד ומוצרי טיפוח תאילנדיים.', descEn:'Khao Lak\'s main night market — 300+ stalls of souvenirs, clothing, handicrafts and Thai wellness products.', link:'https://bangniangmarket.com/', img:'images/khaolak/bang-niang-market.jpg'},
+      {nameHe:'באנג-ניאנג פלאזה', nameEn:'Bang Niang Plaza', descHe:'פלאזה פתוחה עם מזכרות, בגדי חוף ומשי תאילנדי — קניות מקומיות רגועות יותר משוק הלילה.', descEn:'An open-air plaza with souvenirs, beachwear and Thai silk — a calmer local shopping alternative to the night market.', link:'https://www.google.com/maps/search/Bang+Niang+Plaza+Khao+Lak', img:'images/khaolak/bang-niang-plaza.jpg'},
+    ]
+  },
+  {
+    id:'phuket2', start:'2026-08-30', end:'2026-09-04',
+    nameHe:'פוקט (חלק 2)', nameEn:'Phuket (Part 2)',
+    heroImg: 'images/hero/phuket2-banner.jpg',
+    hotel:{
+      nameHe:'Phuket Marriott Resort & Spa, Merlin Beach',
+      nameEn:'Phuket Marriott Resort & Spa, Merlin Beach',
+      descHe:'ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.',
+      descEn:'A 5-star beachfront resort on secluded Merlin (Tri-Trang) Beach, minutes south of Patong — the only hotel on its own private cove.',
+      link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/',
+      mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket',
+      mapLat:7.9070, mapLon:98.2985
+    },
+    attractions:[
+      {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:'images/phuket2/freedom-beach.jpg', tier:1, priceHe:'~300–600 ฿ (סירה הלוך-חזור)', priceEn:'~300–600 THB (round-trip boat)'},
+      {nameHe:'העיר העתיקה של פוקט', nameEn:'Old Phuket Town', descHe:'הליכה בין בתי מסחר ססגוניים בסגנון סינו-פורטוגזי ברחוב טאלאנג וסוי רומאני, עם בתי קפה ואמנות רחוב.', descEn:'A walk through colorful Sino-Portuguese shophouses on Thalang Road and Soi Romanee, with cafés and street art.', link:'https://www.machupicchu.org/old-phuket-town-guide-sino-portuguese-architecture-culture.htm', img:'images/phuket2/old-phuket-town.jpg', tier:0, priceHe:'חינם (סיור עצמאי)', priceEn:'Free (self-guided)'},
+      {nameHe:'שנורקלינג באי ראצ׳ה', nameEn:'Racha (Raya) Island Snorkeling', descHe:'טיול יום בסירת מהירות לאי בתולי עם שוניות אלמוגים רדודות, מתאים לכל הרמות, כולל ארוחת צהריים על החוף.', descEn:'A speedboat day trip to a pristine island with shallow coral reefs, ideal for all levels, plus a beach lunch.', link:'https://www.viator.com/tours/Phuket/Coral-Island-and-Racha-Island-Snorkeling-Tour-By-Speedboat-From-Phuket/d349-110534P183', img:'images/phuket2/racha-island.jpg', tier:3, priceHe:'~1,800–2,500 ฿ לאדם', priceEn:'~1,800–2,500 THB/person'},
+      {nameHe:'פאראסיילינג וג׳ט-סקי', nameEn:'Parasailing & Jet Skiing', descHe:'ספורט ימי מהיר ומלא אדרנלין ממש מול חוף פאטונג — פעילות מצוינת של חצי שעה בין ימי חוף.', descEn:'Quick-hit adrenaline water sports right off Patong Beach — a great half-hour activity between beach days.', link:'https://phuketwatersports.com/sport/parasailing/', img:'images/phuket2/parasailing.jpg', tier:2, priceHe:'~600–1,500 ฿ לפעילות', priceEn:'~600–1,500 THB/activity'},
+      {nameHe:'חוף קאלים ונקודת שקיעה', nameEn:'Kalim Beach Viewpoint & Sunset', descHe:'רצועת חוף שקטה וסלעית מצפון לפאטונג, ידועה בשנורקלינג בעונה השקטה ובנופי שקיעה מהיפים בחוף.', descEn:'A quiet rocky stretch north of Patong, known for calm-season snorkeling and some of the best sunset views on the coast.', link:'https://www.phuket101.net/kalim-beach/', img:'images/phuket2/kalim-sunset.jpg', tier:0, priceHe:'חינם', priceEn:'Free'},
+    ],
+    restaurants:[
+      {nameHe:'EuroThai Restaurant', nameEn:'EuroThai Restaurant', cuisineHe:'תאילנדי אותנטי', cuisineEn:'Authentic Thai', descHe:'נסיעה קצרה מקאלים לפאטונג — פאד תאי אמיתי וקארי צהוב טעים במקום משפחתי וחמים.', descEn:'A short ride from Kalim into Patong — genuinely authentic pad Thai and a tasty yellow curry at a warm, family-run spot.', link:'https://www.google.com/maps/search/EuroThai+Restaurant+Soi+Dr+Wattana+Patong+Phuket', img:'images/shared/eurothai.jpg'},
+      {nameHe:'Baan Pad Thaï', nameEn:'Baan Pad Thaï', cuisineHe:'תאילנדי, פאד תאי', cuisineEn:'Thai, pad Thai specialist', descHe:'מדורגת 5.0/5 בטריפאדוויזור — אורז מטוגן ופאד תאי טריים, מומלץ לחזור לכאן גם בשהות השנייה.', descEn:'Rated 5.0/5 on Tripadvisor — fresh fried rice and pad Thai, worth returning to on this second stay too.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d27177651-Reviews-Baan_Pad_Thai-Patong_Kathu_Phuket.html', img:'images/shared/baan-pad-thai.jpg'},
+      {nameHe:'No.6 Restaurant "Up The Hill"', nameEn:'No.6 Restaurant "Up The Hill"', cuisineHe:'תאילנדי', cuisineEn:'Thai', descHe:'סניף גבעה של מסעדה מקומית ותיקה, עם נוף פנורמי לפאטונג לצד מנות תאילנדיות נדיבות.', descEn:'A hillside outpost of a longtime local favorite, with panoramic views over Patong and generous Thai plates.', link:'https://www.tripadvisor.com/Restaurant_Review-g297930-d2256384-Reviews-No_6_Restaurant-Patong_Kathu_Phuket.html', img:'images/shared/no6-up-the-hill.jpg'},
+      {nameHe:'שוק באנזאן — קומת הרחוב', nameEn:'Banzaan Market — Street Food Floor', cuisineHe:'רחוב תאילנדי', cuisineEn:'Thai street food', descHe:'עשרות דוכני רחוב אותנטיים בפאטונג — פאד תאי בכ-100 ฿, טום יאם עוף ועוד, ממש כמו בשהות הראשונה.', descEn:'Dozens of authentic street-food stalls in Patong — pad Thai for about 100 THB, chicken tom yum and more, just like in Stay 1.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket', img:'images/shared/banzaan-street-food.jpg'},
+    ],
+    shopping:[
+      {nameHe:'ג׳אנגסילון (Jungceylon)', nameEn:'Jungceylon Shopping Center', descHe:'נסיעה קצרה מקאלים — הקניון המרכזי של פאטונג, מותגים, סופרמרקט Big C ופודקורט גדול.', descEn:'A short ride from Kalim — Patong\'s central mall, brands, a Big C supermarket and a large food court.', link:'https://www.jungceylon.com/en', img:'images/shared/jungceylon.jpg'},
+      {nameHe:'שוק באנזאן', nameEn:'Banzaan Fresh Market', descHe:'שוק מקומי עם פירות, תבלינים ומזכרות — הזדמנות נוספת לחוויית קניות תאילנדית אמיתית לפני הטיסה הביתה.', descEn:'A local market with fruit, spices and souvenirs — one more chance for a genuine Thai shopping experience before the flight home.', link:'https://www.google.com/maps/search/Banzaan+Fresh+Market+Patong+Phuket', img:'images/shared/banzaan-market-shopping.jpg'},
+    ]
+  }
+];
+
+
+const PREP_LIST = [
+  {key:'docs', icon:'🛂', nameHe:'מסמכים וכסף', nameEn:'Documents & Money', items:[
+    {he:'דרכונים בתוקף (6+ חודשים) + עותקים', en:'Passports (valid 6+ months) + copies'},
+    {he:'בדיקת ויזת מעבר באבו דאבי', en:'Verify UAE transit visa requirements'},
+    {he:'ביטוח נסיעות עם כיסוי שנורקלינג/סירות', en:'Travel insurance covering snorkeling/boat trips'},
+    {he:'כרטיסי טיסה דיגיטליים + גיבוי מודפס', en:'E-tickets (digital + printed backup)'},
+    {he:'אישורי הזמנת מלונות', en:'Hotel booking confirmations'},
+    {he:'כרטיסי אשראי (לעדכן בנק) + גיבוי', en:'Credit cards (notify bank) + backup card'},
+    {he:'מזומן — דולרים ובאט תאילנדי', en:'Cash — USD and Thai Baht'},
+    {he:'אנשי קשר לחירום ופרטי שגרירות', en:'Emergency contacts & embassy info'},
+  ]},
+  {key:'clothes', icon:'👕', nameHe:'ביגוד', nameEn:'Clothing', items:[
+    {he:'בגדים קלים ומתייבשים מהר', en:'Lightweight, quick-dry clothing'},
+    {he:'מעיל גשם קל / פונצ׳ו', en:'Light rain jacket / poncho'},
+    {he:'בגדי ים (2-3 סטים לאדם)', en:'Swimwear (2-3 sets per person)'},
+    {he:'חולצת שנורקלינג עם הגנת UV', en:'UV rash guard for snorkeling'},
+    {he:'ביגוד צנוע לביקור בטמפלים', en:'Modest cover-up for temple visits'},
+    {he:'כפכפים ונעלי מים', en:'Sandals & water shoes'},
+    {he:'זוג נעליים נוחות להליכה', en:'One pair comfortable walking shoes'},
+    {he:'כובע/מצחייה + מגבת מתייבשת מהר', en:'Hat + quick-dry towel/sarong'},
+  ]},
+  {key:'electronics', icon:'🔌', nameHe:'אלקטרוניקה', nameEn:'Electronics', items:[
+    {he:'מטענים + מתאם חשמל אוניברסלי (220V)', en:'Chargers + universal adapter (220V)'},
+    {he:'פאוור בנק', en:'Power bank(s)'},
+    {he:'נרתיק אטום למים לטלפון', en:'Waterproof phone pouch'},
+    {he:'מצלמה/גופרו + כרטיסי זיכרון', en:'Camera/GoPro + spare memory cards'},
+    {he:'אוזניות מבטלות רעש לטיסות', en:'Noise-cancelling headphones'},
+    {he:'מטען USB מרובה יציאות', en:'Multi-port USB charger'},
+  ]},
+  {key:'health', icon:'☀️', nameHe:'בריאות וציוד לים', nameEn:'Health & Beach Gear', items:[
+    {he:'קרם הגנה ידידותי לשוניות, SPF גבוה', en:'Reef-safe, high-SPF sunscreen'},
+    {he:'ג׳ל אלוורה לאחרי שמש', en:'After-sun / aloe vera gel'},
+    {he:'דוחה יתושים (DEND — עונת גשמים)', en:'Insect repellent (rainy-season risk)'},
+    {he:'ערכת עזרה ראשונה + תרופה לשלשולים', en:'First-aid kit + anti-diarrheal'},
+    {he:'תרופות אישיות ומרשמים', en:'Personal medications & prescriptions'},
+    {he:'תיק יבש (dry bag) לטיולי סירה', en:'Waterproof dry bag for boat trips'},
+    {he:'אטמי אוזניים', en:'Ear plugs'},
+  ]},
+  {key:'teens', icon:'🎧', nameHe:'לבני הנוער', nameEn:'Teen-Specific Items', items:[
+    {he:'פאוור בנק אישי', en:'Personal power bank'},
+    {he:'אוזניות/אירבדס', en:'Headphones/earbuds'},
+    {he:'רמקול בלוטות׳ נייד', en:'Portable Bluetooth speaker'},
+    {he:'ספרים/סדרות מוכנות מראש לטיסות', en:'Downloaded shows/books for the flights'},
+    {he:'חטיפים אישיים', en:'Personal snacks'},
+    {he:'בגדי ים נוספים (יציאות תכופות מהמים)', en:'Extra swimwear (frequent water changes)'},
+    {he:'תיק גב קטן אישי', en:'Small personal daypack'},
+  ]},
+];
+
+/* ============================= STATE ============================= */
+function safeGet(key, fallback){
+  try { return localStorage.getItem(key) ?? fallback; } catch(e){ return fallback; }
+}
+function safeSet(key, value){
+  try { localStorage.setItem(key, value); } catch(e){ /* ignore — e.g. file:// storage restrictions */ }
+}
+
+let LANG = 'he';
+let SELECTED_DATE = null; // yyyy-mm-dd
+
+// All trip-day arithmetic is anchored in UTC on purpose: mixing a local-time
+// Date construction with a UTC-based serialization (the previous version)
+// makes addDays() a no-op in any UTC+ timezone (local midnight of "tomorrow"
+// is still "today" in UTC), which turns buildDayList()'s loop into an
+// infinite loop that never reaches TRIP_META.end.
+function toDate(s){ const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d)); }
+function iso(d){ return d.getUTCFullYear() + '-' + String(d.getUTCMonth()+1).padStart(2,'0') + '-' + String(d.getUTCDate()).padStart(2,'0'); }
+function addDays(s,n){ const d = toDate(s); d.setUTCDate(d.getUTCDate()+n); return iso(d); }
+
+function buildDayList(){
+  const days = [];
+  let cur = TRIP_META.start;
+  while (cur <= TRIP_META.end){
+    days.push(cur);
+    cur = addDays(cur, 1);
+  }
+  return days;
+}
+const ALL_DAYS = buildDayList();
+
+function destForDate(dateStr){
+  if (dateStr === TRIP_META.start) return {type:'flight-out'};
+  if (dateStr === TRIP_META.end) return {type:'flight-return'};
+  for (const dest of DESTINATIONS){
+    if (dateStr >= dest.start && dateStr < dest.end){
+      const isTransfer = dateStr === dest.start && dest.id !== 'phuket1';
+      return {type:'stay', dest, isTransfer};
+    }
+    if (dateStr === dest.end && dest.id === 'phuket2'){
+      // handled by flight-return already
+    }
+  }
+  return {type:'stay', dest: DESTINATIONS[0]};
+}
+
+/* ============================= RENDER ============================= */
+const MONTHS_HE = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function todayIso(){
+  // Intentionally local (not iso()/UTC): "today" should match the viewer's
+  // own calendar day, not UTC's.
+  const now = new Date();
+  return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+}
+
+function safeRun(label, fn){
+  try { fn(); } catch(err){
+    console.error(label, err);
+    if (window.__showFatalError) window.__showFatalError(label, err);
+  }
+}
+
+function render(){
+  safeRun('render:head', () => {
+    const t = I18N[LANG];
+    document.documentElement.lang = LANG;
+    document.documentElement.dir = LANG === 'he' ? 'rtl' : 'ltr';
+    document.getElementById('langToggle').textContent = LANG === 'he' ? 'EN' : 'עב';
+
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if (typeof t[key] === 'string') el.textContent = t[key];
+    });
+  });
+
+  safeRun('renderTodayBadge', renderTodayBadge);
+  safeRun('renderTimeline', renderTimeline);
+  safeRun('renderDayDetail', renderDayDetail);
+  safeRun('renderDestinations', renderDestinations);
+  safeRun('renderPrep', renderPrep);
+}
+
+function renderTodayBadge(){
+  const t = I18N[LANG];
+  const today = todayIso();
+  const badgeText = document.getElementById('todayBadgeText');
+  if (today < TRIP_META.start){
+    const diff = Math.round((toDate(TRIP_META.start) - toDate(today)) / 86400000);
+    badgeText.textContent = t.todayBefore(diff);
+  } else if (today > TRIP_META.end){
+    badgeText.textContent = t.todayAfter;
+  } else {
+    const info = destForDate(today);
+    if (info.type === 'flight-out') badgeText.textContent = t.todayFlightOut;
+    else if (info.type === 'flight-return') badgeText.textContent = t.todayFlightRet;
+    else badgeText.textContent = t.todayAt(LANG==='he' ? info.dest.nameHe : info.dest.nameEn);
+  }
+}
+
+function dayTag(dateStr){
+  const info = destForDate(dateStr);
+  if (info.type === 'flight-out' || info.type === 'flight-return') return {label: LANG==='he'?'טיסה':'Flight', color:'#ffe3d9', fg:'#c73f22'};
+  if (info.isTransfer) return {label: LANG==='he'?'מעבר':'Transfer', color:'#fff1c9', fg:'#8a6209'};
+  return {label: LANG==='he'?info.dest.nameHe:info.dest.nameEn, color:'#d9f0ea', fg:'#0c5c73'};
+}
+
+function renderTimeline(){
+  const strip = document.getElementById('timelineStrip');
+  const today = todayIso();
+  if (!SELECTED_DATE){
+    SELECTED_DATE = (today >= TRIP_META.start && today <= TRIP_META.end) ? today : TRIP_META.start;
+  }
+  const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
+
+  strip.innerHTML = ALL_DAYS.map(dateStr=>{
+    const d = toDate(dateStr);
+    const tag = dayTag(dateStr);
+    let classes = 'timeline-node';
+    if (dateStr === today) classes += ' is-today';
+    if (dateStr === SELECTED_DATE) classes += ' is-selected';
+    return `<button type="button" class="${classes}" data-date="${dateStr}">
+      <span class="tl-dot" style="background:${tag.fg}"></span>
+      <span class="tl-day">${d.getUTCDate()}</span>
+      <span class="tl-date">${months[d.getUTCMonth()]}</span>
+    </button>`;
+  }).join('');
+
+  strip.querySelectorAll('.timeline-node').forEach(node=>{
+    node.addEventListener('click', ()=>{ SELECTED_DATE = node.dataset.date; render(); });
+  });
+
+  const selectedNode = strip.querySelector('.timeline-node.is-selected');
+  if (selectedNode) selectedNode.scrollIntoView({ block:'nearest', inline:'center' });
+}
+
+function renderDayDetail(){
+  const t = I18N[LANG];
+  const info = destForDate(SELECTED_DATE);
+  const box = document.getElementById('dayDetail');
+  const d = toDate(SELECTED_DATE);
+  const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
+  const dateLabel = `${d.getUTCDate()} ${months[d.getUTCMonth()]}`;
+
+  let pill, title, sub;
+  if (info.type === 'flight-out'){
+    pill = t.flightOutTag; title = LANG==='he'?'טיסה לתאילנד':'Flight to Thailand'; sub = LANG==='he'?'תל אביב → אבו דאבי → פוקט':'Tel Aviv → Abu Dhabi → Phuket';
+  } else if (info.type === 'flight-return'){
+    pill = t.flightRetTag; title = LANG==='he'?'טיסה הביתה':'Flight home'; sub = LANG==='he'?'פוקט → אבו דאבי → תל אביב':'Phuket → Abu Dhabi → Tel Aviv';
+  } else {
+    const dest = info.dest;
+    const dayNum = Math.round((toDate(SELECTED_DATE) - toDate(dest.start))/86400000) + 1;
+    const totalDays = Math.round((toDate(dest.end) - toDate(dest.start))/86400000);
+    pill = info.isTransfer ? t.transferTag : t.dayOf(dayNum, totalDays);
+    title = LANG==='he' ? dest.nameHe : dest.nameEn;
+    sub = LANG==='he' ? dest.hotel.nameHe : dest.hotel.nameEn;
+    if (info.isTransfer){
+      const prevIdx = DESTINATIONS.findIndex(x=>x.id===dest.id) - 1;
+      const prevName = prevIdx>=0 ? (LANG==='he'?DESTINATIONS[prevIdx].nameHe:DESTINATIONS[prevIdx].nameEn) : '';
+      sub = t.transferNote(prevName, title);
+    }
+  }
+  box.innerHTML = `<span class="pill">${dateLabel}</span><div><h3>${title}</h3><p>${sub}</p></div>` +
+    (pill ? `<span class="pill" style="margin-inline-start:auto">${pill}</span>` : '');
+
+  document.getElementById('prevDay').disabled = SELECTED_DATE === TRIP_META.start;
+  document.getElementById('nextDay').disabled = SELECTED_DATE === TRIP_META.end;
+}
+
+function cardImg(img, altText){
+  if (img){
+    return `<img class="thumb" src="${img}" alt="${altText}" loading="lazy">`;
+  }
+  return `<div class="thumb placeholder">🌺</div>`;
+}
+
+const TIER_LABEL = ['', '$', '$$', '$$$'];
+
+/* ===== Live weather (Open-Meteo, no API key) ===== */
+const WEATHER_CACHE = {}; // dest.id -> {temp, code, hi, lo, uv} | 'error' | undefined (not loaded yet)
+
+const WEATHER_CODE_MAP = {
+  0:{emoji:'☀️', he:'שמיים בהירים', en:'Clear sky'},
+  1:{emoji:'🌤️', he:'בהיר בעיקר', en:'Mainly clear'},
+  2:{emoji:'⛅', he:'מעונן חלקית', en:'Partly cloudy'},
+  3:{emoji:'☁️', he:'מעונן', en:'Overcast'},
+  45:{emoji:'🌫️', he:'ערפל', en:'Fog'}, 48:{emoji:'🌫️', he:'ערפל קופא', en:'Fog'},
+  51:{emoji:'🌦️', he:'טפטוף קל', en:'Light drizzle'}, 53:{emoji:'🌦️', he:'טפטוף', en:'Drizzle'}, 55:{emoji:'🌦️', he:'טפטוף חזק', en:'Dense drizzle'},
+  61:{emoji:'🌧️', he:'גשם קל', en:'Slight rain'}, 63:{emoji:'🌧️', he:'גשם', en:'Moderate rain'}, 65:{emoji:'🌧️', he:'גשם חזק', en:'Heavy rain'},
+  80:{emoji:'🌦️', he:'ממטרים קלים', en:'Slight showers'}, 81:{emoji:'🌧️', he:'ממטרים', en:'Showers'}, 82:{emoji:'⛈️', he:'ממטרים חזקים', en:'Violent showers'},
+  95:{emoji:'⛈️', he:'סופת רעמים', en:'Thunderstorm'}, 96:{emoji:'⛈️', he:'סופת רעמים עם ברד', en:'Thunderstorm w/ hail'}, 99:{emoji:'⛈️', he:'סופת רעמים עם ברד', en:'Thunderstorm w/ hail'},
+};
+function weatherIcon(code){ return WEATHER_CODE_MAP[code] || {emoji:'🌡️', he:'', en:''}; }
+function uvBand(uv){
+  if (uv == null || Number.isNaN(uv)) return null;
+  if (uv < 3) return {he:'נמוך', en:'Low'};
+  if (uv < 6) return {he:'בינוני', en:'Moderate'};
+  if (uv < 8) return {he:'גבוה', en:'High'};
+  if (uv < 11) return {he:'גבוה מאוד', en:'Very High'};
+  return {he:'קיצוני', en:'Extreme'};
+}
+
+function weatherCardHtml(dest, t){
+  const w = WEATHER_CACHE[dest.id];
+  if (w === 'error'){
+    return `<div class="weather-card weather-error">🌡️ <span>${t.weatherUnavailable}</span></div>`;
+  }
+  if (!w){
+    return `<div class="weather-card weather-loading">🌡️ <span>${t.weatherLoading}</span></div>`;
+  }
+  const icon = weatherIcon(w.code);
+  const uv = uvBand(w.uv);
+  return `<div class="weather-card">
+    <div class="wc-main"><span class="wc-emoji">${icon.emoji}</span><span class="wc-temp">${Math.round(w.temp)}°</span></div>
+    <div class="wc-sub">${LANG==='he'?icon.he:icon.en}</div>
+    <div class="wc-range">${Math.round(w.lo)}°–${Math.round(w.hi)}° <span class="wc-uv">${uv ? ('UV ' + (LANG==='he'?uv.he:uv.en)) : ''}</span></div>
+  </div>`;
+}
+
+function loadWeather(){
+  DESTINATIONS.forEach(dest=>{
+    if (WEATHER_CACHE[dest.id]) return; // already loaded or already failed
+    const {mapLat:lat, mapLon:lon} = dest.hotel;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Asia%2FBangkok`;
+    fetch(url)
+      .then(r => { if (!r.ok) throw new Error('weather http ' + r.status); return r.json(); })
+      .then(data => {
+        WEATHER_CACHE[dest.id] = {
+          temp: data.current.temperature_2m,
+          code: data.current.weather_code,
+          hi: data.daily.temperature_2m_max[0],
+          lo: data.daily.temperature_2m_min[0],
+          uv: data.daily.uv_index_max[0],
+        };
+        safeRun('renderDestinations', renderDestinations);
+      })
+      .catch(() => {
+        WEATHER_CACHE[dest.id] = 'error';
+        safeRun('renderDestinations', renderDestinations);
+      });
+  });
+}
+
+function renderDestinations(){
+  const t = I18N[LANG];
+  const wrap = document.getElementById('destinations');
+  wrap.innerHTML = '';
+  DESTINATIONS.forEach(dest=>{
+    // Place names always shown in English in the destination headers, regardless of the language toggle.
+    const name = dest.nameEn;
+    const hotel = dest.hotel;
+    const section = document.createElement('section');
+    section.className = 'dest';
+    section.id = dest.id;
+
+    const dRange = `${fmtRange(dest.start, dest.end)}`;
+
+    section.innerHTML = `
+      <div class="container">
+        <div class="dest-header">
+          <div class="hero-bg" style="background-image:url('${dest.heroImg}')"></div>
+          <div class="overlay"></div>
+          <div class="inner">
+            <span class="dest-tag">${dRange}</span>
+            <h2>${name}</h2>
+          </div>
+        </div>
+        <div class="hotel-card">
+          <div>
+            <p class="hname">${LANG==='he'?hotel.nameHe:hotel.nameEn}</p>
+            <p class="hdesc">${LANG==='he'?hotel.descHe:hotel.descEn}</p>
+          </div>
+          <a class="btn" href="${hotel.link}" target="_blank" rel="noopener">${t.seeOfficial}</a>
+        </div>
+        <div class="location-row">
+          <div class="map-card">
+            <span class="map-pin">📍</span>
+            <p class="map-name">${LANG==='he'?hotel.nameHe:hotel.nameEn}</p>
+            <p class="map-sub">${LANG==='he'?hotel.mapAreaHe:hotel.mapAreaEn}</p>
+            <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.mapQuery)}" target="_blank" rel="noopener">${t.openMaps}</a>
+          </div>
+          ${weatherCardHtml(dest, t)}
+        </div>
+        <h3 class="block-title"><span class="icon">🧭</span><span>${t.attractionsHead}</span></h3>
+        <div class="cards-grid">
+          ${dest.attractions.map(a=>`
+            <div class="card">
+              ${cardImg(a.img, LANG==='he'?a.nameHe:a.nameEn)}
+              <div class="body">
+                <p class="cname">${LANG==='he'?a.nameHe:a.nameEn}</p>
+                <span class="ctag price-tag">${TIER_LABEL[a.tier] ? TIER_LABEL[a.tier] + ' · ' : ''}${LANG==='he'?a.priceHe:a.priceEn}</span>
+                <p class="cdesc">${LANG==='he'?a.descHe:a.descEn}</p>
+                <a class="clink" href="${a.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        ${(dest.id==='phuket1'||dest.id==='phuket2') ? `
+        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+          <span class="to-icon">📰</span>
+          <div>
+            <p class="to-title">${t.timeOutTitle}</p>
+            <p class="to-sub">${t.timeOutSub} · timeout.com/phuket</p>
+          </div>
+          <span class="to-arrow">→</span>
+        </a>` : ''}
+        <h3 class="block-title"><span class="icon">🍽️</span><span>${t.restaurantsHead}</span></h3>
+        <div class="cards-grid">
+          ${dest.restaurants.map(r=>`
+            <div class="card">
+              ${cardImg(r.img, LANG==='he'?r.nameHe:r.nameEn)}
+              <div class="body">
+                <p class="cname">${LANG==='he'?r.nameHe:r.nameEn}</p>
+                <span class="ctag">${LANG==='he'?r.cuisineHe:r.cuisineEn}</span>
+                <p class="cdesc">${LANG==='he'?r.descHe:r.descEn}</p>
+                <a class="clink" href="${r.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <h3 class="block-title"><span class="icon">🛍️</span><span>${t.shoppingHead}</span></h3>
+        <div class="cards-grid">
+          ${dest.shopping.map(s=>`
+            <div class="card">
+              ${cardImg(s.img, LANG==='he'?s.nameHe:s.nameEn)}
+              <div class="body">
+                <p class="cname">${LANG==='he'?s.nameHe:s.nameEn}</p>
+                <p class="cdesc">${LANG==='he'?s.descHe:s.descEn}</p>
+                <a class="clink" href="${s.link}" target="_blank" rel="noopener">${t.seeMore} →</a>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    wrap.appendChild(section);
+  });
+}
+
+function fmtRange(s,e){
+  // Always English, regardless of the page language toggle - matches the
+  // destination banner's English place name and left-to-right layout.
+  const ds = toDate(s), de = toDate(e);
+  if (ds.getUTCMonth() === de.getUTCMonth()){
+    return `${MONTHS_EN[ds.getUTCMonth()]} ${ds.getUTCDate()}–${de.getUTCDate()}`;
+  }
+  return `${MONTHS_EN[ds.getUTCMonth()]} ${ds.getUTCDate()} — ${MONTHS_EN[de.getUTCMonth()]} ${de.getUTCDate()}`;
+}
+
+function renderPrep(){
+  const t = I18N[LANG];
+  const grid = document.getElementById('prepGrid');
+  const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
+  grid.innerHTML = PREP_LIST.map(cat=>`
+    <div class="prep-cat">
+      <h4>${cat.icon} ${LANG==='he'?cat.nameHe:cat.nameEn}</h4>
+      <ul>
+        ${cat.items.map((it,i)=>{
+          const id = cat.key+'-'+i;
+          const checked = saved[id] ? 'checked' : '';
+          return `<li class="${checked?'checked':''}">
+            <input type="checkbox" id="${id}" data-id="${id}" ${checked}>
+            <label for="${id}">${LANG==='he'?it.he:it.en}</label>
+          </li>`;
+        }).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  grid.querySelectorAll('input[type=checkbox]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
+      saved[cb.dataset.id] = cb.checked;
+      safeSet('thailand-prep-2026', JSON.stringify(saved));
+      cb.closest('li').classList.toggle('checked', cb.checked);
+      updatePrepProgress();
+    });
+  });
+  updatePrepProgress();
+}
+
+function updatePrepProgress(){
+  const total = PREP_LIST.reduce((a,c)=>a+c.items.length,0);
+  const saved = JSON.parse(safeGet('thailand-prep-2026', '{}'));
+  const done = Object.values(saved).filter(Boolean).length;
+  document.getElementById('prepProgress').textContent = LANG==='he'
+    ? `${done} מתוך ${total} פריטים סומנו`
+    : `${done} of ${total} items checked`;
+}
+
+/* ============================= INIT ============================= */
+safeRun('init:listeners', () => {
+  document.getElementById('langToggle').addEventListener('click', ()=>{
+    LANG = LANG === 'he' ? 'en' : 'he';
+    render();
+  });
+  document.getElementById('prevDay').addEventListener('click', ()=>{
+    const idx = ALL_DAYS.indexOf(SELECTED_DATE);
+    if (idx > 0){ SELECTED_DATE = ALL_DAYS[idx-1]; render(); }
+  });
+  document.getElementById('nextDay').addEventListener('click', ()=>{
+    const idx = ALL_DAYS.indexOf(SELECTED_DATE);
+    if (idx < ALL_DAYS.length-1){ SELECTED_DATE = ALL_DAYS[idx+1]; render(); }
+  });
+
+});
+
+safeRun('init:render', () => { render(); });
+safeRun('init:loadWeather', () => { loadWeather(); });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
