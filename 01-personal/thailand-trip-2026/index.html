@@ -365,6 +365,28 @@
   .aircraft-card h5{margin:0 0 10px; font-size:1.05rem; display:flex; align-items:center; gap:8px;}
   .aircraft-card ul{margin:0; padding-inline-start:20px; font-size:.88rem; line-height:1.7;}
 
+  /* ===== Info sections (Flight & Aircraft Info / FAQ) with tabs ===== */
+  .info-section{padding:60px 0;}
+  .info-section:nth-of-type(even){background:#fff3e4;}
+  .tab-switcher{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;
+  }
+  .tab-btn{
+    background:var(--sand-card); border:2px solid var(--line); border-radius:999px; padding:9px 18px;
+    font-weight:700; font-size:.88rem; cursor:pointer; color:var(--ink); font-family:inherit;
+  }
+  .tab-btn.active{background:var(--sea); border-color:var(--sea); color:#fff;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .qa-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:18px;}
+  .qa-card{
+    background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .qa-card h5{margin:0 0 8px; font-size:1rem; display:flex; align-items:flex-start; gap:8px;}
+  .qa-card p{margin:0; font-size:.9rem; line-height:1.65; opacity:.85;}
+  .qa-card ul{margin:6px 0 0; padding-inline-start:20px; font-size:.88rem; line-height:1.7; opacity:.85;}
+  .qa-card.full{grid-column:1/-1;}
+
   /* ===== Flight route map ===== */
   .flight-map-wrap{
     position:relative; background:var(--sand-card); border-radius:18px; padding:16px 18px 12px;
@@ -463,7 +485,9 @@
       <a href="#khaolak" data-i18n="navKhaolak">קאולק</a>
       <a href="#phuket2" data-i18n="navPhuket2">פוקט 2</a>
       <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
+      <a href="#flightInfo" data-i18n="navFlightInfo">טיסה ומטוסים</a>
       <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
+      <a href="#faq" data-i18n="navFaq">שאלות נפוצות</a>
     </div>
     <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 31 ימים</span></div>
   </div>
@@ -645,29 +669,6 @@
       </div>
     </div>
     <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
-  </div>
-
-  <h4>🛩️ קצת על המטוסים שלנו</h4>
-  <div class="aircraft-grid">
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321neo</h5>
-      <ul>
-        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
-        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
-        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
-        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
-        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
-      </ul>
-    </div>
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
-      <ul>
-        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
-        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
-        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
-        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
-      </ul>
-    </div>
   </div>
 </section>
 
@@ -1356,6 +1357,75 @@
   </div>
 </section>
 
+<section class="info-section container" id="flightInfo">
+  <h2 data-i18n="flightInfoTitle">הטיסה והמטוסים שלנו — עוד פרטים</h2>
+  <p class="sub" data-i18n="flightInfoSub">הכל על אתיחאד, אבו דאבי, המטוסים וטיפים לפני עלייה למטוס.</p>
+  <div class="tab-switcher" id="flightInfoTabs">
+    <button type="button" class="tab-btn active" data-group="flightInfo" data-tab="aircraft">
+      המטוסים שלנו
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="flightInfo" data-tab="etihad">
+      אתיחאד ואבו דאבי
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="flightInfo" data-tab="tips">
+      טיפים לטיסה
+    </button>
+  </div>
+  <div id="flightInfoPanels">
+    <div class="tab-panel active" data-group="flightInfo" data-tab="aircraft">
+      <div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+          <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+          <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+          <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+          <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+        <ul>
+          <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+          <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+          <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+          <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="flightInfo" data-tab="etihad">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🛫 למה עוצרים באבו דאבי?</h5><p>אבו דאבי היא הבסיס הראשי (Hub) של אתיחאד איירווייז. אלפי נוסעים עוברים דרכה כל יום, וזה מאפשר לחברה לחבר בין תל אביב לבין יעדים ברחבי אסיה, אוסטרליה, אפריקה ואירופה.</p></div>
+      <div class="qa-card"><h5>⭐ מה מיוחד באתיחאד?</h5><ul>
+        <li>חברת התעופה הלאומית של איחוד האמירויות.</li>
+        <li>אחד הציים הצעירים בעולם.</li>
+        <li>ידועה בצוותי אוויר חברותיים ובידור טוב על הטיסה.</li>
+        <li>ארוחות ילדים טובות (כדאי להזמין מראש אם אפשר).</li>
+        <li>מסכי בידור חינמיים וטעינת USB ברוב המטוסים.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ כמה זמן אורכת הטיסה שלנו?</h5><p>בסך הכל כ-12–14 שעות טיסה נטו, בתוספת זמן ההמתנה לקונקשן באבו דאבי.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="flightInfo" data-tab="tips">
+      <div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 מה כדאי להכין לפני העלייה למטוס?</h5><ul>
+        <li>להוריד סרטים/סדרות/משחקים מראש למקרה שאין מספיק בידור על המטוס.</li>
+        <li>לטעון את כל המכשירים לגמרי.</li>
+        <li>לקחת בקבוק מים לשימוש חוזר (מתמלא אחרי הביקורת הביטחונית).</li>
+        <li>לוודא שהדרכונים וכרטיסי הטיסה נגישים בקלות.</li>
+        <li>ללבוש בגדים נוחים לטיסה ארוכה.</li>
+      </ul></div>
+    </div>
+    </div>
+  </div>
+</section>
+
 <section class="prep" id="prep">
   <div class="container">
     <div class="prep-head">
@@ -1510,6 +1580,135 @@
   </div>
 </section>
 
+<section class="info-section container" id="faq">
+  <h2 data-i18n="faqTitle">שאלות נפוצות</h2>
+  <p class="sub" data-i18n="faqSub">כל מה שכדאי לדעת לפני ובמהלך הטיול — תרבות, אוכל, טבע, מזג אוויר וטיפים מעשיים.</p>
+  <div class="tab-switcher" id="faqTabs">
+    <button type="button" class="tab-btn active" data-group="faq" data-tab="culture">
+      תרבות ונימוסים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="food">
+      אוכל תאילנדי
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="wildlife">
+      טבע ובעלי חיים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="practical">
+      מזג אוויר וטיפים מעשיים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="funfacts">
+      ידעתם ש...?
+    </button>
+  </div>
+  <div id="faqPanels">
+    <div class="tab-panel active" data-group="faq" data-tab="culture">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🙏 איך מברכים אנשים בתאילנד?</h5><p>אומרים "סוואדי" (Sawasdee) עם קידה קטנה וכפות ידיים צמודות זו לזו בגובה החזה — התנועה הזו נקראת "וואי" (wai).</p></div>
+      <div class="qa-card"><h5>🚫 מה חשוב לא לעשות?</h5><ul>
+        <li>לא לגעת בראש של אף אחד.</li>
+        <li>לא להצביע עם כפות הרגליים לעבר אנשים או פסלי בודהה.</li>
+        <li>לא לטפס על מבנים בבתי מקדש.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 איך מתלבשים במקדש?</h5><p>לבוש צנוע (כתפיים וברכיים מכוסות), ולעיתים צריך להסיר נעליים לפני הכניסה.</p></div>
+      <div class="qa-card"><h5>🍽️ למה כולם אוכלים מאותן הצלחות?</h5><p>באוכל התאילנדי נהוג להזמין כמה מנות לאמצע השולחן ולחלוק אותן — זו דרך תאילנדית של נתינה ושיתוף, ועוזרת גם לאזן בין מנות חריפות לפחות חריפות.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="food">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🍜 מה חובה לטעום?</h5><ul>
+        <li>פאד תאי (Pad Thai)</li>
+        <li>אורז דביק עם מנגו (Mango Sticky Rice)</li>
+        <li>אורז מטוגן</li>
+        <li>קארי ירוק</li>
+        <li>סאטיי (שיפודים ברוטב בוטנים)</li>
+        <li>פנקייק תאילנדי</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 אילו פירות כדאי לנסות?</h5><ul>
+        <li>מנגו</li>
+        <li>אננס</li>
+        <li>דרגון פרוט (פרי דרקון)</li>
+        <li>מנגוסטין</li>
+        <li>רמבוטן</li>
+        <li>קוקוס טרי</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 ידעתם? פוקט היא "עיר יצירתית של גסטרונומיה" מטעם אונסק"ו</h5><p>זה אומר שהאוכל בפוקט הוא לא רק ארוחה — הוא חלק מהזהות התרבותית של האי, שמשלב השפעות סיניות-תאילנדיות, מוסלמיות ותאילנדיות-דרומיות.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="wildlife">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🦎 אילו בעלי חיים אנחנו עשויים לראות?</h5><ul>
+        <li>קופים</li>
+        <li>גקקונים (לטאות קיר)</li>
+        <li>וארנים (לטאות ענק)</li>
+        <li>ציפורי אף הענק (Hornbills)</li>
+        <li>דגי שונית צבעוניים</li>
+        <li>צבי ים (מוגנים)</li>
+        <li>סרטני נזירים</li>
+        <li>פרפרים</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 חשוב לזכור</h5><ul>
+        <li>לעולם לא להאכיל בעלי חיים בר.</li>
+        <li>לשמור על מרחק.</li>
+        <li>להשתמש בקרם הגנה ידידותי לשונית (reef-safe).</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ למה לא מבקרים באיי סימילן?</h5><p>איי סימילן וסורין נסגרים כל שנה לציבור בעונת המונסון — בדרך כלל מ-15 במאי ועד 15 באוקטובר — כדי לאפשר לטבע להתאושש ומטעמי בטיחות בים סוער. מכיוון שהטיול שלנו הוא בין 17 באוגוסט ל-4 בספטמבר, האיים האלה סגורים בדיוק בתאריכים האלה. זו הזדמנות טובה להסביר לילדים למה שמורות טבע צריכות "לנוח" מדי פעם.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="practical">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ איך מזג האוויר באוגוסט?</h5><p>חם ולח, כ-28–32°C. שכיחים ממטרים טרופיים קצרים שמגיעים ונעלמים מהר — לרוב אפשר להמשיך בפעילויות אחרי הגשם.</p></div>
+      <div class="qa-card"><h5>💵 כסף</h5><p>המטבע המקומי הוא באט תאילנדי (THB). במקומות רבים מקבלים כרטיסי אשראי, אבל תמיד שווה להחזיק גם מזומן.</p></div>
+      <div class="qa-card"><h5>🔌 חשמל</h5><p>מתח של 220V. בתי מלון רבים מקבלים גם תקעים אירופאיים, אבל מתאם שקע יכול להיות שימושי.</p></div>
+      <div class="qa-card"><h5>📶 אינטרנט</h5><p>eSIM או סים מקומי זולים ומהירים — אפשר להזמין מראש או לקנות בשדה התעופה.</p></div>
+      <div class="qa-card"><h5>🚕 תחבורה</h5><p>Grab היא אפליקציית ההזמנות הפופולרית ביותר. טוקטוק כיפי, אבל אם אין מונה — כדאי לסכם על המחיר מראש.</p></div>
+      <div class="qa-card"><h5>🛂 האם צריך אשרה מיוחדת?</h5><p>אזרחי ישראל מקבלים כניסה ללא ויזה למשך עד 30 יום (החל ממאי 2026). כמו כן, מ-2025 חובה למלא מראש טופס דיגיטלי בשם <b>Thailand Digital Arrival Card (TDAC)</b> — חינם, מקוון, עד 3 ימים לפני ההגעה, באתר הרשמי בלבד: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 בטיחות בים</h5><p>לב לב לדגל האדום על החוף — דגל אדום = אין להיכנס למים.</p></div>
+      <div class="qa-card full"><h5>📞 מספרי חירום שימושיים</h5><ul>
+        <li>משטרת תיירים (24/7, כולל אנגלית): <b>1155</b></li>
+        <li>מוקד מידע לתיירים (TAT), 08:00–20:00: <b>1672</b></li>
+        <li>משטרה כללית: <b>191</b></li>
+      </ul></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="funfacts">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>💡 עובדות מגניבות על תאילנד</h5><ul>
+        <li>בתאילנד חיים כ-72 מיליון בני אדם.</li>
+        <li>פוקט הוא האי הגדול ביותר בתאילנד.</li>
+        <li>תאילנד היא המדינה היחידה בדרום מזרח אסיה שמעולם לא נכבשה על ידי מעצמה אירופית.</li>
+        <li>החיה הלאומית היא הפיל.</li>
+        <li>יותר מ-90% מהתאילנדים הם בודהיסטים.</li>
+        <li>לבנגקוק יש אחד השמות הטקסיים הארוכים בעולם לעיר.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 אתגר המשפחה — לפני שחוזרים הביתה</h5><ul>
+        <li>לטעום 3 פירות חדשים.</li>
+        <li>ללמוד 5 מילים בתאילנדית.</li>
+        <li>לצפות יחד בשקיעה אחת.</li>
+        <li>למצוא 5 דגים טרופיים שונים.</li>
+        <li>לנסות שנורקלינג.</li>
+        <li>לבקר בשוק מקומי אחד.</li>
+        <li>לקנות מזכרת אחת בעבודת יד.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ חידון קטן</h5><ul>
+        <li>למה אנחנו עוצרים באבו דאבי?</li>
+        <li>מה המשמעות של "neo" באיירבוס A321neo?</li>
+        <li>איזה אי מפורסם בזכות הצוקים הגבוהים שלו?</li>
+        <li>איזה פרי תרצו לטעום ראשון?</li>
+        <li>איך מראים כבוד במקדש תאילנדי?</li>
+      </ul></div>
+    </div>
+    </div>
+  </div>
+</section>
+
 <footer data-i18n="footer">נבנה באהבה למשפחה שלנו · טיול תאילנד 17.8–4.9.2026</footer>
 
 <script>
@@ -1523,7 +1722,9 @@ const I18N = {
     heroTitle: 'HaVenture בתאילנד 2026',
     heroRoute: 'פוקט ← קרבי ← קאולק ← פוקט',
     heroTagline: 'המדריך לחופשה מתחיל כאן',
-    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navPrep: 'רשימת ציוד',
+    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navFlightInfo: 'טיסה ומטוסים', navPrep: 'רשימת ציוד', navFaq: 'שאלות נפוצות',
+    flightInfoTitle: 'הטיסה והמטוסים שלנו — עוד פרטים', flightInfoSub: 'הכל על אתיחאד, אבו דאבי, המטוסים וטיפים לפני עלייה למטוס.',
+    faqTitle: 'שאלות נפוצות', faqSub: 'כל מה שכדאי לדעת לפני ובמהלך הטיול — תרבות, אוכל, טבע, מזג אוויר וטיפים מעשיים.',
     trackerTitle: 'איפה אנחנו בכל יום',
     prepTitle: 'רשימת ציוד — מה לא לשכוח',
     prepSub: 'רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.',
@@ -1547,7 +1748,9 @@ const I18N = {
     heroTitle: 'HaVenture in Thailand 2026',
     heroRoute: 'Phuket → Krabi → Khao Lak → Phuket',
     heroTagline: 'Your tour guide starts here.',
-    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navPrep: 'Prep List',
+    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navFlightInfo: 'Flight & Aircraft', navPrep: 'Prep List', navFaq: 'FAQ',
+    flightInfoTitle: 'Our Flight & Aircraft — More Details', flightInfoSub: 'Everything about Etihad, Abu Dhabi, the aircraft, and tips before boarding.',
+    faqTitle: 'Frequently Asked Questions', faqSub: 'Everything worth knowing before and during the trip — culture, food, nature, weather, and practical tips.',
     trackerTitle: 'Where we are each day',
     prepTitle: 'Prep List — Don\'t Forget',
     prepSub: 'A categorized checklist. Check items off while packing — your progress is saved automatically in this browser.',
@@ -1828,6 +2031,8 @@ function render(){
   safeRun('renderTimeline', renderTimeline);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
+  safeRun('renderFlightInfo', renderFlightInfo);
+  safeRun('renderFAQ', renderFAQ);
   safeRun('renderPrep', renderPrep);
 }
 
@@ -2090,6 +2295,332 @@ function renderDestinations(){
   });
 }
 
+/* ===== Tab switcher (shared by Flight Info + FAQ) ===== */
+let FLIGHT_INFO_TAB = 'aircraft';
+let FAQ_TAB = 'culture';
+
+function initTabSwitchers(){
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    const group = btn.dataset.group;
+    const tabId = btn.dataset.tab;
+    if (group === 'flightInfo') FLIGHT_INFO_TAB = tabId;
+    if (group === 'faq') FAQ_TAB = tabId;
+    document.querySelectorAll(`.tab-btn[data-group="${group}"]`).forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll(`.tab-panel[data-group="${group}"]`).forEach(p => p.classList.toggle('active', p.dataset.tab === tabId));
+  });
+}
+
+function renderTabbedSection(groupId, tabs, activeId, tabsElId, panelsElId){
+  const tabsEl = document.getElementById(tabsElId);
+  const panelsEl = document.getElementById(panelsElId);
+  tabsEl.innerHTML = tabs.map(tab => `
+    <button type="button" class="tab-btn${tab.id===activeId?' active':''}" data-group="${groupId}" data-tab="${tab.id}">
+      ${LANG==='he'?tab.labelHe:tab.labelEn}
+    </button>
+  `).join('');
+  panelsEl.innerHTML = tabs.map(tab => `
+    <div class="tab-panel${tab.id===activeId?' active':''}" data-group="${groupId}" data-tab="${tab.id}">
+      ${LANG==='he'?tab.bodyHe:tab.bodyEn}
+    </div>
+  `).join('');
+}
+
+const FLIGHT_INFO_TABS = [
+  {
+    id:'aircraft', labelHe:'המטוסים שלנו', labelEn:'Our Aircraft',
+    bodyHe: `<div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+          <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+          <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+          <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+          <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+        <ul>
+          <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+          <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+          <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+          <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+        </ul>
+      </div>
+    </div>`,
+    bodyEn: `<div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ Airbus A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — an upgraded, more efficient version of the A320 family.</li>
+          <li>Cruises at about 840–870 km/h — nearly the speed of sound!</li>
+          <li>Can fly up to about 7,400 km without refueling.</li>
+          <li>Uses about 20% less fuel than older models, thanks to new engines and special wingtips (Sharklets).</li>
+          <li>A "narrow-body" plane with a single aisle, typically carrying about 180–220 passengers.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ Airbus A321LR ("Long Range")</h5>
+        <ul>
+          <li>The same aircraft family as the A321neo — but with 3 extra fuel tanks in the belly.</li>
+          <li>The extra tanks let it fly much farther — up to about 7,400–8,300 km.</li>
+          <li>It's exactly the aircraft that lets airlines fly long routes like Abu Dhabi–Phuket without needing a huge wide-body jet.</li>
+          <li>From the outside it looks just like a regular neo — the difference is hidden inside!</li>
+        </ul>
+      </div>
+    </div>`
+  },
+  {
+    id:'etihad', labelHe:'אתיחאד ואבו דאבי', labelEn:'Etihad & Abu Dhabi',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🛫 למה עוצרים באבו דאבי?</h5><p>אבו דאבי היא הבסיס הראשי (Hub) של אתיחאד איירווייז. אלפי נוסעים עוברים דרכה כל יום, וזה מאפשר לחברה לחבר בין תל אביב לבין יעדים ברחבי אסיה, אוסטרליה, אפריקה ואירופה.</p></div>
+      <div class="qa-card"><h5>⭐ מה מיוחד באתיחאד?</h5><ul>
+        <li>חברת התעופה הלאומית של איחוד האמירויות.</li>
+        <li>אחד הציים הצעירים בעולם.</li>
+        <li>ידועה בצוותי אוויר חברותיים ובידור טוב על הטיסה.</li>
+        <li>ארוחות ילדים טובות (כדאי להזמין מראש אם אפשר).</li>
+        <li>מסכי בידור חינמיים וטעינת USB ברוב המטוסים.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ כמה זמן אורכת הטיסה שלנו?</h5><p>בסך הכל כ-12–14 שעות טיסה נטו, בתוספת זמן ההמתנה לקונקשן באבו דאבי.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🛫 Why do we stop in Abu Dhabi?</h5><p>Abu Dhabi is Etihad Airways' main hub. Thousands of passengers connect there every day, letting the airline link Tel Aviv to destinations across Asia, Australia, Africa, and Europe.</p></div>
+      <div class="qa-card"><h5>⭐ What's special about Etihad?</h5><ul>
+        <li>The national airline of the United Arab Emirates.</li>
+        <li>One of the youngest fleets in the world.</li>
+        <li>Known for friendly cabin crews and good onboard entertainment.</li>
+        <li>Good kids' meals (worth pre-ordering if available).</li>
+        <li>Free entertainment screens and USB charging on most aircraft.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ How long is our flight?</h5><p>About 12–14 hours of flying in total, plus our connection time in Abu Dhabi.</p></div>
+    </div>`
+  },
+  {
+    id:'tips', labelHe:'טיפים לטיסה', labelEn:'Before You Board',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 מה כדאי להכין לפני העלייה למטוס?</h5><ul>
+        <li>להוריד סרטים/סדרות/משחקים מראש למקרה שאין מספיק בידור על המטוס.</li>
+        <li>לטעון את כל המכשירים לגמרי.</li>
+        <li>לקחת בקבוק מים לשימוש חוזר (מתמלא אחרי הביקורת הביטחונית).</li>
+        <li>לוודא שהדרכונים וכרטיסי הטיסה נגישים בקלות.</li>
+        <li>ללבוש בגדים נוחים לטיסה ארוכה.</li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 What should we prepare before boarding?</h5><ul>
+        <li>Download movies/shows/games in advance in case onboard entertainment is limited.</li>
+        <li>Fully charge all devices.</li>
+        <li>Bring a refillable water bottle (fill it up after security).</li>
+        <li>Keep passports and boarding passes easily accessible.</li>
+        <li>Wear comfortable clothes for a long flight.</li>
+      </ul></div>
+    </div>`
+  }
+];
+
+function renderFlightInfo(){
+  renderTabbedSection('flightInfo', FLIGHT_INFO_TABS, FLIGHT_INFO_TAB, 'flightInfoTabs', 'flightInfoPanels');
+}
+
+const FAQ_TABS = [
+  {
+    id:'culture', labelHe:'תרבות ונימוסים', labelEn:'Culture & Etiquette',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🙏 איך מברכים אנשים בתאילנד?</h5><p>אומרים "סוואדי" (Sawasdee) עם קידה קטנה וכפות ידיים צמודות זו לזו בגובה החזה — התנועה הזו נקראת "וואי" (wai).</p></div>
+      <div class="qa-card"><h5>🚫 מה חשוב לא לעשות?</h5><ul>
+        <li>לא לגעת בראש של אף אחד.</li>
+        <li>לא להצביע עם כפות הרגליים לעבר אנשים או פסלי בודהה.</li>
+        <li>לא לטפס על מבנים בבתי מקדש.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 איך מתלבשים במקדש?</h5><p>לבוש צנוע (כתפיים וברכיים מכוסות), ולעיתים צריך להסיר נעליים לפני הכניסה.</p></div>
+      <div class="qa-card"><h5>🍽️ למה כולם אוכלים מאותן הצלחות?</h5><p>באוכל התאילנדי נהוג להזמין כמה מנות לאמצע השולחן ולחלוק אותן — זו דרך תאילנדית של נתינה ושיתוף, ועוזרת גם לאזן בין מנות חריפות לפחות חריפות.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🙏 How do we greet people?</h5><p>Say "Sawasdee" with a small bow and palms pressed together at chest height — this gesture is called a "wai."</p></div>
+      <div class="qa-card"><h5>🚫 What should we never do?</h5><ul>
+        <li>Never touch someone's head.</li>
+        <li>Never point your feet toward people or Buddha statues.</li>
+        <li>Never climb on temple structures.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 How should we dress at temples?</h5><p>Dress modestly (shoulders and knees covered), and you'll often need to remove your shoes before entering.</p></div>
+      <div class="qa-card"><h5>🍽️ Why does everyone eat from the same plates?</h5><p>In Thai food culture, it's common to order several dishes for the middle of the table and share them — a Thai way of giving and sharing, which also helps balance spicy and mild dishes.</p></div>
+    </div>`
+  },
+  {
+    id:'food', labelHe:'אוכל תאילנדי', labelEn:'Thai Food',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🍜 מה חובה לטעום?</h5><ul>
+        <li>פאד תאי (Pad Thai)</li>
+        <li>אורז דביק עם מנגו (Mango Sticky Rice)</li>
+        <li>אורז מטוגן</li>
+        <li>קארי ירוק</li>
+        <li>סאטיי (שיפודים ברוטב בוטנים)</li>
+        <li>פנקייק תאילנדי</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 אילו פירות כדאי לנסות?</h5><ul>
+        <li>מנגו</li>
+        <li>אננס</li>
+        <li>דרגון פרוט (פרי דרקון)</li>
+        <li>מנגוסטין</li>
+        <li>רמבוטן</li>
+        <li>קוקוס טרי</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 ידעתם? פוקט היא "עיר יצירתית של גסטרונומיה" מטעם אונסק"ו</h5><p>זה אומר שהאוכל בפוקט הוא לא רק ארוחה — הוא חלק מהזהות התרבותית של האי, שמשלב השפעות סיניות-תאילנדיות, מוסלמיות ותאילנדיות-דרומיות.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🍜 What should we try?</h5><ul>
+        <li>Pad Thai</li>
+        <li>Mango Sticky Rice</li>
+        <li>Fried Rice</li>
+        <li>Green Curry</li>
+        <li>Satay (skewers with peanut sauce)</li>
+        <li>Thai pancakes</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 Which fruits should we try?</h5><ul>
+        <li>Mango</li>
+        <li>Pineapple</li>
+        <li>Dragon fruit</li>
+        <li>Mangosteen</li>
+        <li>Rambutan</li>
+        <li>Fresh coconut</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 Did you know? Phuket is a UNESCO Creative City of Gastronomy</h5><p>That means the food in Phuket isn't just a meal — it's part of the island's cultural identity, blending Chinese-Thai, Muslim, and Southern Thai influences all at once.</p></div>
+    </div>`
+  },
+  {
+    id:'wildlife', labelHe:'טבע ובעלי חיים', labelEn:'Wildlife & Nature',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🦎 אילו בעלי חיים אנחנו עשויים לראות?</h5><ul>
+        <li>קופים</li>
+        <li>גקקונים (לטאות קיר)</li>
+        <li>וארנים (לטאות ענק)</li>
+        <li>ציפורי אף הענק (Hornbills)</li>
+        <li>דגי שונית צבעוניים</li>
+        <li>צבי ים (מוגנים)</li>
+        <li>סרטני נזירים</li>
+        <li>פרפרים</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 חשוב לזכור</h5><ul>
+        <li>לעולם לא להאכיל בעלי חיים בר.</li>
+        <li>לשמור על מרחק.</li>
+        <li>להשתמש בקרם הגנה ידידותי לשונית (reef-safe).</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ למה לא מבקרים באיי סימילן?</h5><p>איי סימילן וסורין נסגרים כל שנה לציבור בעונת המונסון — בדרך כלל מ-15 במאי ועד 15 באוקטובר — כדי לאפשר לטבע להתאושש ומטעמי בטיחות בים סוער. מכיוון שהטיול שלנו הוא בין 17 באוגוסט ל-4 בספטמבר, האיים האלה סגורים בדיוק בתאריכים האלה. זו הזדמנות טובה להסביר לילדים למה שמורות טבע צריכות "לנוח" מדי פעם.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🦎 Which animals might we see?</h5><ul>
+        <li>Monkeys</li>
+        <li>Geckos</li>
+        <li>Monitor lizards</li>
+        <li>Hornbills</li>
+        <li>Colorful reef fish</li>
+        <li>Sea turtles (protected)</li>
+        <li>Hermit crabs</li>
+        <li>Butterflies</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 Good to remember</h5><ul>
+        <li>Never feed wild animals.</li>
+        <li>Keep your distance.</li>
+        <li>Use reef-safe sunscreen.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ Why aren't we visiting the Similan Islands?</h5><p>The Similan and Surin islands close to the public every year during monsoon season — typically from May 15 to October 15 — to let nature recover and for safety in rough seas. Since our trip runs August 17 to September 4, those islands are closed exactly during our dates. It's a good chance to explain to the kids why nature reserves sometimes need to "rest."</p></div>
+    </div>`
+  },
+  {
+    id:'practical', labelHe:'מזג אוויר וטיפים מעשיים', labelEn:'Weather & Practical Tips',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ איך מזג האוויר באוגוסט?</h5><p>חם ולח, כ-28–32°C. שכיחים ממטרים טרופיים קצרים שמגיעים ונעלמים מהר — לרוב אפשר להמשיך בפעילויות אחרי הגשם.</p></div>
+      <div class="qa-card"><h5>💵 כסף</h5><p>המטבע המקומי הוא באט תאילנדי (THB). במקומות רבים מקבלים כרטיסי אשראי, אבל תמיד שווה להחזיק גם מזומן.</p></div>
+      <div class="qa-card"><h5>🔌 חשמל</h5><p>מתח של 220V. בתי מלון רבים מקבלים גם תקעים אירופאיים, אבל מתאם שקע יכול להיות שימושי.</p></div>
+      <div class="qa-card"><h5>📶 אינטרנט</h5><p>eSIM או סים מקומי זולים ומהירים — אפשר להזמין מראש או לקנות בשדה התעופה.</p></div>
+      <div class="qa-card"><h5>🚕 תחבורה</h5><p>Grab היא אפליקציית ההזמנות הפופולרית ביותר. טוקטוק כיפי, אבל אם אין מונה — כדאי לסכם על המחיר מראש.</p></div>
+      <div class="qa-card"><h5>🛂 האם צריך אשרה מיוחדת?</h5><p>אזרחי ישראל מקבלים כניסה ללא ויזה למשך עד 30 יום (החל ממאי 2026). כמו כן, מ-2025 חובה למלא מראש טופס דיגיטלי בשם <b>Thailand Digital Arrival Card (TDAC)</b> — חינם, מקוון, עד 3 ימים לפני ההגעה, באתר הרשמי בלבד: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 בטיחות בים</h5><p>לב לב לדגל האדום על החוף — דגל אדום = אין להיכנס למים.</p></div>
+      <div class="qa-card full"><h5>📞 מספרי חירום שימושיים</h5><ul>
+        <li>משטרת תיירים (24/7, כולל אנגלית): <b>1155</b></li>
+        <li>מוקד מידע לתיירים (TAT), 08:00–20:00: <b>1672</b></li>
+        <li>משטרה כללית: <b>191</b></li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ What's the weather like in August?</h5><p>Warm and humid, around 28–32°C. Short tropical showers are common — they come and go quickly, and most activities continue right after the rain.</p></div>
+      <div class="qa-card"><h5>💵 Money</h5><p>The local currency is the Thai Baht (THB). Many places accept cards, but it's always worth carrying some cash too.</p></div>
+      <div class="qa-card"><h5>🔌 Electricity</h5><p>220V. Many hotels accept European plugs too, but a travel adapter is useful.</p></div>
+      <div class="qa-card"><h5>📶 Internet</h5><p>A local eSIM or SIM card is cheap and fast — order ahead online or buy one at the airport.</p></div>
+      <div class="qa-card"><h5>🚕 Transportation</h5><p>Grab is the most popular ride-hailing app. Tuk-tuks are fun, but agree on the fare beforehand if there's no meter.</p></div>
+      <div class="qa-card"><h5>🛂 Do we need a special visa?</h5><p>Israeli citizens get visa-free entry for up to 30 days (as of May 2026). Since 2025, everyone must also complete the <b>Thailand Digital Arrival Card (TDAC)</b> online in advance — free, up to 3 days before arrival, only at the official site: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 Beach safety</h5><p>Watch for the red flag on the beach — a red flag means no swimming.</p></div>
+      <div class="qa-card full"><h5>📞 Useful emergency numbers</h5><ul>
+        <li>Tourist Police (24/7, English spoken): <b>1155</b></li>
+        <li>Tourism Authority of Thailand info line, 08:00–20:00: <b>1672</b></li>
+        <li>General police: <b>191</b></li>
+      </ul></div>
+    </div>`
+  },
+  {
+    id:'funfacts', labelHe:'ידעתם ש...?', labelEn:'Did You Know?',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>💡 עובדות מגניבות על תאילנד</h5><ul>
+        <li>בתאילנד חיים כ-72 מיליון בני אדם.</li>
+        <li>פוקט הוא האי הגדול ביותר בתאילנד.</li>
+        <li>תאילנד היא המדינה היחידה בדרום מזרח אסיה שמעולם לא נכבשה על ידי מעצמה אירופית.</li>
+        <li>החיה הלאומית היא הפיל.</li>
+        <li>יותר מ-90% מהתאילנדים הם בודהיסטים.</li>
+        <li>לבנגקוק יש אחד השמות הטקסיים הארוכים בעולם לעיר.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 אתגר המשפחה — לפני שחוזרים הביתה</h5><ul>
+        <li>לטעום 3 פירות חדשים.</li>
+        <li>ללמוד 5 מילים בתאילנדית.</li>
+        <li>לצפות יחד בשקיעה אחת.</li>
+        <li>למצוא 5 דגים טרופיים שונים.</li>
+        <li>לנסות שנורקלינג.</li>
+        <li>לבקר בשוק מקומי אחד.</li>
+        <li>לקנות מזכרת אחת בעבודת יד.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ חידון קטן</h5><ul>
+        <li>למה אנחנו עוצרים באבו דאבי?</li>
+        <li>מה המשמעות של "neo" באיירבוס A321neo?</li>
+        <li>איזה אי מפורסם בזכות הצוקים הגבוהים שלו?</li>
+        <li>איזה פרי תרצו לטעום ראשון?</li>
+        <li>איך מראים כבוד במקדש תאילנדי?</li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>💡 Cool facts about Thailand</h5><ul>
+        <li>Thailand has about 72 million people.</li>
+        <li>Phuket is Thailand's largest island.</li>
+        <li>Thailand is the only country in Southeast Asia never colonized by a European power.</li>
+        <li>The national animal is the elephant.</li>
+        <li>More than 90% of Thai people practice Buddhism.</li>
+        <li>Bangkok has one of the world's longest ceremonial city names.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 Family challenge — before we head home</h5><ul>
+        <li>Taste 3 new fruits.</li>
+        <li>Learn 5 Thai words.</li>
+        <li>Watch one sunset together.</li>
+        <li>Find 5 different tropical fish.</li>
+        <li>Try snorkeling.</li>
+        <li>Visit one local market.</li>
+        <li>Buy one handmade souvenir.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ Mini quiz</h5><ul>
+        <li>Why do we stop in Abu Dhabi?</li>
+        <li>What does "neo" mean in Airbus A321neo?</li>
+        <li>Which island is famous for its dramatic limestone cliffs?</li>
+        <li>Which fruit would you like to taste first?</li>
+        <li>How do we show respect at a Thai temple?</li>
+      </ul></div>
+    </div>`
+  }
+];
+
+function renderFAQ(){
+  renderTabbedSection('faq', FAQ_TABS, FAQ_TAB, 'faqTabs', 'faqPanels');
+}
+
 function fmtRange(s,e){
   // Always English, regardless of the page language toggle - matches the
   // destination banner's English place name and left-to-right layout.
@@ -2158,9 +2689,12 @@ safeRun('init:listeners', () => {
 
 });
 
+safeRun('init:tabs', initTabSwitchers);
 safeRun('init:render', () => { render(); });
 safeRun('init:loadWeather', () => { loadWeather(); });
 </script>
+
+
 
 
 
