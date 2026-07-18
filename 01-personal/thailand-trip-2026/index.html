@@ -342,22 +342,34 @@
     font-weight:700; font-size:.78rem; box-shadow:0 2px 8px rgba(0,0,0,.18);
   }
   .flights h4{margin:34px 0 14px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
-  .leg-card{
-    display:flex; gap:18px; align-items:center; background:var(--sea-dark); color:#fff; border-radius:18px; padding:22px 26px; margin-bottom:12px;
-    flex-wrap:wrap;
+  /* ---- Journey rail: merges the flight-map card with the leg details into one continuous card ---- */
+  .journey-rail-card{
+    background:var(--sand-card); max-width:560px; margin:0 auto 10px; padding:20px 22px 22px;
+    border-radius:0 0 18px 18px; box-shadow:var(--shadow);
   }
-  .leg-card .ficon{font-size:1.8rem;}
-  .leg-card .leg-main{flex:1; min-width:240px;}
-  .leg-card .leg-flightno{font-weight:800; font-size:1.05rem;}
-  .leg-card .leg-aircraft{opacity:.85; font-size:.85rem; margin-bottom:8px;}
-  .leg-card .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
-  .leg-card .leg-route .city{font-size:1rem;}
-  .leg-card .leg-route .time{font-size:1.3rem; font-weight:800;}
-  .leg-card .leg-route .airport-sub{font-weight:400; opacity:.75; font-size:.78rem; display:block;}
-  .leg-card .leg-meta{margin-inline-start:auto; text-align:end; font-size:.85rem; opacity:.9;}
-  .layover-note{
-    text-align:center; font-size:.85rem; opacity:.7; padding:8px; font-style:italic;
+  .journey-rail-card h4{margin:0 0 18px; font-size:1.05rem;}
+  .journey-rail{position:relative; padding-inline-end:24px;}
+  .journey-rail::before{content:""; position:absolute; top:8px; bottom:8px; inset-inline-end:9px; width:2px; background:var(--line);}
+  .rail-node{position:relative; padding-inline-end:34px; margin-bottom:20px;}
+  .rail-node:last-child{margin-bottom:0;}
+  .rail-node::before{
+    content:""; position:absolute; inset-inline-end:2px; top:4px; width:16px; height:16px; border-radius:50%;
+    border:3px solid var(--sand-card); box-shadow:0 0 0 2px var(--line); background:var(--sand-card);
   }
+  .rail-node.flight::before{background:var(--sea-dark); box-shadow:0 0 0 2px var(--sea-dark);}
+  .rail-node.final::before{background:var(--coral); box-shadow:0 0 0 2px var(--coral);}
+  .rail-chip{display:inline-block; font-size:.72rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:9px;}
+  .rail-node.flight .rail-chip{background:var(--sea-dark); color:#fff;}
+  .rail-node.final .rail-chip{background:var(--coral); color:#fff;}
+  .rail-body{background:var(--sand); border-radius:14px; padding:14px 16px;}
+  .rail-body .leg-flightno{font-weight:800; font-size:1rem;}
+  .rail-body .leg-aircraft{opacity:.75; color:var(--sea-dark); font-size:.82rem; margin-bottom:8px;}
+  .rail-body .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
+  .rail-body .leg-route .city{font-size:1rem;}
+  .rail-body .leg-route .time{font-size:1.2rem; font-weight:800;}
+  .rail-body .leg-route .airport-sub{font-weight:400; opacity:.7; font-size:.76rem; display:block;}
+  .rail-body .leg-meta{margin-top:8px; font-size:.8rem; opacity:.75;}
+  .rail-node.layover .rail-body{background:none; padding:0 16px; font-size:.85rem; font-weight:700; color:var(--sea-dark); opacity:.8;}
   .aircraft-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px; margin-bottom:10px;}
   .aircraft-card{
     background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
@@ -389,8 +401,8 @@
 
   /* ===== Flight route map ===== */
   .flight-map-wrap{
-    position:relative; background:var(--sand-card); border-radius:18px; padding:16px 18px 12px;
-    margin:0 auto 10px; max-width:560px; box-shadow:var(--shadow);
+    position:relative; background:var(--sand-card); border-radius:18px 18px 0 0; padding:16px 18px 12px;
+    margin:0 auto; max-width:560px; box-shadow:var(--shadow);
     direction:ltr;
   }
   .flight-map{width:100%; height:auto; display:block; border-radius:12px; overflow:hidden;}
@@ -410,9 +422,9 @@
   .flight-map .continent-label{
     font-size:10px; font-weight:800; fill:#0c5c73; opacity:.4; letter-spacing:.06em; direction:rtl;
   }
-  .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
-  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
-  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
+  .flight-map .plane-marker{font-size:22px;}
+  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; offset-rotate:auto 210deg; }
+  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; offset-rotate:auto 30deg; }
   @keyframes fly-out{ from{offset-distance:0%;} to{offset-distance:100%;} }
   @keyframes fly-ret{ from{offset-distance:100%;} to{offset-distance:0%;} }
   .flight-map-legend{
@@ -645,33 +657,39 @@
     <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Tel+Aviv,+Israel/Abu+Dhabi,+United+Arab+Emirates/Phuket,+Thailand" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
-  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 598 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+  <div class="journey-rail-card">
+    <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+    <div class="journey-rail">
+      <div class="rail-node flight">
+        <span class="rail-chip">✈️ טיסה ראשונה</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 598 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+            <span>✈</span>
+            <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות · מרחק: כ-2,110 ק״מ</div>
+        </div>
+      </div>
+      <div class="rail-node layover">
+        <div class="rail-body">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
+      </div>
+      <div class="rail-node final">
+        <span class="rail-chip">🏁 היעד הסופי</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 416 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+            <span>✈</span>
+            <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות · מרחק: כ-4,977 ק״מ</div>
+        </div>
       </div>
     </div>
-    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
-  </div>
-  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 416 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
-      </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
   </div>
 </section>
 
@@ -1333,33 +1351,39 @@
     <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Phuket,+Thailand/Abu+Dhabi,+United+Arab+Emirates/Tel+Aviv,+Israel" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
-  <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 417 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+  <div class="journey-rail-card">
+    <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
+    <div class="journey-rail">
+      <div class="rail-node flight">
+        <span class="rail-chip">✈️ טיסה ראשונה</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 417 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+            <span>✈</span>
+            <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות · מרחק: כ-4,977 ק״מ</div>
+        </div>
+      </div>
+      <div class="rail-node layover">
+        <div class="rail-body">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
+      </div>
+      <div class="rail-node final">
+        <span class="rail-chip">🏁 היעד הסופי</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 599 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+            <span>✈</span>
+            <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות · מרחק: כ-2,110 ק״מ</div>
+        </div>
       </div>
     </div>
-    <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות<br>מרחק: כ-4,977 ק״מ</div>
-  </div>
-  <div class="layover-note">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 599 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
-      </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות<br>מרחק: כ-2,110 ק״מ</div>
   </div>
 </section>
 
