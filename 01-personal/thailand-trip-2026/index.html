@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HaVenture 🌴 — משפחת חבר בתאילנד</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="images/icons/icon-192.png">
+<link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0c5c73">
 <script>
   // Registered first, before anything else can throw, so any failure anywhere
   // on the page (this file being opened over file://, WSL paths, etc.) is
@@ -23,6 +27,16 @@
     window.__showFatalError('JS error (' + (e.filename||'') + ':' + (e.lineno||'') + ')', e.error || e.message);
   });
 </script>
+<script>
+  // Applied synchronously, before CSS paints, so there is no flash of the wrong
+  // theme on load. Mirrors the persisted choice the toggle button writes later.
+  try {
+    var savedTheme = localStorage.getItem('haventure-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light'){
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  } catch(e) { /* ignore — e.g. file:// storage restrictions */ }
+</script>
 <style>
   :root{
     --ink:#0b2e3a;
@@ -30,14 +44,55 @@
     --sea-dark:#083c4c;
     --sand:#faf3e7;
     --sand-card:#ffffff;
+    --sand-alt:#fff3e4;
     --coral:#ff6b4a;
     --coral-dark:#e04f30;
     --gold:#f2a33d;
     --leaf:#3f8f6a;
     --line:#e7ddca;
+    --nav-bg:rgba(250,243,231,.94);
+    --map-tint-1:#e7f2f1;
+    --map-tint-2:#dcecef;
+    --weather-tint-1:#fff6e2;
+    --weather-tint-2:#ffeccb;
     --shadow: 0 10px 30px rgba(11,46,58,.12);
     --radius: 18px;
     font-size: 16px;
+    color-scheme: light;
+  }
+  /* Dark theme: a "night ocean" palette derived from the same brand hues, not a naive
+     inversion. Tokens redefine here only — components style through the tokens above. */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#eef2f0; --sea:#4fb3c9; --sea-dark:#2f7c92;
+      --sand:#0d1f24; --sand-card:#142e35; --sand-alt:#0f262c;
+      --coral:#ff8a68; --coral-dark:#ff6b4a;
+      --line:#24444c; --nav-bg:rgba(13,31,36,.9);
+      --map-tint-1:#123039; --map-tint-2:#0d262d;
+      --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eef2f0; --sea:#4fb3c9; --sea-dark:#2f7c92;
+    --sand:#0d1f24; --sand-card:#142e35; --sand-alt:#0f262c;
+    --coral:#ff8a68; --coral-dark:#ff6b4a;
+    --line:#24444c; --nav-bg:rgba(13,31,36,.9);
+    --map-tint-1:#123039; --map-tint-2:#0d262d;
+    --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+    --shadow: 0 10px 30px rgba(0,0,0,.45);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --ink:#0b2e3a; --sea:#0c5c73; --sea-dark:#083c4c;
+    --sand:#faf3e7; --sand-card:#ffffff; --sand-alt:#fff3e4;
+    --coral:#ff6b4a; --coral-dark:#e04f30;
+    --line:#e7ddca; --nav-bg:rgba(250,243,231,.94);
+    --map-tint-1:#e7f2f1; --map-tint-2:#dcecef;
+    --weather-tint-1:#fff6e2; --weather-tint-2:#ffeccb;
+    --shadow: 0 10px 30px rgba(11,46,58,.12);
+    color-scheme: light;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -94,6 +149,14 @@
   }
   .lang-toggle:hover{background:rgba(255,255,255,.28);}
   .hero-content{position:relative; z-index:1;}
+  .avatar-badge{
+    width:112px; height:112px; border-radius:50%; overflow:hidden;
+    border:4px solid rgba(255,255,255,.9); box-shadow:0 6px 20px rgba(0,0,0,.35);
+    background:var(--sand-card);
+  }
+  .avatar-badge img{width:100%; height:100%; object-fit:cover; display:block;}
+  .hero-avatar{position:absolute; top:66px; right:24px; z-index:2;}
+  .dest-avatar{position:absolute; top:20px; right:24px; z-index:3;}
   .eyebrow{
     display:inline-block;
     background:var(--coral);
@@ -104,8 +167,10 @@
     font-size:.85rem;
     letter-spacing:.03em;
     margin-bottom:16px;
+    direction:ltr;
   }
   .hero h1{
+    font-family:"Aptos", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
     font-size:clamp(2.2rem, 6vw, 4.2rem);
     margin:0 0 12px;
     font-weight:800;
@@ -118,22 +183,17 @@
     opacity:.95;
     margin:0 0 26px;
   }
-  .hero-stats{display:flex; flex-wrap:wrap; gap:14px;}
-  .hero-stat{
-    background:rgba(255,255,255,.12);
-    border:1px solid rgba(255,255,255,.35);
-    border-radius:14px;
-    padding:12px 18px;
-    backdrop-filter: blur(6px);
-    min-width:120px;
+  .hero p.sub-route{
+    font-size:clamp(1rem,2.2vw,1.3rem); font-weight:700; opacity:.95; margin:0 0 8px;
   }
-  .hero-stat b{display:block; font-size:1.3rem;}
-  .hero-stat span{font-size:.8rem; opacity:.85;}
+  .hero p.sub-tagline{
+    font-size:clamp(1rem,2.2vw,1.2rem); opacity:.85; margin:0;
+  }
 
   /* ===== Sticky nav ===== */
   .navbar{
     position:sticky; top:0; z-index:50;
-    background:rgba(250,243,231,.94);
+    background:var(--nav-bg);
     backdrop-filter: blur(8px);
     border-bottom:1px solid var(--line);
   }
@@ -151,7 +211,7 @@
     color:var(--sea-dark);
     white-space:nowrap;
   }
-  .nav-links a:hover{background:#fff; box-shadow:var(--shadow);}
+  .nav-links a:hover{background:var(--sand-card); box-shadow:var(--shadow);}
   .today-badge{
     display:flex; align-items:center; gap:8px;
     background:var(--sea);
@@ -190,22 +250,23 @@
   .timeline-strip::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
   .timeline-node{
     position:relative; z-index:1; flex:0 0 auto; scroll-snap-align:center;
-    display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer;
-    width:58px; padding-top:2px; background:none; border:none; font-family:inherit;
+    display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer;
+    width:72px; padding-top:2px; background:none; border:none; font-family:inherit;
   }
   .timeline-node .tl-dot{
-    width:16px; height:16px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px var(--line);
+    width:16px; height:16px; border-radius:50%; border:3px solid var(--sand-card); box-shadow:0 0 0 2px var(--line);
     transition:transform .12s ease;
   }
   .timeline-node:hover .tl-dot{transform:scale(1.15);}
   .timeline-node .tl-day{font-size:.78rem; font-weight:700; opacity:.65;}
   .timeline-node .tl-date{font-size:.66rem; opacity:.5;}
+  .timeline-node .tl-weekday{font-size:.62rem; font-weight:800; opacity:.8; line-height:1.15; white-space:normal; max-width:68px;}
   .timeline-node.is-today .tl-dot{box-shadow:0 0 0 4px rgba(255,107,74,.35); border-color:var(--coral);}
   .timeline-node.is-selected .tl-dot{transform:scale(1.3);}
-  .timeline-node.is-selected .tl-day, .timeline-node.is-selected .tl-date{opacity:1; color:var(--sea-dark);}
+  .timeline-node.is-selected .tl-day, .timeline-node.is-selected .tl-date, .timeline-node.is-selected .tl-weekday{opacity:1; color:var(--sea-dark);}
 
   .day-detail{
-    background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
+    background:var(--sand-card); border-radius:var(--radius); box-shadow:var(--shadow);
     padding:20px 22px; margin-top:6px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
   }
   .day-detail .pill{
@@ -219,7 +280,7 @@
     padding:70px 0 20px;
     scroll-margin-top:74px;
   }
-  section.dest:nth-of-type(even){background:#fff3e4;}
+  section.dest:nth-of-type(even){background:var(--sand-alt);}
   .dest-header{
     position:relative;
     border-radius:24px;
@@ -266,7 +327,7 @@
     position:relative; overflow:hidden; border-radius:18px;
     background:
       radial-gradient(circle, rgba(12,92,115,.16) 1.6px, transparent 1.6px) 0 0/24px 24px,
-      linear-gradient(135deg, #e7f2f1, #dcecef);
+      linear-gradient(135deg, var(--map-tint-1), var(--map-tint-2));
     border:1px solid var(--line);
     padding:26px 24px; text-align:center;
     display:flex; flex-direction:column; align-items:center; gap:6px;
@@ -278,11 +339,11 @@
 
   .weather-card{
     position:relative; overflow:hidden; border-radius:18px;
-    background:linear-gradient(135deg, #fff6e2, #ffeccb);
+    background:linear-gradient(135deg, var(--weather-tint-1), var(--weather-tint-2));
     border:1px solid var(--line);
     padding:20px 24px; text-align:center;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
-    max-width:220px; min-width:180px;
+    max-width:280px; min-width:180px;
   }
   .weather-card .wc-main{display:flex; align-items:center; gap:8px;}
   .weather-card .wc-emoji{font-size:2.1rem; line-height:1;}
@@ -290,6 +351,15 @@
   .weather-card .wc-sub{font-size:.82rem; opacity:.75; font-weight:600;}
   .weather-card .wc-range{font-size:.78rem; opacity:.7;}
   .weather-card .wc-uv{font-weight:700;}
+  .weather-card .wc-wind{font-size:.78rem; opacity:.7;}
+  .weather-card .wc-forecast{
+    display:flex; gap:14px; margin-top:8px; padding-top:8px; width:100%;
+    justify-content:center; border-top:1px solid var(--line);
+  }
+  .weather-card .wc-fday{display:flex; flex-direction:column; align-items:center; gap:1px;}
+  .weather-card .wc-fday-label{font-size:.7rem; font-weight:700; opacity:.6;}
+  .weather-card .wc-fday-emoji{font-size:1.15rem; line-height:1.3;}
+  .weather-card .wc-fday-range{font-size:.7rem; opacity:.75;}
   .weather-card.weather-loading, .weather-card.weather-error{font-size:.85rem; opacity:.65; flex-direction:row; gap:8px;}
 
   .timeout-card{
@@ -331,29 +401,42 @@
   .card .clink:hover{text-decoration:underline;}
 
   /* ===== Flights ===== */
-  .flights{padding:60px 0;}
+  .flights{padding-top:60px; padding-bottom:60px;}
   .booking-ref{
     position:absolute; top:12px; right:16px; z-index:2;
     background:var(--sea); color:#fff; border-radius:999px; padding:5px 14px;
     font-weight:700; font-size:.78rem; box-shadow:0 2px 8px rgba(0,0,0,.18);
   }
   .flights h4{margin:34px 0 14px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
-  .leg-card{
-    display:flex; gap:18px; align-items:center; background:var(--sea-dark); color:#fff; border-radius:18px; padding:22px 26px; margin-bottom:12px;
-    flex-wrap:wrap;
+  /* ---- Journey rail: merges the flight-map card with the leg details into one continuous card ---- */
+  .journey-rail-card{
+    background:var(--sand-card); margin:0 auto 10px; padding:20px 22px 22px;
+    border-radius:0 0 18px 18px; box-shadow:var(--shadow);
   }
-  .leg-card .ficon{font-size:1.8rem;}
-  .leg-card .leg-main{flex:1; min-width:240px;}
-  .leg-card .leg-flightno{font-weight:800; font-size:1.05rem;}
-  .leg-card .leg-aircraft{opacity:.85; font-size:.85rem; margin-bottom:8px;}
-  .leg-card .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
-  .leg-card .leg-route .city{font-size:1rem;}
-  .leg-card .leg-route .time{font-size:1.3rem; font-weight:800;}
-  .leg-card .leg-route .airport-sub{font-weight:400; opacity:.75; font-size:.78rem; display:block;}
-  .leg-card .leg-meta{margin-inline-start:auto; text-align:end; font-size:.85rem; opacity:.9;}
-  .layover-note{
-    text-align:center; font-size:.85rem; opacity:.7; padding:8px; font-style:italic;
+  .journey-rail-card h4{margin:0 0 18px; font-size:1.05rem;}
+  .journey-rail{position:relative; padding-inline-end:24px;}
+  .journey-rail::before{content:""; position:absolute; top:8px; bottom:8px; inset-inline-end:9px; width:2px; background:var(--line);}
+  .rail-node{position:relative; padding-inline-end:34px; margin-bottom:20px;}
+  .rail-node:last-child{margin-bottom:0;}
+  .rail-node::before{
+    content:""; position:absolute; inset-inline-end:2px; top:4px; width:16px; height:16px; border-radius:50%;
+    border:3px solid var(--sand-card); box-shadow:0 0 0 2px var(--line); background:var(--sand-card);
   }
+  .rail-node.flight::before{background:var(--sea-dark); box-shadow:0 0 0 2px var(--sea-dark);}
+  .rail-node.final::before{background:var(--coral); box-shadow:0 0 0 2px var(--coral);}
+  .rail-chip{display:inline-block; font-size:.72rem; font-weight:800; padding:4px 12px; border-radius:999px; margin-bottom:9px;}
+  .rail-node.flight .rail-chip{background:var(--sea-dark); color:#fff;}
+  .rail-node.final .rail-chip{background:var(--coral); color:#fff;}
+  .rail-body{background:var(--sand); border-radius:14px; padding:14px 16px;}
+  .rail-body .leg-flightno{font-weight:800; font-size:1rem;}
+  .rail-body .leg-aircraft{opacity:.75; color:var(--sea-dark); font-size:.82rem; margin-bottom:8px;}
+  .rail-body .leg-route{display:flex; gap:14px; align-items:center; flex-wrap:wrap; font-weight:700;}
+  .rail-body .leg-route .city{font-size:1rem;}
+  .rail-body .leg-route .time{font-size:1.2rem; font-weight:800;}
+  .rail-body .leg-route .airport-sub{font-weight:400; opacity:.7; font-size:.76rem; display:block;}
+  .rail-body .leg-route .leg-arrow{display:inline-block; transform:scaleX(-1);}
+  .rail-body .leg-meta{margin-top:8px; font-size:.8rem; opacity:.75;}
+  .rail-node.layover .rail-body{background:none; padding:0 16px; font-size:.85rem; font-weight:700; color:var(--sea-dark); opacity:.8;}
   .aircraft-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:18px; margin-bottom:10px;}
   .aircraft-card{
     background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
@@ -361,35 +444,73 @@
   .aircraft-card h5{margin:0 0 10px; font-size:1.05rem; display:flex; align-items:center; gap:8px;}
   .aircraft-card ul{margin:0; padding-inline-start:20px; font-size:.88rem; line-height:1.7;}
 
+  /* ===== Info sections (Flight & Aircraft Info / FAQ) with tabs ===== */
+  .info-section{padding:60px 0;}
+  .info-section:nth-of-type(even){background:var(--sand-alt);}
+  .tab-switcher{
+    display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;
+  }
+  .tab-btn{
+    background:var(--sand-card); border:2px solid var(--line); border-radius:999px; padding:9px 18px;
+    font-weight:700; font-size:.88rem; cursor:pointer; color:var(--ink); font-family:inherit;
+  }
+  .tab-btn.active{background:var(--sea); border-color:var(--sea); color:#fff;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .qa-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:18px;}
+  .qa-card{
+    background:var(--sand-card); border-radius:16px; padding:20px 22px; box-shadow:var(--shadow);
+  }
+  .qa-card h5{margin:0 0 8px; font-size:1rem; display:flex; align-items:flex-start; gap:8px;}
+  .qa-card p{margin:0; font-size:.9rem; line-height:1.65; opacity:.85;}
+  .qa-card ul{margin:6px 0 0; padding-inline-start:20px; font-size:.88rem; line-height:1.7; opacity:.85;}
+  .qa-card.full{grid-column:1/-1;}
+
   /* ===== Flight route map ===== */
   .flight-map-wrap{
-    position:relative; background:var(--sand-card); border-radius:18px; padding:16px 18px 12px;
-    margin:0 auto 10px; max-width:560px; box-shadow:var(--shadow);
+    position:relative; background:var(--sand-card); border-radius:18px 18px 0 0; padding:16px 18px 12px;
+    margin:0 auto; box-shadow:var(--shadow);
     direction:ltr;
   }
-  .flight-map{width:100%; height:auto; display:block;}
-  .flight-map .route-path{fill:none; stroke:var(--line); stroke-width:3; stroke-dasharray:7,7;}
+  .flight-map{width:100%; height:auto; display:block; border-radius:12px; overflow:hidden;}
+  .flight-map .map-ocean{fill:#dcedf1;}
+  .flight-map .map-grid line{stroke:#0c5c73; stroke-width:1; opacity:.08;}
+  .flight-map .map-land{fill:#e3dabd; stroke:#cabb92; stroke-width:1.2; stroke-linejoin:round;}
+  .flight-map .route-path{fill:none; stroke:var(--coral); stroke-width:2.5; stroke-dasharray:7,6;}
   .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
-  .flight-map .airport-label{font-size:15px; font-weight:700; fill:var(--ink); direction:rtl;}
-  .flight-map .plane-marker{font-size:22px; offset-rotate:0deg;}
-  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; }
-  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; }
+  .flight-map .airport-label{
+    /* fixed, not var(--ink): the map paper stays a light "postcard" insert in both
+       themes, so its label color must not flip to a light tone in dark mode */
+    font-size:14px; font-weight:800; fill:#0b2e3a; direction:rtl;
+    paint-order:stroke; stroke:#fdfaf3; stroke-width:4px; stroke-linejoin:round;
+  }
+  .flight-map .country-label{
+    font-size:11px; font-weight:700; fill:#8a7a4f; opacity:.65; direction:rtl;
+    paint-order:stroke; stroke:#e3dabd; stroke-width:3px; stroke-linejoin:round;
+  }
+  .flight-map .continent-label{
+    font-size:10px; font-weight:800; fill:#0c5c73; opacity:.4; letter-spacing:.06em; direction:rtl;
+  }
+  .flight-map .plane-marker{font-size:22px;}
+  .flight-map .plane-marker.anim-out{ animation: fly-out 4s linear infinite; offset-rotate:auto 210deg; }
+  .flight-map .plane-marker.anim-ret{ animation: fly-ret 4s linear infinite; offset-rotate:auto 30deg; }
   @keyframes fly-out{ from{offset-distance:0%;} to{offset-distance:100%;} }
   @keyframes fly-ret{ from{offset-distance:100%;} to{offset-distance:0%;} }
   .flight-map-legend{
     display:flex; flex-wrap:wrap; gap:16px; justify-content:center; margin-top:10px; font-size:.82rem; opacity:.8; font-weight:600;
   }
+  .map-explore-link{display:block; text-align:center; margin-top:14px;}
 
   /* ===== Prep list ===== */
   .prep{
     padding:60px 0 90px;
-    background: linear-gradient(180deg, #fff3e4, var(--sand));
+    background: linear-gradient(180deg, var(--sand-alt), var(--sand));
   }
   .prep-head{text-align:center; max-width:640px; margin:0 auto 34px;}
   .prep-head h2{font-size:2rem; margin:0 0 8px;}
   .prep-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;}
   .prep-cat{
-    background:#fff; border-radius:16px; padding:18px 20px; box-shadow:var(--shadow);
+    background:var(--sand-card); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow);
   }
   .prep-cat h4{margin:0 0 10px; display:flex; align-items:center; gap:8px; font-size:1.05rem;}
   .prep-cat ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
@@ -408,12 +529,58 @@
     .today-badge{justify-content:center;}
     .dest-header{min-height:260px;}
   }
+
+  /* ===== Install banner (PWA) ===== */
+  .install-banner{
+    position:fixed; left:16px; right:16px; bottom:16px; z-index:80; max-width:520px; margin:0 auto;
+    background:var(--sand-card); color:var(--ink); border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 12px 32px rgba(0,0,0,.22); padding:14px 16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .install-banner[hidden]{display:none;}
+  .install-banner-ic{font-size:1.7rem; flex:0 0 auto;}
+  .install-banner-copy{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .install-banner-copy b{font-size:.88rem;}
+  .install-banner-copy span{font-size:.76rem; opacity:.7;}
+  .install-banner-cta{
+    background:var(--coral); color:#fff; border:none; border-radius:999px; padding:8px 16px;
+    font-weight:700; font-size:.8rem; font-family:inherit; cursor:pointer; white-space:nowrap; flex:0 0 auto;
+  }
+  .install-banner-close{
+    background:none; border:none; color:var(--ink); opacity:.5; font-size:1rem; cursor:pointer;
+    padding:4px; flex:0 0 auto; font-family:inherit;
+  }
+  .install-banner-close:hover{opacity:.9;}
+
+  /* ===== Weather + prep nudge ===== */
+  .wc-nudge{
+    margin-top:8px; padding-top:8px; border-top:1px solid var(--line);
+    font-size:.78rem; opacity:.85; line-height:1.5;
+  }
+  .wc-nudge-cta{
+    display:inline-block; margin-top:6px; background:none; border:none; color:var(--sea);
+    font-weight:700; font-size:.78rem; cursor:pointer; font-family:inherit; padding:0; text-decoration:underline;
+  }
+
+  /* ===== Scroll reveal ===== */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
 </style>
 </head>
 <body>
 
-
-
+<div class="install-banner" id="installBanner" hidden="">
+  <span class="install-banner-ic">📲</span>
+  <div class="install-banner-copy">
+    <b data-i18n="installTitle">הוסיפו את HaVenture למסך הבית</b>
+    <span data-i18n="installSub">פתיחה מהירה, עובד גם בלי אינטרנט</span>
+  </div>
+  <button class="install-banner-cta" id="installCta" type="button" data-i18n="installCta">התקנה</button>
+  <button class="install-banner-close" id="installDismiss" type="button" aria-label="Dismiss">✕</button>
+</div>
 
 
 
@@ -422,19 +589,17 @@
 <div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand">HaVenture</span></div>
-    <div>
+    <div style="display:flex; gap:8px;">
+      <button class="lang-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </div>
   </div>
+  <div class="avatar-badge hero-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
   <div class="container hero-content">
-    <span class="eyebrow" data-i18n="heroEyebrow">17.8 – 4.9.2026 · טיול משפחתי</span>
-    <h1 data-i18n="heroTitle">משפחת חבר יוצאת ל-HaVenture בתאילנד</h1>
-    <p class="sub" data-i18n="heroSub">פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><b>19</b><span data-i18n="statDays">ימי טיול</span></div>
-      <div class="hero-stat"><b>4</b><span data-i18n="statStops">תחנות</span></div>
-      <div class="hero-stat"><b>5</b><span data-i18n="statPeople">נוסעים</span></div>
-    </div>
+    <span class="eyebrow" data-i18n="heroEyebrow">17-Aug - 04 Sept. 2026</span>
+    <h1 data-i18n="heroTitle">HaVenture בתאילנד 2026</h1>
+    <p class="sub-route" data-i18n="heroRoute">פוקט ← קרבי ← קאולק ← פוקט</p>
+    <p class="sub-tagline" data-i18n="heroTagline">המדריך לחופשה מתחיל כאן</p>
   </div>
 </div>
 
@@ -448,9 +613,11 @@
       <a href="#khaolak" data-i18n="navKhaolak">קאולק</a>
       <a href="#phuket2" data-i18n="navPhuket2">פוקט 2</a>
       <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
-      <a href="#prep" data-i18n="navPrep">רשימת ציוד</a>
+      <a href="#flightInfo" data-i18n="navFlightInfo">טיסה ומטוסים</a>
+      <a href="#prep" data-i18n="navPrep" style="display:none">רשימת ציוד</a>
+      <a href="#faq" data-i18n="navFaq">שאלות נפוצות</a>
     </div>
-    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 31 ימים</span></div>
+    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 30 ימים</span></div>
   </div>
 </div>
 
@@ -466,80 +633,99 @@
       <span class="tl-dot" style="background:#c73f22"></span>
       <span class="tl-day">17</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שני</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-18">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">18</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שלישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-19">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">19</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">רביעי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-20">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">20</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">חמישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-21">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">21</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-22">
       <span class="tl-dot" style="background:#8a6209"></span>
       <span class="tl-day">22</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שבת</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-23">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">23</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">ראשון</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-24">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">24</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שני</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-25">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">25</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שלישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-26">
       <span class="tl-dot" style="background:#8a6209"></span>
       <span class="tl-day">26</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">רביעי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-27">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">27</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">חמישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-28">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">28</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-29">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">29</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שבת</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-30">
       <span class="tl-dot" style="background:#8a6209"></span>
       <span class="tl-day">30</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">ראשון</span>
     </button><button type="button" class="timeline-node" data-date="2026-08-31">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">31</span>
       <span class="tl-date">אוג</span>
+      <span class="tl-weekday">שני</span>
     </button><button type="button" class="timeline-node" data-date="2026-09-01">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">1</span>
       <span class="tl-date">ספט</span>
+      <span class="tl-weekday">שלישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-09-02">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">2</span>
       <span class="tl-date">ספט</span>
+      <span class="tl-weekday">רביעי</span>
     </button><button type="button" class="timeline-node" data-date="2026-09-03">
       <span class="tl-dot" style="background:#0c5c73"></span>
       <span class="tl-day">3</span>
       <span class="tl-date">ספט</span>
+      <span class="tl-weekday">חמישי</span>
     </button><button type="button" class="timeline-node" data-date="2026-09-04">
       <span class="tl-dot" style="background:#c73f22"></span>
       <span class="tl-day">4</span>
       <span class="tl-date">ספט</span>
+      <span class="tl-weekday">שישי</span>
     </button></div>
-  <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב → אבו דאבי → פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
+  <div class="day-detail" id="dayDetail"><span class="pill">17 אוג</span><div><h3>טיסה לתאילנד</h3><p>תל אביב ← אבו דאבי ← פוקט</p></div><span class="pill" style="margin-inline-start:auto">טיסת הלוך</span></div>
 </div>
 
 <section class="flights container" id="flightsOut" dir="rtl" lang="he">
@@ -548,71 +734,77 @@
   <div class="flight-map-wrap">
     <div class="booking-ref">🎫 <b>9B5Q44</b> · Etihad Airways</div>
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
-      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
-      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
-      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
-      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
-      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
-      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
-      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
-      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+      <defs>
+        <marker id="routeArrowOut" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 z" fill="var(--coral)"></path>
+        </marker>
+      </defs>
+      <rect class="map-ocean" x="0" y="0" width="800" height="240"></rect>
+      <g class="map-grid">
+        <line x1="0" y1="60" x2="800" y2="60"></line>
+        <line x1="0" y1="120" x2="800" y2="120"></line>
+        <line x1="0" y1="180" x2="800" y2="180"></line>
+        <line x1="200" y1="0" x2="200" y2="240"></line>
+        <line x1="400" y1="0" x2="400" y2="240"></line>
+        <line x1="600" y1="0" x2="600" y2="240"></line>
+      </g>
+      <path class="map-land" d="M94.1,25.0 C97.2,20.0 111.4,34.2 122.4,35.0 C133.4,35.8 144.3,35.0 160.0,30.0 C175.7,25.0 196.1,9.2 216.5,5.0 C236.9,0.8 263.6,0.8 282.4,5.0 C301.2,9.2 316.9,21.7 329.4,30.0 C341.9,38.3 360.7,49.2 357.6,55.0 C354.5,60.8 324.7,62.5 310.6,65.0 C296.5,67.5 285.4,67.5 272.9,70.0 C260.3,72.5 251.0,73.3 235.3,80.0 C219.6,86.7 191.4,102.5 178.8,110.0 C166.2,117.5 160.0,121.7 160.0,125.0 C160.0,128.3 169.4,130.8 178.8,130.0 C188.2,129.2 203.9,123.3 216.5,120.0 C229.1,116.7 241.5,115.0 254.1,110.0 C266.6,105.0 291.8,96.7 291.8,90.0 C291.8,83.3 269.8,68.3 254.1,70.0 C238.4,71.7 216.4,94.2 197.6,100.0 C178.8,105.8 156.9,110.8 141.2,105.0 C125.5,99.2 111.3,78.3 103.5,65.0 C95.7,51.7 90.9,30.0 94.1,25.0 Z"></path>
+      <path class="map-land" d="M423.5,15.0 C436.1,10.8 454.9,20.8 470.6,25.0 C486.3,29.2 501.9,35.0 517.6,40.0 C533.3,45.0 552.2,49.2 564.7,55.0 C577.2,60.8 589.8,66.7 592.9,75.0 C596.0,83.3 589.8,96.7 583.5,105.0 C577.2,113.3 566.3,118.3 555.3,125.0 C544.3,131.7 527.0,141.7 517.6,145.0 C508.2,148.3 505.1,145.8 498.8,145.0 C492.5,144.2 486.3,142.5 480.0,140.0 C473.7,137.5 467.5,134.2 461.2,130.0 C454.9,125.8 448.7,120.8 442.4,115.0 C436.1,109.2 429.8,102.5 423.5,95.0 C417.2,87.5 409.4,77.5 404.7,70.0 C400.0,62.5 392.2,59.2 395.3,50.0 C398.4,40.8 410.9,19.2 423.5,15.0 Z"></path>
+      <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
+      <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
+      <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <text class="continent-label" x="60" y="215" text-anchor="middle">אסיה</text>
+      <text class="country-label" x="150" y="78" text-anchor="middle">סעודיה</text>
+      <text class="country-label" x="255" y="16" text-anchor="middle">איראן</text>
+      <text class="country-label" x="480" y="108" text-anchor="middle">הודו</text>
+      <text class="country-label" x="665" y="112" text-anchor="middle">תאילנד</text>
+      <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
+      <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="279" cy="68" r="6"></circle>
+      <text class="airport-label" x="279" y="44" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="690" cy="149" r="6"></circle>
+      <text class="airport-label" x="690" y="129" text-anchor="middle">פוקט (HKT)</text>
+      <path class="route-path" d="M93,30 Q186,20 279,68 Q484,60 669.8,140.3" marker-end="url(#routeArrowOut)"></path>
+      <text id="planeMarkerOut" class="plane-marker anim-out" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
-      <span>תל אביב → אבו דאבי: כ-2,110 ק״מ</span>
-      <span>אבו דאבי → פוקט: כ-4,977 ק״מ</span>
-      <span>סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
+      <span>תל אביב ← אבו דאבי (כ-2,110 ק״מ) ← פוקט (כ-4,977 ק״מ) · סה״כ כיוון הלוך: כ-7,087 ק״מ</span>
     </div>
+    <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Tel+Aviv,+Israel/Abu+Dhabi,+United+Arab+Emirates/Phuket,+Thailand" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
-  <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 598 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+  <div class="journey-rail-card">
+    <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+    <div class="journey-rail">
+      <div class="rail-node flight">
+        <span class="rail-chip">✈️ טיסה ראשונה</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 598 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">20:10</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+            <span class="leg-arrow">✈</span>
+            <span class="city"><span class="time">00:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות · מרחק: כ-2,110 ק״מ</div>
+        </div>
       </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 3 שעות ו-15 דקות<br>מרחק: כ-2,110 ק״מ</div>
-  </div>
-  <div class="layover-note">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 416 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+      <div class="rail-node layover">
+        <div class="rail-body">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
       </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות<br>מרחק: כ-4,977 ק״מ</div>
-  </div>
-
-  <h4>🛩️ קצת על המטוסים שלנו</h4>
-  <div class="aircraft-grid">
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321neo</h5>
-      <ul>
-        <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
-        <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
-        <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
-        <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
-        <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
-      </ul>
-    </div>
-    <div class="aircraft-card">
-      <h5>✈️ איירבוס A321LR ("Long Range")</h5>
-      <ul>
-        <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
-        <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
-        <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
-        <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
-      </ul>
+      <div class="rail-node final">
+        <span class="rail-chip">🏁 היעד הסופי</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 416 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+            <span class="leg-arrow">✈</span>
+            <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות · מרחק: כ-4,977 ק״מ</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -622,12 +814,13 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/phuket1-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 18–22</span>
             <h2>Phuket (Part 1)</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
             <p class="hdesc">ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.</p>
@@ -635,18 +828,18 @@
           <a class="btn" href="https://www.dinsoresort.com/phuket/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
             <p class="map-sub">פאטונג, פוקט</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/big-buddha.jpg" alt="הבודהה הגדול של פוקט" loading="lazy">
               <div class="body">
                 <p class="cname">הבודהה הגדול של פוקט</p>
@@ -656,7 +849,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/cable-jungle-zipline.jpg" alt="זיפליין ו-ATV ביער הטרופי" loading="lazy">
               <div class="body">
                 <p class="cname">זיפליין ו-ATV ביער הטרופי</p>
@@ -666,7 +859,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/bangla-road.jpg" alt="רחוב באנגלה ושוק הלילה" loading="lazy">
               <div class="body">
                 <p class="cname">רחוב באנגלה ושוק הלילה</p>
@@ -676,7 +869,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/phi-phi-islands.jpg" alt="טיול יום לאיי פי-פי" loading="lazy">
               <div class="body">
                 <p class="cname">טיול יום לאיי פי-פי</p>
@@ -686,7 +879,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/james-bond-island.jpg" alt="איי ג׳יימס בונד ומפרץ פאנגה" loading="lazy">
               <div class="body">
                 <p class="cname">איי ג׳יימס בונד ומפרץ פאנגה</p>
@@ -698,7 +891,7 @@
           
         </div>
         
-        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+        <a class="timeout-card reveal in" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
           <span class="to-icon">📰</span>
           <div>
             <p class="to-title">המדריך של Time Out לפוקט</p>
@@ -709,7 +902,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">EuroThai Restaurant</p>
@@ -719,7 +912,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
               <div class="body">
                 <p class="cname">Baan Pad Thaï</p>
@@ -729,7 +922,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/kaab-gluay.jpg" alt="Kaab Gluay" loading="lazy">
               <div class="body">
                 <p class="cname">Kaab Gluay</p>
@@ -739,7 +932,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן — קומת הרחוב</p>
@@ -753,7 +946,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
               <div class="body">
                 <p class="cname">ג׳אנגסילון (Jungceylon)</p>
@@ -762,7 +955,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן</p>
@@ -778,12 +971,13 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/krabi-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 22–26</span>
             <h2>Krabi</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Dusit Thani Krabi Beach Resort</p>
             <p class="hdesc">ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.</p>
@@ -791,18 +985,18 @@
           <a class="btn" href="https://www.dusit.com/dusitthani-krabibeachresort/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Dusit Thani Krabi Beach Resort</p>
             <p class="map-sub">קרבי, תאילנד</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/railay-beach.jpg" alt="חוף ריילי (Railay)" loading="lazy">
               <div class="body">
                 <p class="cname">חוף ריילי (Railay)</p>
@@ -812,7 +1006,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/four-islands-tour.jpg" alt="טיול ארבעת האיים" loading="lazy">
               <div class="body">
                 <p class="cname">טיול ארבעת האיים</p>
@@ -822,7 +1016,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/tiger-cave-temple.jpg" alt="מקדש מערת הנמר" loading="lazy">
               <div class="body">
                 <p class="cname">מקדש מערת הנמר</p>
@@ -832,7 +1026,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/emerald-pool.jpg" alt="הבריכה האזמרגדית והכחולה" loading="lazy">
               <div class="body">
                 <p class="cname">הבריכה האזמרגדית והכחולה</p>
@@ -842,7 +1036,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-market.jpg" alt="עיירת אאו-נאנג ושוק הלילה" loading="lazy">
               <div class="body">
                 <p class="cname">עיירת אאו-נאנג ושוק הלילה</p>
@@ -857,7 +1051,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/amp-aing.jpg" alt="Amp &amp; Aing" loading="lazy">
               <div class="body">
                 <p class="cname">Amp &amp; Aing</p>
@@ -867,7 +1061,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/kodam-kitchen.jpg" alt="KoDam Kitchen" loading="lazy">
               <div class="body">
                 <p class="cname">KoDam Kitchen</p>
@@ -877,7 +1071,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/mama-kitchen.jpg" alt="Mama Kitchen" loading="lazy">
               <div class="body">
                 <p class="cname">Mama Kitchen</p>
@@ -887,7 +1081,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-boat-noodle.jpg" alt="Ao Nang Boat Noodle &amp; Thai Food" loading="lazy">
               <div class="body">
                 <p class="cname">Ao Nang Boat Noodle &amp; Thai Food</p>
@@ -901,7 +1095,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-landmark-market.jpg" alt="שוק הלילה של אאו-נאנג (Landmark)" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הלילה של אאו-נאנג (Landmark)</p>
@@ -910,7 +1104,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-beach-walk-market.jpg" alt="שוק הטיילת של אאו-נאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הטיילת של אאו-נאנג</p>
@@ -926,12 +1120,13 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/khaolak-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 26–30</span>
             <h2>Khao Lak</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">JW Marriott Khao Lak Resort &amp; Spa</p>
             <p class="hdesc">ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.</p>
@@ -939,18 +1134,18 @@
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
             <p class="map-sub">קאולק, תאילנד</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/phang-nga-canoe.jpg" alt="מפרץ פאנגה ואי ג׳יימס בונד" loading="lazy">
               <div class="body">
                 <p class="cname">מפרץ פאנגה ואי ג׳יימס בונד</p>
@@ -960,7 +1155,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/khao-sok.jpg" alt="פארק לאומי קאו סוק" loading="lazy">
               <div class="body">
                 <p class="cname">פארק לאומי קאו סוק</p>
@@ -970,7 +1165,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/lam-ru-waterfall.jpg" alt="פארק חאו-לאק לאם-רו והמפל" loading="lazy">
               <div class="body">
                 <p class="cname">פארק חאו-לאק לאם-רו והמפל</p>
@@ -980,7 +1175,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/tsunami-memorial.jpg" alt="אנדרטת הצונאמי — סירת המשטרה 813" loading="lazy">
               <div class="body">
                 <p class="cname">אנדרטת הצונאמי — סירת המשטרה 813</p>
@@ -990,7 +1185,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/elephant-sanctuary.jpg" alt="מקלט פילים אתי" loading="lazy">
               <div class="body">
                 <p class="cname">מקלט פילים אתי</p>
@@ -1005,7 +1200,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/ten-star.jpg" alt="Ten Star Coffee and Food" loading="lazy">
               <div class="body">
                 <p class="cname">Ten Star Coffee and Food</p>
@@ -1015,7 +1210,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/walkers.jpg" alt="Walkers" loading="lazy">
               <div class="body">
                 <p class="cname">Walkers</p>
@@ -1025,7 +1220,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/pattys.jpg" alt="Patty's Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">Patty's Restaurant</p>
@@ -1035,7 +1230,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-night-market-food.jpg" alt="שוק הלילה של באנג-ניאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הלילה של באנג-ניאנג</p>
@@ -1049,7 +1244,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-market.jpg" alt="שוק באנג-ניאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנג-ניאנג</p>
@@ -1058,7 +1253,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-plaza.jpg" alt="באנג-ניאנג פלאזה" loading="lazy">
               <div class="body">
                 <p class="cname">באנג-ניאנג פלאזה</p>
@@ -1074,12 +1269,13 @@
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('images/hero/phuket2-banner.jpg')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">Aug 30 — Sep 4</span>
             <h2>Phuket (Part 2)</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
             <p class="hdesc">ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.</p>
@@ -1087,18 +1283,18 @@
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
             <p class="map-sub">קלים, פוקט</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/freedom-beach.jpg" alt="חוף פרידום" loading="lazy">
               <div class="body">
                 <p class="cname">חוף פרידום</p>
@@ -1108,7 +1304,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/old-phuket-town.jpg" alt="העיר העתיקה של פוקט" loading="lazy">
               <div class="body">
                 <p class="cname">העיר העתיקה של פוקט</p>
@@ -1118,7 +1314,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/racha-island.jpg" alt="שנורקלינג באי ראצ׳ה" loading="lazy">
               <div class="body">
                 <p class="cname">שנורקלינג באי ראצ׳ה</p>
@@ -1128,7 +1324,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/parasailing.jpg" alt="פאראסיילינג וג׳ט-סקי" loading="lazy">
               <div class="body">
                 <p class="cname">פאראסיילינג וג׳ט-סקי</p>
@@ -1138,7 +1334,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/kalim-sunset.jpg" alt="חוף קאלים ונקודת שקיעה" loading="lazy">
               <div class="body">
                 <p class="cname">חוף קאלים ונקודת שקיעה</p>
@@ -1150,7 +1346,7 @@
           
         </div>
         
-        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+        <a class="timeout-card reveal in" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
           <span class="to-icon">📰</span>
           <div>
             <p class="to-title">המדריך של Time Out לפוקט</p>
@@ -1161,7 +1357,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">EuroThai Restaurant</p>
@@ -1171,7 +1367,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
               <div class="body">
                 <p class="cname">Baan Pad Thaï</p>
@@ -1181,7 +1377,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/no6-up-the-hill.jpg" alt="No.6 Restaurant " up="" the="" hill""="" loading="lazy">
               <div class="body">
                 <p class="cname">No.6 Restaurant "Up The Hill"</p>
@@ -1191,7 +1387,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן — קומת הרחוב</p>
@@ -1205,7 +1401,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
               <div class="body">
                 <p class="cname">ג׳אנגסילון (Jungceylon)</p>
@@ -1214,7 +1410,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן</p>
@@ -1232,53 +1428,151 @@
 
   <div class="flight-map-wrap">
     <svg class="flight-map" viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
-      <path class="route-path" d="M70,180 Q260,70 400,120 Q540,170 730,90"></path>
-      <circle class="airport-dot" cx="70" cy="180" r="7"></circle>
-      <text class="airport-label" x="70" y="205" text-anchor="middle">תל אביב (TLV)</text>
-      <circle class="airport-dot" cx="400" cy="120" r="7"></circle>
-      <text class="airport-label" x="400" y="98" text-anchor="middle">אבו דאבי (AUH)</text>
-      <circle class="airport-dot" cx="730" cy="90" r="7"></circle>
-      <text class="airport-label" x="730" y="65" text-anchor="middle">פוקט (HKT)</text>
-      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M70,180 Q260,70 400,120 Q540,170 730,90');">✈️</text>
+      <defs>
+        <marker id="routeArrowRet" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+          <path d="M1,1 L9,5 L1,9 z" fill="var(--coral)"></path>
+        </marker>
+      </defs>
+      <rect class="map-ocean" x="0" y="0" width="800" height="240"></rect>
+      <g class="map-grid">
+        <line x1="0" y1="60" x2="800" y2="60"></line>
+        <line x1="0" y1="120" x2="800" y2="120"></line>
+        <line x1="0" y1="180" x2="800" y2="180"></line>
+        <line x1="200" y1="0" x2="200" y2="240"></line>
+        <line x1="400" y1="0" x2="400" y2="240"></line>
+        <line x1="600" y1="0" x2="600" y2="240"></line>
+      </g>
+      <path class="map-land" d="M94.1,25.0 C97.2,20.0 111.4,34.2 122.4,35.0 C133.4,35.8 144.3,35.0 160.0,30.0 C175.7,25.0 196.1,9.2 216.5,5.0 C236.9,0.8 263.6,0.8 282.4,5.0 C301.2,9.2 316.9,21.7 329.4,30.0 C341.9,38.3 360.7,49.2 357.6,55.0 C354.5,60.8 324.7,62.5 310.6,65.0 C296.5,67.5 285.4,67.5 272.9,70.0 C260.3,72.5 251.0,73.3 235.3,80.0 C219.6,86.7 191.4,102.5 178.8,110.0 C166.2,117.5 160.0,121.7 160.0,125.0 C160.0,128.3 169.4,130.8 178.8,130.0 C188.2,129.2 203.9,123.3 216.5,120.0 C229.1,116.7 241.5,115.0 254.1,110.0 C266.6,105.0 291.8,96.7 291.8,90.0 C291.8,83.3 269.8,68.3 254.1,70.0 C238.4,71.7 216.4,94.2 197.6,100.0 C178.8,105.8 156.9,110.8 141.2,105.0 C125.5,99.2 111.3,78.3 103.5,65.0 C95.7,51.7 90.9,30.0 94.1,25.0 Z"></path>
+      <path class="map-land" d="M423.5,15.0 C436.1,10.8 454.9,20.8 470.6,25.0 C486.3,29.2 501.9,35.0 517.6,40.0 C533.3,45.0 552.2,49.2 564.7,55.0 C577.2,60.8 589.8,66.7 592.9,75.0 C596.0,83.3 589.8,96.7 583.5,105.0 C577.2,113.3 566.3,118.3 555.3,125.0 C544.3,131.7 527.0,141.7 517.6,145.0 C508.2,148.3 505.1,145.8 498.8,145.0 C492.5,144.2 486.3,142.5 480.0,140.0 C473.7,137.5 467.5,134.2 461.2,130.0 C454.9,125.8 448.7,120.8 442.4,115.0 C436.1,109.2 429.8,102.5 423.5,95.0 C417.2,87.5 409.4,77.5 404.7,70.0 C400.0,62.5 392.2,59.2 395.3,50.0 C398.4,40.8 410.9,19.2 423.5,15.0 Z"></path>
+      <ellipse class="map-land" cx="545" cy="170" rx="7" ry="10"></ellipse>
+      <path class="map-land" d="M649.4,65.0 C652.5,64.2 668.2,78.3 677.6,85.0 C687.0,91.7 699.6,97.5 705.9,105.0 C712.2,112.5 713.7,121.7 715.3,130.0 C716.9,138.3 716.9,147.5 715.3,155.0 C713.7,162.5 705.9,170.0 705.9,175.0 C705.9,180.0 710.6,184.2 715.3,185.0 C720.0,185.8 732.5,184.2 734.1,180.0 C735.7,175.8 731.0,166.7 724.7,160.0 C718.4,153.3 702.8,146.7 696.5,140.0 C690.2,133.3 691.8,126.7 687.1,120.0 C682.4,113.3 672.9,105.0 668.2,100.0 C663.5,95.0 661.9,95.8 658.8,90.0 C655.7,84.2 646.3,65.8 649.4,65.0 Z"></path>
+      <path class="map-land" d="M668.2,165.0 C674.5,165.0 688.6,173.3 696.5,180.0 C704.4,186.7 715.3,199.2 715.3,205.0 C715.3,210.8 704.4,215.8 696.5,215.0 C688.6,214.2 674.5,205.8 668.2,200.0 C661.9,194.2 658.8,185.8 658.8,180.0 C658.8,174.2 661.9,165.0 668.2,165.0 Z"></path>
+      <text class="continent-label" x="60" y="215" text-anchor="middle">אסיה</text>
+      <text class="country-label" x="150" y="78" text-anchor="middle">סעודיה</text>
+      <text class="country-label" x="255" y="16" text-anchor="middle">איראן</text>
+      <text class="country-label" x="480" y="108" text-anchor="middle">הודו</text>
+      <text class="country-label" x="665" y="112" text-anchor="middle">תאילנד</text>
+      <circle class="airport-dot" cx="93" cy="30" r="6"></circle>
+      <text class="airport-label" x="93" y="52" text-anchor="middle">תל אביב (TLV)</text>
+      <circle class="airport-dot" cx="279" cy="68" r="6"></circle>
+      <text class="airport-label" x="279" y="44" text-anchor="middle">אבו דאבי (AUH)</text>
+      <circle class="airport-dot" cx="690" cy="149" r="6"></circle>
+      <text class="airport-label" x="690" y="129" text-anchor="middle">פוקט (HKT)</text>
+      <path class="route-path" d="M114.9,27.6 Q186,20 279,68 Q484,60 690,149" marker-start="url(#routeArrowRet)"></path>
+      <text id="planeMarkerRet" class="plane-marker anim-ret" style="offset-path:path('M93,30 Q186,20 279,68 Q484,60 690,149');">✈️</text>
     </svg>
     <div class="flight-map-legend">
-      <span>פוקט → אבו דאבי: כ-4,977 ק״מ</span>
-      <span>אבו דאבי → תל אביב: כ-2,110 ק״מ</span>
-      <span>סה״כ כיוון חזור: כ-7,087 ק״מ · הלוך ושוב: כ-14,174 ק״מ</span>
+      <span>פוקט ← אבו דאבי (כ-4,977 ק״מ) ← תל אביב (כ-2,110 ק״מ) · סה״כ כיוון חזור: כ-7,087 ק״מ (הלוך ושוב: כ-14,174 ק״מ)</span>
     </div>
+    <a class="btn small map-explore-link" href="https://www.google.com/maps/dir/Phuket,+Thailand/Abu+Dhabi,+United+Arab+Emirates/Tel+Aviv,+Israel" target="_blank" rel="noopener">🌍 המסלול ב-Google Maps — זום וסיבוב חופשי</a>
   </div>
 
-  <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 417 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+  <div class="journey-rail-card">
+    <h4>🛬 חזור — יום שישי 4.9.2026 (סה״כ 11 שעות ו-45 דקות)</h4>
+    <div class="journey-rail">
+      <div class="rail-node flight">
+        <span class="rail-chip">✈️ טיסה ראשונה</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 417 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">15:20</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+            <span class="leg-arrow">✈</span>
+            <span class="city"><span class="time">18:45</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות · מרחק: כ-4,977 ק״מ</div>
+        </div>
+      </div>
+      <div class="rail-node layover">
+        <div class="rail-body">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
+      </div>
+      <div class="rail-node final">
+        <span class="rail-chip">🏁 היעד הסופי</span>
+        <div class="rail-body">
+          <div class="leg-flightno">EY 599 · Etihad Airways</div>
+          <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
+          <div class="leg-route">
+            <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+            <span class="leg-arrow">✈</span>
+            <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
+          </div>
+          <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות · מרחק: כ-2,110 ק״מ</div>
+        </div>
       </div>
     </div>
-    <div class="leg-meta">משך טיסה: 6 שעות ו-25 דקות<br>מרחק: כ-4,977 ק״מ</div>
-  </div>
-  <div class="layover-note">🕐 קונקשן באבו דאבי — שעה ו-55 דקות</div>
-  <div class="leg-card">
-    <div class="ficon">✈️</div>
-    <div class="leg-main">
-      <div class="leg-flightno">EY 599 · Etihad Airways</div>
-      <div class="leg-aircraft">מטוס: איירבוס A321neo</div>
-      <div class="leg-route">
-        <span class="city"><span class="time">20:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
-        <span>✈</span>
-        <span class="city"><span class="time">23:05</span><span class="airport-sub">תל אביב · בן גוריון (TLV), טרמינל 3</span></span>
-      </div>
-    </div>
-    <div class="leg-meta">משך טיסה: 3 שעות ו-25 דקות<br>מרחק: כ-2,110 ק״מ</div>
   </div>
 </section>
 
-<section class="prep" id="prep">
+<section class="info-section container" id="flightInfo">
+  <h2 data-i18n="flightInfoTitle">הטיסה והמטוסים שלנו — עוד פרטים</h2>
+  <p class="sub" data-i18n="flightInfoSub">הכל על אתיחאד, אבו דאבי, המטוסים וטיפים לפני עלייה למטוס.</p>
+  <div class="tab-switcher" id="flightInfoTabs">
+    <button type="button" class="tab-btn active" data-group="flightInfo" data-tab="aircraft">
+      המטוסים שלנו
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="flightInfo" data-tab="etihad">
+      אתיחאד ואבו דאבי
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="flightInfo" data-tab="tips">
+      טיפים לטיסה
+    </button>
+  </div>
+  <div id="flightInfoPanels">
+    <div class="tab-panel active" data-group="flightInfo" data-tab="aircraft">
+      <div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+          <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+          <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+          <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+          <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+        <ul>
+          <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+          <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+          <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+          <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="flightInfo" data-tab="etihad">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🛫 למה עוצרים באבו דאבי?</h5><p>אבו דאבי היא הבסיס הראשי (Hub) של אתיחאד איירווייז. אלפי נוסעים עוברים דרכה כל יום, וזה מאפשר לחברה לחבר בין תל אביב לבין יעדים ברחבי אסיה, אוסטרליה, אפריקה ואירופה.</p></div>
+      <div class="qa-card"><h5>⭐ מה מיוחד באתיחאד?</h5><ul>
+        <li>חברת התעופה הלאומית של איחוד האמירויות.</li>
+        <li>אחד הציים הצעירים בעולם.</li>
+        <li>ידועה בצוותי אוויר חברותיים ובידור טוב על הטיסה.</li>
+        <li>ארוחות ילדים טובות (כדאי להזמין מראש אם אפשר).</li>
+        <li>מסכי בידור חינמיים וטעינת USB ברוב המטוסים.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ כמה זמן אורכת הטיסה שלנו?</h5><p>בסך הכל כ-12–14 שעות טיסה נטו, בתוספת זמן ההמתנה לקונקשן באבו דאבי.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="flightInfo" data-tab="tips">
+      <div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 מה כדאי להכין לפני העלייה למטוס?</h5><ul>
+        <li>להוריד סרטים/סדרות/משחקים מראש למקרה שאין מספיק בידור על המטוס.</li>
+        <li>לטעון את כל המכשירים לגמרי.</li>
+        <li>לקחת בקבוק מים לשימוש חוזר (מתמלא אחרי הביקורת הביטחונית).</li>
+        <li>לוודא שהדרכונים וכרטיסי הטיסה נגישים בקלות.</li>
+        <li>ללבוש בגדים נוחים לטיסה ארוכה.</li>
+      </ul></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="prep" id="prep" style="display:none">
   <div class="container">
     <div class="prep-head">
       <h2 data-i18n="prepTitle">רשימת ציוד — מה לא לשכוח</h2>
@@ -1432,6 +1726,135 @@
   </div>
 </section>
 
+<section class="info-section container" id="faq">
+  <h2 data-i18n="faqTitle">שאלות נפוצות</h2>
+  <p class="sub" data-i18n="faqSub">כל מה שכדאי לדעת לפני ובמהלך הטיול — תרבות, אוכל, טבע, מזג אוויר וטיפים מעשיים.</p>
+  <div class="tab-switcher" id="faqTabs">
+    <button type="button" class="tab-btn active" data-group="faq" data-tab="culture">
+      תרבות ונימוסים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="food">
+      אוכל תאילנדי
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="wildlife">
+      טבע ובעלי חיים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="practical">
+      מזג אוויר וטיפים מעשיים
+    </button>
+  
+    <button type="button" class="tab-btn" data-group="faq" data-tab="funfacts">
+      ידעתם ש...?
+    </button>
+  </div>
+  <div id="faqPanels">
+    <div class="tab-panel active" data-group="faq" data-tab="culture">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🙏 איך מברכים אנשים בתאילנד?</h5><p>אומרים "סוואדי" (Sawasdee) עם קידה קטנה וכפות ידיים צמודות זו לזו בגובה החזה — התנועה הזו נקראת "וואי" (wai).</p></div>
+      <div class="qa-card"><h5>🚫 מה חשוב לא לעשות?</h5><ul>
+        <li>לא לגעת בראש של אף אחד.</li>
+        <li>לא להצביע עם כפות הרגליים לעבר אנשים או פסלי בודהה.</li>
+        <li>לא לטפס על מבנים בבתי מקדש.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 איך מתלבשים במקדש?</h5><p>לבוש צנוע (כתפיים וברכיים מכוסות), ולעיתים צריך להסיר נעליים לפני הכניסה.</p></div>
+      <div class="qa-card"><h5>🍽️ למה כולם אוכלים מאותן הצלחות?</h5><p>באוכל התאילנדי נהוג להזמין כמה מנות לאמצע השולחן ולחלוק אותן — זו דרך תאילנדית של נתינה ושיתוף, ועוזרת גם לאזן בין מנות חריפות לפחות חריפות.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="food">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🍜 מה חובה לטעום?</h5><ul>
+        <li>פאד תאי (Pad Thai)</li>
+        <li>אורז דביק עם מנגו (Mango Sticky Rice)</li>
+        <li>אורז מטוגן</li>
+        <li>קארי ירוק</li>
+        <li>סאטיי (שיפודים ברוטב בוטנים)</li>
+        <li>פנקייק תאילנדי</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 אילו פירות כדאי לנסות?</h5><ul>
+        <li>מנגו</li>
+        <li>אננס</li>
+        <li>דרגון פרוט (פרי דרקון)</li>
+        <li>מנגוסטין</li>
+        <li>רמבוטן</li>
+        <li>קוקוס טרי</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 ידעתם? פוקט היא "עיר יצירתית של גסטרונומיה" מטעם אונסק"ו</h5><p>זה אומר שהאוכל בפוקט הוא לא רק ארוחה — הוא חלק מהזהות התרבותית של האי, שמשלב השפעות סיניות-תאילנדיות, מוסלמיות ותאילנדיות-דרומיות.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="wildlife">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🦎 אילו בעלי חיים אנחנו עשויים לראות?</h5><ul>
+        <li>קופים</li>
+        <li>גקקונים (לטאות קיר)</li>
+        <li>וארנים (לטאות ענק)</li>
+        <li>ציפורי אף הענק (Hornbills)</li>
+        <li>דגי שונית צבעוניים</li>
+        <li>צבי ים (מוגנים)</li>
+        <li>סרטני נזירים</li>
+        <li>פרפרים</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 חשוב לזכור</h5><ul>
+        <li>לעולם לא להאכיל בעלי חיים בר.</li>
+        <li>לשמור על מרחק.</li>
+        <li>להשתמש בקרם הגנה ידידותי לשונית (reef-safe).</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ למה לא מבקרים באיי סימילן?</h5><p>איי סימילן וסורין נסגרים כל שנה לציבור בעונת המונסון — בדרך כלל מ-15 במאי ועד 15 באוקטובר — כדי לאפשר לטבע להתאושש ומטעמי בטיחות בים סוער. מכיוון שהטיול שלנו הוא בין 17 באוגוסט ל-4 בספטמבר, האיים האלה סגורים בדיוק בתאריכים האלה. זו הזדמנות טובה להסביר לילדים למה שמורות טבע צריכות "לנוח" מדי פעם.</p></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="practical">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ איך מזג האוויר באוגוסט?</h5><p>חם ולח, כ-28–32°C. שכיחים ממטרים טרופיים קצרים שמגיעים ונעלמים מהר — לרוב אפשר להמשיך בפעילויות אחרי הגשם.</p></div>
+      <div class="qa-card"><h5>💵 כסף</h5><p>המטבע המקומי הוא באט תאילנדי (THB). במקומות רבים מקבלים כרטיסי אשראי, אבל תמיד שווה להחזיק גם מזומן.</p></div>
+      <div class="qa-card"><h5>🔌 חשמל</h5><p>מתח של 220V. בתי מלון רבים מקבלים גם תקעים אירופאיים, אבל מתאם שקע יכול להיות שימושי.</p></div>
+      <div class="qa-card"><h5>📶 אינטרנט</h5><p>eSIM או סים מקומי זולים ומהירים — אפשר להזמין מראש או לקנות בשדה התעופה.</p></div>
+      <div class="qa-card"><h5>🚕 תחבורה</h5><p>Grab היא אפליקציית ההזמנות הפופולרית ביותר. טוקטוק כיפי, אבל אם אין מונה — כדאי לסכם על המחיר מראש.</p></div>
+      <div class="qa-card"><h5>🛂 האם צריך אשרה מיוחדת?</h5><p>אזרחי ישראל מקבלים כניסה ללא ויזה למשך עד 30 יום (החל ממאי 2026). כמו כן, מ-2025 חובה למלא מראש טופס דיגיטלי בשם <b>Thailand Digital Arrival Card (TDAC)</b> — חינם, מקוון, עד 3 ימים לפני ההגעה, באתר הרשמי בלבד: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 בטיחות בים</h5><p>לב לב לדגל האדום על החוף — דגל אדום = אין להיכנס למים.</p></div>
+      <div class="qa-card full"><h5>📞 מספרי חירום שימושיים</h5><ul>
+        <li>משטרת תיירים (24/7, כולל אנגלית): <b>1155</b></li>
+        <li>מוקד מידע לתיירים (TAT), 08:00–20:00: <b>1672</b></li>
+        <li>משטרה כללית: <b>191</b></li>
+      </ul></div>
+    </div>
+    </div>
+  
+    <div class="tab-panel" data-group="faq" data-tab="funfacts">
+      <div class="qa-grid">
+      <div class="qa-card"><h5>💡 עובדות מגניבות על תאילנד</h5><ul>
+        <li>בתאילנד חיים כ-72 מיליון בני אדם.</li>
+        <li>פוקט הוא האי הגדול ביותר בתאילנד.</li>
+        <li>תאילנד היא המדינה היחידה בדרום מזרח אסיה שמעולם לא נכבשה על ידי מעצמה אירופית.</li>
+        <li>החיה הלאומית היא הפיל.</li>
+        <li>יותר מ-90% מהתאילנדים הם בודהיסטים.</li>
+        <li>לבנגקוק יש אחד השמות הטקסיים הארוכים בעולם לעיר.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 אתגר המשפחה — לפני שחוזרים הביתה</h5><ul>
+        <li>לטעום 3 פירות חדשים.</li>
+        <li>ללמוד 5 מילים בתאילנדית.</li>
+        <li>לצפות יחד בשקיעה אחת.</li>
+        <li>למצוא 5 דגים טרופיים שונים.</li>
+        <li>לנסות שנורקלינג.</li>
+        <li>לבקר בשוק מקומי אחד.</li>
+        <li>לקנות מזכרת אחת בעבודת יד.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ חידון קטן</h5><ul>
+        <li>למה אנחנו עוצרים באבו דאבי?</li>
+        <li>מה המשמעות של "neo" באיירבוס A321neo?</li>
+        <li>איזה אי מפורסם בזכות הצוקים הגבוהים שלו?</li>
+        <li>איזה פרי תרצו לטעום ראשון?</li>
+        <li>איך מראים כבוד במקדש תאילנדי?</li>
+      </ul></div>
+    </div>
+    </div>
+  </div>
+</section>
+
 <footer data-i18n="footer">נבנה באהבה למשפחה שלנו · טיול תאילנד 17.8–4.9.2026</footer>
 
 <script>
@@ -1441,11 +1864,13 @@ const TRIP_META = { start: '2026-08-17', end: '2026-09-04' };
 const I18N = {
   he: {
     brand: 'HaVenture',
-    heroEyebrow: '17.8 – 4.9.2026 · טיול משפחתי',
-    heroTitle: 'משפחת חבר יוצאת ל-HaVenture בתאילנד',
-    heroSub: 'פוקט → קרבי → קאולק → פוקט. 19 ימים של חופים, איים, טעמים ואטרקציות — הכל במקום אחד, עם מעקב יומי אחרי איפה אנחנו נמצאים.',
-    statDays: 'ימי טיול', statStops: 'תחנות', statPeople: 'נוסעים',
-    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navPrep: 'רשימת ציוד',
+    heroEyebrow: '17-Aug - 04 Sept. 2026',
+    heroTitle: 'HaVenture בתאילנד 2026',
+    heroRoute: 'פוקט ← קרבי ← קאולק ← פוקט',
+    heroTagline: 'המדריך לחופשה מתחיל כאן',
+    navTracker: 'ציר זמן', navFlightsOut: 'טיסת הלוך', navPhuket1: 'פוקט 1', navKrabi: 'קרבי', navKhaolak: 'קאולק', navPhuket2: 'פוקט 2', navFlightsRet: 'טיסת חזור', navFlightInfo: 'טיסה ומטוסים', navPrep: 'רשימת ציוד', navFaq: 'שאלות נפוצות',
+    flightInfoTitle: 'הטיסה והמטוסים שלנו — עוד פרטים', flightInfoSub: 'הכל על אתיחאד, אבו דאבי, המטוסים וטיפים לפני עלייה למטוס.',
+    faqTitle: 'שאלות נפוצות', faqSub: 'כל מה שכדאי לדעת לפני ובמהלך הטיול — תרבות, אוכל, טבע, מזג אוויר וטיפים מעשיים.',
     trackerTitle: 'איפה אנחנו בכל יום',
     prepTitle: 'רשימת ציוד — מה לא לשכוח',
     prepSub: 'רשימה מסודרת לפי קטגוריות. סמנו פריטים תוך כדי אריזה — הסימונים נשמרים אוטומטית בדפדפן.',
@@ -1462,14 +1887,23 @@ const I18N = {
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
     weatherLoading: 'טוען מזג אוויר...', weatherUnavailable: 'מזג האוויר לא זמין כרגע',
     timeOutTitle: 'המדריך של Time Out לפוקט', timeOutSub: 'עוד המלצות של מגזין הטיולים',
+    installTitle: 'הוסיפו את HaVenture למסך הבית', installSub: 'פתיחה מהירה, עובד גם בלי אינטרנט',
+    installCta: 'התקנה',
+    nudgeSunny: 'חם ולח — אל תשכחו קרם הגנה, כובע ובקבוק מים לפני שיוצאים.',
+    nudgeCloudy: 'מזג אוויר נעים ליציאה — קרם הגנה עדיין לא מזיק.',
+    nudgeRain: 'יכול להרטיב — כדאי לקחת מטרייה קלה או מעיל גשם דק.',
+    nudgeStorm: 'סופות רעמים בסביבה — עדיף לתכנן פעילות מקורה היום.',
+    openPrepList: '✓ פתיחת רשימת הציוד',
   },
   en: {
     brand: 'HaVenture',
     heroEyebrow: 'Aug 17 – Sep 4, 2026 · Family Trip',
-    heroTitle: 'The Haver Family HaVenture — Thailand 2026',
-    heroSub: 'Phuket → Krabi → Khao Lak → Phuket. 19 days of beaches, islands, flavors and adventures — all in one place, with a live day-by-day tracker.',
-    statDays: 'trip days', statStops: 'stops', statPeople: 'travelers',
-    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navPrep: 'Prep List',
+    heroTitle: 'HaVenture in Thailand 2026',
+    heroRoute: 'Phuket → Krabi → Khao Lak → Phuket',
+    heroTagline: 'Your tour guide starts here.',
+    navTracker: 'Timeline', navFlightsOut: 'Departure Flight', navPhuket1: 'Phuket 1', navKrabi: 'Krabi', navKhaolak: 'Khao Lak', navPhuket2: 'Phuket 2', navFlightsRet: 'Return Flight', navFlightInfo: 'Flight & Aircraft', navPrep: 'Prep List', navFaq: 'FAQ',
+    flightInfoTitle: 'Our Flight & Aircraft — More Details', flightInfoSub: 'Everything about Etihad, Abu Dhabi, the aircraft, and tips before boarding.',
+    faqTitle: 'Frequently Asked Questions', faqSub: 'Everything worth knowing before and during the trip — culture, food, nature, weather, and practical tips.',
     trackerTitle: 'Where we are each day',
     prepTitle: 'Prep List — Don\'t Forget',
     prepSub: 'A categorized checklist. Check items off while packing — your progress is saved automatically in this browser.',
@@ -1486,6 +1920,13 @@ const I18N = {
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
     weatherLoading: 'Loading weather...', weatherUnavailable: 'Weather unavailable right now',
     timeOutTitle: 'The Time Out Guide to Phuket', timeOutSub: 'More picks from the travel magazine',
+    installTitle: 'Add HaVenture to your home screen', installSub: 'Opens instantly, works without internet too',
+    installCta: 'Install',
+    nudgeSunny: "Hot and humid — don't forget sunscreen, a hat, and a water bottle before heading out.",
+    nudgeCloudy: 'Pleasant weather to head out — sunscreen still doesn\'t hurt.',
+    nudgeRain: 'Could get wet — worth bringing a light umbrella or thin rain jacket.',
+    nudgeStorm: 'Thunderstorms nearby — better to plan an indoor activity today.',
+    openPrepList: '✓ Open the packing list',
   }
 };
 
@@ -1675,6 +2116,18 @@ function safeSet(key, value){
   try { localStorage.setItem(key, value); } catch(e){ /* ignore — e.g. file:// storage restrictions */ }
 }
 
+function currentTheme(){
+  const attr = document.documentElement.getAttribute('data-theme');
+  if (attr === 'dark' || attr === 'light') return attr;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  safeSet('haventure-theme', theme);
+}
+
 let LANG = 'he';
 let SELECTED_DATE = null; // yyyy-mm-dd
 
@@ -1716,6 +2169,10 @@ function destForDate(dateStr){
 /* ============================= RENDER ============================= */
 const MONTHS_HE = ['ינו','פבר','מרץ','אפר','מאי','יונ','יול','אוג','ספט','אוק','נוב','דצמ'];
 const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const WEEKDAYS_HE = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const WEEKDAYS_EN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const WEEKDAYS_HE_SHORT = ['א','ב','ג','ד','ה','ו','ש'];
+const WEEKDAYS_EN_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 function todayIso(){
   // Intentionally local (not iso()/UTC): "today" should match the viewer's
@@ -1744,10 +2201,19 @@ function render(){
     });
   });
 
+  safeRun('togglePrepVisibility', () => {
+    const hidePrep = LANG === 'he'; // packing list temporarily hidden in the Hebrew version
+    const prepNavLink = document.querySelector('a[href="#prep"]');
+    const prepSection = document.getElementById('prep');
+    if (prepNavLink) prepNavLink.style.display = hidePrep ? 'none' : '';
+    if (prepSection) prepSection.style.display = hidePrep ? 'none' : '';
+  });
   safeRun('renderTodayBadge', renderTodayBadge);
   safeRun('renderTimeline', renderTimeline);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
+  safeRun('renderFlightInfo', renderFlightInfo);
+  safeRun('renderFAQ', renderFAQ);
   safeRun('renderPrep', renderPrep);
 }
 
@@ -1782,6 +2248,7 @@ function renderTimeline(){
     SELECTED_DATE = (today >= TRIP_META.start && today <= TRIP_META.end) ? today : TRIP_META.start;
   }
   const months = LANG==='he' ? MONTHS_HE : MONTHS_EN;
+  const weekdays = LANG==='he' ? WEEKDAYS_HE : WEEKDAYS_EN;
 
   strip.innerHTML = ALL_DAYS.map(dateStr=>{
     const d = toDate(dateStr);
@@ -1793,6 +2260,7 @@ function renderTimeline(){
       <span class="tl-dot" style="background:${tag.fg}"></span>
       <span class="tl-day">${d.getUTCDate()}</span>
       <span class="tl-date">${months[d.getUTCMonth()]}</span>
+      <span class="tl-weekday">${weekdays[d.getUTCDay()]}</span>
     </button>`;
   }).join('');
 
@@ -1814,9 +2282,9 @@ function renderDayDetail(){
 
   let pill, title, sub;
   if (info.type === 'flight-out'){
-    pill = t.flightOutTag; title = LANG==='he'?'טיסה לתאילנד':'Flight to Thailand'; sub = LANG==='he'?'תל אביב → אבו דאבי → פוקט':'Tel Aviv → Abu Dhabi → Phuket';
+    pill = t.flightOutTag; title = LANG==='he'?'טיסה לתאילנד':'Flight to Thailand'; sub = LANG==='he'?'תל אביב ← אבו דאבי ← פוקט':'Tel Aviv → Abu Dhabi → Phuket';
   } else if (info.type === 'flight-return'){
-    pill = t.flightRetTag; title = LANG==='he'?'טיסה הביתה':'Flight home'; sub = LANG==='he'?'פוקט → אבו דאבי → תל אביב':'Phuket → Abu Dhabi → Tel Aviv';
+    pill = t.flightRetTag; title = LANG==='he'?'טיסה הביתה':'Flight home'; sub = LANG==='he'?'פוקט ← אבו דאבי ← תל אביב':'Phuket → Abu Dhabi → Tel Aviv';
   } else {
     const dest = info.dest;
     const dayNum = Math.round((toDate(SELECTED_DATE) - toDate(dest.start))/86400000) + 1;
@@ -1869,6 +2337,12 @@ function uvBand(uv){
   if (uv < 11) return {he:'גבוה מאוד', en:'Very High'};
   return {he:'קיצוני', en:'Extreme'};
 }
+function nudgeKeyForCode(code){
+  if (code === 95 || code === 96 || code === 99) return 'nudgeStorm';
+  if ([51,53,55,61,63,65,80,81,82].includes(code)) return 'nudgeRain';
+  if (code === 2 || code === 3 || code === 45 || code === 48) return 'nudgeCloudy';
+  return 'nudgeSunny'; // 0, 1, or any unmapped code — the common case here
+}
 
 function weatherCardHtml(dest, t){
   const w = WEATHER_CACHE[dest.id];
@@ -1880,10 +2354,21 @@ function weatherCardHtml(dest, t){
   }
   const icon = weatherIcon(w.code);
   const uv = uvBand(w.uv);
+  const weekdaysShort = LANG==='he' ? WEEKDAYS_HE_SHORT : WEEKDAYS_EN_SHORT;
+  const forecastHtml = (w.forecast || []).map(f=>{
+    const fIcon = weatherIcon(f.code);
+    const wd = weekdaysShort[toDate(f.date).getUTCDay()];
+    return `<div class="wc-fday"><span class="wc-fday-label">${wd}</span><span class="wc-fday-emoji">${fIcon.emoji}</span><span class="wc-fday-range">${Math.round(f.hi)}°/${Math.round(f.lo)}°</span></div>`;
+  }).join('');
+  const nudgeText = t[nudgeKeyForCode(w.code)];
+  const showPrepCta = LANG !== 'he'; // packing list is hidden for the Hebrew version (see togglePrepVisibility)
   return `<div class="weather-card">
     <div class="wc-main"><span class="wc-emoji">${icon.emoji}</span><span class="wc-temp">${Math.round(w.temp)}°</span></div>
     <div class="wc-sub">${LANG==='he'?icon.he:icon.en}</div>
     <div class="wc-range">${Math.round(w.lo)}°–${Math.round(w.hi)}° <span class="wc-uv">${uv ? ('UV ' + (LANG==='he'?uv.he:uv.en)) : ''}</span></div>
+    <div class="wc-wind">💨 ${Math.round(w.wind)} ${LANG==='he'?'קמ״ש':'km/h'}</div>
+    ${forecastHtml ? `<div class="wc-forecast">${forecastHtml}</div>` : ''}
+    <div class="wc-nudge">${nudgeText}${showPrepCta ? `<br><button type="button" class="wc-nudge-cta" data-scroll-to="prep">${t.openPrepList}</button>` : ''}</div>
   </div>`;
 }
 
@@ -1891,16 +2376,23 @@ function loadWeather(){
   DESTINATIONS.forEach(dest=>{
     if (WEATHER_CACHE[dest.id]) return; // already loaded or already failed
     const {mapLat:lat, mapLon:lon} = dest.hotel;
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,uv_index_max&timezone=Asia%2FBangkok`;
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,uv_index_max,weather_code&forecast_days=3&timezone=Asia%2FBangkok`;
     fetch(url)
       .then(r => { if (!r.ok) throw new Error('weather http ' + r.status); return r.json(); })
       .then(data => {
         WEATHER_CACHE[dest.id] = {
           temp: data.current.temperature_2m,
           code: data.current.weather_code,
+          wind: data.current.wind_speed_10m,
           hi: data.daily.temperature_2m_max[0],
           lo: data.daily.temperature_2m_min[0],
           uv: data.daily.uv_index_max[0],
+          forecast: [1, 2].map(i => ({
+            date: data.daily.time[i],
+            code: data.daily.weather_code[i],
+            hi: data.daily.temperature_2m_max[i],
+            lo: data.daily.temperature_2m_min[i],
+          })),
         };
         safeRun('renderDestinations', renderDestinations);
       })
@@ -1930,6 +2422,7 @@ function renderDestinations(){
         <div class="dest-header">
           <div class="hero-bg" style="background-image:url('${dest.heroImg}')"></div>
           <div class="overlay"></div>
+          <div class="avatar-badge dest-avatar"><img src="images/family/family.jpg" alt="משפחת חבר"></div>
           <div class="inner">
             <span class="dest-tag">${dRange}</span>
             <h2>${name}</h2>
@@ -2005,6 +2498,351 @@ function renderDestinations(){
     `;
     wrap.appendChild(section);
   });
+  initScrollReveal();
+}
+
+function initScrollReveal(){
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll(
+    '#destinations .hotel-card, #destinations .map-card, #destinations .weather-card, #destinations .timeout-card, #destinations .cards-grid .card'
+  );
+  if (reduceMotion || !('IntersectionObserver' in window)){
+    targets.forEach(el => el.classList.add('reveal', 'in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  targets.forEach(el => {
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+}
+
+/* ===== Tab switcher (shared by Flight Info + FAQ) ===== */
+let FLIGHT_INFO_TAB = 'aircraft';
+let FAQ_TAB = 'culture';
+
+function initTabSwitchers(){
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    const group = btn.dataset.group;
+    const tabId = btn.dataset.tab;
+    if (group === 'flightInfo') FLIGHT_INFO_TAB = tabId;
+    if (group === 'faq') FAQ_TAB = tabId;
+    document.querySelectorAll(`.tab-btn[data-group="${group}"]`).forEach(b => b.classList.toggle('active', b === btn));
+    document.querySelectorAll(`.tab-panel[data-group="${group}"]`).forEach(p => p.classList.toggle('active', p.dataset.tab === tabId));
+  });
+}
+
+function renderTabbedSection(groupId, tabs, activeId, tabsElId, panelsElId){
+  const tabsEl = document.getElementById(tabsElId);
+  const panelsEl = document.getElementById(panelsElId);
+  tabsEl.innerHTML = tabs.map(tab => `
+    <button type="button" class="tab-btn${tab.id===activeId?' active':''}" data-group="${groupId}" data-tab="${tab.id}">
+      ${LANG==='he'?tab.labelHe:tab.labelEn}
+    </button>
+  `).join('');
+  panelsEl.innerHTML = tabs.map(tab => `
+    <div class="tab-panel${tab.id===activeId?' active':''}" data-group="${groupId}" data-tab="${tab.id}">
+      ${LANG==='he'?tab.bodyHe:tab.bodyEn}
+    </div>
+  `).join('');
+}
+
+const FLIGHT_INFO_TABS = [
+  {
+    id:'aircraft', labelHe:'המטוסים שלנו', labelEn:'Our Aircraft',
+    bodyHe: `<div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — "אופציית מנוע חדש". גרסה משודרגת ויעילה של משפחת A320.</li>
+          <li>טס במהירות שיוט של כ-840–870 קמ״ש — כמעט מהירות הקול!</li>
+          <li>יכול לטוס עד כ-7,400 ק״מ ברצף בלי לעצור לתדלוק.</li>
+          <li>חוסך כ-20% יותר דלק מדגמים ישנים יותר, בזכות מנועים חדשים וקצות כנף מיוחדים (Sharklets).</li>
+          <li>מטוס "צר-גוף" עם מעבר אחד בין הכיסאות, בדרך כלל כ-180–220 נוסעים.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ איירבוס A321LR ("Long Range")</h5>
+        <ul>
+          <li>זו בעצם אותה משפחת מטוס כמו ה-A321neo — אבל עם 3 מיכלי דלק נוספים בבטן המטוס.</li>
+          <li>המיכלים הנוספים מאפשרים לו לטוס הרבה יותר רחוק — עד כ-7,400–8,300 ק״מ.</li>
+          <li>זה בדיוק המטוס שמאפשר לחברות תעופה לטוס ישירות במסלולים ארוכים כמו אבו דאבי–פוקט, בלי צורך במטוס "גוף-רחב" ענק.</li>
+          <li>מבחוץ הוא נראה בדיוק כמו ה-neo הרגיל — ההבדל מוסתר בפנים!</li>
+        </ul>
+      </div>
+    </div>`,
+    bodyEn: `<div class="aircraft-grid">
+      <div class="aircraft-card">
+        <h5>✈️ Airbus A321neo</h5>
+        <ul>
+          <li>"neo" = New Engine Option — an upgraded, more efficient version of the A320 family.</li>
+          <li>Cruises at about 840–870 km/h — nearly the speed of sound!</li>
+          <li>Can fly up to about 7,400 km without refueling.</li>
+          <li>Uses about 20% less fuel than older models, thanks to new engines and special wingtips (Sharklets).</li>
+          <li>A "narrow-body" plane with a single aisle, typically carrying about 180–220 passengers.</li>
+        </ul>
+      </div>
+      <div class="aircraft-card">
+        <h5>✈️ Airbus A321LR ("Long Range")</h5>
+        <ul>
+          <li>The same aircraft family as the A321neo — but with 3 extra fuel tanks in the belly.</li>
+          <li>The extra tanks let it fly much farther — up to about 7,400–8,300 km.</li>
+          <li>It's exactly the aircraft that lets airlines fly long routes like Abu Dhabi–Phuket without needing a huge wide-body jet.</li>
+          <li>From the outside it looks just like a regular neo — the difference is hidden inside!</li>
+        </ul>
+      </div>
+    </div>`
+  },
+  {
+    id:'etihad', labelHe:'אתיחאד ואבו דאבי', labelEn:'Etihad & Abu Dhabi',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🛫 למה עוצרים באבו דאבי?</h5><p>אבו דאבי היא הבסיס הראשי (Hub) של אתיחאד איירווייז. אלפי נוסעים עוברים דרכה כל יום, וזה מאפשר לחברה לחבר בין תל אביב לבין יעדים ברחבי אסיה, אוסטרליה, אפריקה ואירופה.</p></div>
+      <div class="qa-card"><h5>⭐ מה מיוחד באתיחאד?</h5><ul>
+        <li>חברת התעופה הלאומית של איחוד האמירויות.</li>
+        <li>אחד הציים הצעירים בעולם.</li>
+        <li>ידועה בצוותי אוויר חברותיים ובידור טוב על הטיסה.</li>
+        <li>ארוחות ילדים טובות (כדאי להזמין מראש אם אפשר).</li>
+        <li>מסכי בידור חינמיים וטעינת USB ברוב המטוסים.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ כמה זמן אורכת הטיסה שלנו?</h5><p>בסך הכל כ-12–14 שעות טיסה נטו, בתוספת זמן ההמתנה לקונקשן באבו דאבי.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🛫 Why do we stop in Abu Dhabi?</h5><p>Abu Dhabi is Etihad Airways' main hub. Thousands of passengers connect there every day, letting the airline link Tel Aviv to destinations across Asia, Australia, Africa, and Europe.</p></div>
+      <div class="qa-card"><h5>⭐ What's special about Etihad?</h5><ul>
+        <li>The national airline of the United Arab Emirates.</li>
+        <li>One of the youngest fleets in the world.</li>
+        <li>Known for friendly cabin crews and good onboard entertainment.</li>
+        <li>Good kids' meals (worth pre-ordering if available).</li>
+        <li>Free entertainment screens and USB charging on most aircraft.</li>
+      </ul></div>
+      <div class="qa-card"><h5>⏱️ How long is our flight?</h5><p>About 12–14 hours of flying in total, plus our connection time in Abu Dhabi.</p></div>
+    </div>`
+  },
+  {
+    id:'tips', labelHe:'טיפים לטיסה', labelEn:'Before You Board',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 מה כדאי להכין לפני העלייה למטוס?</h5><ul>
+        <li>להוריד סרטים/סדרות/משחקים מראש למקרה שאין מספיק בידור על המטוס.</li>
+        <li>לטעון את כל המכשירים לגמרי.</li>
+        <li>לקחת בקבוק מים לשימוש חוזר (מתמלא אחרי הביקורת הביטחונית).</li>
+        <li>לוודא שהדרכונים וכרטיסי הטיסה נגישים בקלות.</li>
+        <li>ללבוש בגדים נוחים לטיסה ארוכה.</li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card full"><h5>🎒 What should we prepare before boarding?</h5><ul>
+        <li>Download movies/shows/games in advance in case onboard entertainment is limited.</li>
+        <li>Fully charge all devices.</li>
+        <li>Bring a refillable water bottle (fill it up after security).</li>
+        <li>Keep passports and boarding passes easily accessible.</li>
+        <li>Wear comfortable clothes for a long flight.</li>
+      </ul></div>
+    </div>`
+  }
+];
+
+function renderFlightInfo(){
+  renderTabbedSection('flightInfo', FLIGHT_INFO_TABS, FLIGHT_INFO_TAB, 'flightInfoTabs', 'flightInfoPanels');
+}
+
+const FAQ_TABS = [
+  {
+    id:'culture', labelHe:'תרבות ונימוסים', labelEn:'Culture & Etiquette',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🙏 איך מברכים אנשים בתאילנד?</h5><p>אומרים "סוואדי" (Sawasdee) עם קידה קטנה וכפות ידיים צמודות זו לזו בגובה החזה — התנועה הזו נקראת "וואי" (wai).</p></div>
+      <div class="qa-card"><h5>🚫 מה חשוב לא לעשות?</h5><ul>
+        <li>לא לגעת בראש של אף אחד.</li>
+        <li>לא להצביע עם כפות הרגליים לעבר אנשים או פסלי בודהה.</li>
+        <li>לא לטפס על מבנים בבתי מקדש.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 איך מתלבשים במקדש?</h5><p>לבוש צנוע (כתפיים וברכיים מכוסות), ולעיתים צריך להסיר נעליים לפני הכניסה.</p></div>
+      <div class="qa-card"><h5>🍽️ למה כולם אוכלים מאותן הצלחות?</h5><p>באוכל התאילנדי נהוג להזמין כמה מנות לאמצע השולחן ולחלוק אותן — זו דרך תאילנדית של נתינה ושיתוף, ועוזרת גם לאזן בין מנות חריפות לפחות חריפות.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🙏 How do we greet people?</h5><p>Say "Sawasdee" with a small bow and palms pressed together at chest height — this gesture is called a "wai."</p></div>
+      <div class="qa-card"><h5>🚫 What should we never do?</h5><ul>
+        <li>Never touch someone's head.</li>
+        <li>Never point your feet toward people or Buddha statues.</li>
+        <li>Never climb on temple structures.</li>
+      </ul></div>
+      <div class="qa-card"><h5>🛕 How should we dress at temples?</h5><p>Dress modestly (shoulders and knees covered), and you'll often need to remove your shoes before entering.</p></div>
+      <div class="qa-card"><h5>🍽️ Why does everyone eat from the same plates?</h5><p>In Thai food culture, it's common to order several dishes for the middle of the table and share them — a Thai way of giving and sharing, which also helps balance spicy and mild dishes.</p></div>
+    </div>`
+  },
+  {
+    id:'food', labelHe:'אוכל תאילנדי', labelEn:'Thai Food',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🍜 מה חובה לטעום?</h5><ul>
+        <li>פאד תאי (Pad Thai)</li>
+        <li>אורז דביק עם מנגו (Mango Sticky Rice)</li>
+        <li>אורז מטוגן</li>
+        <li>קארי ירוק</li>
+        <li>סאטיי (שיפודים ברוטב בוטנים)</li>
+        <li>פנקייק תאילנדי</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 אילו פירות כדאי לנסות?</h5><ul>
+        <li>מנגו</li>
+        <li>אננס</li>
+        <li>דרגון פרוט (פרי דרקון)</li>
+        <li>מנגוסטין</li>
+        <li>רמבוטן</li>
+        <li>קוקוס טרי</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 ידעתם? פוקט היא "עיר יצירתית של גסטרונומיה" מטעם אונסק"ו</h5><p>זה אומר שהאוכל בפוקט הוא לא רק ארוחה — הוא חלק מהזהות התרבותית של האי, שמשלב השפעות סיניות-תאילנדיות, מוסלמיות ותאילנדיות-דרומיות.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🍜 What should we try?</h5><ul>
+        <li>Pad Thai</li>
+        <li>Mango Sticky Rice</li>
+        <li>Fried Rice</li>
+        <li>Green Curry</li>
+        <li>Satay (skewers with peanut sauce)</li>
+        <li>Thai pancakes</li>
+      </ul></div>
+      <div class="qa-card"><h5>🥭 Which fruits should we try?</h5><ul>
+        <li>Mango</li>
+        <li>Pineapple</li>
+        <li>Dragon fruit</li>
+        <li>Mangosteen</li>
+        <li>Rambutan</li>
+        <li>Fresh coconut</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 Did you know? Phuket is a UNESCO Creative City of Gastronomy</h5><p>That means the food in Phuket isn't just a meal — it's part of the island's cultural identity, blending Chinese-Thai, Muslim, and Southern Thai influences all at once.</p></div>
+    </div>`
+  },
+  {
+    id:'wildlife', labelHe:'טבע ובעלי חיים', labelEn:'Wildlife & Nature',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🦎 אילו בעלי חיים אנחנו עשויים לראות?</h5><ul>
+        <li>קופים</li>
+        <li>גקקונים (לטאות קיר)</li>
+        <li>וארנים (לטאות ענק)</li>
+        <li>ציפורי אף הענק (Hornbills)</li>
+        <li>דגי שונית צבעוניים</li>
+        <li>צבי ים (מוגנים)</li>
+        <li>סרטני נזירים</li>
+        <li>פרפרים</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 חשוב לזכור</h5><ul>
+        <li>לעולם לא להאכיל בעלי חיים בר.</li>
+        <li>לשמור על מרחק.</li>
+        <li>להשתמש בקרם הגנה ידידותי לשונית (reef-safe).</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ למה לא מבקרים באיי סימילן?</h5><p>איי סימילן וסורין נסגרים כל שנה לציבור בעונת המונסון — בדרך כלל מ-15 במאי ועד 15 באוקטובר — כדי לאפשר לטבע להתאושש ומטעמי בטיחות בים סוער. מכיוון שהטיול שלנו הוא בין 17 באוגוסט ל-4 בספטמבר, האיים האלה סגורים בדיוק בתאריכים האלה. זו הזדמנות טובה להסביר לילדים למה שמורות טבע צריכות "לנוח" מדי פעם.</p></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🦎 Which animals might we see?</h5><ul>
+        <li>Monkeys</li>
+        <li>Geckos</li>
+        <li>Monitor lizards</li>
+        <li>Hornbills</li>
+        <li>Colorful reef fish</li>
+        <li>Sea turtles (protected)</li>
+        <li>Hermit crabs</li>
+        <li>Butterflies</li>
+      </ul></div>
+      <div class="qa-card"><h5>🌊 Good to remember</h5><ul>
+        <li>Never feed wild animals.</li>
+        <li>Keep your distance.</li>
+        <li>Use reef-safe sunscreen.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏝️ Why aren't we visiting the Similan Islands?</h5><p>The Similan and Surin islands close to the public every year during monsoon season — typically from May 15 to October 15 — to let nature recover and for safety in rough seas. Since our trip runs August 17 to September 4, those islands are closed exactly during our dates. It's a good chance to explain to the kids why nature reserves sometimes need to "rest."</p></div>
+    </div>`
+  },
+  {
+    id:'practical', labelHe:'מזג אוויר וטיפים מעשיים', labelEn:'Weather & Practical Tips',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ איך מזג האוויר באוגוסט?</h5><p>חם ולח, כ-28–32°C. שכיחים ממטרים טרופיים קצרים שמגיעים ונעלמים מהר — לרוב אפשר להמשיך בפעילויות אחרי הגשם.</p></div>
+      <div class="qa-card"><h5>💵 כסף</h5><p>המטבע המקומי הוא באט תאילנדי (THB). במקומות רבים מקבלים כרטיסי אשראי, אבל תמיד שווה להחזיק גם מזומן.</p></div>
+      <div class="qa-card"><h5>🔌 חשמל</h5><p>מתח של 220V. בתי מלון רבים מקבלים גם תקעים אירופאיים, אבל מתאם שקע יכול להיות שימושי.</p></div>
+      <div class="qa-card"><h5>📶 אינטרנט</h5><p>eSIM או סים מקומי זולים ומהירים — אפשר להזמין מראש או לקנות בשדה התעופה.</p></div>
+      <div class="qa-card"><h5>🚕 תחבורה</h5><p>Grab היא אפליקציית ההזמנות הפופולרית ביותר. טוקטוק כיפי, אבל אם אין מונה — כדאי לסכם על המחיר מראש.</p></div>
+      <div class="qa-card"><h5>🛂 האם צריך אשרה מיוחדת?</h5><p>אזרחי ישראל מקבלים כניסה ללא ויזה למשך עד 30 יום (החל ממאי 2026). כמו כן, מ-2025 חובה למלא מראש טופס דיגיטלי בשם <b>Thailand Digital Arrival Card (TDAC)</b> — חינם, מקוון, עד 3 ימים לפני ההגעה, באתר הרשמי בלבד: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 בטיחות בים</h5><p>לב לב לדגל האדום על החוף — דגל אדום = אין להיכנס למים.</p></div>
+      <div class="qa-card full"><h5>📞 מספרי חירום שימושיים</h5><ul>
+        <li>משטרת תיירים (24/7, כולל אנגלית): <b>1155</b></li>
+        <li>מוקד מידע לתיירים (TAT), 08:00–20:00: <b>1672</b></li>
+        <li>משטרה כללית: <b>191</b></li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>🌦️ What's the weather like in August?</h5><p>Warm and humid, around 28–32°C. Short tropical showers are common — they come and go quickly, and most activities continue right after the rain.</p></div>
+      <div class="qa-card"><h5>💵 Money</h5><p>The local currency is the Thai Baht (THB). Many places accept cards, but it's always worth carrying some cash too.</p></div>
+      <div class="qa-card"><h5>🔌 Electricity</h5><p>220V. Many hotels accept European plugs too, but a travel adapter is useful.</p></div>
+      <div class="qa-card"><h5>📶 Internet</h5><p>A local eSIM or SIM card is cheap and fast — order ahead online or buy one at the airport.</p></div>
+      <div class="qa-card"><h5>🚕 Transportation</h5><p>Grab is the most popular ride-hailing app. Tuk-tuks are fun, but agree on the fare beforehand if there's no meter.</p></div>
+      <div class="qa-card"><h5>🛂 Do we need a special visa?</h5><p>Israeli citizens get visa-free entry for up to 30 days (as of May 2026). Since 2025, everyone must also complete the <b>Thailand Digital Arrival Card (TDAC)</b> online in advance — free, up to 3 days before arrival, only at the official site: tdac.immigration.go.th.</p></div>
+      <div class="qa-card"><h5>🚩 Beach safety</h5><p>Watch for the red flag on the beach — a red flag means no swimming.</p></div>
+      <div class="qa-card full"><h5>📞 Useful emergency numbers</h5><ul>
+        <li>Tourist Police (24/7, English spoken): <b>1155</b></li>
+        <li>Tourism Authority of Thailand info line, 08:00–20:00: <b>1672</b></li>
+        <li>General police: <b>191</b></li>
+      </ul></div>
+    </div>`
+  },
+  {
+    id:'funfacts', labelHe:'ידעתם ש...?', labelEn:'Did You Know?',
+    bodyHe: `<div class="qa-grid">
+      <div class="qa-card"><h5>💡 עובדות מגניבות על תאילנד</h5><ul>
+        <li>בתאילנד חיים כ-72 מיליון בני אדם.</li>
+        <li>פוקט הוא האי הגדול ביותר בתאילנד.</li>
+        <li>תאילנד היא המדינה היחידה בדרום מזרח אסיה שמעולם לא נכבשה על ידי מעצמה אירופית.</li>
+        <li>החיה הלאומית היא הפיל.</li>
+        <li>יותר מ-90% מהתאילנדים הם בודהיסטים.</li>
+        <li>לבנגקוק יש אחד השמות הטקסיים הארוכים בעולם לעיר.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 אתגר המשפחה — לפני שחוזרים הביתה</h5><ul>
+        <li>לטעום 3 פירות חדשים.</li>
+        <li>ללמוד 5 מילים בתאילנדית.</li>
+        <li>לצפות יחד בשקיעה אחת.</li>
+        <li>למצוא 5 דגים טרופיים שונים.</li>
+        <li>לנסות שנורקלינג.</li>
+        <li>לבקר בשוק מקומי אחד.</li>
+        <li>לקנות מזכרת אחת בעבודת יד.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ חידון קטן</h5><ul>
+        <li>למה אנחנו עוצרים באבו דאבי?</li>
+        <li>מה המשמעות של "neo" באיירבוס A321neo?</li>
+        <li>איזה אי מפורסם בזכות הצוקים הגבוהים שלו?</li>
+        <li>איזה פרי תרצו לטעום ראשון?</li>
+        <li>איך מראים כבוד במקדש תאילנדי?</li>
+      </ul></div>
+    </div>`,
+    bodyEn: `<div class="qa-grid">
+      <div class="qa-card"><h5>💡 Cool facts about Thailand</h5><ul>
+        <li>Thailand has about 72 million people.</li>
+        <li>Phuket is Thailand's largest island.</li>
+        <li>Thailand is the only country in Southeast Asia never colonized by a European power.</li>
+        <li>The national animal is the elephant.</li>
+        <li>More than 90% of Thai people practice Buddhism.</li>
+        <li>Bangkok has one of the world's longest ceremonial city names.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>🏆 Family challenge — before we head home</h5><ul>
+        <li>Taste 3 new fruits.</li>
+        <li>Learn 5 Thai words.</li>
+        <li>Watch one sunset together.</li>
+        <li>Find 5 different tropical fish.</li>
+        <li>Try snorkeling.</li>
+        <li>Visit one local market.</li>
+        <li>Buy one handmade souvenir.</li>
+      </ul></div>
+      <div class="qa-card full"><h5>❓ Mini quiz</h5><ul>
+        <li>Why do we stop in Abu Dhabi?</li>
+        <li>What does "neo" mean in Airbus A321neo?</li>
+        <li>Which island is famous for its dramatic limestone cliffs?</li>
+        <li>Which fruit would you like to taste first?</li>
+        <li>How do we show respect at a Thai temple?</li>
+      </ul></div>
+    </div>`
+  }
+];
+
+function renderFAQ(){
+  renderTabbedSection('faq', FAQ_TABS, FAQ_TAB, 'faqTabs', 'faqPanels');
 }
 
 function fmtRange(s,e){
@@ -2059,6 +2897,12 @@ function updatePrepProgress(){
 }
 
 /* ============================= INIT ============================= */
+safeRun('init:theme', () => {
+  applyTheme(currentTheme()); // syncs the toggle button label with whatever the head script already set
+  document.getElementById('themeToggle').addEventListener('click', ()=>{
+    applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+  });
+});
 safeRun('init:listeners', () => {
   document.getElementById('langToggle').addEventListener('click', ()=>{
     LANG = LANG === 'he' ? 'en' : 'he';
@@ -2075,9 +2919,70 @@ safeRun('init:listeners', () => {
 
 });
 
+safeRun('init:scrollToLinks', () => {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-scroll-to]');
+    if (!btn) return;
+    const target = document.getElementById(btn.getAttribute('data-scroll-to'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+safeRun('init:tabs', initTabSwitchers);
 safeRun('init:render', () => { render(); });
 safeRun('init:loadWeather', () => { loadWeather(); });
+
+safeRun('init:serviceWorker', () => {
+  // No protocol/hostname gate needed here: the browser itself only allows
+  // registration on a secure context (https, or localhost/127.0.0.1 for local
+  // testing) and rejects the promise everywhere else — which the catch below
+  // silently absorbs, e.g. when this file is opened directly over file://.
+  if ('serviceWorker' in navigator){
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  }
+});
+
+safeRun('init:installBanner', () => {
+  const banner = document.getElementById('installBanner');
+  const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isStandalone && safeGet('haventure-install-dismissed', '') !== '1'){
+      banner.hidden = false;
+    }
+  });
+
+  document.getElementById('installCta').addEventListener('click', async () => {
+    banner.hidden = true;
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice.catch(() => {});
+    deferredPrompt = null;
+  });
+
+  document.getElementById('installDismiss').addEventListener('click', () => {
+    banner.hidden = true;
+    safeSet('haventure-install-dismissed', '1');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    banner.hidden = true;
+    safeSet('haventure-install-dismissed', '1');
+  });
+});
 </script>
+
+
+
+
+
+
+
+
+
+
 
 
 
