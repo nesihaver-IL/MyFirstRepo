@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HaVenture 🌴 — משפחת חבר בתאילנד</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="images/icons/icon-192.png">
+<link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+<meta name="theme-color" content="#0c5c73">
 <script>
   // Registered first, before anything else can throw, so any failure anywhere
   // on the page (this file being opened over file://, WSL paths, etc.) is
@@ -23,6 +27,16 @@
     window.__showFatalError('JS error (' + (e.filename||'') + ':' + (e.lineno||'') + ')', e.error || e.message);
   });
 </script>
+<script>
+  // Applied synchronously, before CSS paints, so there is no flash of the wrong
+  // theme on load. Mirrors the persisted choice the toggle button writes later.
+  try {
+    var savedTheme = localStorage.getItem('haventure-theme');
+    if (savedTheme === 'dark' || savedTheme === 'light'){
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  } catch(e) { /* ignore — e.g. file:// storage restrictions */ }
+</script>
 <style>
   :root{
     --ink:#0b2e3a;
@@ -30,14 +44,55 @@
     --sea-dark:#083c4c;
     --sand:#faf3e7;
     --sand-card:#ffffff;
+    --sand-alt:#fff3e4;
     --coral:#ff6b4a;
     --coral-dark:#e04f30;
     --gold:#f2a33d;
     --leaf:#3f8f6a;
     --line:#e7ddca;
+    --nav-bg:rgba(250,243,231,.94);
+    --map-tint-1:#e7f2f1;
+    --map-tint-2:#dcecef;
+    --weather-tint-1:#fff6e2;
+    --weather-tint-2:#ffeccb;
     --shadow: 0 10px 30px rgba(11,46,58,.12);
     --radius: 18px;
     font-size: 16px;
+    color-scheme: light;
+  }
+  /* Dark theme: a "night ocean" palette derived from the same brand hues, not a naive
+     inversion. Tokens redefine here only — components style through the tokens above. */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ink:#eef2f0; --sea:#4fb3c9; --sea-dark:#2f7c92;
+      --sand:#0d1f24; --sand-card:#142e35; --sand-alt:#0f262c;
+      --coral:#ff8a68; --coral-dark:#ff6b4a;
+      --line:#24444c; --nav-bg:rgba(13,31,36,.9);
+      --map-tint-1:#123039; --map-tint-2:#0d262d;
+      --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#eef2f0; --sea:#4fb3c9; --sea-dark:#2f7c92;
+    --sand:#0d1f24; --sand-card:#142e35; --sand-alt:#0f262c;
+    --coral:#ff8a68; --coral-dark:#ff6b4a;
+    --line:#24444c; --nav-bg:rgba(13,31,36,.9);
+    --map-tint-1:#123039; --map-tint-2:#0d262d;
+    --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+    --shadow: 0 10px 30px rgba(0,0,0,.45);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"]{
+    --ink:#0b2e3a; --sea:#0c5c73; --sea-dark:#083c4c;
+    --sand:#faf3e7; --sand-card:#ffffff; --sand-alt:#fff3e4;
+    --coral:#ff6b4a; --coral-dark:#e04f30;
+    --line:#e7ddca; --nav-bg:rgba(250,243,231,.94);
+    --map-tint-1:#e7f2f1; --map-tint-2:#dcecef;
+    --weather-tint-1:#fff6e2; --weather-tint-2:#ffeccb;
+    --shadow: 0 10px 30px rgba(11,46,58,.12);
+    color-scheme: light;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
@@ -97,7 +152,7 @@
   .avatar-badge{
     width:112px; height:112px; border-radius:50%; overflow:hidden;
     border:4px solid rgba(255,255,255,.9); box-shadow:0 6px 20px rgba(0,0,0,.35);
-    background:#fff;
+    background:var(--sand-card);
   }
   .avatar-badge img{width:100%; height:100%; object-fit:cover; display:block;}
   .hero-avatar{position:absolute; top:66px; right:24px; z-index:2;}
@@ -138,7 +193,7 @@
   /* ===== Sticky nav ===== */
   .navbar{
     position:sticky; top:0; z-index:50;
-    background:rgba(250,243,231,.94);
+    background:var(--nav-bg);
     backdrop-filter: blur(8px);
     border-bottom:1px solid var(--line);
   }
@@ -156,7 +211,7 @@
     color:var(--sea-dark);
     white-space:nowrap;
   }
-  .nav-links a:hover{background:#fff; box-shadow:var(--shadow);}
+  .nav-links a:hover{background:var(--sand-card); box-shadow:var(--shadow);}
   .today-badge{
     display:flex; align-items:center; gap:8px;
     background:var(--sea);
@@ -199,7 +254,7 @@
     width:72px; padding-top:2px; background:none; border:none; font-family:inherit;
   }
   .timeline-node .tl-dot{
-    width:16px; height:16px; border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px var(--line);
+    width:16px; height:16px; border-radius:50%; border:3px solid var(--sand-card); box-shadow:0 0 0 2px var(--line);
     transition:transform .12s ease;
   }
   .timeline-node:hover .tl-dot{transform:scale(1.15);}
@@ -211,7 +266,7 @@
   .timeline-node.is-selected .tl-day, .timeline-node.is-selected .tl-date, .timeline-node.is-selected .tl-weekday{opacity:1; color:var(--sea-dark);}
 
   .day-detail{
-    background:#fff; border-radius:var(--radius); box-shadow:var(--shadow);
+    background:var(--sand-card); border-radius:var(--radius); box-shadow:var(--shadow);
     padding:20px 22px; margin-top:6px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
   }
   .day-detail .pill{
@@ -225,7 +280,7 @@
     padding:70px 0 20px;
     scroll-margin-top:74px;
   }
-  section.dest:nth-of-type(even){background:#fff3e4;}
+  section.dest:nth-of-type(even){background:var(--sand-alt);}
   .dest-header{
     position:relative;
     border-radius:24px;
@@ -272,7 +327,7 @@
     position:relative; overflow:hidden; border-radius:18px;
     background:
       radial-gradient(circle, rgba(12,92,115,.16) 1.6px, transparent 1.6px) 0 0/24px 24px,
-      linear-gradient(135deg, #e7f2f1, #dcecef);
+      linear-gradient(135deg, var(--map-tint-1), var(--map-tint-2));
     border:1px solid var(--line);
     padding:26px 24px; text-align:center;
     display:flex; flex-direction:column; align-items:center; gap:6px;
@@ -284,7 +339,7 @@
 
   .weather-card{
     position:relative; overflow:hidden; border-radius:18px;
-    background:linear-gradient(135deg, #fff6e2, #ffeccb);
+    background:linear-gradient(135deg, var(--weather-tint-1), var(--weather-tint-2));
     border:1px solid var(--line);
     padding:20px 24px; text-align:center;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;
@@ -391,7 +446,7 @@
 
   /* ===== Info sections (Flight & Aircraft Info / FAQ) with tabs ===== */
   .info-section{padding:60px 0;}
-  .info-section:nth-of-type(even){background:#fff3e4;}
+  .info-section:nth-of-type(even){background:var(--sand-alt);}
   .tab-switcher{
     display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px;
   }
@@ -424,7 +479,9 @@
   .flight-map .route-path{fill:none; stroke:var(--coral); stroke-width:2.5; stroke-dasharray:7,6;}
   .flight-map .airport-dot{fill:var(--coral); stroke:#fff; stroke-width:2;}
   .flight-map .airport-label{
-    font-size:14px; font-weight:800; fill:var(--ink); direction:rtl;
+    /* fixed, not var(--ink): the map paper stays a light "postcard" insert in both
+       themes, so its label color must not flip to a light tone in dark mode */
+    font-size:14px; font-weight:800; fill:#0b2e3a; direction:rtl;
     paint-order:stroke; stroke:#fdfaf3; stroke-width:4px; stroke-linejoin:round;
   }
   .flight-map .country-label{
@@ -447,13 +504,13 @@
   /* ===== Prep list ===== */
   .prep{
     padding:60px 0 90px;
-    background: linear-gradient(180deg, #fff3e4, var(--sand));
+    background: linear-gradient(180deg, var(--sand-alt), var(--sand));
   }
   .prep-head{text-align:center; max-width:640px; margin:0 auto 34px;}
   .prep-head h2{font-size:2rem; margin:0 0 8px;}
   .prep-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:18px;}
   .prep-cat{
-    background:#fff; border-radius:16px; padding:18px 20px; box-shadow:var(--shadow);
+    background:var(--sand-card); border-radius:16px; padding:18px 20px; box-shadow:var(--shadow);
   }
   .prep-cat h4{margin:0 0 10px; display:flex; align-items:center; gap:8px; font-size:1.05rem;}
   .prep-cat ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px;}
@@ -472,12 +529,58 @@
     .today-badge{justify-content:center;}
     .dest-header{min-height:260px;}
   }
+
+  /* ===== Install banner (PWA) ===== */
+  .install-banner{
+    position:fixed; left:16px; right:16px; bottom:16px; z-index:80; max-width:520px; margin:0 auto;
+    background:var(--sand-card); color:var(--ink); border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 12px 32px rgba(0,0,0,.22); padding:14px 16px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .install-banner[hidden]{display:none;}
+  .install-banner-ic{font-size:1.7rem; flex:0 0 auto;}
+  .install-banner-copy{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .install-banner-copy b{font-size:.88rem;}
+  .install-banner-copy span{font-size:.76rem; opacity:.7;}
+  .install-banner-cta{
+    background:var(--coral); color:#fff; border:none; border-radius:999px; padding:8px 16px;
+    font-weight:700; font-size:.8rem; font-family:inherit; cursor:pointer; white-space:nowrap; flex:0 0 auto;
+  }
+  .install-banner-close{
+    background:none; border:none; color:var(--ink); opacity:.5; font-size:1rem; cursor:pointer;
+    padding:4px; flex:0 0 auto; font-family:inherit;
+  }
+  .install-banner-close:hover{opacity:.9;}
+
+  /* ===== Weather + prep nudge ===== */
+  .wc-nudge{
+    margin-top:8px; padding-top:8px; border-top:1px solid var(--line);
+    font-size:.78rem; opacity:.85; line-height:1.5;
+  }
+  .wc-nudge-cta{
+    display:inline-block; margin-top:6px; background:none; border:none; color:var(--sea);
+    font-weight:700; font-size:.78rem; cursor:pointer; font-family:inherit; padding:0; text-decoration:underline;
+  }
+
+  /* ===== Scroll reveal ===== */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{transition:none; opacity:1; transform:none;}
+  }
 </style>
 </head>
 <body>
 
-
-
+<div class="install-banner" id="installBanner" hidden="">
+  <span class="install-banner-ic">📲</span>
+  <div class="install-banner-copy">
+    <b data-i18n="installTitle">הוסיפו את HaVenture למסך הבית</b>
+    <span data-i18n="installSub">פתיחה מהירה, עובד גם בלי אינטרנט</span>
+  </div>
+  <button class="install-banner-cta" id="installCta" type="button" data-i18n="installCta">התקנה</button>
+  <button class="install-banner-close" id="installDismiss" type="button" aria-label="Dismiss">✕</button>
+</div>
 
 
 
@@ -486,7 +589,8 @@
 <div class="hero" id="hero">
   <div class="hero-top">
     <div class="brand">🌴 <span data-i18n="brand">HaVenture</span></div>
-    <div>
+    <div style="display:flex; gap:8px;">
+      <button class="lang-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
       <button class="lang-toggle" id="langToggle" type="button">EN</button>
     </div>
   </div>
@@ -716,7 +820,7 @@
             <h2>Phuket (Part 1)</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
             <p class="hdesc">ריזורט בוטיק בהשראת "וואבי־סאבי" יפני, על גבעה ירוקה מעל פאטונג — כ־10 דקות נסיעה מהחוף ו־600 מ׳ מקניון ג׳אנגסילון.</p>
@@ -724,18 +828,18 @@
           <a class="btn" href="https://www.dinsoresort.com/phuket/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Dinso Resort &amp; Villas Phuket, Vignette Collection</p>
             <p class="map-sub">פאטונג, פוקט</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/big-buddha.jpg" alt="הבודהה הגדול של פוקט" loading="lazy">
               <div class="body">
                 <p class="cname">הבודהה הגדול של פוקט</p>
@@ -745,7 +849,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/cable-jungle-zipline.jpg" alt="זיפליין ו-ATV ביער הטרופי" loading="lazy">
               <div class="body">
                 <p class="cname">זיפליין ו-ATV ביער הטרופי</p>
@@ -755,7 +859,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/bangla-road.jpg" alt="רחוב באנגלה ושוק הלילה" loading="lazy">
               <div class="body">
                 <p class="cname">רחוב באנגלה ושוק הלילה</p>
@@ -765,7 +869,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/phi-phi-islands.jpg" alt="טיול יום לאיי פי-פי" loading="lazy">
               <div class="body">
                 <p class="cname">טיול יום לאיי פי-פי</p>
@@ -775,7 +879,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket1/james-bond-island.jpg" alt="איי ג׳יימס בונד ומפרץ פאנגה" loading="lazy">
               <div class="body">
                 <p class="cname">איי ג׳יימס בונד ומפרץ פאנגה</p>
@@ -787,7 +891,7 @@
           
         </div>
         
-        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+        <a class="timeout-card reveal in" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
           <span class="to-icon">📰</span>
           <div>
             <p class="to-title">המדריך של Time Out לפוקט</p>
@@ -798,7 +902,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">EuroThai Restaurant</p>
@@ -808,7 +912,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
               <div class="body">
                 <p class="cname">Baan Pad Thaï</p>
@@ -818,7 +922,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/kaab-gluay.jpg" alt="Kaab Gluay" loading="lazy">
               <div class="body">
                 <p class="cname">Kaab Gluay</p>
@@ -828,7 +932,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן — קומת הרחוב</p>
@@ -842,7 +946,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
               <div class="body">
                 <p class="cname">ג׳אנגסילון (Jungceylon)</p>
@@ -851,7 +955,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן</p>
@@ -873,7 +977,7 @@
             <h2>Krabi</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Dusit Thani Krabi Beach Resort</p>
             <p class="hdesc">ריזורט יוקרה על קו החוף בחוף קלונג מואנג (סמוך לחוף טאבקאק), מוקף בצוקי גיר וגנים טרופיים.</p>
@@ -881,18 +985,18 @@
           <a class="btn" href="https://www.dusit.com/dusitthani-krabibeachresort/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Dusit Thani Krabi Beach Resort</p>
             <p class="map-sub">קרבי, תאילנד</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/railay-beach.jpg" alt="חוף ריילי (Railay)" loading="lazy">
               <div class="body">
                 <p class="cname">חוף ריילי (Railay)</p>
@@ -902,7 +1006,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/four-islands-tour.jpg" alt="טיול ארבעת האיים" loading="lazy">
               <div class="body">
                 <p class="cname">טיול ארבעת האיים</p>
@@ -912,7 +1016,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/tiger-cave-temple.jpg" alt="מקדש מערת הנמר" loading="lazy">
               <div class="body">
                 <p class="cname">מקדש מערת הנמר</p>
@@ -922,7 +1026,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/emerald-pool.jpg" alt="הבריכה האזמרגדית והכחולה" loading="lazy">
               <div class="body">
                 <p class="cname">הבריכה האזמרגדית והכחולה</p>
@@ -932,7 +1036,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-market.jpg" alt="עיירת אאו-נאנג ושוק הלילה" loading="lazy">
               <div class="body">
                 <p class="cname">עיירת אאו-נאנג ושוק הלילה</p>
@@ -947,7 +1051,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/amp-aing.jpg" alt="Amp &amp; Aing" loading="lazy">
               <div class="body">
                 <p class="cname">Amp &amp; Aing</p>
@@ -957,7 +1061,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/kodam-kitchen.jpg" alt="KoDam Kitchen" loading="lazy">
               <div class="body">
                 <p class="cname">KoDam Kitchen</p>
@@ -967,7 +1071,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/mama-kitchen.jpg" alt="Mama Kitchen" loading="lazy">
               <div class="body">
                 <p class="cname">Mama Kitchen</p>
@@ -977,7 +1081,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-boat-noodle.jpg" alt="Ao Nang Boat Noodle &amp; Thai Food" loading="lazy">
               <div class="body">
                 <p class="cname">Ao Nang Boat Noodle &amp; Thai Food</p>
@@ -991,7 +1095,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-landmark-market.jpg" alt="שוק הלילה של אאו-נאנג (Landmark)" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הלילה של אאו-נאנג (Landmark)</p>
@@ -1000,7 +1104,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/krabi/ao-nang-beach-walk-market.jpg" alt="שוק הטיילת של אאו-נאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הטיילת של אאו-נאנג</p>
@@ -1022,7 +1126,7 @@
             <h2>Khao Lak</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">JW Marriott Khao Lak Resort &amp; Spa</p>
             <p class="hdesc">ריזורט יוקרה חופי הפרוש על גנים טרופיים מול ים אנדמן, עם סוויטות משפחתיות ומתקני ספא.</p>
@@ -1030,18 +1134,18 @@
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">JW Marriott Khao Lak Resort &amp; Spa</p>
             <p class="map-sub">קאולק, תאילנד</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/phang-nga-canoe.jpg" alt="מפרץ פאנגה ואי ג׳יימס בונד" loading="lazy">
               <div class="body">
                 <p class="cname">מפרץ פאנגה ואי ג׳יימס בונד</p>
@@ -1051,7 +1155,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/khao-sok.jpg" alt="פארק לאומי קאו סוק" loading="lazy">
               <div class="body">
                 <p class="cname">פארק לאומי קאו סוק</p>
@@ -1061,7 +1165,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/lam-ru-waterfall.jpg" alt="פארק חאו-לאק לאם-רו והמפל" loading="lazy">
               <div class="body">
                 <p class="cname">פארק חאו-לאק לאם-רו והמפל</p>
@@ -1071,7 +1175,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/tsunami-memorial.jpg" alt="אנדרטת הצונאמי — סירת המשטרה 813" loading="lazy">
               <div class="body">
                 <p class="cname">אנדרטת הצונאמי — סירת המשטרה 813</p>
@@ -1081,7 +1185,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/elephant-sanctuary.jpg" alt="מקלט פילים אתי" loading="lazy">
               <div class="body">
                 <p class="cname">מקלט פילים אתי</p>
@@ -1096,7 +1200,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/ten-star.jpg" alt="Ten Star Coffee and Food" loading="lazy">
               <div class="body">
                 <p class="cname">Ten Star Coffee and Food</p>
@@ -1106,7 +1210,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/walkers.jpg" alt="Walkers" loading="lazy">
               <div class="body">
                 <p class="cname">Walkers</p>
@@ -1116,7 +1220,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/pattys.jpg" alt="Patty's Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">Patty's Restaurant</p>
@@ -1126,7 +1230,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-night-market-food.jpg" alt="שוק הלילה של באנג-ניאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק הלילה של באנג-ניאנג</p>
@@ -1140,7 +1244,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-market.jpg" alt="שוק באנג-ניאנג" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנג-ניאנג</p>
@@ -1149,7 +1253,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/khaolak/bang-niang-plaza.jpg" alt="באנג-ניאנג פלאזה" loading="lazy">
               <div class="body">
                 <p class="cname">באנג-ניאנג פלאזה</p>
@@ -1171,7 +1275,7 @@
             <h2>Phuket (Part 2)</h2>
           </div>
         </div>
-        <div class="hotel-card">
+        <div class="hotel-card reveal in">
           <div>
             <p class="hname">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
             <p class="hdesc">ריזורט חוף 5 כוכבים על מפרץ מרלין (טרי-טראנג) המבודד, דקות ספורות מדרום לפאטונג — המלון היחיד על מפרץ פרטי משלו.</p>
@@ -1179,18 +1283,18 @@
           <a class="btn" href="https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/" target="_blank" rel="noopener">אתר המלון הרשמי</a>
         </div>
         <div class="location-row">
-          <div class="map-card">
+          <div class="map-card reveal in">
             <span class="map-pin">📍</span>
             <p class="map-name">Phuket Marriott Resort &amp; Spa, Merlin Beach</p>
             <p class="map-sub">קלים, פוקט</p>
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
-          <div class="weather-card weather-error">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/freedom-beach.jpg" alt="חוף פרידום" loading="lazy">
               <div class="body">
                 <p class="cname">חוף פרידום</p>
@@ -1200,7 +1304,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/old-phuket-town.jpg" alt="העיר העתיקה של פוקט" loading="lazy">
               <div class="body">
                 <p class="cname">העיר העתיקה של פוקט</p>
@@ -1210,7 +1314,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/racha-island.jpg" alt="שנורקלינג באי ראצ׳ה" loading="lazy">
               <div class="body">
                 <p class="cname">שנורקלינג באי ראצ׳ה</p>
@@ -1220,7 +1324,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/parasailing.jpg" alt="פאראסיילינג וג׳ט-סקי" loading="lazy">
               <div class="body">
                 <p class="cname">פאראסיילינג וג׳ט-סקי</p>
@@ -1230,7 +1334,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/phuket2/kalim-sunset.jpg" alt="חוף קאלים ונקודת שקיעה" loading="lazy">
               <div class="body">
                 <p class="cname">חוף קאלים ונקודת שקיעה</p>
@@ -1242,7 +1346,7 @@
           
         </div>
         
-        <a class="timeout-card" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
+        <a class="timeout-card reveal in" href="https://www.timeout.com/phuket" target="_blank" rel="noopener">
           <span class="to-icon">📰</span>
           <div>
             <p class="to-title">המדריך של Time Out לפוקט</p>
@@ -1253,7 +1357,7 @@
         <h3 class="block-title"><span class="icon">🍽️</span><span>מסעדות מומלצות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/eurothai.jpg" alt="EuroThai Restaurant" loading="lazy">
               <div class="body">
                 <p class="cname">EuroThai Restaurant</p>
@@ -1263,7 +1367,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/baan-pad-thai.jpg" alt="Baan Pad Thaï" loading="lazy">
               <div class="body">
                 <p class="cname">Baan Pad Thaï</p>
@@ -1273,7 +1377,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/no6-up-the-hill.jpg" alt="No.6 Restaurant " up="" the="" hill""="" loading="lazy">
               <div class="body">
                 <p class="cname">No.6 Restaurant "Up The Hill"</p>
@@ -1283,7 +1387,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-street-food.jpg" alt="שוק באנזאן — קומת הרחוב" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן — קומת הרחוב</p>
@@ -1297,7 +1401,7 @@
         <h3 class="block-title"><span class="icon">🛍️</span><span>קניות</span></h3>
         <div class="cards-grid">
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/jungceylon.jpg" alt="ג׳אנגסילון (Jungceylon)" loading="lazy">
               <div class="body">
                 <p class="cname">ג׳אנגסילון (Jungceylon)</p>
@@ -1306,7 +1410,7 @@
               </div>
             </div>
           
-            <div class="card">
+            <div class="card reveal in">
               <img class="thumb" src="images/shared/banzaan-market-shopping.jpg" alt="שוק באנזאן" loading="lazy">
               <div class="body">
                 <p class="cname">שוק באנזאן</p>
@@ -1783,6 +1887,13 @@ const I18N = {
     attractionsHead: 'אטרקציות מומלצות', restaurantsHead: 'מסעדות מומלצות', shoppingHead: 'קניות',
     weatherLoading: 'טוען מזג אוויר...', weatherUnavailable: 'מזג האוויר לא זמין כרגע',
     timeOutTitle: 'המדריך של Time Out לפוקט', timeOutSub: 'עוד המלצות של מגזין הטיולים',
+    installTitle: 'הוסיפו את HaVenture למסך הבית', installSub: 'פתיחה מהירה, עובד גם בלי אינטרנט',
+    installCta: 'התקנה',
+    nudgeSunny: 'חם ולח — אל תשכחו קרם הגנה, כובע ובקבוק מים לפני שיוצאים.',
+    nudgeCloudy: 'מזג אוויר נעים ליציאה — קרם הגנה עדיין לא מזיק.',
+    nudgeRain: 'יכול להרטיב — כדאי לקחת מטרייה קלה או מעיל גשם דק.',
+    nudgeStorm: 'סופות רעמים בסביבה — עדיף לתכנן פעילות מקורה היום.',
+    openPrepList: '✓ פתיחת רשימת הציוד',
   },
   en: {
     brand: 'HaVenture',
@@ -1809,6 +1920,13 @@ const I18N = {
     attractionsHead: 'Recommended Attractions', restaurantsHead: 'Recommended Restaurants', shoppingHead: 'Shopping',
     weatherLoading: 'Loading weather...', weatherUnavailable: 'Weather unavailable right now',
     timeOutTitle: 'The Time Out Guide to Phuket', timeOutSub: 'More picks from the travel magazine',
+    installTitle: 'Add HaVenture to your home screen', installSub: 'Opens instantly, works without internet too',
+    installCta: 'Install',
+    nudgeSunny: "Hot and humid — don't forget sunscreen, a hat, and a water bottle before heading out.",
+    nudgeCloudy: 'Pleasant weather to head out — sunscreen still doesn\'t hurt.',
+    nudgeRain: 'Could get wet — worth bringing a light umbrella or thin rain jacket.',
+    nudgeStorm: 'Thunderstorms nearby — better to plan an indoor activity today.',
+    openPrepList: '✓ Open the packing list',
   }
 };
 
@@ -1996,6 +2114,18 @@ function safeGet(key, fallback){
 }
 function safeSet(key, value){
   try { localStorage.setItem(key, value); } catch(e){ /* ignore — e.g. file:// storage restrictions */ }
+}
+
+function currentTheme(){
+  const attr = document.documentElement.getAttribute('data-theme');
+  if (attr === 'dark' || attr === 'light') return attr;
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+}
+function applyTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  safeSet('haventure-theme', theme);
 }
 
 let LANG = 'he';
@@ -2207,6 +2337,12 @@ function uvBand(uv){
   if (uv < 11) return {he:'גבוה מאוד', en:'Very High'};
   return {he:'קיצוני', en:'Extreme'};
 }
+function nudgeKeyForCode(code){
+  if (code === 95 || code === 96 || code === 99) return 'nudgeStorm';
+  if ([51,53,55,61,63,65,80,81,82].includes(code)) return 'nudgeRain';
+  if (code === 2 || code === 3 || code === 45 || code === 48) return 'nudgeCloudy';
+  return 'nudgeSunny'; // 0, 1, or any unmapped code — the common case here
+}
 
 function weatherCardHtml(dest, t){
   const w = WEATHER_CACHE[dest.id];
@@ -2224,12 +2360,15 @@ function weatherCardHtml(dest, t){
     const wd = weekdaysShort[toDate(f.date).getUTCDay()];
     return `<div class="wc-fday"><span class="wc-fday-label">${wd}</span><span class="wc-fday-emoji">${fIcon.emoji}</span><span class="wc-fday-range">${Math.round(f.hi)}°/${Math.round(f.lo)}°</span></div>`;
   }).join('');
+  const nudgeText = t[nudgeKeyForCode(w.code)];
+  const showPrepCta = LANG !== 'he'; // packing list is hidden for the Hebrew version (see togglePrepVisibility)
   return `<div class="weather-card">
     <div class="wc-main"><span class="wc-emoji">${icon.emoji}</span><span class="wc-temp">${Math.round(w.temp)}°</span></div>
     <div class="wc-sub">${LANG==='he'?icon.he:icon.en}</div>
     <div class="wc-range">${Math.round(w.lo)}°–${Math.round(w.hi)}° <span class="wc-uv">${uv ? ('UV ' + (LANG==='he'?uv.he:uv.en)) : ''}</span></div>
     <div class="wc-wind">💨 ${Math.round(w.wind)} ${LANG==='he'?'קמ״ש':'km/h'}</div>
     ${forecastHtml ? `<div class="wc-forecast">${forecastHtml}</div>` : ''}
+    <div class="wc-nudge">${nudgeText}${showPrepCta ? `<br><button type="button" class="wc-nudge-cta" data-scroll-to="prep">${t.openPrepList}</button>` : ''}</div>
   </div>`;
 }
 
@@ -2358,6 +2497,25 @@ function renderDestinations(){
       </div>
     `;
     wrap.appendChild(section);
+  });
+  initScrollReveal();
+}
+
+function initScrollReveal(){
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll(
+    '#destinations .hotel-card, #destinations .map-card, #destinations .weather-card, #destinations .timeout-card, #destinations .cards-grid .card'
+  );
+  if (reduceMotion || !('IntersectionObserver' in window)){
+    targets.forEach(el => el.classList.add('reveal', 'in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
+  }, { threshold: 0.15 });
+  targets.forEach(el => {
+    el.classList.add('reveal');
+    io.observe(el);
   });
 }
 
@@ -2739,6 +2897,12 @@ function updatePrepProgress(){
 }
 
 /* ============================= INIT ============================= */
+safeRun('init:theme', () => {
+  applyTheme(currentTheme()); // syncs the toggle button label with whatever the head script already set
+  document.getElementById('themeToggle').addEventListener('click', ()=>{
+    applyTheme(currentTheme() === 'dark' ? 'light' : 'dark');
+  });
+});
 safeRun('init:listeners', () => {
   document.getElementById('langToggle').addEventListener('click', ()=>{
     LANG = LANG === 'he' ? 'en' : 'he';
@@ -2755,10 +2919,62 @@ safeRun('init:listeners', () => {
 
 });
 
+safeRun('init:scrollToLinks', () => {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-scroll-to]');
+    if (!btn) return;
+    const target = document.getElementById(btn.getAttribute('data-scroll-to'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 safeRun('init:tabs', initTabSwitchers);
 safeRun('init:render', () => { render(); });
 safeRun('init:loadWeather', () => { loadWeather(); });
+
+safeRun('init:serviceWorker', () => {
+  // No protocol/hostname gate needed here: the browser itself only allows
+  // registration on a secure context (https, or localhost/127.0.0.1 for local
+  // testing) and rejects the promise everywhere else — which the catch below
+  // silently absorbs, e.g. when this file is opened directly over file://.
+  if ('serviceWorker' in navigator){
+    navigator.serviceWorker.register('service-worker.js').catch(() => {});
+  }
+});
+
+safeRun('init:installBanner', () => {
+  const banner = document.getElementById('installBanner');
+  const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isStandalone && safeGet('haventure-install-dismissed', '') !== '1'){
+      banner.hidden = false;
+    }
+  });
+
+  document.getElementById('installCta').addEventListener('click', async () => {
+    banner.hidden = true;
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice.catch(() => {});
+    deferredPrompt = null;
+  });
+
+  document.getElementById('installDismiss').addEventListener('click', () => {
+    banner.hidden = true;
+    safeSet('haventure-install-dismissed', '1');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    banner.hidden = true;
+    safeSet('haventure-install-dismissed', '1');
+  });
+});
 </script>
+
+
 
 
 
