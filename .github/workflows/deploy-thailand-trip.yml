@@ -5,6 +5,8 @@ on:
     branches: ["claude/update-claude-md-BGuLn"]
     paths:
       - "01-personal/thailand-trip-2026/**"
+      - "04-reference/whatsapp-export/album/**"
+      - ".github/workflows/deploy-thailand-trip.yml"
   workflow_dispatch:
 
 permissions:
@@ -25,10 +27,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Upload trip site as Pages artifact
+      - name: Build combined site
+        run: |
+          mkdir -p _site
+          cp -r 01-personal/thailand-trip-2026/. _site/
+          mkdir -p _site/whatsapp-export/album
+          cp -r 04-reference/whatsapp-export/album/. _site/whatsapp-export/album/
+      - name: Upload combined site as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 01-personal/thailand-trip-2026
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
