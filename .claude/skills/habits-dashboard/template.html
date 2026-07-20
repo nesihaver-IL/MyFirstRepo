@@ -295,7 +295,7 @@
 (function(){
   "use strict";
 
-  var TODAY = new Date('2026-07-20T16:50:00Z');
+  var TODAY = new Date('2026-07-20T16:58:22Z');
   function toDate(s){ return new Date(s + 'T00:00:00Z'); }
   function daysAgo(dateStr){ return Math.round((TODAY - toDate(dateStr))/86400000); }
   function fmtDate(dateStr){ return toDate(dateStr).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}); }
@@ -312,21 +312,22 @@
     model:'claude-sonnet-5 (Sonnet 5)',
     repo:'nesihaver-IL/MyFirstRepo',
     branch:'claude/code-habits-dashboard-6ru3f3',
-    branchStatus:'reattributed, content-identical to main',
-    aheadBehind:'1 ahead · 1 behind origin/main (same content — the sole difference is the merge commit was re-authored as Claude/noreply@anthropic.com to pass verification; trees are identical)',
-    headSha:'bc6daf1',
-    workTreeClean:false, // building this very skill's files as this snapshot is taken
-    repoSkills:24, platformSkills:23
+    branchStatus:'normal feature branch, PR open',
+    aheadBehind:'2 ahead · 1 behind origin/main — PR #34 open against main, not yet merged',
+    headSha:'77f510c',
+    workTreeClean:true,
+    repoSkills:24, platformSkills:23,
+    openPr:{number:34, title:'feat: add habits-dashboard skill for on-demand workspace snapshots', ciState:'pending (no checks configured yet)', watching:true}
   };
 
   var CONNECTORS = [
-    {name:'Claude Code Remote', role:'this dashboard’s own control plane — environments, Routines, session tools', state:'flapped',
-     detail:'Failed with permission-stream errors earlier this session (list_environments, list_triggers both errored out), same shape as the previous session. Two sessions in a row now — treat this as expected, not exceptional.'},
-    {name:'GitHub', role:'PRs, issues, CI, code search', state:'flapped', detail:'Disconnected and reconnected more than once this session while PR #32 work was happening.'},
-    {name:'Gmail', role:'drafts, thread search, labels', state:'flapped', detail:'Connected, dropped, reconnected — consistent with last session.'},
-    {name:'Google Calendar', role:'events, scheduling', state:'flapped', detail:'Same pattern as Gmail this session.'},
-    {name:'Linear', role:'issues, projects, docs', state:'down', detail:'Disconnected mid-session, not observed to reconnect by snapshot time.'},
-    {name:'Excalidraw', role:'diagram creation', state:'connecting', detail:'Still never confirmed connected across two sessions now.'}
+    {name:'Claude Code Remote', role:'this dashboard’s own control plane — environments, Routines, session tools', state:'recovered',
+     detail:'Failed with permission-stream errors earlier this session (list_environments, list_triggers both errored out). Since recovered: subscribe_pr_activity and send_later both succeeded cleanly for PR #34. Pattern across runs: flaps, then comes back within the same session — plan around temporary failures, not permanent ones.'},
+    {name:'GitHub', role:'PRs, issues, CI, code search', state:'recovered', detail:'Flapped earlier in this session during PR #32 work; now stable — create_pull_request, subscribe_pr_activity, and two pull_request_read calls all succeeded back-to-back for PR #34.'},
+    {name:'Gmail', role:'drafts, thread search, labels', state:'unverified', detail:'Not exercised in this run — last known state (previous run) was flapped.'},
+    {name:'Google Calendar', role:'events, scheduling', state:'unverified', detail:'Not exercised in this run — last known state (previous run) was flapped.'},
+    {name:'Linear', role:'issues, projects, docs', state:'unverified', detail:'Not exercised in this run — last known state (previous run) was down.'},
+    {name:'Excalidraw', role:'diagram creation', state:'unverified', detail:'Not exercised in this run — never confirmed connected in either previous run.'}
   ];
 
   var TOP_LEVEL = [
@@ -334,7 +335,7 @@
     {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'6 folders'},
     {id:'03-plans', color:'var(--cat-3)', size:'260K', desc:'Strategy, roadmaps, research — human-owned planning', count:'4 subfolders'},
     {id:'04-reference', color:'var(--cat-4)', size:'92M', desc:'Knowledge base, cheatsheets, archives', count:'9 subfolders'},
-    {id:'.claude', color:'var(--cat-5)', size:'768K', desc:'Skills, agents, diagnostic tools — down from 67M after PR #32', count:'24 skills · 4 agents'},
+    {id:'.claude', color:'var(--cat-5)', size:'828K', desc:'Skills, agents, diagnostic tools — down from 67M after PR #32, +the habits-dashboard skill itself', count:'24 skills · 4 agents'},
     {id:'.config', color:'var(--cat-6)', size:'64K', desc:'Templates & snippets', count:'6 templates'},
     {id:'.cursor', color:'var(--cat-7)', size:'84K', desc:'Cursor IDE command mirrors', count:'7 commands'},
     {id:'scripts + root', color:'var(--cat-8)', size:'~80K', desc:'Sync scripts + workspace root docs', count:'10 files'}
@@ -408,7 +409,8 @@
   var DOCUMENTED = PROJECTS.filter(function(p){return p.documented;}).length;
   var DORMANT = PROJECTS.filter(function(p){return daysAgo(p.lastCommit) > 45;}).length;
   var REPO_SKILL_COUNT = SESSION.repoSkills;
-  var CONNECTORS_UNSTABLE = CONNECTORS.filter(function(c){return c.state!=='connected';}).length;
+  var CONNECTORS_UNSTABLE = CONNECTORS.filter(function(c){return c.state==='flapped' || c.state==='down' || c.state==='connecting';}).length;
+  var CONNECTORS_UNVERIFIED = CONNECTORS.filter(function(c){return c.state==='unverified';}).length;
   var WORKSPACE_AGE_DAYS = Math.round((TODAY - toDate('2026-01-05'))/86400000);
 
   // ===== END DASHBOARD DATA =====
@@ -429,8 +431,10 @@
 
   function connStateInfo(state){
     if(state==='connected') return {badge:'good', label:'connected'};
+    if(state==='recovered') return {badge:'good', label:'recovered this session'};
     if(state==='flapped') return {badge:'warn', label:'flapped this session'};
     if(state==='connecting') return {badge:'neutral', label:'stuck connecting'};
+    if(state==='unverified') return {badge:'neutral', label:'not exercised this run'};
     return {badge:'bad', label:'disconnected'};
   }
 
@@ -441,15 +445,15 @@
       {val:DORMANT+'/'+TOTAL_PROJECTS, lbl:'Idle 45d+', sub:'unchanged by cleanup — needs triage', cls:'critical'},
       {val:REPO_SKILL_COUNT, lbl:'Repo skills active', sub:'+1 this run: habits-dashboard', cls:'good'},
       {val:HYGIENE_RESOLVED.length, lbl:'Hygiene flags resolved', sub:'since the last snapshot (PR #32)', cls:'good'},
-      {val:CONNECTORS_UNSTABLE+'/'+CONNECTORS.length, lbl:'MCP connectors unstable', sub:'2nd session in a row — expected now', cls:'critical'}
+      {val:CONNECTORS_UNSTABLE+'/'+CONNECTORS.length, lbl:'MCP connectors unstable right now', sub:CONNECTORS_UNVERIFIED+' more not exercised this run', cls: CONNECTORS_UNSTABLE>0 ? 'critical' : 'good'}
     ];
     var html = '<div class="kpis">' + kpis.map(function(k){
       return '<div class="kpi '+(k.cls||'')+'"><div class="val">'+k.val+'</div><div class="lbl">'+k.lbl+'</div><div class="sub">'+k.sub+'</div></div>';
     }).join('') + '</div>';
 
     html += '<div class="callout good"><span class="ci">✓</span><span class="ct">' +
-      '<b>This dashboard is now a skill</b> — <code>.claude/skills/habits-dashboard/</code>, runnable on demand from Desktop, VS Code, or the web. ' +
-      'This page is the output of actually running it, not a hand-built mockup. See the Refresh tab for how to run it again.</span></div>';
+      '<b>Second run of the habits-dashboard skill</b> — this page updates in place each time rather than piling up new links. ' +
+      'PR #'+SESSION.openPr.number+' (adding the skill itself) is open and being watched; CI is '+SESSION.openPr.ciState+'.</span></div>';
 
     html += '<div class="callout"><span class="ci">⚠</span><span class="ct">' +
       '<b>What cleanup fixed vs. what it didn\'t:</b> PR #32 resolved 5 structural hygiene flags (worktree duplicate, tracked venv, ' +
@@ -473,11 +477,12 @@
       '<div class="factrow"><span class="k">Working directory</span><span class="v"><code>'+SESSION.cwd+'</code></span></div>' +
       '<div class="factrow"><span class="k">Branch</span><span class="v"><code>'+SESSION.branch+'</code></span></div>' +
       '<div class="factrow"><span class="k">Branch vs. main</span><span class="v">'+SESSION.aheadBehind+'</span></div>' +
+      '<div class="factrow"><span class="k">Open PR</span><span class="v">#'+SESSION.openPr.number+' — '+(SESSION.openPr.watching?'being watched':'not watched')+', CI '+SESSION.openPr.ciState+'</span></div>' +
       '<div class="factrow"><span class="k">Skills loaded</span><span class="v">'+SESSION.repoSkills+' repo + '+SESSION.platformSkills+' platform</span></div>' +
       '</div></div>';
 
-    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>MCP connectors — '+CONNECTORS_UNSTABLE+' of '+CONNECTORS.length+' unstable this session</h2>' +
-      '<span class="hint">Same instability shape as the previous session — this is now a confirmed pattern, not a one-off</span></div>';
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>MCP connectors</h2>' +
+      '<span class="hint">Claude Code Remote and GitHub both flapped earlier this session, then recovered — every call made for PR #34 in this run succeeded</span></div>';
     html += '<div class="grid-cards">' + CONNECTORS.map(function(c){
       var info = connStateInfo(c.state);
       var accent = info.badge==='good' ? 'var(--good)' : (info.badge==='warn' ? 'var(--warning)' : (info.badge==='bad' ? 'var(--critical)' : 'var(--text-muted)'));
