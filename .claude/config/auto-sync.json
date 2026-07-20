@@ -3,7 +3,7 @@
     "enabled": true,
     "check_on_startup": true,
     "check_interval_hours": 24,
-    "branch": "claude/add-slash-commands-22qEL",
+    "branch": "claude/code-habits-dashboard-6ru3f3",
     "notify_on_updates": true
   },
   "commands": {
