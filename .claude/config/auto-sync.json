@@ -72,6 +72,13 @@
       "update documentation",
       "document changes",
       "update readme"
+    ],
+    "habits-dashboard": [
+      "habits dashboard",
+      "dashboard status",
+      "show me the dashboard",
+      "refresh snapshot",
+      "check my setup"
     ]
   },
   "features": {

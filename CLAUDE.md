@@ -9,7 +9,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - **Work projects** (`02-work/`) for professional deliverables using Azure AI Foundry and enterprise automation
 - **Planning & research** (`03-plans/`) for strategy documents and technical roadmaps
 - **Reference materials** (`04-reference/`) for knowledge base, cheatsheets, and archived data
-- **Claude Code ecosystem** (`.claude/`) with 23 active skills (+7 archived in `.claude/skills-archive/`) and 4 domain-specialized agents
+- **Claude Code ecosystem** (`.claude/`) with 24 active skills (+7 archived in `.claude/skills-archive/`) and 4 domain-specialized agents
 
 ## Project Architecture Map
 

@@ -1,0 +1,609 @@
+<title>Claude Code Habits Dashboard</title>
+<style>
+  :root{
+    --surface-1:#fcfcfb; --page:#f9f9f7; --text-primary:#0b0b0b; --text-secondary:#52514e;
+    --text-muted:#898781; --grid:#e1e0d9; --baseline-axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+    --good:#0ca30c; --warning:#fab219; --serious:#ec835a; --critical:#d03b3b;
+    --cat-1:#2a78d6; --cat-2:#1baf7a; --cat-3:#eda100; --cat-4:#008300;
+    --cat-5:#4a3aa7; --cat-6:#e34948; --cat-7:#e87ba4; --cat-8:#eb6834;
+    --shadow: 0 1px 2px rgba(11,11,11,0.06), 0 4px 16px rgba(11,11,11,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --surface-1:#1a1a19; --page:#0d0d0d; --text-primary:#ffffff; --text-secondary:#c3c2b7;
+      --text-muted:#898781; --grid:#2c2c2a; --baseline-axis:#383835; --border:rgba(255,255,255,0.10);
+      --cat-1:#3987e5; --cat-2:#199e70; --cat-3:#c98500; --cat-4:#008300;
+      --cat-5:#9085e9; --cat-6:#e66767; --cat-7:#d55181; --cat-8:#d95926;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface-1:#1a1a19; --page:#0d0d0d; --text-primary:#ffffff; --text-secondary:#c3c2b7;
+    --text-muted:#898781; --grid:#2c2c2a; --baseline-axis:#383835; --border:rgba(255,255,255,0.10);
+    --cat-1:#3987e5; --cat-2:#199e70; --cat-3:#c98500; --cat-4:#008300;
+    --cat-5:#9085e9; --cat-6:#e66767; --cat-7:#d55181; --cat-8:#d95926;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"]{
+    --surface-1:#fcfcfb; --page:#f9f9f7; --text-primary:#0b0b0b; --text-secondary:#52514e;
+    --text-muted:#898781; --grid:#e1e0d9; --baseline-axis:#c3c2b7; --border:rgba(11,11,11,0.10);
+    --cat-1:#2a78d6; --cat-2:#1baf7a; --cat-3:#eda100; --cat-4:#008300;
+    --cat-5:#4a3aa7; --cat-6:#e34948; --cat-7:#e87ba4; --cat-8:#eb6834;
+    --shadow: 0 1px 2px rgba(11,11,11,0.06), 0 4px 16px rgba(11,11,11,0.06);
+  }
+
+  .viz-root{ background:var(--page); color:var(--text-primary); font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased; min-height:100vh; }
+  .viz-root *, #ccDrawer *, #ccScrim{ box-sizing:border-box; }
+  .wrap{ max-width:1360px; margin:0 auto; padding:22px 20px 64px; }
+
+  .hdr{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:6px; flex-wrap:wrap; }
+  .hdr h1{ font-size:21px; font-weight:700; margin:0 0 4px; letter-spacing:-0.01em; }
+  .hdr p.sub{ margin:0; color:var(--text-secondary); font-size:13px; }
+  .hdr-right{ display:flex; align-items:center; gap:10px; }
+  .asof{ font-size:11.5px; color:var(--text-muted); text-align:right; }
+  .theme-btn{ border:1px solid var(--border); background:var(--surface-1); color:var(--text-primary);
+    border-radius:8px; padding:7px 12px; font-size:12.5px; cursor:pointer; font-weight:600; }
+  .badge-repo{ display:inline-flex; align-items:center; gap:6px; font-size:11px; color:var(--text-muted);
+    border:1px dashed var(--border); border-radius:999px; padding:3px 10px; margin-top:6px; }
+
+  /* Global search */
+  .searchwrap{ position:relative; margin:16px 0 4px; z-index:15; }
+  .searchbar{ display:flex; align-items:center; gap:8px; background:var(--surface-1); border:1px solid var(--border);
+    border-radius:11px; padding:9px 12px; box-shadow:var(--shadow); }
+  .searchbar:focus-within{ outline:2px solid var(--cat-1); outline-offset:1px; }
+  .searchbar .sicon{ font-size:15px; color:var(--text-muted); flex:none; }
+  .searchbar input{ flex:1; border:none; background:transparent; color:var(--text-primary); font-size:13.5px;
+    font-family:inherit; outline:none; }
+  .searchbar input::placeholder{ color:var(--text-muted); }
+  .searchbar .skbd{ font-size:10.5px; color:var(--text-muted); border:1px solid var(--border); border-radius:5px;
+    padding:1px 6px; font-family:inherit; flex:none; }
+  .searchbar input:focus + .skbd{ display:none; }
+  .searchbar .sclear{ border:none; background:var(--page); color:var(--text-secondary); width:20px; height:20px;
+    border-radius:50%; cursor:pointer; font-size:11px; flex:none; }
+  .searchresults{ position:absolute; top:calc(100% + 6px); left:0; right:0; max-height:420px; overflow-y:auto;
+    background:var(--surface-1); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:6px; }
+  .sresult{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; cursor:pointer; }
+  .sresult:hover, .sresult.active{ background:var(--page); }
+  .sresult .sdot{ width:7px; height:7px; border-radius:2px; flex:none; }
+  .sresult .slabel{ font-size:12.8px; font-weight:600; color:var(--text-primary); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sresult .slabel mark{ background:color-mix(in srgb, var(--cat-1) 30%, transparent); color:inherit; border-radius:3px; padding:0 1px; }
+  .sresult .ssub{ font-size:11px; color:var(--text-muted); flex:none; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sresult .stype{ font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:5px; padding:2px 6px; flex:none; }
+  .sresult-empty{ padding:16px 10px; font-size:12.5px; color:var(--text-muted); text-align:center; }
+  .sresult-footer{ padding:6px 10px 4px; font-size:10.5px; color:var(--text-muted); text-align:center; border-top:1px solid var(--grid); margin-top:4px; }
+
+  @keyframes searchHitPulse{
+    0%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--cat-1) 55%, transparent); }
+    100%{ box-shadow:0 0 0 10px color-mix(in srgb, var(--cat-1) 0%, transparent); }
+  }
+  .search-hit{ animation:searchHitPulse 1s ease-out 2; border-radius:8px; outline:2px solid var(--cat-1); outline-offset:2px; }
+
+  /* Tabs */
+  .tabs{ display:flex; gap:2px; border-bottom:1px solid var(--border); margin:18px 0 20px; overflow-x:auto; }
+  .tab{ border:none; background:transparent; color:var(--text-secondary); font-size:12.8px; font-weight:600;
+    padding:9px 14px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab:hover{ color:var(--text-primary); }
+  .tab.active{ color:var(--cat-1); border-bottom-color:var(--cat-1); }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  /* KPI */
+  .kpis{ display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:8px; }
+  .kpi{ background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:12px 14px; box-shadow:var(--shadow); }
+  .kpi .val{ font-size:22px; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .kpi .lbl{ font-size:11px; color:var(--text-secondary); margin-top:3px; }
+  .kpi .sub{ font-size:10.5px; color:var(--text-muted); margin-top:2px; }
+  .kpi.critical .val{ color:var(--critical); }
+  .kpi.warning .val{ color:#b3790f; }
+  :root[data-theme="dark"] .kpi.warning .val, @media (prefers-color-scheme:dark){ .kpi.warning .val{ color:var(--warning); } }
+  .kpi.good .val{ color:var(--good); }
+
+  .callout{ display:flex; gap:12px; align-items:flex-start; background:color-mix(in srgb, var(--critical) 10%, var(--surface-1));
+    border:1px solid color-mix(in srgb, var(--critical) 35%, var(--border)); border-radius:12px; padding:14px 16px; margin:16px 0; }
+  .callout .ci{ font-size:18px; color:var(--critical); flex:none; }
+  .callout .ct{ font-size:13px; color:var(--text-primary); line-height:1.5; }
+  .callout .ct b{ color:var(--critical); }
+  .callout.info{ background:color-mix(in srgb, var(--cat-1) 8%, var(--surface-1)); border-color:color-mix(in srgb, var(--cat-1) 30%, var(--border)); }
+  .callout.info .ci{ color:var(--cat-1); }
+  .callout.info .ct b{ color:var(--cat-1); }
+  .callout.good{ background:color-mix(in srgb, var(--good) 8%, var(--surface-1)); border-color:color-mix(in srgb, var(--good) 30%, var(--border)); }
+  .callout.good .ci{ color:var(--good); }
+  .callout.good .ct b{ color:var(--good); }
+
+  .section{ margin-bottom:24px; }
+  .section-hd{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:6px;}
+  .section-hd h2{ font-size:14.5px; font-weight:700; margin:0; }
+  .section-hd .hint{ font-size:11.5px; color:var(--text-muted); }
+
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:12px; }
+  .card{ background:var(--surface-1); border:1px solid var(--border); border-radius:13px; padding:14px 15px;
+    box-shadow:var(--shadow); border-top:3px solid var(--accent, var(--cat-1)); }
+  .card.clickable{ cursor:pointer; transition:transform .12s ease; }
+  .card.clickable:hover{ transform:translateY(-2px); }
+  .card h3{ font-size:13.5px; margin:0 0 3px; font-weight:700; }
+  .card .meta1{ font-size:11px; color:var(--text-muted); }
+  .badge{ display:inline-flex; align-items:center; gap:5px; font-size:10.8px; font-weight:700;
+    padding:2.5px 8px; border-radius:999px; border:1px solid transparent; white-space:nowrap; }
+  .badge.good{ color:var(--good); background:color-mix(in srgb, var(--good) 14%, transparent); border-color:color-mix(in srgb, var(--good) 30%, transparent); }
+  .badge.warn{ color:#8a5a00; background:color-mix(in srgb, var(--warning) 24%, transparent); border-color:color-mix(in srgb, var(--warning) 45%, transparent); }
+  :root[data-theme="dark"] .badge.warn, @media (prefers-color-scheme:dark){ .badge.warn{ color:var(--warning); } }
+  .badge.bad{ color:var(--critical); background:color-mix(in srgb, var(--critical) 14%, transparent); border-color:color-mix(in srgb, var(--critical) 30%, transparent); }
+  .badge.neutral{ color:var(--text-secondary); background:color-mix(in srgb, var(--text-secondary) 12%, transparent); border-color:var(--border); }
+
+  /* Hierarchy tree */
+  .tree-card{ background:var(--surface-1); border:1px solid var(--border); border-radius:13px; padding:14px 16px; box-shadow:var(--shadow); }
+  details.tnode{ margin:0; }
+  details.tnode > summary{ cursor:pointer; list-style:none; padding:5px 6px; border-radius:6px; display:flex; align-items:center; gap:8px; font-size:12.8px; }
+  details.tnode > summary::-webkit-details-marker{ display:none; }
+  details.tnode > summary:hover{ background:var(--page); }
+  details.tnode > summary::before{ content:"▸"; font-size:9px; color:var(--text-muted); transition:transform .1s ease; width:10px; flex:none; }
+  details.tnode[open] > summary::before{ transform:rotate(90deg); }
+  .tnode .dot{ width:8px; height:8px; border-radius:2px; flex:none; }
+  .tnode .tname{ font-weight:600; color:var(--text-primary); }
+  .tnode .tmeta{ font-size:10.5px; color:var(--text-muted); margin-left:auto; padding-left:10px; text-align:right; }
+  .tnode .tmeta.flag{ color:var(--critical); font-weight:700; }
+  .tchildren{ margin-left:9px; padding-left:12px; border-left:1px solid var(--grid); }
+  .fnode{ display:flex; align-items:center; gap:8px; padding:4px 6px 4px 22px; font-size:12.2px; color:var(--text-secondary); }
+  .fnode .fsize{ margin-left:auto; font-size:10.5px; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+  .fnode::before{ content:"–"; color:var(--text-muted); }
+
+  table.datatable{ width:100%; border-collapse:collapse; background:var(--surface-1); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden; font-size:12.5px; }
+  table.datatable th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted);
+    padding:9px 11px; border-bottom:1px solid var(--grid); font-weight:700; }
+  table.datatable td{ padding:8px 11px; border-bottom:1px solid var(--grid); color:var(--text-secondary); vertical-align:middle; }
+  table.datatable tr:last-child td{ border-bottom:none; }
+  table.datatable td.name{ color:var(--text-primary); font-weight:600; }
+  .tblwrap{ overflow-x:auto; }
+
+  .viewtoggle{ display:flex; gap:6px; }
+  .pillgroup{ display:flex; gap:6px; background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:4px; }
+  .pill{ border:none; background:transparent; color:var(--text-secondary); font-size:12px; font-weight:600;
+    padding:5px 10px; border-radius:7px; cursor:pointer; }
+  .pill.active{ background:var(--text-primary); color:var(--surface-1); }
+
+  /* Projects */
+  .idlebar{ height:5px; border-radius:999px; background:var(--grid); overflow:hidden; margin:8px 0; }
+  .idlebar > span{ display:block; height:100%; border-radius:999px; }
+  .card-row{ display:flex; justify-content:space-between; font-size:11.3px; color:var(--text-secondary); margin-top:3px; }
+  .card-row .k{ color:var(--text-muted); }
+
+  /* Skills & agents */
+  .skillgrp{ margin-bottom:14px; }
+  .skillgrp h4{ font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted); margin:0 0 8px; }
+  .chiprow{ display:flex; flex-wrap:wrap; gap:6px; }
+  .chip{ font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:8px; background:var(--surface-1);
+    border:1px solid var(--border); color:var(--text-primary); }
+  .chip.platform{ background:color-mix(in srgb, var(--cat-5) 10%, var(--surface-1)); border-color:color-mix(in srgb, var(--cat-5) 30%, var(--border)); }
+  .chip.new{ border-color:color-mix(in srgb, var(--good) 45%, var(--border)); background:color-mix(in srgb, var(--good) 12%, var(--surface-1)); }
+
+  /* Automations */
+  .auto-card{ background:var(--surface-1); border:1px solid var(--border); border-radius:13px; padding:14px 16px; box-shadow:var(--shadow); margin-bottom:10px; }
+  .auto-card .at{ font-size:13.5px; font-weight:700; margin-bottom:4px; }
+  .auto-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; font-size:11.5px; margin-top:8px; }
+  .auto-grid .k{ color:var(--text-muted); display:block; font-size:10px; text-transform:uppercase; letter-spacing:.02em; margin-bottom:2px;}
+
+  /* Archive bars */
+  .barlist{ display:flex; flex-direction:column; gap:10px; }
+  .barrow{ display:grid; grid-template-columns:150px 1fr 90px; align-items:center; gap:10px; font-size:12px; }
+  .barrow .btrack{ height:10px; border-radius:5px; background:var(--grid); overflow:hidden; }
+  .barrow .btrack > span{ display:block; height:100%; border-radius:5px; }
+  .barrow .bval{ text-align:right; color:var(--text-muted); font-variant-numeric:tabular-nums; }
+
+  /* Hygiene */
+  .flag-card{ border:1px solid var(--border); border-left:4px solid var(--critical); border-radius:10px;
+    padding:12px 14px; margin-bottom:10px; background:var(--surface-1); }
+  .flag-card.warn-sev{ border-left-color:var(--warning); }
+  .flag-card.resolved{ border-left-color:var(--good); opacity:.75; }
+  .flag-card .ft{ font-size:13px; font-weight:700; margin-bottom:4px; }
+  .flag-card .ff{ font-size:11.8px; color:var(--text-secondary); }
+  .flag-card .ff b{ color:var(--text-primary); }
+
+  /* Refresh tab */
+  .refresh-card{ background:var(--surface-1); border:1px solid var(--border); border-radius:14px; padding:22px; box-shadow:var(--shadow); max-width:640px; }
+  .refresh-card h3{ margin:0 0 6px; font-size:15px; }
+  .refresh-card p{ font-size:13px; color:var(--text-secondary); line-height:1.6; }
+  .copyrow{ display:flex; gap:8px; margin-top:14px; }
+  .copyrow input{ flex:1; border:1px solid var(--border); background:var(--page); color:var(--text-primary);
+    border-radius:8px; padding:9px 11px; font-size:12.5px; font-family:inherit; }
+  .copyrow button{ border:none; background:var(--cat-1); color:#fff; border-radius:8px; padding:9px 16px;
+    font-size:12.5px; font-weight:700; cursor:pointer; }
+  .copyrow button.copied{ background:var(--good); }
+  .snap-meta{ display:flex; gap:18px; margin-top:16px; font-size:11.5px; color:var(--text-muted); flex-wrap:wrap; }
+  .snap-meta b{ color:var(--text-primary); }
+
+  .footnote{ font-size:11.5px; color:var(--text-muted); margin-top:10px; line-height:1.6; }
+
+  .factlist{ display:flex; flex-direction:column; gap:0; }
+  .factrow{ display:flex; justify-content:space-between; gap:16px; padding:9px 0; border-bottom:1px solid var(--grid); font-size:12.5px; }
+  .factrow:last-child{ border-bottom:none; }
+  .factrow .k{ color:var(--text-muted); flex:none; }
+  .factrow .v{ color:var(--text-primary); font-weight:600; text-align:right; }
+  .factrow code{ background:var(--page); border:1px solid var(--border); border-radius:5px; padding:1px 6px; font-size:11.5px; }
+
+  .commit-card{ background:var(--surface-1); border:1px solid var(--border); border-radius:13px; padding:13px 15px; box-shadow:var(--shadow); margin-bottom:9px; }
+  .commit-card .ch{ display:flex; justify-content:space-between; gap:10px; align-items:baseline; flex-wrap:wrap; }
+  .commit-card .csubj{ font-size:13px; font-weight:700; }
+  .commit-card .cwhen{ font-size:11px; color:var(--text-muted); white-space:nowrap; }
+  .commit-card .cmeta{ font-size:11.5px; color:var(--text-secondary); margin-top:5px; }
+  .commit-card .chash{ font-variant-numeric:tabular-nums; color:var(--text-muted); }
+
+  .scrim{ position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity .18s ease; z-index:20; }
+  .scrim.open{ opacity:1; pointer-events:auto; }
+  .drawer{ position:fixed; top:0; right:0; bottom:0; width:min(440px,92vw); background:var(--surface-1); z-index:21;
+    box-shadow:-8px 0 32px rgba(0,0,0,0.18); transform:translateX(100%); transition:transform .2s ease; overflow-y:auto;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--text-primary); }
+  .drawer.open{ transform:translateX(0); }
+  .drawer-hd{ padding:18px 20px 12px; border-bottom:1px solid var(--grid); position:sticky; top:0; background:var(--surface-1); z-index:2; }
+  .drawer-hd .close{ position:absolute; top:16px; right:16px; border:none; background:var(--page); color:var(--text-primary);
+    width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:14px; }
+  .drawer-body{ padding:14px 20px 28px; font-size:12.8px; color:var(--text-secondary); }
+  .drawer h2{ font-size:16px; margin:0 0 4px; padding-right:34px; }
+  .dsec{ margin-top:16px; }
+  .dsec h4{ font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted); margin:0 0 8px; }
+
+  @media (max-width:900px){ .kpis{ grid-template-columns:repeat(3,1fr); } .auto-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .kpis{ grid-template-columns:1fr 1fr; } .barrow{ grid-template-columns:100px 1fr 70px; } .factrow{ flex-direction:column; gap:2px; } .factrow .v{ text-align:left; } }
+</style>
+
+<div class="viz-root">
+  <div class="wrap">
+    <div class="hdr">
+      <div>
+        <h1>Claude Code Habits Dashboard</h1>
+        <p class="sub">MyFirstRepo — work tree, active session, installed base &amp; archive at a glance</p>
+        <div class="badge-repo" id="repoBadge">● Generated by the habits-dashboard skill — run it again anytime from Desktop, VS Code, or the web</div>
+      </div>
+      <div class="hdr-right">
+        <div class="asof">Snapshot taken<br><b id="asofDate" style="color:var(--text-primary)"></b></div>
+        <button class="theme-btn" id="themeToggle" type="button">🌓 Theme</button>
+      </div>
+    </div>
+
+    <div class="searchwrap" id="searchWrap">
+      <div class="searchbar">
+        <span class="sicon">⌕</span>
+        <input id="globalSearch" type="text" autocomplete="off" spellcheck="false"
+          placeholder="Search projects, skills, /slash-commands, agents, connectors, files, risks…  (press /)"
+          aria-label="Search the workspace" aria-expanded="false" aria-autocomplete="list" role="combobox">
+        <kbd class="skbd">/</kbd>
+        <button class="sclear" id="searchClear" type="button" aria-label="Clear search" hidden>✕</button>
+      </div>
+      <div class="searchresults" id="searchResults" role="listbox" hidden></div>
+    </div>
+
+    <div class="tabs" id="tabs"></div>
+
+    <div id="panels"></div>
+  </div>
+</div>
+
+<div class="scrim" id="ccScrim"></div>
+<div class="drawer" id="ccDrawer" role="dialog" aria-modal="true" aria-label="Detail">
+  <div class="drawer-hd">
+    <button class="close" id="ccDrawerClose" type="button" aria-label="Close">✕</button>
+    <span class="meta1" id="ccDrawerCat"></span>
+    <h2 id="ccDrawerTitle"></h2>
+    <span class="badge" id="ccDrawerBadge"></span>
+  </div>
+  <div class="drawer-body" id="ccDrawerBody"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TODAY = new Date('2026-07-20T16:50:00Z');
+  function toDate(s){ return new Date(s + 'T00:00:00Z'); }
+  function daysAgo(dateStr){ return Math.round((TODAY - toDate(dateStr))/86400000); }
+  function fmtDate(dateStr){ return toDate(dateStr).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  // ===== BEGIN DASHBOARD DATA (regenerated each run) =====
+  // Source: .claude/skills/habits-dashboard/scripts/gather.sh (facts) + this session's own
+  // observations (MCP connector health, judgment calls). Regenerate this whole block on every
+  // run — never hand-edit stale values forward.
+
+  var SESSION = {
+    surface:'Claude Code on the web (managed remote environment)',
+    cwd:'/home/user/MyFirstRepo',
+    model:'claude-sonnet-5 (Sonnet 5)',
+    repo:'nesihaver-IL/MyFirstRepo',
+    branch:'claude/code-habits-dashboard-6ru3f3',
+    branchStatus:'reattributed, content-identical to main',
+    aheadBehind:'1 ahead · 1 behind origin/main (same content — the sole difference is the merge commit was re-authored as Claude/noreply@anthropic.com to pass verification; trees are identical)',
+    headSha:'bc6daf1',
+    workTreeClean:false, // building this very skill's files as this snapshot is taken
+    repoSkills:24, platformSkills:23
+  };
+
+  var CONNECTORS = [
+    {name:'Claude Code Remote', role:'this dashboard’s own control plane — environments, Routines, session tools', state:'flapped',
+     detail:'Failed with permission-stream errors earlier this session (list_environments, list_triggers both errored out), same shape as the previous session. Two sessions in a row now — treat this as expected, not exceptional.'},
+    {name:'GitHub', role:'PRs, issues, CI, code search', state:'flapped', detail:'Disconnected and reconnected more than once this session while PR #32 work was happening.'},
+    {name:'Gmail', role:'drafts, thread search, labels', state:'flapped', detail:'Connected, dropped, reconnected — consistent with last session.'},
+    {name:'Google Calendar', role:'events, scheduling', state:'flapped', detail:'Same pattern as Gmail this session.'},
+    {name:'Linear', role:'issues, projects, docs', state:'down', detail:'Disconnected mid-session, not observed to reconnect by snapshot time.'},
+    {name:'Excalidraw', role:'diagram creation', state:'connecting', detail:'Still never confirmed connected across two sessions now.'}
+  ];
+
+  var TOP_LEVEL = [
+    {id:'01-personal', color:'var(--cat-1)', size:'49M', desc:'Personal projects — learning & experimentation', count:'12 folders'},
+    {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'6 folders'},
+    {id:'03-plans', color:'var(--cat-3)', size:'260K', desc:'Strategy, roadmaps, research — human-owned planning', count:'4 subfolders'},
+    {id:'04-reference', color:'var(--cat-4)', size:'92M', desc:'Knowledge base, cheatsheets, archives', count:'9 subfolders'},
+    {id:'.claude', color:'var(--cat-5)', size:'768K', desc:'Skills, agents, diagnostic tools — down from 67M after PR #32', count:'24 skills · 4 agents'},
+    {id:'.config', color:'var(--cat-6)', size:'64K', desc:'Templates & snippets', count:'6 templates'},
+    {id:'.cursor', color:'var(--cat-7)', size:'84K', desc:'Cursor IDE command mirrors', count:'7 commands'},
+    {id:'scripts + root', color:'var(--cat-8)', size:'~80K', desc:'Sync scripts + workspace root docs', count:'10 files'}
+  ];
+
+  var PROJECTS = [
+    {name:'garmin-health', group:'Personal', path:'01-personal/garmin-health', lastCommit:'2026-05-29', files:40, size:'1.5M', documented:true, note:'Agent: Garmin Health Agent · Skills: streamlit-dash, data-pipeline, garmin-analyzer'},
+    {name:'aws-ai-agent', group:'Personal', path:'01-personal/aws-ai-agent', lastCommit:'2026-05-29', files:40, size:'16M', documented:true, note:'Agent: AWS Infrastructure Agent · Skills: aws-strands, aws-agentcore'},
+    {name:'math-practice', group:'Personal', path:'01-personal/math-practice', lastCommit:'2026-05-29', files:87, size:'31M', documented:true, note:'Hebrew UI, grade-5 exam generator'},
+    {name:'interview-coach', group:'Personal', path:'01-personal/interview-coach', lastCommit:'2026-04-16', files:0, size:'4.0K', documented:true, note:'⚠ submodule not initialized — 0 files checked out'},
+    {name:'token-optimizer', group:'Personal', path:'01-personal/token-optimizer', lastCommit:'2026-05-29', files:0, size:'4.0K', documented:false, note:'0 files on disk — not in CLAUDE.md project table'},
+    {name:'zohar-resume', group:'Personal', path:'01-personal/zohar-resume', lastCommit:'2026-03-21', files:15, size:'628K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'windows-monitor', group:'Personal', path:'01-personal/windows-monitor', lastCommit:'2026-05-29', files:11, size:'160K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'bookmark-management', group:'Personal', path:'01-personal/bookmark-management', lastCommit:'2026-04-08', files:16, size:'308K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'electricity-dashboard', group:'Personal', path:'01-personal/electricity-dashboard', lastCommit:'2026-05-29', files:9, size:'76K', documented:false, note:'Gmail API bill extraction (per TODO.md)'},
+    {name:'tzofim-payments', group:'Personal', path:'01-personal/tzofim-payments', lastCommit:'2026-05-29', files:2, size:'20K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'marketplace', group:'Personal', path:'01-personal/marketplace', lastCommit:'2026-05-29', files:3, size:'48K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'sandbox', group:'Personal', path:'01-personal/sandbox', lastCommit:'2026-01-09', files:1, size:'8.0K', documented:false, note:'1 file — likely scratch space'},
+    {name:'ai-foundry-agent', group:'Work', path:'02-work/ai-foundry-agent', lastCommit:'2026-05-29', files:93, size:'744K', documented:true, note:'Agent: JIRA/Confluence Agent (integrations subpath) · Skill: azure-ai-foundry'},
+    {name:'automation-integrations', group:'Work', path:'02-work/automation-integrations', lastCommit:'2026-05-29', files:10, size:'48K', documented:true, note:'Agent: JIRA/Confluence Automation Agent · Skill: jira-confluence — mostly scaffolding (.gitkeep placeholders)'},
+    {name:'genesis-feedback-storytelling', group:'Work', path:'02-work/genesis-feedback-storytelling', lastCommit:'2026-05-29', files:5, size:'3.9M', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'strategy-presentation', group:'Work', path:'02-work/strategy-presentation', lastCommit:'2026-06-04', files:14, size:'13M', documented:false, note:'Contains 4 tracked .xlsx planning files — most recently touched project in the workspace'},
+    {name:'aws-cleanup', group:'Work', path:'02-work/aws-cleanup', lastCommit:'2026-04-08', files:6, size:'64K', documented:false, note:'Not in CLAUDE.md project table'},
+    {name:'handoff', group:'Work', path:'02-work/handoff', lastCommit:'2026-04-08', files:2, size:'12K', documented:false, note:'Not in CLAUDE.md project table'}
+  ];
+
+  var SKILLS_REPO = {
+    'AWS (7)':['aws-agentcore','aws-bedrock','aws-eventbridge','aws-lambda','aws-step-functions','aws-strands','terraform-ops'],
+    'Azure (1)':['azure-ai-foundry'],
+    'PM & workflow (9)':['create-issue','create-plan','execute-plan','review','peer-review','update-docs','test-runner','security-audit','excel-pm-planner'],
+    'Enterprise integrations (1)':['jira-confluence'],
+    'Data & domain (4)':['garmin-analyzer','data-pipeline','streamlit-dash','analytics-metrics'],
+    'Content & creative (1)':['pptx-builder'],
+    'Meta / this dashboard (1)':['habits-dashboard']
+  };
+  var SKILLS_NEW = ['habits-dashboard'];
+  var SKILLS_ARCHIVED = ['copilot-docs','cyber-exec-brief','exploration-phase','figma','github-trending','nano-banana-pro','resume-optimizer'];
+  var SKILLS_PLATFORM = ['session-start-hook','dataviz','artifact-design','artifact-capabilities','update-config',
+    'keybindings-help','verify','code-review','simplify','fewer-permission-prompts','loop','claude-api','run','init',
+    'security-review','morning','israeli-bituach-leumi','web-artifacts-builder','skill-creator','xlsx','pptx','pdf','docx'];
+
+  var AGENTS = [
+    {name:'AWS Infrastructure Agent', role:'AWS cloud infrastructure specialist', scope:'01-personal/garmin-health/backend/ + 01-personal/aws-ai-agent/', color:'var(--cat-1)'},
+    {name:'Code Quality & Security Agent', role:'Cross-project quality enforcer and security gate', scope:'All projects in the workspace', color:'var(--cat-5)'},
+    {name:'Garmin Health Agent', role:'Personal health analytics specialist and training coach', scope:'01-personal/garmin-health/ — all subprojects', color:'var(--cat-2)'},
+    {name:'JIRA / Confluence Automation Agent', role:'Enterprise workflow automation specialist', scope:'02-work/automation-integrations/ + 02-work/ai-foundry-agent/src/integrations/', color:'var(--cat-3)'}
+  ];
+
+  var STALE_DOCS = [
+    {file:'TODO.md', touched:'2026-03-21', issue:'"In Progress" list predates 5+ commits and Tier-3 triage is still pending your input.'},
+    {file:'DECISIONS.md', touched:'2026-03-21', issue:'No entry for the skills-archival decision or this dashboard skill\'s addition.'},
+    {file:'CLAUDE-STATUS.md', touched:'2026-04-12', issue:'Says "Skills Available: 14" — actual is 24; also self-contradicts its own "Last Check" date.'},
+    {file:'CLAUDE.md', touched:'2026-07-20', issue:'Skill count just corrected to 24 (was fixed at 23 by PR #32, now +1 for habits-dashboard itself).'},
+    {file:'.claude/COMMAND_REGISTRY.md', touched:'2026-07-20', issue:'Freshly regenerated — clean as of this snapshot.'}
+  ];
+
+  var HYGIENE_OPEN = [
+    {sev:'critical', title:'Every one of the 18 project folders is still 45+ days idle', detail:'Unchanged since PR #32 — cleanup fixed the repo\'s bookkeeping, not the underlying dormancy. No commit anywhere in the workspace since 2026-06-06.', fix:'This is the Tier-3 triage: decide per TODO.md item whether it\'s still real, done, or dead. Still waiting on that input.'},
+    {sev:'critical', title:'12 of 18 project folders are undocumented in CLAUDE.md', detail:'Unchanged — bookmark-management, electricity-dashboard, marketplace, sandbox, tzofim-payments, windows-monitor, zohar-resume, aws-cleanup, handoff, genesis-feedback-storytelling, strategy-presentation, token-optimizer.', fix:'Add rows for the ones the Tier-3 triage confirms are still active; drop the rest.'},
+    {sev:'warning', title:'TODO.md, DECISIONS.md and CLAUDE-STATUS.md remain stale (99–121 days)', detail:'Blocked on the same Tier-3 triage as the two flags above — rewriting these now would just re-encode guesses.', fix:'Once triage answers land, rewrite both in the same pass.'}
+  ];
+  var HYGIENE_RESOLVED = [
+    {title:'Phantom .claude/worktrees/ duplicate (67MB)', when:'PR #32'},
+    {title:'Tracked .venv-1 virtualenv', when:'PR #32'},
+    {title:'Malformed "Teams\\\\ 365" folder', when:'PR #32'},
+    {title:'CLAUDE.md / COMMAND_REGISTRY.md skill-count drift', when:'PR #32, re-verified this run — still accurate'},
+    {title:'auto-sync.json stale branch field', when:'PR #32 (cosmetic fix — field isn\'t read by any script)'}
+  ];
+
+  var TOTAL_PROJECTS = PROJECTS.length;
+  var DOCUMENTED = PROJECTS.filter(function(p){return p.documented;}).length;
+  var DORMANT = PROJECTS.filter(function(p){return daysAgo(p.lastCommit) > 45;}).length;
+  var REPO_SKILL_COUNT = SESSION.repoSkills;
+  var CONNECTORS_UNSTABLE = CONNECTORS.filter(function(c){return c.state!=='connected';}).length;
+  var WORKSPACE_AGE_DAYS = Math.round((TODAY - toDate('2026-01-05'))/86400000);
+
+  // ===== END DASHBOARD DATA =====
+
+  function slug(s){ return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-+|-+$)/g,''); }
+
+  var TABS = [
+    {id:'overview', label:'Overview'},
+    {id:'session', label:'Active Session'},
+    {id:'projects', label:'Projects'},
+    {id:'skills', label:'Skills & Agents'},
+    {id:'hygiene', label:'Workspace Hygiene'},
+    {id:'refresh', label:'Refresh'}
+  ];
+  document.getElementById('tabs').innerHTML = TABS.map(function(t,i){
+    return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.id+'" type="button">'+t.label+'</button>';
+  }).join('');
+
+  function connStateInfo(state){
+    if(state==='connected') return {badge:'good', label:'connected'};
+    if(state==='flapped') return {badge:'warn', label:'flapped this session'};
+    if(state==='connecting') return {badge:'neutral', label:'stuck connecting'};
+    return {badge:'bad', label:'disconnected'};
+  }
+
+  function renderOverview(){
+    var kpis = [
+      {val:TOTAL_PROJECTS, lbl:'Project folders', sub:'12 personal · 6 work'},
+      {val:DOCUMENTED+'/'+TOTAL_PROJECTS, lbl:'Documented in CLAUDE.md', sub:Math.round(DOCUMENTED/TOTAL_PROJECTS*100)+'% coverage', cls:'warning'},
+      {val:DORMANT+'/'+TOTAL_PROJECTS, lbl:'Idle 45d+', sub:'unchanged by cleanup — needs triage', cls:'critical'},
+      {val:REPO_SKILL_COUNT, lbl:'Repo skills active', sub:'+1 this run: habits-dashboard', cls:'good'},
+      {val:HYGIENE_RESOLVED.length, lbl:'Hygiene flags resolved', sub:'since the last snapshot (PR #32)', cls:'good'},
+      {val:CONNECTORS_UNSTABLE+'/'+CONNECTORS.length, lbl:'MCP connectors unstable', sub:'2nd session in a row — expected now', cls:'critical'}
+    ];
+    var html = '<div class="kpis">' + kpis.map(function(k){
+      return '<div class="kpi '+(k.cls||'')+'"><div class="val">'+k.val+'</div><div class="lbl">'+k.lbl+'</div><div class="sub">'+k.sub+'</div></div>';
+    }).join('') + '</div>';
+
+    html += '<div class="callout good"><span class="ci">✓</span><span class="ct">' +
+      '<b>This dashboard is now a skill</b> — <code>.claude/skills/habits-dashboard/</code>, runnable on demand from Desktop, VS Code, or the web. ' +
+      'This page is the output of actually running it, not a hand-built mockup. See the Refresh tab for how to run it again.</span></div>';
+
+    html += '<div class="callout"><span class="ci">⚠</span><span class="ct">' +
+      '<b>What cleanup fixed vs. what it didn\'t:</b> PR #32 resolved 5 structural hygiene flags (worktree duplicate, tracked venv, ' +
+      'malformed folder, doc drift). It did not touch the 3 that need your judgment — workspace-wide dormancy, undocumented projects, ' +
+      'and the stale planning docs. Those are still open below.</span></div>';
+
+    html += '<div class="section"><div class="section-hd"><h2>Work tree at a glance</h2><span class="hint">'+WORKSPACE_AGE_DAYS+' days old · branch <code>'+SESSION.branch+'</code></span></div>';
+    html += '<div class="grid-cards">' + TOP_LEVEL.map(function(t){
+      return '<div class="card" style="--accent:'+t.color+'"><h3>'+t.id+'</h3><div class="meta1">'+t.desc+'</div>'+
+        '<div class="card-row"><span class="k">Size</span><span>'+t.size+'</span></div>'+
+        '<div class="card-row"><span class="k">Contains</span><span>'+t.count+'</span></div></div>';
+    }).join('') + '</div></div>';
+    return html;
+  }
+
+  function renderSession(){
+    var html = '<div class="section-hd"><h2>This session</h2><span class="hint">What can actually be verified about the session running the skill right now</span></div>';
+    html += '<div class="card" style="max-width:680px"><div class="factlist">' +
+      '<div class="factrow"><span class="k">Surface</span><span class="v">'+SESSION.surface+'</span></div>' +
+      '<div class="factrow"><span class="k">Model</span><span class="v">'+SESSION.model+'</span></div>' +
+      '<div class="factrow"><span class="k">Working directory</span><span class="v"><code>'+SESSION.cwd+'</code></span></div>' +
+      '<div class="factrow"><span class="k">Branch</span><span class="v"><code>'+SESSION.branch+'</code></span></div>' +
+      '<div class="factrow"><span class="k">Branch vs. main</span><span class="v">'+SESSION.aheadBehind+'</span></div>' +
+      '<div class="factrow"><span class="k">Skills loaded</span><span class="v">'+SESSION.repoSkills+' repo + '+SESSION.platformSkills+' platform</span></div>' +
+      '</div></div>';
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>MCP connectors — '+CONNECTORS_UNSTABLE+' of '+CONNECTORS.length+' unstable this session</h2>' +
+      '<span class="hint">Same instability shape as the previous session — this is now a confirmed pattern, not a one-off</span></div>';
+    html += '<div class="grid-cards">' + CONNECTORS.map(function(c){
+      var info = connStateInfo(c.state);
+      var accent = info.badge==='good' ? 'var(--good)' : (info.badge==='warn' ? 'var(--warning)' : (info.badge==='bad' ? 'var(--critical)' : 'var(--text-muted)'));
+      return '<div class="card" style="--accent:'+accent+'"><h3>'+escapeHtml(c.name)+'</h3>' +
+        '<div class="meta1" style="margin-bottom:8px">'+escapeHtml(c.role)+'</div>' +
+        '<span class="badge '+info.badge+'">'+info.label+'</span>' +
+        '<div style="font-size:11.5px; color:var(--text-secondary); margin-top:8px; line-height:1.5">'+escapeHtml(c.detail)+'</div></div>';
+    }).join('') + '</div></div>';
+    return html;
+  }
+
+  function renderProjects(){
+    var html = '<div class="section-hd"><h2>All '+TOTAL_PROJECTS+' project folders</h2><span class="hint">Idle bar = days since last commit — every one is currently red</span></div>';
+    html += '<div class="grid-cards">' + PROJECTS.map(function(p){
+      var idle = daysAgo(p.lastCommit);
+      var col = idle < 14 ? 'var(--good)' : (idle <= 45 ? 'var(--warning)' : 'var(--critical)');
+      var pct = Math.min(100, Math.round((idle/190)*100));
+      var docBadge = p.documented ? '<span class="badge good">✓ documented</span>' : '<span class="badge bad">✕ undocumented</span>';
+      return '<div class="card" style="--accent:'+col+'">' +
+        '<h3>'+escapeHtml(p.name)+'</h3><div class="meta1">'+p.group+' · '+p.path+'</div>' +
+        '<div class="idlebar"><span style="width:'+pct+'%; background:'+col+'"></span></div>' +
+        '<div class="card-row"><span class="k">Last commit</span><span>'+fmtDate(p.lastCommit)+' ('+idle+'d ago)</span></div>' +
+        '<div class="card-row"><span class="k">Size</span><span>'+p.files+' files · '+p.size+'</span></div>' +
+        '<div style="margin-top:8px">'+docBadge+'</div>' +
+        '<div style="font-size:11px; color:var(--text-secondary); margin-top:7px; line-height:1.5">'+escapeHtml(p.note)+'</div></div>';
+    }).join('') + '</div>';
+    return html;
+  }
+
+  function renderSkills(){
+    var html = '<div class="section-hd"><h2>Repo skills — '+REPO_SKILL_COUNT+' in .claude/skills/</h2><span class="hint">Grouped by domain — check here before building a new script or automation</span></div>';
+    html += Object.keys(SKILLS_REPO).map(function(g){
+      return '<div class="skillgrp"><h4>'+g+'</h4><div class="chiprow">' +
+        SKILLS_REPO[g].map(function(s){ return '<span class="chip'+(SKILLS_NEW.indexOf(s)>=0?' new':'')+'">'+s+(SKILLS_NEW.indexOf(s)>=0?' — new':'')+'</span>'; }).join('') + '</div></div>';
+    }).join('');
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Archived — '+SKILLS_ARCHIVED.length+' in .claude/skills-archive/</h2></div>' +
+      '<div class="chiprow">' + SKILLS_ARCHIVED.map(function(s){ return '<span class="chip" style="opacity:.6; text-decoration:line-through">'+s+'</span>'; }).join('') + '</div></div>';
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Platform skills — '+SKILLS_PLATFORM.length+' available this session</h2>' +
+      '<span class="hint">Bundled with Claude Code itself, not part of this repo</span></div>' +
+      '<div class="chiprow">' + SKILLS_PLATFORM.map(function(s){ return '<span class="chip platform">'+s+'</span>'; }).join('') + '</div></div>';
+
+    html += '<div class="section"><div class="section-hd"><h2>Sub-agents — '+AGENTS.length+' in .claude/agents/</h2></div>';
+    html += '<div class="grid-cards">' + AGENTS.map(function(a){
+      return '<div class="card" style="--accent:'+a.color+'"><h3>'+escapeHtml(a.name)+'</h3>' +
+        '<div class="meta1" style="margin-bottom:8px">'+escapeHtml(a.role)+'</div>' +
+        '<div class="card-row"><span class="k">Scope</span></div><div style="font-size:11.5px; color:var(--text-secondary); margin-top:2px">'+escapeHtml(a.scope)+'</div></div>';
+    }).join('') + '</div></div>';
+    return html;
+  }
+
+  function renderHygiene(){
+    var html = '<div class="section-hd"><h2>Open — '+HYGIENE_OPEN.length+' flags</h2></div>';
+    html += HYGIENE_OPEN.map(function(h){
+      return '<div class="flag-card'+(h.sev==='warning'?' warn-sev':'')+'"><div class="ft" style="color:'+(h.sev==='warning'?'var(--warning)':'var(--critical)')+'">'+
+        (h.sev==='warning'?'⚠':'✕')+' '+escapeHtml(h.title)+'</div>' +
+        '<div class="ff">'+escapeHtml(h.detail)+'</div>' +
+        '<div class="ff" style="margin-top:6px"><b>Suggested fix:</b> '+escapeHtml(h.fix)+'</div></div>';
+    }).join('');
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Resolved — '+HYGIENE_RESOLVED.length+' flags</h2></div>';
+    html += HYGIENE_RESOLVED.map(function(h){
+      return '<div class="flag-card resolved"><div class="ft" style="color:var(--good)">✓ '+escapeHtml(h.title)+'</div>' +
+        '<div class="ff">Fixed in <b>'+escapeHtml(h.when)+'</b> — re-verified clean by this run\'s <code>gather.sh</code> scan, not just remembered from before.</div></div>';
+    }).join('') + '</div>';
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Stale docs</h2></div>' +
+      '<div class="tblwrap"><table class="datatable"><thead><tr><th>File</th><th>Last touched</th><th>Days stale</th><th>Status</th></tr></thead><tbody>' +
+      STALE_DOCS.map(function(d){
+        return '<tr><td class="name">'+escapeHtml(d.file)+'</td><td>'+fmtDate(d.touched)+'</td><td>'+daysAgo(d.touched)+'d</td><td>'+escapeHtml(d.issue)+'</td></tr>';
+      }).join('') + '</tbody></table></div></div>';
+    return html;
+  }
+
+  function renderRefresh(){
+    var html = '<div class="refresh-card">' +
+      '<h3>How to run this again</h3>' +
+      '<p>This page is generated by the <code>habits-dashboard</code> skill in <code>.claude/skills/</code>. It works the same from ' +
+      'Claude Code Desktop, VS Code, or the web — just ask, in any session pointed at this repo.</p>' +
+      '<div class="copyrow"><input id="refreshPrompt" type="text" readonly value="Show me the habits dashboard"><button id="copyBtn" type="button">Copy</button></div>' +
+      '<p style="margin-top:14px">Each run re-scans the repo from scratch via <code>gather.sh</code> — nothing here is carried forward by memory. ' +
+      'It also checks branch-vs-main first, so a merged PR won\'t cause the failure that broke the very first version of this dashboard.</p>' +
+      '<div class="snap-meta"><div>Snapshot taken <b id="rfAsof"></b></div><div>Branch <b>'+SESSION.branch+'</b></div></div>' +
+      '</div>';
+    return html;
+  }
+
+  var panelsHtml = '';
+  panelsHtml += '<div class="panel active" id="panel-overview">' + renderOverview() + '</div>';
+  panelsHtml += '<div class="panel" id="panel-session">' + renderSession() + '</div>';
+  panelsHtml += '<div class="panel" id="panel-projects">' + renderProjects() + '</div>';
+  panelsHtml += '<div class="panel" id="panel-skills">' + renderSkills() + '</div>';
+  panelsHtml += '<div class="panel" id="panel-hygiene">' + renderHygiene() + '</div>';
+  panelsHtml += '<div class="panel" id="panel-refresh">' + renderRefresh() + '</div>';
+  document.getElementById('panels').innerHTML = panelsHtml;
+
+  document.getElementById('tabs').addEventListener('click', function(e){
+    var btn = e.target.closest('.tab');
+    if(!btn) return;
+    document.querySelectorAll('.tab').forEach(function(b){ b.classList.toggle('active', b===btn); });
+    var tabId = btn.getAttribute('data-tab');
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('active', p.id==='panel-'+tabId); });
+  });
+
+  document.addEventListener('click', function(e){
+    if(e.target.id==='copyBtn'){
+      var input = document.getElementById('refreshPrompt');
+      input.select(); input.setSelectionRange(0,999);
+      var ok = false;
+      try{ navigator.clipboard.writeText(input.value); ok = true; }catch(err){}
+      try{ if(!ok) document.execCommand('copy'); }catch(err){}
+      e.target.textContent = 'Copied!'; e.target.classList.add('copied');
+      setTimeout(function(){ e.target.textContent='Copy'; e.target.classList.remove('copied'); }, 1600);
+    }
+  });
+
+  document.getElementById('themeToggle').addEventListener('click', function(){
+    var root = document.documentElement;
+    var cur = root.getAttribute('data-theme');
+    root.setAttribute('data-theme', cur==='dark' ? 'light' : 'dark');
+  });
+
+  var asofStr = TODAY.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric', timeZone:'UTC'});
+  document.getElementById('asofDate').textContent = asofStr;
+  var rf = document.getElementById('rfAsof'); if(rf) rf.textContent = asofStr;
+
+})();
+</script>
