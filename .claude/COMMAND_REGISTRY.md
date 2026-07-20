@@ -6,7 +6,6 @@
 ### Full Command Names
 
 #### Core Workflow (use in order)
-- exploration-phase
 - create-plan
 - execute-plan
 - review
@@ -31,12 +30,8 @@
 - data-pipeline
 - jira-confluence
 
-#### Career & Professional Development (added 2026-03-13)
-- resume-optimizer
-
 #### Project Management (added 2026-02-28)
 - excel-pm-planner
-- cyber-exec-brief
 - pptx-builder
 
 #### Quality & Security (added 2026-02-27)
@@ -44,11 +39,7 @@
 - security-audit
 
 #### Design & Utilities
-- figma
 - analytics-metrics
-- copilot-docs
-- nano-banana-pro
-- github-trending
 
 ### Aliases (Short Names)
 You can use these trigger phrases to activate commands:
@@ -58,9 +49,6 @@ You can use these trigger phrases to activate commands:
 | "create issue" | create-issue | Document bugs, features, ideas |
 | "log bug" | create-issue | Record a bug |
 | "track feature" | create-issue | Track new feature |
-| "explore" | exploration-phase | Understand task and code |
-| "explore codebase" | exploration-phase | Analyze existing code |
-| "understand task" | exploration-phase | Clarify requirements |
 | "plan" | create-plan | Create implementation plan |
 | "make plan" | create-plan | Design solution |
 | "implement plan" | execute-plan | Write the code |
@@ -104,10 +92,6 @@ You can use these trigger phrases to activate commands:
 | "owasp" | security-audit | OWASP Top 10 compliance check |
 | "dashboard" | analytics-metrics | Data visualization / Recharts charts |
 | "chart" | analytics-metrics | KPI displays, metrics dashboards |
-| "copilot" | copilot-docs | GitHub Copilot custom instructions |
-| "figma" | figma | Figma API, design tokens, component gen |
-| "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
-| "trending" | github-trending | GitHub trending repos discovery |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
 | "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
 | "bedrock flows" | aws-bedrock | Visual agentic flow builder |
@@ -124,16 +108,6 @@ You can use these trigger phrases to activate commands:
 | "lambda handler" | aws-lambda | Serverless function patterns |
 | "sam cli" | aws-lambda | Local Lambda testing with SAM |
 | "function url" | aws-lambda | Lambda HTTP endpoint for agents |
-| "exec brief" | cyber-exec-brief | Executive status update for cyber project |
-| "executive update" | cyber-exec-brief | Management-ready status communication |
-| "status report" | cyber-exec-brief | Project status report for management |
-| "cyber project update" | cyber-exec-brief | Cybersecurity B2C project update |
-| "risk brief" | cyber-exec-brief | Executive risk summary |
-| "milestone update" | cyber-exec-brief | Gate or milestone executive summary |
-| "board presentation" | cyber-exec-brief | Board / steering committee slide content |
-| "steering committee" | cyber-exec-brief | Steering committee update |
-| "gate review" | cyber-exec-brief | Phase gate review brief |
-| "roadmap summary" | cyber-exec-brief | Executive roadmap snapshot |
 | "build slides" | pptx-builder | Generate a PowerPoint deck from structured content |
 | "create presentation" | pptx-builder | Build an exec-ready .pptx file |
 | "powerpoint" | pptx-builder | PowerPoint slide generation |
@@ -147,23 +121,11 @@ You can use these trigger phrases to activate commands:
 | "schedule review" | excel-pm-planner | Identify slips, gaps, and risks |
 | "discipline allocation" | excel-pm-planner | Who is working and when |
 | "block analysis" | excel-pm-planner | Block-based Gantt / schedule analysis |
-| "optimize resume" | resume-optimizer | Tailor resume against target role |
-| "tailor resume" | resume-optimizer | Resume fit analysis and rewrite |
-| "resume score" | resume-optimizer | ATS-aware resume optimization |
-| "cv optimization" | resume-optimizer | CV enhancement and benchmarking |
-| "career optimization" | resume-optimizer | Career positioning and role matching |
-| "position match" | resume-optimizer | Candidate-role fit analysis |
-| "job fit analysis" | resume-optimizer | Analyze fit and benchmark role |
-| "resume benchmark" | resume-optimizer | Market research + resume rewrite |
-| "resume talent" | resume-optimizer | Resume optimization for talent matching |
 
 ## Usage Examples
 
 ### Short Form (Using Triggers)
 ```
-"explore the authentication system"
-→ Triggers: exploration-phase
-
 "create issue - login button broken"
 → Triggers: create-issue
 
@@ -196,7 +158,6 @@ Use the jira-confluence skill to create the sprint ticket
 ### Cursor IDE
 ```
 /create-issue
-/exploration-phase
 /create-plan
 /execute-plan
 /review
@@ -273,7 +234,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-03-13
-Total Skills: 28
+Last Updated: 2026-07-20 (regenerated against .claude/skills/ + .claude/skills-archive/)
+Total Skills: 23 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
 Total Agents: 4
 Status: ✅ Active
