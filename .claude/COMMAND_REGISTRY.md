@@ -41,11 +41,17 @@
 #### Design & Utilities
 - analytics-metrics
 
+#### Workspace Insight (added 2026-07-20)
+- habits-dashboard
+
 ### Aliases (Short Names)
 You can use these trigger phrases to activate commands:
 
 | Alias/Trigger | Full Command | Description |
 |---------------|--------------|-------------|
+| "dashboard status" | habits-dashboard | Show the habits dashboard (work tree, session, skills, hygiene) |
+| "habits dashboard" | habits-dashboard | Same as above |
+| "refresh snapshot" | habits-dashboard | Re-scan and republish the dashboard |
 | "create issue" | create-issue | Document bugs, features, ideas |
 | "log bug" | create-issue | Record a bug |
 | "track feature" | create-issue | Track new feature |
@@ -234,7 +240,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-07-20 (regenerated against .claude/skills/ + .claude/skills-archive/)
-Total Skills: 23 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Last Updated: 2026-07-20 (regenerated against .claude/skills/ + .claude/skills-archive/, +habits-dashboard)
+Total Skills: 24 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
 Total Agents: 4
 Status: ✅ Active
