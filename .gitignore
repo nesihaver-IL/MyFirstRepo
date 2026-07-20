@@ -18,8 +18,12 @@ __pycache__/
 *.pyc
 *.pyo
 .venv/
+.venv*/
 venv/
 *.egg-info/
+
+# Claude Code agent worktrees — scratch checkouts, never meant to be committed
+.claude/worktrees/
 
 # Node
 node_modules/

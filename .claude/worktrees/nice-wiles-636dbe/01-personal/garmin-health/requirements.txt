@@ -1,7 +1,0 @@
-# Pipeline-level dependencies
-# Re-exports all analytics deps
--r analytics/requirements.txt
-
-# Pipeline additions
-jinja2>=3.1.0       # HTML template rendering
-markdown>=3.5.0     # Converts AI analysis Markdown → HTML in report
