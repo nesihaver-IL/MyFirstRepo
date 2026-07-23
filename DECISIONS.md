@@ -132,4 +132,66 @@ to persist workspace context across Claude Code sessions.
 
 ---
 
-_Updated: 2026-03-21_
+### D-007 — habits-dashboard as an On-Demand Skill, Not an Agent or Scheduled Routine
+
+**Date**: 2026-07-20
+**Status**: Active
+
+**Decision**: Ship workspace-snapshot tooling as `.claude/skills/habits-dashboard/` — a
+skill invoked on demand — rather than a standing background agent or a scheduled Routine.
+
+**Rationale**:
+- The actual requirement was "let me check frequently, from Desktop, VS Code, or web" —
+  that's an on-demand trigger, not a background process
+- Skills auto-load from `.claude/` on every surface with no separate setup; a scheduled
+  Routine or persistent agent would need to be configured per-account and doesn't naturally
+  extend to "any surface, any session"
+- No standing process means no extra infrastructure to keep healthy — the dashboard itself
+  already flagged MCP-connector flakiness as a real, recurring condition; adding a background
+  job dependent on the same connectors would inherit that fragility
+- `gather.sh` is read-only and idempotent, so re-running it costs nothing extra when it's
+  actually needed, instead of running on a schedule whether or not anyone looks at the output
+
+**Alternatives rejected**:
+- A `.claude/agents/` sub-agent: agents in this workspace are for delegated, open-ended
+  multi-step work, not a fixed procedure with a fixed output shape
+- A scheduled Routine (Claude Code Remote): considered and explicitly declined — adds a
+  standing dependency for a need that's on-demand, not time-based
+
+---
+
+### D-008 — TODO.md Triage Methodology (2026-07-20)
+
+**Date**: 2026-07-20
+**Status**: Active — needs owner confirmation on flagged items
+
+**Decision**: Reclassify TODO.md's stale "In Progress" list using repo evidence (file counts,
+sizes, commit dates, `.gitignore` carve-outs) rather than leaving 121-day-old status
+unchanged, while explicitly tagging every inferred call as `[inferred]` in the doc itself.
+
+**Rationale**:
+- The workspace had gone 44+ days without a single commit anywhere, across all 18 project
+  folders — the existing "In Progress" list predated that entire gap and was not a reliable
+  signal of what's actually still live
+- Guessing personal/business intent for projects with no supporting evidence (e.g. why a
+  given side project still matters) would be worse than leaving it flagged; only reclassified
+  items with concrete repo evidence behind the call
+- Marking guesses explicitly in `TODO.md` — not just in a chat conversation — keeps the file
+  honest about its own confidence level, which is the same failure mode (confident-looking
+  docs that turn out to be wrong) that motivated this triage in the first place
+
+**Items reclassified with `[inferred]`** (see `TODO.md` for detail): Math Practice App and
+Azure AI Foundry Agent moved to Completed based on file count/size; RAG dataset for Garmin
+marked done based on CLAUDE.md's own architecture description; whatsapp-export GitHub Pages
+marked partial based on `.gitignore` carve-outs; Anthropic API connectivity issue carried
+forward as unconfirmed rather than guessed either way.
+
+**Explicitly not touched**: whether the 12 undocumented project folders (bookmark-management,
+electricity-dashboard, marketplace, sandbox, tzofim-payments, windows-monitor, zohar-resume,
+aws-cleanup, handoff, genesis-feedback-storytelling, strategy-presentation, token-optimizer)
+should be added to CLAUDE.md's project table or archived — that requires knowing intent this
+triage has no evidence for, and stays an open hygiene flag until the workspace owner weighs in.
+
+---
+
+_Updated: 2026-07-20_
