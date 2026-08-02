@@ -424,12 +424,12 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
   // the Firestore security rules, scoped to this one document path). Replace with the
   // values from your Firebase project's "Add app" screen.
   var FIREBASE_CONFIG = {
-    apiKey: "REPLACE_ME",
-    authDomain: "REPLACE_ME.firebaseapp.com",
-    projectId: "REPLACE_ME",
-    storageBucket: "REPLACE_ME.appspot.com",
-    messagingSenderId: "REPLACE_ME",
-    appId: "REPLACE_ME"
+    apiKey: "AIzaSyBzSMWQrchC43ZspAEZLpcCsxqDzt32UiE",
+    authDomain: "morzin-budget.firebaseapp.com",
+    projectId: "morzin-budget",
+    storageBucket: "morzin-budget.firebasestorage.app",
+    messagingSenderId: "990857443644",
+    appId: "1:990857443644:web:7c719955a79010ec990639"
   };
   var DOC_COLLECTION = "budgets";
   var DOC_ID = "morzin-2026-lvlov2s1";
@@ -484,7 +484,8 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
         }
         render();
       }, function(err){
-        setSyncNotice("שגיאת חיבור לענן: " + err.message);
+        setSyncNotice("שגיאת חיבור לענן: " + err.message + " — מוצגים נתוני דוגמה בלבד.");
+        render();
       });
     }catch(err){
       setSyncNotice("שגיאת חיבור לענן: " + err.message);
