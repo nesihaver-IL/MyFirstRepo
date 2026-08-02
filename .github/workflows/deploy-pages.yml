@@ -1,12 +1,13 @@
-name: Deploy HaVenture Thailand trip site to Pages
+name: Deploy Pages site (Thailand trip + Morzin budget)
 
 on:
   push:
     branches: ["claude/update-claude-md-BGuLn"]
     paths:
       - "01-personal/thailand-trip-2026/**"
+      - "01-personal/morzin-budget-2026/**"
       - "04-reference/whatsapp-export/album/**"
-      - ".github/workflows/deploy-thailand-trip.yml"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -33,6 +34,8 @@ jobs:
           cp -r 01-personal/thailand-trip-2026/. _site/
           mkdir -p _site/whatsapp-export/album
           cp -r 04-reference/whatsapp-export/album/. _site/whatsapp-export/album/
+          mkdir -p _site/morzin-budget-2026
+          cp -r 01-personal/morzin-budget-2026/. _site/morzin-budget-2026/
       - name: Upload combined site as Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,0 +1,834 @@
+<title>Morzin 2026 – Budget</title>
+<style>
+  :root{
+    --bg:#faf3e7;
+    --surface:#ffffff;
+    --surface-2:#fff3e4;
+    --ink:#0b2e3a;
+    --ink-dim:#53696e;
+    --line:#e7ddca;
+    --accent:#0c5c73;
+    --accent-dark:#083c4c;
+    --accent-ink:#ffffff;
+    --accent-soft:rgba(12,92,115,0.12);
+    --cat-econ:#f2a33d;
+    --cat-econ-bg:rgba(242,163,61,0.16);
+    --cat-bike:#3f8f6a;
+    --cat-bike-bg:rgba(63,143,106,0.16);
+    --critical:#ff6b4a;
+    --critical-dark:#e04f30;
+    --critical-bg:rgba(255,107,74,0.14);
+    --radius:18px;
+    --shadow:0 10px 30px rgba(11,46,58,0.12);
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0d1f24;
+      --surface:#142e35;
+      --surface-2:#0f262c;
+      --ink:#eef2f0;
+      --ink-dim:#abb3b3;
+      --line:#24444c;
+      --accent:#4fb3c9;
+      --accent-dark:#2f7c92;
+      --accent-ink:#ffffff;
+      --accent-soft:rgba(79,179,201,0.18);
+      --cat-econ:#f2a33d;
+      --cat-econ-bg:rgba(242,163,61,0.18);
+      --cat-bike:#3f8f6a;
+      --cat-bike-bg:rgba(63,143,106,0.2);
+      --critical:#ff8a68;
+      --critical-dark:#ff6b4a;
+      --critical-bg:rgba(255,138,104,0.2);
+      --shadow:0 10px 30px rgba(0,0,0,0.45);
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0d1f24;--surface:#142e35;--surface-2:#0f262c;--ink:#eef2f0;--ink-dim:#abb3b3;
+    --line:#24444c;--accent:#4fb3c9;--accent-dark:#2f7c92;--accent-ink:#ffffff;--accent-soft:rgba(79,179,201,0.18);
+    --cat-econ:#f2a33d;--cat-econ-bg:rgba(242,163,61,0.18);--cat-bike:#3f8f6a;--cat-bike-bg:rgba(63,143,106,0.2);
+    --critical:#ff8a68;--critical-dark:#ff6b4a;--critical-bg:rgba(255,138,104,0.2);
+    --shadow:0 10px 30px rgba(0,0,0,0.45);color-scheme:dark;
+  }
+  :root[data-theme="light"]{
+    --bg:#faf3e7;--surface:#ffffff;--surface-2:#fff3e4;--ink:#0b2e3a;--ink-dim:#53696e;
+    --line:#e7ddca;--accent:#0c5c73;--accent-dark:#083c4c;--accent-ink:#ffffff;--accent-soft:rgba(12,92,115,0.12);
+    --cat-econ:#f2a33d;--cat-econ-bg:rgba(242,163,61,0.16);--cat-bike:#3f8f6a;--cat-bike-bg:rgba(63,143,106,0.16);
+    --critical:#ff6b4a;--critical-dark:#e04f30;--critical-bg:rgba(255,107,74,0.14);
+    --shadow:0 10px 30px rgba(11,46,58,0.12);color-scheme:light;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:1040px;margin:0 auto;padding:0 20px 64px;}
+
+  .hero{
+    position:relative;overflow:hidden;
+    margin:0 -20px 28px;padding:40px 20px 84px;
+    background:linear-gradient(180deg,var(--surface-2),var(--bg));
+    border-bottom:1px solid var(--line);
+  }
+  .hero-bg{position:absolute;inset:auto 0 0 0;width:100%;height:96px;opacity:0.5;}
+  .hero-content{position:relative;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    font-weight:700;font-size:12.5px;letter-spacing:0.09em;
+    color:var(--accent);text-transform:uppercase;margin:0 0 10px;
+  }
+  h1{
+    font-weight:800;font-size:clamp(26px,4vw,38px);
+    margin:0;text-wrap:balance;letter-spacing:-0.01em;
+  }
+  .title-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
+  .bike-icon{width:58px;height:36px;flex:none;color:var(--accent);}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+    color:var(--ink-dim);font-size:14.5px;
+  }
+  .hero-meta .dot{opacity:0.5;}
+  .hero-meta .card-chip{
+    direction:ltr;unicode-bidi:isolate;
+    background:var(--surface);border:1px solid var(--line);border-radius:6px;
+    padding:2px 8px;font-size:13px;
+  }
+  .update-status{
+    display:inline-flex;align-items:center;gap:7px;
+    font-weight:700;font-size:11.5px;
+    color:var(--accent);background:var(--accent-soft);
+    border-radius:999px;padding:4px 12px 4px 9px;margin-bottom:16px;
+    font-variant-numeric:tabular-nums;
+  }
+  .update-status span:last-child{direction:ltr;unicode-bidi:isolate;}
+  .update-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;
+    box-shadow:0 0 0 3px var(--accent-soft),0 0 9px 1px var(--accent);
+  }
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;}
+  .hero-text{flex:1 1 320px;min-width:0;}
+  .day-badge{
+    flex:0 0 auto;display:flex;align-items:center;gap:10px;
+    background:var(--surface);border:1px solid var(--line);border-radius:999px;
+    padding:6px 16px 6px 8px;box-shadow:var(--shadow);
+  }
+  .day-ring{width:38px;height:38px;flex:none;}
+  #dayRingProgress{transition:stroke-dasharray .4s ease;}
+  .day-badge-text{display:flex;flex-direction:column;gap:1px;white-space:nowrap;}
+  .day-badge-text strong{
+    font-weight:700;font-size:13.5px;
+    font-variant-numeric:tabular-nums;
+  }
+  .day-badge-text span{font-size:11.5px;color:var(--ink-dim);}
+
+  h2{
+    font-weight:700;font-size:17px;margin:0 0 14px;
+  }
+
+  .sync-notice{
+    background:var(--critical-bg);color:var(--critical);border-radius:var(--radius);
+    padding:10px 16px;font-size:13.5px;font-weight:600;margin-bottom:20px;
+  }
+  .kpis{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;
+    margin-bottom:32px;
+  }
+  .kpi{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px 18px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:6px;min-height:108px;
+  }
+  .kpi-label{font-size:12.5px;color:var(--ink-dim);font-weight:500;}
+  .kpi-value{
+    direction:ltr;unicode-bidi:isolate;text-align:right;
+    font-weight:700;font-size:23px;font-variant-numeric:tabular-nums;letter-spacing:-0.01em;
+  }
+  .kpi-value.critical{color:var(--critical);}
+  .kpi-value.good{color:var(--accent);}
+  .kpi-sub{font-size:12.5px;color:var(--ink-dim);font-variant-numeric:tabular-nums;}
+  .kpi-sub .num{direction:ltr;unicode-bidi:isolate;}
+  .kpi-bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:2px;}
+  .kpi-bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease;}
+  .kpi-bar > i.critical{background:var(--critical);}
+
+  .categories{margin-bottom:32px;}
+  .cat-pie{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;box-shadow:var(--shadow);
+    display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+  }
+  .pie-wrap{position:relative;width:140px;height:140px;flex:none;}
+  .pie-chart{width:100%;height:100%;}
+  .pie-seg{transition:stroke-dasharray .4s ease,stroke-dashoffset .4s ease;}
+  #pieEcon{stroke:var(--cat-econ);}
+  #pieBike{stroke:var(--cat-bike);}
+  .pie-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;pointer-events:none;
+  }
+  .pie-center strong{
+    direction:ltr;unicode-bidi:isolate;
+    font-size:16px;font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .pie-center span{font-size:10.5px;color:var(--ink-dim);margin-top:2px;}
+  .pie-legend{flex:1 1 220px;display:flex;flex-direction:column;gap:12px;min-width:0;}
+  .legend-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;}
+  .cat-chip{
+    display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px;
+  }
+  .cat-chip::before{content:"";width:9px;height:9px;border-radius:3px;display:inline-block;flex:none;}
+  .cat-chip.econ{color:var(--cat-econ);}
+  .cat-chip.econ::before{background:var(--cat-econ);}
+  .cat-chip.bike{color:var(--cat-bike);}
+  .cat-chip.bike::before{background:var(--cat-bike);}
+  .cat-amt{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;color:var(--ink-dim);font-size:13.5px;white-space:nowrap;}
+
+  .ledger-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px;}
+  .ledger-note{color:var(--ink-dim);font-size:13.5px;margin:0 0 14px;}
+  .ghost-btn{
+    font-size:13px;font-weight:700;color:var(--accent);
+    background:transparent;border:2px solid var(--accent);border-radius:999px;padding:7px 16px;
+    cursor:pointer;transition:border-color .15s,color .15s;
+  }
+  .ghost-btn:hover{border-color:var(--critical);color:var(--critical);}
+  .ghost-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .table-wrap{
+    overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);
+    box-shadow:var(--shadow);
+  }
+  table{width:100%;border-collapse:collapse;min-width:660px;}
+  thead th{
+    text-align:right;font-size:12px;font-weight:600;color:var(--ink-dim);
+    text-transform:uppercase;letter-spacing:0.04em;
+    padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface-2);
+    position:sticky;top:0;
+  }
+  thead th.num-col{text-align:left;}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);font-size:14.5px;vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:var(--surface-2);}
+  td.date-cell{direction:ltr;unicode-bidi:isolate;color:var(--ink-dim);font-size:13.5px;white-space:nowrap;}
+  td.notes-cell{color:var(--ink-dim);font-size:13.5px;}
+  td.num-cell{direction:ltr;unicode-bidi:isolate;text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  td.ils-cell{font-weight:600;}
+  .row-cat{
+    display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;
+    padding:3px 9px;border-radius:99px;white-space:nowrap;
+  }
+  .row-cat.econ{color:var(--cat-econ);background:var(--cat-econ-bg);}
+  .row-cat.bike{color:var(--cat-bike);background:var(--cat-bike-bg);}
+  .del-btn{
+    background:transparent;border:none;color:var(--ink-dim);cursor:pointer;font-size:15px;
+    width:28px;height:28px;border-radius:7px;line-height:1;
+  }
+  .del-btn:hover{background:var(--critical-bg);color:var(--critical);}
+  .del-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+  .empty-row td{
+    text-align:center;color:var(--ink-dim);padding:26px 14px;font-size:14px;
+  }
+
+  .add-form{
+    display:grid;
+    grid-template-columns:118px 1.3fr 160px 95px 105px 1.1fr 108px;
+    gap:8px;margin-top:12px;align-items:end;
+  }
+  .field{display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .field label{font-size:11.5px;color:var(--ink-dim);font-weight:600;}
+  .field input,.field select{
+    font-size:14px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    padding:8px 10px;width:100%;min-width:0;
+  }
+  .field input[type="number"]{direction:ltr;text-align:left;}
+  .field input:focus-visible,.field select:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+  .add-btn{
+    font-weight:700;font-size:13.5px;
+    background:var(--accent);color:var(--accent-ink);border:none;border-radius:999px;
+    padding:9px 14px;cursor:pointer;height:37px;transition:background .15s;
+  }
+  .add-btn:hover{background:var(--accent-dark);}
+  .add-btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+  .foot{margin-top:26px;color:var(--ink-dim);font-size:12.5px;text-align:center;}
+
+  @media (max-width:760px){
+    .add-form{grid-template-columns:1fr 1fr;}
+    .add-form .add-btn{grid-column:1/-1;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+
+<div class="page" dir="rtl" lang="he">
+  <header class="hero">
+    <svg class="hero-bg" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true">
+      <polyline points="0,90 60,78 130,84 200,55 270,68 340,30 410,50 480,20 550,42 620,25 690,48 760,15 830,38 900,22 1000,40 1000,100 0,100"
+        fill="var(--accent-soft)" stroke="none"/>
+      <polyline points="0,90 60,78 130,84 200,55 270,68 340,30 410,50 480,20 550,42 620,25 690,48 760,15 830,38 900,22 1000,40"
+        fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.5"/>
+    </svg>
+    <div class="hero-content">
+      <div class="update-status" id="updateStatus">
+        <span class="update-dot" aria-hidden="true"></span>
+        <span id="updateStatusText"></span>
+      </div>
+      <div class="hero-top">
+        <div class="hero-text">
+          <p class="eyebrow">מעקב תקציב חופשה</p>
+          <div class="title-row">
+            <svg class="bike-icon" viewBox="0 0 64 40" aria-hidden="true">
+              <circle cx="51" cy="29" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="13" cy="29" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/>
+              <circle cx="51" cy="29" r="1.3" fill="currentColor"/>
+              <circle cx="13" cy="29" r="1.3" fill="currentColor"/>
+              <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="51" y1="29" x2="37" y2="29"/>
+                <line x1="51" y1="29" x2="41" y2="13"/>
+                <line x1="37" y1="29" x2="41" y2="13"/>
+                <line x1="41" y1="13" x2="45" y2="22"/>
+                <line x1="37" y1="29" x2="20" y2="16"/>
+                <line x1="20" y1="16" x2="18" y2="10"/>
+                <line x1="41" y1="13" x2="18" y2="10"/>
+                <line x1="41" y1="13" x2="43" y2="5"/>
+                <line x1="46" y1="5" x2="40" y2="4"/>
+                <line x1="19" y1="12" x2="13" y2="29"/>
+                <line x1="17.5" y1="11.5" x2="12.5" y2="29"/>
+                <line x1="20" y1="13" x2="16" y2="12"/>
+                <line x1="18" y1="10" x2="21" y2="8"/>
+                <line x1="26" y1="8" x2="16" y2="8"/>
+                <line x1="37" y1="29" x2="33" y2="33"/>
+              </g>
+              <circle cx="37" cy="29" r="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <h1><span dir="ltr">Morzin 2026 – Budget</span></h1>
+          </div>
+          <div class="hero-meta">
+            <span id="tripDatesLabel"></span>
+            <span class="dot">•</span>
+            <span>חיוב באמצעות ויזה המסתיימת ב־<span class="card-chip">0776</span></span>
+          </div>
+        </div>
+        <div class="day-badge" id="dayBadge">
+          <svg class="day-ring" viewBox="0 0 40 40" aria-hidden="true">
+            <circle cx="20" cy="20" r="16" fill="none" stroke="var(--surface-2)" stroke-width="5"/>
+            <circle id="dayRingProgress" cx="20" cy="20" r="16" fill="none" stroke="var(--accent)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 20 20)"/>
+          </svg>
+          <div class="day-badge-text">
+            <strong id="dayBadgeMain"></strong>
+            <span id="dayBadgeSub"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="sync-notice" id="syncNotice" role="status" hidden></div>
+
+  <section class="kpis" id="kpis" aria-label="מדדים עיקריים"></section>
+
+  <section class="categories">
+    <h2>פילוח הוצאות לפי קטגוריה</h2>
+    <div class="cat-pie" id="catPie">
+      <div class="pie-wrap">
+        <svg class="pie-chart" viewBox="0 0 100 100" aria-hidden="true">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="var(--surface-2)" stroke-width="20"/>
+          <circle id="pieEcon" class="pie-seg" cx="50" cy="50" r="40" fill="none" stroke-width="20" transform="rotate(-90 50 50)"/>
+          <circle id="pieBike" class="pie-seg" cx="50" cy="50" r="40" fill="none" stroke-width="20" transform="rotate(-90 50 50)"/>
+        </svg>
+        <div class="pie-center">
+          <strong id="pieCenterAmt"></strong>
+          <span>סה"כ הוצא</span>
+        </div>
+      </div>
+      <div class="pie-legend" id="pieLegend"></div>
+    </div>
+  </section>
+
+  <section class="ledger">
+    <div class="ledger-head">
+      <h2>יומן הוצאות</h2>
+      <button type="button" class="ghost-btn" id="clearAllBtn">נקה הכל והתחל מחדש</button>
+    </div>
+    <p class="ledger-note">כל שורה מדוח הוויזה — היתרה למעלה מתעדכנת אוטומטית.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>תאריך</th>
+            <th>תיאור</th>
+            <th>קטגוריה</th>
+            <th class="num-col">אירו (€)</th>
+            <th class="num-col">חיוב בפועל (₪)</th>
+            <th>הערות</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <form class="add-form" id="addForm">
+      <div class="field">
+        <label for="f-date">תאריך</label>
+        <input type="date" id="f-date" required>
+      </div>
+      <div class="field">
+        <label for="f-desc">תיאור</label>
+        <input type="text" id="f-desc" placeholder="לדוגמה: ארוחת ערב בכפר" required>
+      </div>
+      <div class="field">
+        <label for="f-cat">קטגוריה</label>
+        <select id="f-cat" required>
+          <option value="econ">כלכלה</option>
+          <option value="bike">אופניים, ציוד וטיפולים</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-eur">אירו (€)</label>
+        <input type="number" id="f-eur" step="0.01" min="0" placeholder="0.00">
+      </div>
+      <div class="field">
+        <label for="f-ils">חיוב (₪)</label>
+        <input type="number" id="f-ils" step="0.01" min="0" placeholder="0.00" required>
+      </div>
+      <div class="field">
+        <label for="f-notes">הערות</label>
+        <input type="text" id="f-notes" placeholder="הערה חופשית (רשות)">
+      </div>
+      <button type="submit" class="add-btn">הוספת שורה</button>
+    </form>
+  </section>
+
+  <footer class="foot">הנתונים מסונכרנים בענן (Firebase) — כל מי שפותח את הקישור רואה ומעדכן את אותו יומן הוצאות, בזמן אמת.</footer>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+(function(){
+  "use strict";
+  var BUDGET = 4200;
+  var TRIP_START = "2026-07-31";
+  var TRIP_END = "2026-08-14";
+
+  // Public by design: a Firebase web config is not a secret (access control lives in
+  // the Firestore security rules, scoped to this one document path). Replace with the
+  // values from your Firebase project's "Add app" screen.
+  var FIREBASE_CONFIG = {
+    apiKey: "REPLACE_ME",
+    authDomain: "REPLACE_ME.firebaseapp.com",
+    projectId: "REPLACE_ME",
+    storageBucket: "REPLACE_ME.appspot.com",
+    messagingSenderId: "REPLACE_ME",
+    appId: "REPLACE_ME"
+  };
+  var DOC_COLLECTION = "budgets";
+  var DOC_ID = "morzin-2026-lvlov2s1";
+
+  var CATS = {
+    econ: {label: "כלכלה", cls: "econ"},
+    bike: {label: "אופניים, ציוד וטיפולים", cls: "bike"}
+  };
+  var CLEAR_PASSWORD = "1202";
+
+  var SEED = [
+    {id:"s1", date:"2026-07-31", desc:"ארוחת ערב – מסעדה בכפר", cat:"econ", eur:42.5, ils:168, notes:""},
+    {id:"s2", date:"2026-07-31", desc:"סופרמרקט – קניות ראשוניות", cat:"econ", eur:65, ils:257, notes:"מלאי לכל השבוע"},
+    {id:"s3", date:"2026-08-01", desc:"כרטיס רכבל להעלאת אופניים", cat:"bike", eur:35, ils:138, notes:""},
+    {id:"s4", date:"2026-08-01", desc:"תיקון פנצ'ר בחנות אופניים מקומית", cat:"bike", eur:18, ils:71, notes:"תוקן תוך 20 דקות"},
+    {id:"s5", date:"2026-08-02", desc:"ארוחת צהריים על ההר", cat:"econ", eur:22, ils:87, notes:""}
+  ];
+
+  var rows = SEED.slice();
+  var meta = {lastUpdated: null};
+  var db = null;
+  var docRef = null;
+  var cloudReady = false;
+
+  function setSyncNotice(text){
+    var el = document.getElementById("syncNotice");
+    if(!text){ el.hidden = true; el.textContent = ""; return; }
+    el.hidden = false;
+    el.textContent = text;
+  }
+
+  function connectCloud(){
+    if(FIREBASE_CONFIG.apiKey === "REPLACE_ME"){
+      setSyncNotice("לא מחובר לענן — הדף פועל במצב תצוגה בלבד (הנתונים לא נשמרים ולא משותפים).");
+      render();
+      return;
+    }
+    try{
+      var app = initializeApp(FIREBASE_CONFIG);
+      db = getFirestore(app);
+      docRef = doc(db, DOC_COLLECTION, DOC_ID);
+      onSnapshot(docRef, function(snap){
+        cloudReady = true;
+        setSyncNotice(null);
+        if(snap.exists()){
+          var data = snap.data();
+          rows = Array.isArray(data.rows) ? data.rows : [];
+          meta.lastUpdated = data.lastUpdated || null;
+        } else {
+          setDoc(docRef, {rows: SEED, lastUpdated: new Date().toISOString()});
+          rows = SEED.slice();
+        }
+        render();
+      }, function(err){
+        setSyncNotice("שגיאת חיבור לענן: " + err.message);
+      });
+    }catch(err){
+      setSyncNotice("שגיאת חיבור לענן: " + err.message);
+      render();
+    }
+  }
+
+  function writeRows(newRows){
+    rows = newRows;
+    meta.lastUpdated = new Date().toISOString();
+    if(cloudReady && docRef){
+      setDoc(docRef, {rows: rows, lastUpdated: meta.lastUpdated}, {merge:true});
+    } else {
+      render();
+    }
+  }
+
+  function addRow(row){
+    if(cloudReady && docRef){
+      meta.lastUpdated = new Date().toISOString();
+      updateDoc(docRef, {rows: arrayUnion(row), lastUpdated: meta.lastUpdated});
+    } else {
+      rows = rows.concat([row]);
+      meta.lastUpdated = new Date().toISOString();
+      render();
+    }
+  }
+
+  function dayMs(){ return 86400000; }
+  function parseDate(s){
+    var p = s.split("-");
+    return Date.UTC(parseInt(p[0],10), parseInt(p[1],10)-1, parseInt(p[2],10));
+  }
+  function todayUTC(){
+    var n = new Date();
+    return Date.UTC(n.getFullYear(), n.getMonth(), n.getDate());
+  }
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+
+  function fmtILS(n){
+    var s = (Math.round(n*100)/100).toLocaleString("he-IL",{minimumFractionDigits:0,maximumFractionDigits:0});
+    return "₪" + s;
+  }
+  function fmtILSsigned(n){
+    var sign = n < 0 ? "-" : "+";
+    return sign + fmtILS(Math.abs(n)).replace("₪","₪");
+  }
+  function fmtEUR(n){
+    if(n === null || n === undefined || isNaN(n)) return "—";
+    return "€" + (Math.round(n*100)/100).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function fmtDateHe(dstr){
+    var d = new Date(parseDate(dstr));
+    var days = ["יום א׳","יום ב׳","יום ג׳","יום ד׳","יום ה׳","יום ו׳","שבת"];
+    var dd = String(d.getUTCDate()).padStart(2,"0");
+    var mm = String(d.getUTCMonth()+1).padStart(2,"0");
+    return dd + "." + mm;
+  }
+
+  var startMs = parseDate(TRIP_START);
+  var endMs = parseDate(TRIP_END);
+  var totalDays = Math.round((endMs - startMs)/dayMs()) + 1;
+
+  function computeDayState(){
+    var t = todayUTC();
+    var elapsedRaw = Math.floor((t - startMs)/dayMs()) + 1;
+    var elapsed = clamp(elapsedRaw, 0, totalDays);
+    var remaining = clamp(totalDays - Math.max(elapsedRaw,0), 0, totalDays);
+    var tripStatus = "before";
+    if(t >= startMs && t <= endMs) tripStatus = "during";
+    else if(t > endMs) tripStatus = "after";
+    return {elapsed: Math.max(elapsed,0), remaining: remaining, status: tripStatus, elapsedRaw: elapsedRaw};
+  }
+
+  function heDate(dstr, opts){
+    var d = new Date(parseDate(dstr));
+    return d.toLocaleDateString("he-IL", opts || {day:"numeric", month:"long"});
+  }
+
+  document.getElementById("tripDatesLabel").textContent =
+    heDate(TRIP_START) + " – " + heDate(TRIP_END, {day:"numeric",month:"long",year:"numeric"}) + " · " + totalDays + " ימים";
+
+  function render(){
+    renderUpdateStatus();
+
+    var spentILS = 0, econILS = 0, bikeILS = 0;
+    rows.forEach(function(r){
+      var v = Number(r.ils)||0;
+      spentILS += v;
+      if(r.cat === "econ") econILS += v; else bikeILS += v;
+    });
+    var remainingBudget = BUDGET - spentILS;
+    var pctSpent = BUDGET > 0 ? (spentILS/BUDGET*100) : 0;
+
+    var ds = computeDayState();
+    var perDaySoFar = ds.elapsed > 0 ? spentILS/ds.elapsed : 0;
+    var projectedTotal = perDaySoFar * totalDays;
+    var projectedDelta = BUDGET - projectedTotal;
+
+    var kpis = document.getElementById("kpis");
+    kpis.innerHTML = "";
+
+    kpis.appendChild(kpiCard({
+      label:"תקציב לכל הטיול",
+      value: fmtILS(BUDGET),
+      sub: totalDays + " ימים בסך הכל"
+    }));
+
+    kpis.appendChild(kpiCard({
+      label:"הוצא עד כה",
+      value: fmtILS(spentILS),
+      valueClass: pctSpent > 100 ? "critical" : "",
+      sub: Math.round(pctSpent) + "% מהתקציב",
+      bar: {pct: clamp(pctSpent,0,100), critical: pctSpent > 100}
+    }));
+
+    kpis.appendChild(kpiCard({
+      label:"יתרה",
+      value: fmtILS(remainingBudget),
+      valueClass: remainingBudget < 0 ? "critical" : "good",
+      sub: ds.remaining > 0 ? ("כ־" + fmtILS(remainingBudget/Math.max(ds.remaining,1)) + " ליום שנותר") : "הטיול הסתיים"
+    }));
+
+    renderDayBadge(ds);
+
+    kpis.appendChild(kpiCard({
+      label:"תחזית לסיום הטיול",
+      value: fmtILS(Math.round(projectedTotal)),
+      valueClass: projectedDelta < 0 ? "critical" : "good",
+      sub: (projectedDelta >= 0 ? "צפי חיסכון של " : "צפי חריגה של ") + fmtILS(Math.abs(Math.round(projectedDelta))) + " מהתקציב"
+    }));
+
+    renderPie(econILS, bikeILS, spentILS);
+
+    var tbody = document.getElementById("rows");
+    tbody.innerHTML = "";
+    if(rows.length === 0){
+      var tr = document.createElement("tr");
+      tr.className = "empty-row";
+      var td = document.createElement("td");
+      td.colSpan = 7;
+      td.textContent = "עדיין לא נוספו הוצאות. הוסיפו את השורה הראשונה מתוך דוח הוויזה בטופס שלמטה.";
+      tr.appendChild(td);
+      tbody.appendChild(tr);
+    } else {
+      rows.slice().sort(function(a,b){ return parseDate(a.date) - parseDate(b.date); })
+        .forEach(function(r){ tbody.appendChild(rowEl(r)); });
+    }
+  }
+
+  function kpiCard(opts){
+    var div = document.createElement("div");
+    div.className = "kpi";
+    var label = document.createElement("div");
+    label.className = "kpi-label";
+    label.textContent = opts.label;
+    var value = document.createElement("div");
+    value.className = "kpi-value" + (opts.valueClass ? " "+opts.valueClass : "");
+    if(opts.small) value.style.fontSize = "18px";
+    value.textContent = opts.value;
+    div.appendChild(label);
+    div.appendChild(value);
+    if(opts.bar){
+      var bar = document.createElement("div");
+      bar.className = "kpi-bar";
+      var i = document.createElement("i");
+      if(opts.bar.critical) i.className = "critical";
+      i.style.width = opts.bar.pct + "%";
+      bar.appendChild(i);
+      div.appendChild(bar);
+    }
+    if(opts.sub){
+      var sub = document.createElement("div");
+      sub.className = "kpi-sub";
+      sub.textContent = opts.sub;
+      div.appendChild(sub);
+    }
+    return div;
+  }
+
+  function renderUpdateStatus(){
+    var el = document.getElementById("updateStatusText");
+    if(!meta.lastUpdated){ el.textContent = "טרם עודכן"; return; }
+    var d = new Date(meta.lastUpdated);
+    var datePart = d.toLocaleDateString("he-IL", {day:"2-digit", month:"2-digit", year:"numeric"});
+    var timePart = d.toLocaleTimeString("he-IL", {hour:"2-digit", minute:"2-digit"});
+    el.textContent = "עודכן לאחרונה · " + datePart + " · " + timePart;
+  }
+
+  function renderDayBadge(ds){
+    var main = document.getElementById("dayBadgeMain");
+    var sub = document.getElementById("dayBadgeSub");
+    var ring = document.getElementById("dayRingProgress");
+    var circ = 2*Math.PI*16;
+    var frac = 0;
+    if(ds.status === "before"){
+      var untilStart = Math.max(Math.round((startMs - todayUTC())/dayMs()), 0);
+      main.textContent = "טרם התחיל";
+      sub.textContent = "בעוד " + untilStart + " ימים";
+      frac = 0;
+    } else if(ds.status === "during"){
+      main.textContent = "יום " + ds.elapsed + " מתוך " + totalDays;
+      sub.textContent = "נותרו " + ds.remaining + " ימים";
+      frac = totalDays > 0 ? ds.elapsed/totalDays : 0;
+    } else {
+      main.textContent = "הטיול הסתיים";
+      sub.textContent = totalDays + " מתוך " + totalDays + " ימים";
+      frac = 1;
+    }
+    ring.setAttribute("stroke-dasharray", (circ*frac).toFixed(2) + " " + circ.toFixed(2));
+  }
+
+  function renderPie(econ, bike, total){
+    var circ = 2*Math.PI*40;
+    var pieEcon = document.getElementById("pieEcon");
+    var pieBike = document.getElementById("pieBike");
+
+    if(total <= 0){
+      pieEcon.setAttribute("stroke-dasharray", "0 " + circ.toFixed(2));
+      pieBike.setAttribute("stroke-dasharray", "0 " + circ.toFixed(2));
+    } else {
+      var econLen = circ * (econ/total);
+      var bikeLen = circ * (bike/total);
+      pieEcon.setAttribute("stroke-dasharray", econLen.toFixed(2) + " " + (circ-econLen).toFixed(2));
+      pieEcon.setAttribute("stroke-dashoffset", "0");
+      pieBike.setAttribute("stroke-dasharray", bikeLen.toFixed(2) + " " + (circ-bikeLen).toFixed(2));
+      pieBike.setAttribute("stroke-dashoffset", (-econLen).toFixed(2));
+    }
+
+    document.getElementById("pieCenterAmt").textContent = fmtILS(total);
+
+    var legend = document.getElementById("pieLegend");
+    legend.innerHTML = "";
+    legend.appendChild(legendRow("econ", CATS.econ.label, econ, total));
+    legend.appendChild(legendRow("bike", CATS.bike.label, bike, total));
+  }
+
+  function legendRow(cls, label, amount, total){
+    var pct = total > 0 ? Math.round(amount/total*100) : 0;
+    var row = document.createElement("div");
+    row.className = "legend-row";
+    var chip = document.createElement("span");
+    chip.className = "cat-chip " + cls;
+    chip.textContent = label;
+    var amt = document.createElement("span");
+    amt.className = "cat-amt";
+    amt.textContent = fmtILS(amount) + " · " + pct + "%";
+    row.appendChild(chip);
+    row.appendChild(amt);
+    return row;
+  }
+
+  function rowEl(r){
+    var tr = document.createElement("tr");
+
+    var tdDate = document.createElement("td");
+    tdDate.className = "date-cell";
+    tdDate.textContent = fmtDateHe(r.date);
+    tr.appendChild(tdDate);
+
+    var tdDesc = document.createElement("td");
+    tdDesc.textContent = r.desc;
+    tr.appendChild(tdDesc);
+
+    var tdCat = document.createElement("td");
+    var catSpan = document.createElement("span");
+    var catInfo = CATS[r.cat] || CATS.econ;
+    catSpan.className = "row-cat " + catInfo.cls;
+    catSpan.textContent = catInfo.label;
+    tdCat.appendChild(catSpan);
+    tr.appendChild(tdCat);
+
+    var tdEur = document.createElement("td");
+    tdEur.className = "num-cell";
+    tdEur.textContent = fmtEUR(r.eur);
+    tr.appendChild(tdEur);
+
+    var tdIls = document.createElement("td");
+    tdIls.className = "num-cell ils-cell";
+    tdIls.textContent = fmtILS(Number(r.ils)||0);
+    tr.appendChild(tdIls);
+
+    var tdNotes = document.createElement("td");
+    tdNotes.className = "notes-cell";
+    tdNotes.textContent = r.notes || "";
+    tr.appendChild(tdNotes);
+
+    var tdDel = document.createElement("td");
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "del-btn";
+    btn.setAttribute("aria-label", "מחיקת שורה: " + r.desc);
+    btn.textContent = "✕";
+    btn.addEventListener("click", function(){
+      writeRows(rows.filter(function(x){ return x.id !== r.id; }));
+    });
+    tdDel.appendChild(btn);
+    tr.appendChild(tdDel);
+
+    return tr;
+  }
+
+  document.getElementById("addForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var date = document.getElementById("f-date").value;
+    var desc = document.getElementById("f-desc").value.trim();
+    var cat = document.getElementById("f-cat").value;
+    var eurVal = document.getElementById("f-eur").value;
+    var ilsVal = document.getElementById("f-ils").value;
+    var notes = document.getElementById("f-notes").value.trim();
+    if(!date || !desc || !ilsVal) return;
+
+    addRow({
+      id: "r" + Date.now() + Math.random().toString(36).slice(2,7),
+      date: date,
+      desc: desc,
+      cat: cat,
+      eur: eurVal === "" ? null : Number(eurVal),
+      ils: Number(ilsVal),
+      notes: notes
+    });
+
+    document.getElementById("f-desc").value = "";
+    document.getElementById("f-eur").value = "";
+    document.getElementById("f-ils").value = "";
+    document.getElementById("f-notes").value = "";
+    document.getElementById("f-desc").focus();
+  });
+
+  document.getElementById("clearAllBtn").addEventListener("click", function(){
+    var pw = prompt("פעולה זו מוחקת את כל השורות. הזינו סיסמה כדי להמשיך:");
+    if(pw === null) return;
+    if(pw !== CLEAR_PASSWORD){
+      alert("סיסמה שגויה — הנתונים לא נמחקו.");
+      return;
+    }
+    if(confirm("למחוק את כל השורות ולהתחיל תקציב נקי מ-" + BUDGET + " ₪?")){
+      writeRows([]);
+    }
+  });
+
+  var todayStr = new Date().toISOString().slice(0,10);
+  document.getElementById("f-date").value = todayStr < TRIP_START ? TRIP_START : (todayStr > TRIP_END ? TRIP_END : todayStr);
+
+  connectCloud();
+})();
+</script>
