@@ -240,6 +240,7 @@
   }
   .field{display:flex;flex-direction:column;gap:4px;min-width:0;}
   .field label{font-size:11.5px;color:var(--ink-dim);font-weight:600;}
+  .field-hint{font-weight:400;color:var(--accent);opacity:0.85;}
   .field input,.field select{
     font-size:14px;color:var(--ink);
     background:var(--surface);border:1px solid var(--line);border-radius:8px;
@@ -396,7 +397,7 @@
         <input type="number" id="f-eur" step="0.01" min="0" placeholder="0.00">
       </div>
       <div class="field">
-        <label for="f-ils">חיוב (₪)</label>
+        <label for="f-ils">חיוב (₪) <span class="field-hint">מתמלא אוטומטית</span></label>
         <input type="number" id="f-ils" step="0.01" min="0" placeholder="0.00" required>
       </div>
       <div class="field">
@@ -419,6 +420,9 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
   var BUDGET = 4200;
   var TRIP_START = "2026-07-31";
   var TRIP_END = "2026-08-14";
+  // Approximate manual rate for auto-filling the shekel field from euros — the
+  // actual bank charge (with its own fee/rate) can still be typed over it by hand.
+  var EUR_TO_ILS_RATE = 3.95;
 
   // Public by design: a Firebase web config is not a secret (access control lives in
   // the Firestore security rules, scoped to this one document path). Replace with the
@@ -787,6 +791,14 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
 
     return tr;
   }
+
+  document.getElementById("f-eur").addEventListener("input", function(){
+    var eur = parseFloat(this.value);
+    var ilsInput = document.getElementById("f-ils");
+    if(!isNaN(eur)){
+      ilsInput.value = (eur * EUR_TO_ILS_RATE).toFixed(2);
+    }
+  });
 
   document.getElementById("addForm").addEventListener("submit", function(e){
     e.preventDefault();
