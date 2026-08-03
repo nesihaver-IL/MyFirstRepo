@@ -628,8 +628,8 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
       if(r.cat === "econ") econILS += v; else bikeILS += v;
     });
     var cashILS = (Number(cashEur)||0) * EUR_TO_ILS_RATE;
-    var spentILS = ledgerILS + cashILS;
-    var remainingBudget = BUDGET - spentILS;
+    var spentILS = ledgerILS;
+    var remainingBudget = BUDGET - spentILS + cashILS;
     var pctSpent = BUDGET > 0 ? (spentILS/BUDGET*100) : 0;
 
     var ds = computeDayState();
@@ -753,7 +753,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
 
     var sub = document.createElement("div");
     sub.className = "kpi-sub";
-    sub.textContent = "מתווסף אוטומטית להוצא עד כה וליתרה";
+    sub.textContent = "מתווסף אוטומטית ליתרה";
     div.appendChild(sub);
 
     return div;
