@@ -232,6 +232,20 @@
   .empty-row td{
     text-align:center;color:var(--ink-dim);padding:26px 14px;font-size:14px;
   }
+  .row-editable{cursor:pointer;}
+  .row-editing td{padding:7px 10px;background:var(--surface-2);}
+  .row-editing input,.row-editing select{
+    font-size:13.5px;color:var(--ink);background:var(--surface);
+    border:1px solid var(--accent);border-radius:7px;padding:5px 8px;width:100%;min-width:0;
+  }
+  .row-editing input[type="number"]{direction:ltr;text-align:left;}
+  .row-actions{display:flex;gap:4px;}
+  .save-btn{
+    background:transparent;border:none;color:var(--accent);cursor:pointer;font-size:15px;
+    font-weight:700;width:28px;height:28px;border-radius:7px;line-height:1;
+  }
+  .save-btn:hover{background:var(--accent-soft);}
+  .save-btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
 
   .add-form{
     display:grid;
@@ -422,7 +436,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
   var TRIP_END = "2026-08-14";
   // Approximate manual rate for auto-filling the shekel field from euros — the
   // actual bank charge (with its own fee/rate) can still be typed over it by hand.
-  var EUR_TO_ILS_RATE = 3.95;
+  var EUR_TO_ILS_RATE = 3.5;
 
   // Public by design: a Firebase web config is not a secret (access control lives in
   // the Firestore security rules, scoped to this one document path). Replace with the
@@ -585,9 +599,6 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     var pctSpent = BUDGET > 0 ? (spentILS/BUDGET*100) : 0;
 
     var ds = computeDayState();
-    var perDaySoFar = ds.elapsed > 0 ? spentILS/ds.elapsed : 0;
-    var projectedTotal = perDaySoFar * totalDays;
-    var projectedDelta = BUDGET - projectedTotal;
 
     var kpis = document.getElementById("kpis");
     kpis.innerHTML = "";
@@ -614,13 +625,6 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     }));
 
     renderDayBadge(ds);
-
-    kpis.appendChild(kpiCard({
-      label:"תחזית לסיום הטיול",
-      value: fmtILS(Math.round(projectedTotal)),
-      valueClass: projectedDelta < 0 ? "critical" : "good",
-      sub: (projectedDelta >= 0 ? "צפי חיסכון של " : "צפי חריגה של ") + fmtILS(Math.abs(Math.round(projectedDelta))) + " מהתקציב"
-    }));
 
     renderPie(econILS, bikeILS, spentILS);
 
@@ -742,8 +746,28 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     return row;
   }
 
+  var editingId = null;
+
+  function wireEurAutofill(eurInput, ilsInput){
+    eurInput.addEventListener("input", function(){
+      var eur = parseFloat(eurInput.value);
+      if(!isNaN(eur)){
+        ilsInput.value = (eur * EUR_TO_ILS_RATE).toFixed(2);
+      }
+    });
+  }
+
   function rowEl(r){
+    if(editingId === r.id) return editRowEl(r);
+
     var tr = document.createElement("tr");
+    tr.className = "row-editable";
+    tr.title = "לחצו לעריכת השורה";
+    tr.addEventListener("click", function(e){
+      if(e.target.closest(".del-btn")) return;
+      editingId = r.id;
+      render();
+    });
 
     var tdDate = document.createElement("td");
     tdDate.className = "date-cell";
@@ -792,13 +816,102 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     return tr;
   }
 
-  document.getElementById("f-eur").addEventListener("input", function(){
-    var eur = parseFloat(this.value);
-    var ilsInput = document.getElementById("f-ils");
-    if(!isNaN(eur)){
-      ilsInput.value = (eur * EUR_TO_ILS_RATE).toFixed(2);
-    }
-  });
+  function editRowEl(r){
+    var tr = document.createElement("tr");
+    tr.className = "row-editing";
+
+    var tdDate = document.createElement("td");
+    var dateInput = document.createElement("input");
+    dateInput.type = "date";
+    dateInput.value = r.date;
+    tdDate.appendChild(dateInput);
+    tr.appendChild(tdDate);
+
+    var tdDesc = document.createElement("td");
+    var descInput = document.createElement("input");
+    descInput.type = "text";
+    descInput.value = r.desc;
+    tdDesc.appendChild(descInput);
+    tr.appendChild(tdDesc);
+
+    var tdCat = document.createElement("td");
+    var catSelect = document.createElement("select");
+    Object.keys(CATS).forEach(function(key){
+      var opt = document.createElement("option");
+      opt.value = key;
+      opt.textContent = CATS[key].label;
+      if(key === r.cat) opt.selected = true;
+      catSelect.appendChild(opt);
+    });
+    tdCat.appendChild(catSelect);
+    tr.appendChild(tdCat);
+
+    var tdEur = document.createElement("td");
+    var eurInput = document.createElement("input");
+    eurInput.type = "number"; eurInput.step = "0.01"; eurInput.min = "0";
+    eurInput.value = (r.eur === null || r.eur === undefined) ? "" : r.eur;
+    tdEur.appendChild(eurInput);
+    tr.appendChild(tdEur);
+
+    var tdIls = document.createElement("td");
+    var ilsInput = document.createElement("input");
+    ilsInput.type = "number"; ilsInput.step = "0.01"; ilsInput.min = "0";
+    ilsInput.value = r.ils;
+    tdIls.appendChild(ilsInput);
+    tr.appendChild(tdIls);
+    wireEurAutofill(eurInput, ilsInput);
+
+    var tdNotes = document.createElement("td");
+    var notesInput = document.createElement("input");
+    notesInput.type = "text";
+    notesInput.value = r.notes || "";
+    tdNotes.appendChild(notesInput);
+    tr.appendChild(tdNotes);
+
+    var tdActions = document.createElement("td");
+    tdActions.className = "row-actions";
+    var saveBtn = document.createElement("button");
+    saveBtn.type = "button";
+    saveBtn.className = "save-btn";
+    saveBtn.setAttribute("aria-label", "שמירת שינויים");
+    saveBtn.textContent = "✓";
+    saveBtn.addEventListener("click", function(){
+      var date = dateInput.value;
+      var desc = descInput.value.trim();
+      var ilsVal = ilsInput.value;
+      if(!date || !desc || ilsVal === "") return;
+      editingId = null;
+      writeRows(rows.map(function(x){
+        if(x.id !== r.id) return x;
+        return {
+          id: x.id,
+          date: date,
+          desc: desc,
+          cat: catSelect.value,
+          eur: eurInput.value === "" ? null : Number(eurInput.value),
+          ils: Number(ilsVal),
+          notes: notesInput.value.trim()
+        };
+      }));
+      render();
+    });
+    var cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "del-btn";
+    cancelBtn.setAttribute("aria-label", "ביטול עריכה");
+    cancelBtn.textContent = "✕";
+    cancelBtn.addEventListener("click", function(){
+      editingId = null;
+      render();
+    });
+    tdActions.appendChild(saveBtn);
+    tdActions.appendChild(cancelBtn);
+    tr.appendChild(tdActions);
+
+    return tr;
+  }
+
+  wireEurAutofill(document.getElementById("f-eur"), document.getElementById("f-ils"));
 
   document.getElementById("addForm").addEventListener("submit", function(e){
     e.preventDefault();
