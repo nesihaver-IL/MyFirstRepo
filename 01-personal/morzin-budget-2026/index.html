@@ -155,6 +155,18 @@
   .kpi-bar{height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin-top:2px;}
   .kpi-bar > i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease;}
   .kpi-bar > i.critical{background:var(--critical);}
+  .cash-row{display:flex;align-items:center;gap:8px;margin:2px 0 4px;}
+  .cash-input{
+    font-size:16px;font-weight:700;color:var(--ink);background:var(--surface);
+    border:1px solid var(--line);border-radius:8px;padding:6px 8px;width:84px;min-width:0;
+    direction:ltr;text-align:left;font-variant-numeric:tabular-nums;
+  }
+  .cash-input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent);}
+  .cash-eq{color:var(--ink-dim);font-size:14px;}
+  .cash-ils{
+    font-weight:700;font-size:16px;color:var(--accent);
+    direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums;
+  }
 
   .categories{margin-bottom:32px;}
   .cat-pie{
@@ -359,7 +371,7 @@
         </svg>
         <div class="pie-center">
           <strong id="pieCenterAmt"></strong>
-          <span>סה"כ הוצא</span>
+          <span>סה"כ בדוח הוויזה</span>
         </div>
       </div>
       <div class="pie-legend" id="pieLegend"></div>
@@ -468,6 +480,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
 
   var rows = SEED.slice();
   var meta = {lastUpdated: null};
+  var cashEur = 0;
   var db = null;
   var docRef = null;
   var cloudReady = false;
@@ -495,10 +508,20 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
         if(snap.exists()){
           var data = snap.data();
           rows = Array.isArray(data.rows) ? data.rows : [];
+          cashEur = Number(data.cashEur) || 0;
           meta.lastUpdated = data.lastUpdated || null;
+          if(!data.rateMigratedV1){
+            rows = rows.map(function(r){
+              if(r.eur === null || r.eur === undefined) return r;
+              return Object.assign({}, r, {ils: Math.round(r.eur * EUR_TO_ILS_RATE * 100) / 100});
+            });
+            meta.lastUpdated = new Date().toISOString();
+            setDoc(docRef, {rows: rows, rateMigratedV1: true, lastUpdated: meta.lastUpdated}, {merge:true});
+          }
         } else {
-          setDoc(docRef, {rows: SEED, lastUpdated: new Date().toISOString()});
+          setDoc(docRef, {rows: SEED, cashEur: 0, lastUpdated: new Date().toISOString()});
           rows = SEED.slice();
+          cashEur = 0;
         }
         render();
       }, function(err){
@@ -530,6 +553,15 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
       meta.lastUpdated = new Date().toISOString();
       render();
     }
+  }
+
+  function writeCash(newCashEur){
+    cashEur = newCashEur;
+    meta.lastUpdated = new Date().toISOString();
+    if(cloudReady && docRef){
+      setDoc(docRef, {cashEur: cashEur, lastUpdated: meta.lastUpdated}, {merge:true});
+    }
+    render();
   }
 
   function dayMs(){ return 86400000; }
@@ -589,12 +621,14 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
   function render(){
     renderUpdateStatus();
 
-    var spentILS = 0, econILS = 0, bikeILS = 0;
+    var ledgerILS = 0, econILS = 0, bikeILS = 0;
     rows.forEach(function(r){
       var v = Number(r.ils)||0;
-      spentILS += v;
+      ledgerILS += v;
       if(r.cat === "econ") econILS += v; else bikeILS += v;
     });
+    var cashILS = (Number(cashEur)||0) * EUR_TO_ILS_RATE;
+    var spentILS = ledgerILS + cashILS;
     var remainingBudget = BUDGET - spentILS;
     var pctSpent = BUDGET > 0 ? (spentILS/BUDGET*100) : 0;
 
@@ -624,9 +658,11 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
       sub: ds.remaining > 0 ? ("כ־" + fmtILS(remainingBudget/Math.max(ds.remaining,1)) + " ליום שנותר") : "הטיול הסתיים"
     }));
 
+    kpis.appendChild(cashCard());
+
     renderDayBadge(ds);
 
-    renderPie(econILS, bikeILS, spentILS);
+    renderPie(econILS, bikeILS, ledgerILS);
 
     var tbody = document.getElementById("rows");
     tbody.innerHTML = "";
@@ -671,6 +707,55 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
       sub.textContent = opts.sub;
       div.appendChild(sub);
     }
+    return div;
+  }
+
+  function cashCard(){
+    var div = document.createElement("div");
+    div.className = "kpi";
+
+    var label = document.createElement("div");
+    label.className = "kpi-label";
+    label.textContent = "מזומן ביורו";
+    div.appendChild(label);
+
+    var row = document.createElement("div");
+    row.className = "cash-row";
+
+    var input = document.createElement("input");
+    input.type = "number"; input.step = "0.01"; input.min = "0";
+    input.placeholder = "0.00";
+    input.className = "cash-input";
+    input.setAttribute("aria-label", "סכום מזומן ביורו");
+    input.value = cashEur ? cashEur : "";
+
+    var eq = document.createElement("span");
+    eq.className = "cash-eq";
+    eq.textContent = "=";
+
+    var ilsSpan = document.createElement("span");
+    ilsSpan.className = "cash-ils";
+    ilsSpan.textContent = fmtILS((Number(cashEur)||0) * EUR_TO_ILS_RATE);
+
+    input.addEventListener("input", function(){
+      var v = parseFloat(input.value);
+      ilsSpan.textContent = fmtILS((isNaN(v) ? 0 : v) * EUR_TO_ILS_RATE);
+    });
+    input.addEventListener("change", function(){
+      var v = parseFloat(input.value);
+      writeCash(isNaN(v) ? 0 : v);
+    });
+
+    row.appendChild(input);
+    row.appendChild(eq);
+    row.appendChild(ilsSpan);
+    div.appendChild(row);
+
+    var sub = document.createElement("div");
+    sub.className = "kpi-sub";
+    sub.textContent = "מתווסף אוטומטית להוצא עד כה וליתרה";
+    div.appendChild(sub);
+
     return div;
   }
 
