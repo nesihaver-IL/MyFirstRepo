@@ -383,7 +383,7 @@
       <h2>יומן הוצאות</h2>
       <button type="button" class="ghost-btn" id="clearAllBtn">נקה הכל והתחל מחדש</button>
     </div>
-    <p class="ledger-note">כל שורה מדוח הוויזה — היתרה למעלה מתעדכנת אוטומטית.</p>
+    <p class="ledger-note">כל שורה מדוח הוויזה — היתרה למעלה מתעדכנת אוטומטית. הוספה או מחיקה דורשות סיסמה, פעם אחת לכל פתיחה של הדף.</p>
 
     <div class="table-wrap">
       <table>
@@ -468,7 +468,22 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     econ: {label: "כלכלה", cls: "econ"},
     bike: {label: "אופניים, ציוד וטיפולים", cls: "bike"}
   };
-  var CLEAR_PASSWORD = "1202";
+  var APP_PASSWORD = "1202";
+  var AUTH_SESSION_KEY = "morzin-budget-authed";
+
+  function ensureAuthorized(){
+    try{
+      if(sessionStorage.getItem(AUTH_SESSION_KEY) === "1") return true;
+    }catch(e){}
+    var pw = prompt("הזינו סיסמה כדי לבצע שינוי (הוספה/מחיקה):");
+    if(pw === null) return false;
+    if(pw !== APP_PASSWORD){
+      alert("סיסמה שגויה — הפעולה בוטלה.");
+      return false;
+    }
+    try{ sessionStorage.setItem(AUTH_SESSION_KEY, "1"); }catch(e){}
+    return true;
+  }
 
   var SEED = [
     {id:"s1", date:"2026-07-31", desc:"ארוחת ערב – מסעדה בכפר", cat:"econ", eur:42.5, ils:168, notes:""},
@@ -893,6 +908,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
     btn.setAttribute("aria-label", "מחיקת שורה: " + r.desc);
     btn.textContent = "✕";
     btn.addEventListener("click", function(){
+      if(!ensureAuthorized()) return;
       writeRows(rows.filter(function(x){ return x.id !== r.id; }));
     });
     tdDel.appendChild(btn);
@@ -1000,6 +1016,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
 
   document.getElementById("addForm").addEventListener("submit", function(e){
     e.preventDefault();
+    if(!ensureAuthorized()) return;
     var date = document.getElementById("f-date").value;
     var desc = document.getElementById("f-desc").value.trim();
     var cat = document.getElementById("f-cat").value;
@@ -1026,12 +1043,7 @@ import { getFirestore, doc, setDoc, updateDoc, onSnapshot, arrayUnion } from "ht
   });
 
   document.getElementById("clearAllBtn").addEventListener("click", function(){
-    var pw = prompt("פעולה זו מוחקת את כל השורות. הזינו סיסמה כדי להמשיך:");
-    if(pw === null) return;
-    if(pw !== CLEAR_PASSWORD){
-      alert("סיסמה שגויה — הנתונים לא נמחקו.");
-      return;
-    }
+    if(!ensureAuthorized()) return;
     if(confirm("למחוק את כל השורות ולהתחיל תקציב נקי מ-" + BUDGET + " ₪?")){
       writeRows([]);
     }
