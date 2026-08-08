@@ -55,6 +55,8 @@
     --map-tint-2:#dcecef;
     --weather-tint-1:#fff6e2;
     --weather-tint-2:#ffeccb;
+    --insight-tint-1:#e8f6f2;
+    --insight-tint-2:#d8f0e8;
     --shadow: 0 10px 30px rgba(11,46,58,.12);
     --radius: 18px;
     font-size: 16px;
@@ -70,6 +72,7 @@
       --line:#24444c; --nav-bg:rgba(13,31,36,.9);
       --map-tint-1:#123039; --map-tint-2:#0d262d;
       --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+      --insight-tint-1:#12312c; --insight-tint-2:#0f2a25;
       --shadow: 0 10px 30px rgba(0,0,0,.45);
       color-scheme: dark;
     }
@@ -81,6 +84,7 @@
     --line:#24444c; --nav-bg:rgba(13,31,36,.9);
     --map-tint-1:#123039; --map-tint-2:#0d262d;
     --weather-tint-1:#2b2116; --weather-tint-2:#241c12;
+    --insight-tint-1:#12312c; --insight-tint-2:#0f2a25;
     --shadow: 0 10px 30px rgba(0,0,0,.45);
     color-scheme: dark;
   }
@@ -91,6 +95,7 @@
     --line:#e7ddca; --nav-bg:rgba(250,243,231,.94);
     --map-tint-1:#e7f2f1; --map-tint-2:#dcecef;
     --weather-tint-1:#fff6e2; --weather-tint-2:#ffeccb;
+    --insight-tint-1:#e8f6f2; --insight-tint-2:#d8f0e8;
     --shadow: 0 10px 30px rgba(11,46,58,.12);
     color-scheme: light;
   }
@@ -362,6 +367,55 @@
   .weather-card .wc-fday-range{font-size:.7rem; opacity:.75;}
   .weather-card.weather-loading, .weather-card.weather-error{font-size:.85rem; opacity:.65; flex-direction:row; gap:8px;}
 
+  /* ===== Entertainment insight ===== */
+  .insight-launcher{
+    position:relative; overflow:hidden; border-radius:18px;
+    background:linear-gradient(135deg, var(--insight-tint-1), var(--insight-tint-2));
+    border:1px solid var(--line);
+    padding:20px 24px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    max-width:280px; min-width:180px; flex:1 1 220px;
+  }
+  .insight-launcher .il-label{font-size:.82rem; font-weight:700; color:var(--sea-dark);}
+  .insight-btn{
+    background:var(--coral); color:#fff; border:none; border-radius:999px; padding:10px 20px;
+    font-weight:800; font-size:.86rem; font-family:inherit; cursor:pointer; display:inline-flex;
+    align-items:center; gap:8px; transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .insight-btn:hover{transform:translateY(-1px); box-shadow:0 6px 16px rgba(255,107,74,.35);}
+  .insight-btn:active{transform:translateY(0);}
+  .insight-btn[disabled]{opacity:.75; cursor:default; transform:none;}
+  .insight-btn .il-spin{
+    width:13px; height:13px; border-radius:50%; border:2px solid rgba(255,255,255,.5);
+    border-top-color:#fff; animation:il-spin .8s linear infinite; display:none;
+  }
+  .insight-btn.loading .il-spin{display:inline-block;}
+  @keyframes il-spin{to{transform:rotate(360deg);}}
+
+  .insight-card{
+    flex-basis:100%; margin-top:4px; border-radius:18px; overflow:hidden;
+    background:var(--sand-card); border:1px solid var(--line); box-shadow:var(--shadow);
+    display:none; animation:il-reveal .45s ease both;
+  }
+  .insight-card.show{display:block;}
+  @keyframes il-reveal{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .ic-head{
+    background:linear-gradient(135deg, var(--insight-tint-1), var(--insight-tint-2));
+    padding:12px 18px; font-size:.8rem; font-weight:700; color:var(--sea-dark);
+    display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--line);
+  }
+  .ic-body{padding:16px 18px 18px;}
+  .ic-title{font-size:1.1rem; font-weight:800; margin:0 0 8px; font-family:"Aptos","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;}
+  .ic-desc{font-size:.92rem; line-height:1.65; margin:0 0 14px;}
+  .ic-meta{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
+  .ic-chip{background:var(--sand-alt); border:1px solid var(--line); border-radius:999px; padding:5px 12px; font-size:.76rem; font-weight:700; color:var(--sea-dark);}
+  .ic-budget{background:var(--sand-alt); border-radius:14px; padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:12px;}
+  .ic-budget .lbl{font-size:.78rem; color:var(--ink); opacity:.65; font-weight:600;}
+  .ic-budget .amt{font-size:1.1rem; font-weight:800; color:var(--coral-dark);}
+  .ic-fit{font-size:.82rem; line-height:1.6; color:var(--sea-dark); background:var(--insight-tint-1); border-radius:12px; padding:10px 12px; display:flex; gap:8px;}
+  .ic-fit b{white-space:nowrap;}
+  .ic-foot{font-size:.7rem; opacity:.55; margin-top:12px; text-align:center;}
+
   .timeout-card{
     display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
     background:#0b0b0b; color:#fff !important; border-radius:16px; padding:18px 22px; margin-bottom:36px;
@@ -617,7 +671,7 @@
       <a href="#prep" data-i18n="navPrep" style="display:none">רשימת ציוד</a>
       <a href="#faq" data-i18n="navFaq">שאלות נפוצות</a>
     </div>
-    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 30 ימים</span></div>
+    <div class="today-badge" id="todayBadge"><span class="dot"></span><span id="todayBadgeText">הטיול מתחיל בעוד 9 ימים</span></div>
   </div>
 </div>
 
@@ -835,6 +889,14 @@
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dinso%20Resort%20%26%20Villas%20Phuket%2C%20Vignette%20Collection" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
           <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="insight-launcher" data-dest-id="phuket1">
+      <div class="il-label">☀️ מה עושים היום עם המשפחה?</div>
+      <button type="button" class="insight-btn" data-insight-btn="" data-dest-id="phuket1">
+        <span class="il-spin"></span>
+        <span class="il-btnlabel">✨ תובנת בילוי להיום</span>
+      </button>
+    </div>
+    <div class="insight-card" data-insight-card="phuket1"></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -992,6 +1054,14 @@
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Dusit%20Thani%20Krabi%20Beach%20Resort" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
           <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="insight-launcher" data-dest-id="krabi">
+      <div class="il-label">☀️ מה עושים היום עם המשפחה?</div>
+      <button type="button" class="insight-btn" data-insight-btn="" data-dest-id="krabi">
+        <span class="il-spin"></span>
+        <span class="il-btnlabel">✨ תובנת בילוי להיום</span>
+      </button>
+    </div>
+    <div class="insight-card" data-insight-card="krabi"></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -1141,6 +1211,14 @@
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=JW%20Marriott%20Khao%20Lak%20Resort%20%26%20Spa" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
           <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="insight-launcher" data-dest-id="khaolak">
+      <div class="il-label">☀️ מה עושים היום עם המשפחה?</div>
+      <button type="button" class="insight-btn" data-insight-btn="" data-dest-id="khaolak">
+        <span class="il-spin"></span>
+        <span class="il-btnlabel">✨ תובנת בילוי להיום</span>
+      </button>
+    </div>
+    <div class="insight-card" data-insight-card="khaolak"></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -1290,6 +1368,14 @@
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket%20Marriott%20Resort%20%26%20Spa%2C%20Merlin%20Beach" target="_blank" rel="noopener">🗺️ פתיחה ב-Google Maps</a>
           </div>
           <div class="weather-card weather-error reveal in">🌡️ <span>מזג האוויר לא זמין כרגע</span></div>
+          <div class="insight-launcher" data-dest-id="phuket2">
+      <div class="il-label">☀️ מה עושים היום עם המשפחה?</div>
+      <button type="button" class="insight-btn" data-insight-btn="" data-dest-id="phuket2">
+        <span class="il-spin"></span>
+        <span class="il-btnlabel">✨ תובנת בילוי להיום</span>
+      </button>
+    </div>
+    <div class="insight-card" data-insight-card="phuket2"></div>
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>אטרקציות מומלצות</span></h3>
         <div class="cards-grid">
@@ -1894,6 +1980,14 @@ const I18N = {
     nudgeRain: 'יכול להרטיב — כדאי לקחת מטרייה קלה או מעיל גשם דק.',
     nudgeStorm: 'סופות רעמים בסביבה — עדיף לתכנן פעילות מקורה היום.',
     openPrepList: '✓ פתיחת רשימת הציוד',
+    insightLauncherOutdoor: '☀️ מה עושים היום עם המשפחה?',
+    insightLauncherIndoor: '🌧️ מה עושים היום עם המשפחה?',
+    insightBtn: '✨ תובנת בילוי להיום',
+    insightBtnLoading: 'מחפש את הרעיון המושלם להיום…',
+    insightBtnRefresh: '🔄 רעיון נוסף',
+    insightBudgetLabel: 'הערכת עלות למשפחה',
+    insightFitLabel: '🎯 למה זה מתאים לנו:',
+    insightFooter: 'התובנה מתעדכנת לפי מזג האוויר בפועל של היום ⋅ ההערכה התקציבית היא הערכה גסה בלבד',
   },
   en: {
     brand: 'HaVenture',
@@ -1927,6 +2021,14 @@ const I18N = {
     nudgeRain: 'Could get wet — worth bringing a light umbrella or thin rain jacket.',
     nudgeStorm: 'Thunderstorms nearby — better to plan an indoor activity today.',
     openPrepList: '✓ Open the packing list',
+    insightLauncherOutdoor: '☀️ What should we do today?',
+    insightLauncherIndoor: '🌧️ What should we do today?',
+    insightBtn: '✨ Today\'s entertainment insight',
+    insightBtnLoading: 'Finding the perfect idea for today…',
+    insightBtnRefresh: '🔄 Another idea',
+    insightBudgetLabel: 'Estimated cost for the family',
+    insightFitLabel: '🎯 Why this fits us:',
+    insightFooter: 'Updates automatically based on today\'s actual weather ⋅ the budget is a rough estimate only',
   }
 };
 
@@ -1944,6 +2046,40 @@ const DESTINATIONS = [
       link:'https://www.dinsoresort.com/phuket/',
       mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket',
       mapLat:7.8965, mapLon:98.2965
+    },
+    insights:{
+      outdoor:[
+        {titleHe:'טיול סירה לאיי פי-פי', titleEn:'Boat Day to the Phi Phi Islands',
+          descHe:'יום שמש יציב הוא בדיוק התנאי לצאת למים: טיול סירת מהירות לארכיפלג פי-פי, שנורקלינג במפרץ פילה ובאי במבוק, ועצירה במאיה ביי המפורסם.',
+          descEn:'A steady sunny day is exactly the call to get out on the water: a speedboat day to the iconic Phi Phi archipelago, snorkeling at Pileh Lagoon and Bamboo Island, with a stop at famous Maya Bay.',
+          chipsHe:['⏱️ יום שלם','🕗 יציאה מוקדמת בבוקר','🍱 כולל ארוחת צהריים'], chipsEn:['⏱️ Full day','🕗 Early morning pickup','🍱 Lunch included'],
+          budgetHe:'כ-900–1,250 ₪ למשפחה (5 נוסעים)', budgetEn:'approx. ₪900–1,250 for the family (5 travelers)',
+          fitHe:'שנורקלינג ודילוג בין מפרצים מתאים לבני 14 ו-18, המים הרדודים במאיה ביי טובים גם לבת ה-11, וההורים יכולים פשוט ליהנות מהנוף מהסירה.',
+          fitEn:'Snorkeling and hopping between coves suits the 14- and 18-year-olds, the shallow water at Maya Bay works well for the 11-year-old too, and the parents can just enjoy the ride.'},
+        {titleHe:'זיפליין ו-ATV ביער הטרופי', titleEn:'Jungle Zipline & ATV Adventure',
+          descHe:'שמיים בהירים כאלה מתאימים מצוין ליום אדרנלין ביבשה: מסלול זיפליין בן 21 תחנות מעל חופת הג׳ונגל, בשילוב רכיבת ATV.',
+          descEn:'Clear skies like today are perfect for an adrenaline day on land: a 21-station zipline through the jungle canopy, paired with an ATV ride.',
+          chipsHe:['⏱️ כ-3–4 שעות','🌳 בחופת הג׳ונגל','🪖 ציוד בטיחות כלול'], chipsEn:['⏱️ ~3–4 hours','🌳 Jungle canopy','🪖 Safety gear included'],
+          budgetHe:'כ-900–1,250 ₪ למשפחה (5 נוסעים)', budgetEn:'approx. ₪900–1,250 for the family (5 travelers)',
+          fitHe:'בדיוק ברמת האתגר שבני 14 ו-18 אוהבים, ורוב המסלולים מקבלים גם ילדים מגיל 10 ומעלה — כדאי לוודא מראש עם המפעיל לגבי בת ה-11.',
+          fitEn:'Exactly the challenge level the 14- and 18-year-olds will love, and most operators accept kids from age 10 up — worth confirming in advance for the 11-year-old.'}
+      ],
+      indoor:[
+        {titleHe:'AQUARIA — האקווריום הגדול בתאילנד', titleEn:'AQUARIA — Thailand’s Largest Aquarium',
+          descHe:'עם הגשם היום, הים יכול לחכות: AQUARIA במרכז פוקט הוא האקווריום הגדול בתאילנד, עם מנהרת זכוכית תת-ימית ותצוגות חיות ים מכל העולם.',
+          descEn:'With rain today, the sea can wait: AQUARIA in central Phuket is Thailand\'s largest aquarium, with an underwater glass tunnel and marine life displays from around the world.',
+          chipsHe:['⏱️ כ-2 שעות','🏬 בתוך Central Phuket Floresta','🅿️ חניה מקורה'], chipsEn:['⏱️ ~2 hours','🏬 Inside Central Phuket Floresta','🅿️ Covered parking'],
+          budgetHe:'כ-380–480 ₪ למשפחה (5 כרטיסים, הערכה)', budgetEn:'approx. ₪380–480 for the family (5 tickets, estimate)',
+          fitHe:'מתחת ל-90 ס״מ נכנסים חינם, ומעל זה יש תמחור לפי גובה — כלומר זו אחת מהפעילויות המשפחתיות הבודדות שמתאימות ממש לכל טווח הגילאים בלי פשרות.',
+          fitEn:'Under 90cm gets in free, with height-based pricing above that — making this one of the rare family activities that genuinely suits the whole age range without compromise.'},
+        {titleHe:'סדנת בישול תאילנדי (איזור קארון)', titleEn:'Thai Cooking Class (Karon Area)',
+          descHe:'עוד אופציה מקורה טובה ליום גשום: סדנת בישול תאילנדי של כ-4 שעות עם שף מקומי, כולל הסעה הלוך-חזור מפאטונג.',
+          descEn:'Another solid indoor option for a rainy day: a roughly 4-hour Thai cooking class with a local chef, including a round-trip transfer from Patong.',
+          chipsHe:['⏱️ כ-4 שעות','🚐 הסעה כלולה','📖 חוברת מתכונים בסיום'], chipsEn:['⏱️ ~4 hours','🚐 Transfer included','📖 Recipe booklet included'],
+          budgetHe:'כ-580–680 ₪ למשפחה (5 משתתפים)', budgetEn:'approx. ₪580–680 for the family (5 participants)',
+          fitHe:'אותו רעיון של בישול משותף כמו באאו-נאנג, רק בפוקט — כדאי לוודא מראש גיל מינימום לבת ה-11 בהזמנה.',
+          fitEn:'The same shared-cooking idea as in Ao Nang, just in Phuket — worth confirming the minimum age for the 11-year-old when booking.'}
+      ]
     },
     attractions:[
       {nameHe:'הבודהה הגדול של פוקט', nameEn:'Big Buddha Phuket', descHe:'פסל בודהה מצופה שיש בגובה 45 מ׳ על גבעת נאקרד, עם תצפית 360° על האי. כניסה חינם.', descEn:'A 45m marble-clad Buddha atop Nakkerd Hill with a 360° island viewpoint. Free entry.', link:'https://www.tourismthailand.org/Attraction/phra-phuttha-ming-mongkhon-ek-nakkhiri-phuket-big-buddha', img:'images/phuket1/big-buddha.jpg', tier:0, priceHe:'כניסה חינם', priceEn:'Free entry'},
@@ -1976,6 +2112,40 @@ const DESTINATIONS = [
       mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand',
       mapLat:8.1600, mapLon:98.7590
     },
+    insights:{
+      outdoor:[
+        {titleHe:'טיול ארבעת האיים', titleEn:'Four Islands Tour',
+          descHe:'יום כזה נולד לטיול הזה: סירת זנב-ארוך בין איי Tub, Chicken ו-Poda, שנורקלינג, שרטון החול המפורסם, וארוחת פיקניק על החוף.',
+          descEn:'A day like this was made for this tour: a longtail boat between Tub, Chicken and Poda Islands, snorkeling, the famous sandbar, and a beach picnic lunch.',
+          chipsHe:['⏱️ יום שלם','🏖️ כולל זמן חוף חופשי','🍍 ארוחת צהריים בחוף'], chipsEn:['⏱️ Full day','🏖️ Free beach time included','🍍 Beach picnic lunch'],
+          budgetHe:'כ-400–600 ₪ למשפחה (5 נוסעים)', budgetEn:'approx. ₪400–600 for the family (5 travelers)',
+          fitHe:'שנורקלינג והקפיצות מהסירה מתאימים מצוין לבני 14 ו-18, בת ה-11 תאהב את השרטון הרדוד, וההורים יכולים פשוט לשבת בצל בין תחנה לתחנה.',
+          fitEn:'Snorkeling and jumping off the boat suit the 14- and 18-year-olds well, the 11-year-old will love the shallow sandbar, and the parents can just relax in the shade between stops.'},
+        {titleHe:'הבריכה האזמרגדית והכחולה', titleEn:'Emerald Pool & Blue Pool',
+          descHe:'יום נעים בג׳ונגל: הליכה קצרה בשמורת טבע לבריכת מעיינות טורקיז לשחייה, ועצירה בבריכה הכחולה המרהיבה הסמוכה.',
+          descEn:'A pleasant day in the jungle: a short walk through a nature reserve to a swimmable turquoise mineral pool, with a stop at the striking sapphire Blue Pool nearby.',
+          chipsHe:['⏱️ כ-3 שעות','🥾 הליכה קלה','💧 מים פושרים לשחייה'], chipsEn:['⏱️ ~3 hours','🥾 Easy walk','💧 Lukewarm swimming water'],
+          budgetHe:'כ-90–120 ₪ למשפחה (5 כניסות)', budgetEn:'approx. ₪90–120 for the family (5 entries)',
+          fitHe:'קצב רגוע ועלות נמוכה — אופציה נעימה ליום שבו לא בא לכולם אותו דבר, עם משהו קליל גם להורים וגם לילדים.',
+          fitEn:'A relaxed pace and low cost — a nice option for a day when not everyone wants the same thing, easy-going for parents and kids alike.'}
+      ],
+      indoor:[
+        {titleHe:'סדנת בישול תאילנדי באאו-נאנג', titleEn:'Thai Cooking Class in Ao Nang',
+          descHe:'הגשם היום הוא תירוץ מצוין למקום מקורה: סדנת בישול תאילנדי קטנה במרכז אאו-נאנג, כל אחד מכין 4-5 מנות קלאסיות — פאד תאי, טום קה גאי וקארי — ואוכלים ביחד בסיום.',
+          descEn:'Rain today is a great excuse for something indoors: a small Thai cooking class in central Ao Nang, everyone prepares 4–5 classic dishes — pad Thai, tom kha gai and curry — and eats together at the end.',
+          chipsHe:['⏱️ כ-4 שעות','🕓 מושבים בבוקר ואחה״צ','📖 חוברת מתכונים בסיום'], chipsEn:['⏱️ ~4 hours','🕓 Morning & afternoon sessions','📖 Recipe booklet included'],
+          budgetHe:'כ-550–650 ₪ למשפחה (5 משתתפים)', budgetEn:'approx. ₪550–650 for the family (5 participants)',
+          fitHe:'פעילות ידיים אחת שכל המשפחה עושה יחד ליד אותו שולחן עבודה — כדאי רק לוודא מראש עם בית הספר שיש מקום לבת ה-11, חלק מהסדנאות מוגבלות לגיל 12+.',
+          fitEn:'One hands-on activity the whole family does together at the same worktable — just worth confirming in advance with the school that the 11-year-old is welcome, as some classes are limited to ages 12+.'},
+        {titleHe:'אחר-צהריים ספא משפחתי באאו-נאנג', titleEn:'Family Spa Afternoon in Ao Nang',
+          descHe:'ביום גשום, למה לא לפנק את כולם: עיסויים תאילנדים קלים זה-לצד-זה בספא מקומי באאו-נאנג — אופציה רגועה שכמעט לא דורשת יציאה החוצה.',
+          descEn:'On a rainy day, why not treat everyone: gentle side-by-side Thai massages at a local Ao Nang spa — a relaxed option that barely requires stepping outside.',
+          chipsHe:['⏱️ כ-1–1.5 שעות','💆 חדרים זה-לצד-זה','🧴 כולל טיפולי רגליים לילדים'], chipsEn:['⏱️ ~1–1.5 hours','💆 Side-by-side rooms','🧴 Includes light foot treatments for kids'],
+          budgetHe:'כ-180–260 ₪ למשפחה (5 טיפולים קצרים)', budgetEn:'approx. ₪180–260 for the family (5 short treatments)',
+          fitHe:'אפשר לשלב עיסוי רגליים קליל גם לבני הנוער, וזה זמן מנוחה אמיתי להורים אחרי כמה ימים אינטנסיביים.',
+          fitEn:'Even the teens can join with a light foot massage, and it\'s real downtime for the parents after a few intense days.'}
+      ]
+    },
     attractions:[
       {nameHe:'חוף ריילי (Railay)', nameEn:'Railay Beach', descHe:'חצי אי שמגיעים אליו רק בסירה, מוקף בצוקי גיר דרמטיים — מרכז הטיפוס האזורי, זמן חוף וטיולי מערות.', descEn:'A boat-only peninsula ringed by dramatic limestone cliffs — the region\'s rock-climbing hub, beach time and cave exploring.', link:'https://www.getyourguide.com/krabi-l2174/half-day-rock-climbing-tours-in-railay-beach-t58063/', img:'images/krabi/railay-beach.jpg', tier:2, priceHe:'~150–200 ฿ סירה; טיפוס מודרך ~1,500 ฿', priceEn:'~150–200 THB boat; guided climbing ~1,500 THB'},
       {nameHe:'טיול ארבעת האיים', nameEn:'Four Islands Tour', descHe:'טיול סירה של יום שלם — שנורקלינג, שרטון החול המפורסם בין אי העוף לאי טופ, וארוחת פיקניק על החוף.', descEn:'A full-day boat-hopping tour — snorkeling, the famous sandbar between Chicken and Tup Islands, and a beach picnic.', link:'https://www.viator.com/tours/Krabi/4-Islands-Full-day-Tour-from-Krabi-with-Tub-Chicken-Poda-Island-and-Phra-Nang/d348-103612P97', img:'images/krabi/four-islands-tour.jpg', tier:2, priceHe:'~800–1,200 ฿ לאדם', priceEn:'~800–1,200 THB/person'},
@@ -2007,6 +2177,40 @@ const DESTINATIONS = [
       mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand',
       mapLat:8.7000, mapLon:98.2530
     },
+    insights:{
+      outdoor:[
+        {titleHe:'מפרץ פאנגה ואי ג׳יימס בונד', titleEn:'Phang Nga Bay & James Bond Island',
+          descHe:'יום בהיר כזה מתאים בול לשיט לונגטייל/קאנו במפרץ פאנגה — מערות ים, הכפר הצף Koh Panyee, ועצירה באי "ג׳יימס בונד" המפורסם.',
+          descEn:'A clear day like this is perfect for a longtail/canoe tour of Phang Nga Bay — sea caves, the floating village of Koh Panyee, and a stop at the famous "James Bond Island".',
+          chipsHe:['⏱️ יום שלם','🛶 כולל שיט קאנו במערות','🍱 ארוחת צהריים כלולה'], chipsEn:['⏱️ Full day','🛶 Includes sea-cave canoeing','🍱 Lunch included'],
+          budgetHe:'כ-750–1,000 ₪ למשפחה (5 נוסעים)', budgetEn:'approx. ₪750–1,000 for the family (5 travelers)',
+          fitHe:'הקאנוֹת במערות הן חוויה שכולם — מגיל 11 ועד ההורים — יכולים לעשות יחד, בקצב רגוע ובלי צורך בשנורקלינג.',
+          fitEn:'Canoeing through the caves is something everyone — from the 11-year-old to the parents — can do together, at a relaxed pace with no snorkeling required.'},
+        {titleHe:'פארק חאו-לאק לאם-רו והמפל', titleEn:'Khao Lak–Lam Ru National Park & Waterfall',
+          descHe:'טיול חצי-יום קליל: מפל בן 5 מדרגות (Ton Chong Fa) בתוך הפארק הלאומי, ותצפית נופית על החוף בסיום.',
+          descEn:'An easy half-day outing: a 5-tier waterfall (Ton Chong Fa) inside the national park, ending with a scenic coastal viewpoint.',
+          chipsHe:['⏱️ כ-2–3 שעות','🥾 מסלול הליכה קצר','🏞️ תצפית לסיום'], chipsEn:['⏱️ ~2–3 hours','🥾 Short walking trail','🏞️ Viewpoint finish'],
+          budgetHe:'כ-90–120 ₪ למשפחה (5 כניסות)', budgetEn:'approx. ₪90–120 for the family (5 entries)',
+          fitHe:'קצר ולא מתיש — אופציה טובה בין שני ימי ים עמוסים, וזול מספיק כדי לא להרגיש כמו "עוד יום מתוכנן".',
+          fitEn:'Short and not tiring — a good option to slot between two heavier beach days, and cheap enough not to feel like "another planned day".'}
+      ],
+      indoor:[
+        {titleHe:'סדנת בישול תאילנדי בבאנג-ניאנג', titleEn:'Thai Cooking Class in Bang Niang',
+          descHe:'ביום גשום כזה — סדנת בישול תאילנדי מקומית בבאנג-ניאנג שמתחילה בסיור קצר בשוק לבחירת מצרכים טריים, וממשיכה בבישול משותף במטבח פתוח ומקורה.',
+          descEn:'On a rainy day like this — a local Thai cooking class in Bang Niang that starts with a short market visit to pick fresh ingredients, then moves to shared cooking in a covered open-air kitchen.',
+          chipsHe:['⏱️ כ-4 שעות','🛒 כולל סיור בשוק','👨‍🍳 קבוצות קטנות'], chipsEn:['⏱️ ~4 hours','🛒 Includes a market visit','👨‍🍳 Small groups'],
+          budgetHe:'כ-650–750 ₪ למשפחה (5 משתתפים)', budgetEn:'approx. ₪650–750 for the family (5 participants)',
+          fitHe:'סיור השוק בתחילת הסדנה מוסיף עניין גם לבני הנוער שכבר "ראו הכל" בשוק הלילה של באנג-ניאנג, לפני שמתיישבים לבשל יחד.',
+          fitEn:'The opening market walk adds interest even for the teens who\'ve already "seen it all" at Bang Niang night market, before everyone sits down to cook together.'},
+        {titleHe:'ספא ועיסויים בבאנג-ניאנג', titleEn:'Spa & Massages in Bang Niang',
+          descHe:'עוד אופציה שקטה ליום סוער: ספא מקומי בבאנג-ניאנג עם עיסויים תאילנדים ועטיפות גוף — ממש קרוב למלון.',
+          descEn:'Another calm option for a stormy day: a local Bang Niang spa with Thai massages and body wraps — just a short ride from the hotel.',
+          chipsHe:['⏱️ כ-1–1.5 שעות','🧖 עיסוי + עטיפת גוף','🚗 קרוב למלון'], chipsEn:['⏱️ ~1–1.5 hours','🧖 Massage + body wrap','🚗 Close to the hotel'],
+          budgetHe:'כ-180–260 ₪ למשפחה (5 טיפולים קצרים)', budgetEn:'approx. ₪180–260 for the family (5 short treatments)',
+          fitHe:'קרוב מספיק למלון שאפשר לחזור אחר כך למנוחה בחדר בלי לאבד את שארית היום.',
+          fitEn:'Close enough to the hotel that you can head back to rest in the room afterward without losing the rest of the day.'}
+      ]
+    },
     attractions:[
       {nameHe:'מפרץ פאנגה ואי ג׳יימס בונד', nameEn:'Phang Nga Bay & James Bond Island', descHe:'איי סימילן סגורים בתאריכי הטיול (עונת מונסון) — לכן טיול לונגטייל/קאנו במפרץ פאנגה הוא התחליף המומלץ: מערות ים, כפר הדייגים הצף וכמובן אי "ג׳יימס בונד".', descEn:'The Similan Islands are closed on our dates (monsoon season) — a longtail/canoe tour of Phang Nga Bay is the recommended substitute: sea caves, a floating village and "James Bond Island".', link:'https://www.viator.com/tours/Khao-Lak/Khao-Lak-Phang-Nga-Bay-and-James-Bond-Island-by-Longtail-Boat/d23786-117052P21', img:'images/khaolak/phang-nga-canoe.jpg', tier:3, priceHe:'~1,500–2,000 ฿ לאדם', priceEn:'~1,500–2,000 THB/person'},
       {nameHe:'פארק לאומי קאו סוק', nameEn:'Khao Sok National Park', descHe:'יער גשם עתיק עם צוקי גיר דרמטיים; סיורי יום כוללים שיט לונגטייל באגם צ׳יאו לאן וארוחה על רפסודה צפה.', descEn:'Ancient rainforest with dramatic karsts; day tours include a longtail boat ride across Cheow Lan Lake and lunch on a floating raft.', link:'https://en.wikipedia.org/wiki/Khao_Sok_National_Park', img:'images/khaolak/khao-sok.jpg', tier:3, priceHe:'~2,000–2,500 ฿ לאדם', priceEn:'~2,000–2,500 THB/person'},
@@ -2037,6 +2241,40 @@ const DESTINATIONS = [
       link:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/',
       mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket',
       mapLat:7.9070, mapLon:98.2985
+    },
+    insights:{
+      outdoor:[
+        {titleHe:'שנורקלינג באי ראצ׳ה', titleEn:'Racha Island Snorkeling',
+          descHe:'יום צלול כזה הוא בדיוק מה שראצ׳ה צריכה: טיול סירת מהירות לאי בתולי עם שוניות אלמוגים רדודות ומים צלולים, כולל ארוחת צהריים על החוף.',
+          descEn:'A clear day like this is exactly what Racha needs: a speedboat trip to a pristine island with shallow coral reefs and clear water, plus a beach lunch.',
+          chipsHe:['⏱️ יום שלם','🤿 מתאים לכל הרמות','🍱 ארוחת צהריים בחוף'], chipsEn:['⏱️ Full day','🤿 Suitable for all levels','🍱 Beach lunch included'],
+          budgetHe:'כ-900–1,250 ₪ למשפחה (5 נוסעים)', budgetEn:'approx. ₪900–1,250 for the family (5 travelers)',
+          fitHe:'המים הרדודים והשקטים מתאימים גם לבת ה-11 שרק מתחילה עם שנורקל, בזמן שבני ה-14 וה-18 יכולים לשחות רחוק יותר.',
+          fitEn:'The shallow, calm water suits the 11-year-old who\'s still new to snorkeling, while the 14- and 18-year-olds can swim further out.'},
+        {titleHe:'חוף פרידום', titleEn:'Freedom Beach',
+          descHe:'לא צריך יום שלם בשביל חוף מושלם: מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת לונגטייל קצרה, עם שנורקלינג מהחוף שלא נופל מהטיולים היקרים יותר.',
+          descEn:'A perfect beach doesn\'t need a full day: a secluded cove south of Patong, reachable only by a short longtail boat, with shore snorkeling that rivals the pricier boat trips.',
+          chipsHe:['⏱️ חצי יום','🚤 סירה קצרה (כ-10 דק׳)','🐠 שנורקלינג מהחוף'], chipsEn:['⏱️ Half day','🚤 Short boat ride (~10 min)','🐠 Shore snorkeling'],
+          budgetHe:'כ-150–300 ₪ למשפחה (5 נוסעים, סירה הלוך-חזור)', budgetEn:'approx. ₪150–300 for the family (5 travelers, round-trip boat)',
+          fitHe:'קצר, זול וגמיש — אפשר לשלב אותו עם עוד חצי יום חופשי, בלי להתחייב ליום שלם מתוכנן.',
+          fitEn:'Short, cheap and flexible — easy to pair with another free half-day, without committing to a fully planned day.'}
+      ],
+      indoor:[
+        {titleHe:'באולינג וקולנוע בג׳אנגסילון', titleEn:'Bowling & Cinema at Jungceylon',
+          descHe:'הים יכול לחכות ליום אחר: קומת הבידור של ג׳אנגסילון כוללת את SF Strike Bowl (באולינג) וקולנוע SF Cinema — ממש בפאטונג, דקות מקאלים.',
+          descEn:'The sea can wait for another day: Jungceylon\'s entertainment floor has SF Strike Bowl (bowling) and SF Cinema — right in Patong, minutes from Kalim.',
+          chipsHe:['⏱️ כ-1.5–3 שעות','🎳 באולינג + 🎬 קולנוע (אופציונלי)','🅿️ הכל תחת קורת גג אחת'], chipsEn:['⏱️ ~1.5–3 hours','🎳 Bowling + 🎬 cinema (optional)','🅿️ All under one roof'],
+          budgetHe:'כ-140–200 ₪ למשפחה (באולינג בלבד, 5 משתתפים)', budgetEn:'approx. ₪140–200 for the family (bowling only, 5 players)',
+          fitHe:'משהו קליל וחסר-מחויבות שגם בני 18 שכבר "עשו את כל האטרקציות" עדיין נהנים ממנו — ואפשר להאריך לסרט אם מתחשק.',
+          fitEn:'Something light and low-commitment that even the 18-year-old who\'s "done all the attractions" will still enjoy — and easy to extend into a movie if the mood strikes.'},
+        {titleHe:'אחר-צהריים ספא בריזורט', titleEn:'Resort Spa Afternoon',
+          descHe:'יום גשום הוא ההזדמנות המושלמת לנצל את הספא של המלון עצמו — עיסויים תאילנדים, בלי לצאת מהריזורט בכלל.',
+          descEn:'A rainy day is the perfect excuse to actually use the hotel\'s own spa — Thai massages, without leaving the resort at all.',
+          chipsHe:['⏱️ כ-1 שעה','🏨 בתוך המלון','🌊 גישה לבריכת הספא'], chipsEn:['⏱️ ~1 hour','🏨 On-site at the hotel','🌊 Access to the spa pool'],
+          budgetHe:'כ-320–450 ₪ (2–3 טיפולים, לא כולם חייבים עיסוי)', budgetEn:'approx. ₪320–450 (2–3 treatments, not everyone needs a massage)',
+          fitHe:'גם אם רק חלק מהמשפחה רוצים עיסוי, השאר יכולים פשוט להשתמש בבריכה או בג׳קוזי של הספא בינתיים.',
+          fitEn:'Even if only part of the family wants a massage, the rest can just use the spa\'s pool or jacuzzi in the meantime.'}
+      ]
     },
     attractions:[
       {nameHe:'חוף פרידום', nameEn:'Freedom Beach', descHe:'מפרץ מבודד מדרום לפאטונג, נגיש רק בסירת "לונגטייל" קצרה — אחד השנורקלינג הטובים מהחוף באזור.', descEn:'A secluded cove reachable only by a short longtail boat — some of the best shore snorkeling in the area.', link:'https://www.tripadvisor.com/Attraction_Review-g297930-d778266-Reviews-Freedom_Beach-Patong_Kathu_Phuket.html', img:'images/phuket2/freedom-beach.jpg', tier:1, priceHe:'~300–600 ฿ (סירה הלוך-חזור)', priceEn:'~300–600 THB (round-trip boat)'},
@@ -2372,6 +2610,84 @@ function weatherCardHtml(dest, t){
   </div>`;
 }
 
+/* ===== Entertainment insight (weather-aware, curated per destination) ===== */
+function insightBucketForDest(dest){
+  const w = WEATHER_CACHE[dest.id];
+  if (w && w !== 'error'){
+    const key = nudgeKeyForCode(w.code);
+    if (key === 'nudgeRain' || key === 'nudgeStorm') return 'indoor';
+  }
+  return 'outdoor'; // default when sunny/cloudy, or while weather is still loading/unavailable
+}
+
+function insightLauncherHtml(dest, t){
+  const bucket = insightBucketForDest(dest);
+  const label = bucket === 'indoor' ? t.insightLauncherIndoor : t.insightLauncherOutdoor;
+  return `<div class="insight-launcher" data-dest-id="${dest.id}">
+      <div class="il-label">${label}</div>
+      <button type="button" class="insight-btn" data-insight-btn data-dest-id="${dest.id}">
+        <span class="il-spin"></span>
+        <span class="il-btnlabel">${t.insightBtn}</span>
+      </button>
+    </div>
+    <div class="insight-card" data-insight-card="${dest.id}"></div>`;
+}
+
+const INSIGHT_STATE = {}; // dest.id -> {bucket, index} — remembers the last pick so "another idea" rotates rather than repeats
+
+function todayLabel(){
+  const now = new Date();
+  const wd = (LANG==='he' ? WEEKDAYS_HE : WEEKDAYS_EN)[now.getDay()];
+  return LANG==='he' ? `יום ${wd}, ${now.getDate()}.${now.getMonth()+1}` : `${wd}, ${MONTHS_EN[now.getMonth()]} ${now.getDate()}`;
+}
+
+function insightCardHtml(dest, t, bucket, entry){
+  const w = WEATHER_CACHE[dest.id];
+  const icon = (w && w !== 'error') ? weatherIcon(w.code) : {emoji: bucket==='indoor' ? '🌧️' : '☀️'};
+  const temp = (w && w !== 'error') ? `${Math.round(w.temp)}°C` : '';
+  const destName = LANG==='he' ? dest.nameHe : dest.nameEn;
+  const headLine = `${destName} · ${todayLabel()}${temp ? ' · ' + icon.emoji + ' ' + temp : ''}`;
+  const chips = (LANG==='he' ? entry.chipsHe : entry.chipsEn) || [];
+  return `<div class="ic-head"><span>📍</span><span>${headLine}</span></div>
+    <div class="ic-body">
+      <h3 class="ic-title">${LANG==='he'?entry.titleHe:entry.titleEn}</h3>
+      <p class="ic-desc">${LANG==='he'?entry.descHe:entry.descEn}</p>
+      <div class="ic-meta">${chips.map(c=>`<span class="ic-chip">${c}</span>`).join('')}</div>
+      <div class="ic-budget"><span class="lbl">${t.insightBudgetLabel}</span><span class="amt">${LANG==='he'?entry.budgetHe:entry.budgetEn}</span></div>
+      <div class="ic-fit"><b>${t.insightFitLabel}</b><span>${LANG==='he'?entry.fitHe:entry.fitEn}</span></div>
+      <div class="ic-foot">${t.insightFooter}</div>
+    </div>`;
+}
+
+function handleInsightClick(btn){
+  const destId = btn.getAttribute('data-dest-id');
+  const dest = DESTINATIONS.find(d => d.id === destId);
+  if (!dest || btn.classList.contains('loading')) return;
+  const t = I18N[LANG];
+  const bucket = insightBucketForDest(dest);
+  const pool = dest.insights && dest.insights[bucket];
+  const card = document.querySelector(`.insight-card[data-insight-card="${destId}"]`);
+  if (!pool || !pool.length || !card) return;
+
+  const st = INSIGHT_STATE[destId];
+  const nextIndex = (!st || st.bucket !== bucket) ? 0 : (st.index + 1) % pool.length;
+  INSIGHT_STATE[destId] = {bucket, index: nextIndex};
+
+  const labelEl = btn.querySelector('.il-btnlabel');
+  btn.classList.add('loading');
+  btn.disabled = true;
+  card.classList.remove('show');
+  labelEl.textContent = t.insightBtnLoading;
+
+  setTimeout(() => {
+    card.innerHTML = insightCardHtml(dest, t, bucket, pool[nextIndex]);
+    btn.classList.remove('loading');
+    btn.disabled = false;
+    labelEl.textContent = t.insightBtnRefresh;
+    card.classList.add('show');
+  }, 1500);
+}
+
 function loadWeather(){
   DESTINATIONS.forEach(dest=>{
     if (WEATHER_CACHE[dest.id]) return; // already loaded or already failed
@@ -2443,6 +2759,7 @@ function renderDestinations(){
             <a class="btn small" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hotel.mapQuery)}" target="_blank" rel="noopener">${t.openMaps}</a>
           </div>
           ${weatherCardHtml(dest, t)}
+          ${insightLauncherHtml(dest, t)}
         </div>
         <h3 class="block-title"><span class="icon">🧭</span><span>${t.attractionsHead}</span></h3>
         <div class="cards-grid">
@@ -2927,6 +3244,13 @@ safeRun('init:scrollToLinks', () => {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+safeRun('init:insights', () => {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-insight-btn]');
+    if (!btn) return;
+    handleInsightClick(btn);
+  });
+});
 safeRun('init:tabs', initTabSwitchers);
 safeRun('init:render', () => { render(); });
 safeRun('init:loadWeather', () => { loadWeather(); });
@@ -2973,6 +3297,8 @@ safeRun('init:installBanner', () => {
   });
 });
 </script>
+
+
 
 
 
