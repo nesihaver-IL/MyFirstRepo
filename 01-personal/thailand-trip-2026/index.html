@@ -453,6 +453,12 @@
   .card .cdesc{font-size:.88rem; opacity:.8; margin:0; flex:1;}
   .card .clink{font-size:.82rem; font-weight:700; color:var(--coral); text-decoration:none; margin-top:6px;}
   .card .clink:hover{text-decoration:underline;}
+  .card .sport-links{display:flex; flex-wrap:wrap; gap:14px; margin-top:6px;}
+  .card .sport-links .clink{margin-top:0;}
+
+  .sports-dest-block{margin-bottom:40px;}
+  .sports-dest-block:last-child{margin-bottom:0;}
+  .sports-dest-block h3.block-title{margin-bottom:16px;}
 
   /* ===== Flights ===== */
   .flights{padding-top:60px; padding-bottom:60px;}
@@ -667,6 +673,7 @@
       <a href="#khaolak" data-i18n="navKhaolak">קאולק</a>
       <a href="#phuket2" data-i18n="navPhuket2">פוקט 2</a>
       <a href="#flightsRet" data-i18n="navFlightsRet">טיסת חזור</a>
+      <a href="#sportsActivities" data-i18n="navSports">ספורט ופעילויות</a>
       <a href="#flightInfo" data-i18n="navFlightInfo">טיסה ומטוסים</a>
       <a href="#prep" data-i18n="navPrep" style="display:none">רשימת ציוד</a>
       <a href="#faq" data-i18n="navFaq">שאלות נפוצות</a>
@@ -828,7 +835,7 @@
   </div>
 
   <div class="journey-rail-card">
-    <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 12 שעות ו-20 דקות)</h4>
+    <h4>🛫 הלוך — יום שני 17.8.2026 עד יום שלישי 18.8.2026 (סה״כ 14 שעות ו-5 דקות)</h4>
     <div class="journey-rail">
       <div class="rail-node flight">
         <span class="rail-chip">✈️ טיסה ראשונה</span>
@@ -844,7 +851,7 @@
         </div>
       </div>
       <div class="rail-node layover">
-        <div class="rail-body">🕐 קונקשן באבו דאבי — 2 שעות ו-15 דקות</div>
+        <div class="rail-body">🕐 קונקשן באבו דאבי — 4 שעות</div>
       </div>
       <div class="rail-node final">
         <span class="rail-chip">🏁 היעד הסופי</span>
@@ -852,9 +859,9 @@
           <div class="leg-flightno">EY 416 · Etihad Airways</div>
           <div class="leg-aircraft">מטוס: איירבוס A321LR</div>
           <div class="leg-route">
-            <span class="city"><span class="time">02:40</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
+            <span class="city"><span class="time">04:25</span><span class="airport-sub">אבו דאבי (AUH), טרמינל A</span></span>
             <span class="leg-arrow">✈</span>
-            <span class="city"><span class="time">12:30</span><span class="airport-sub">פוקט (HKT), טרמינל 1</span></span>
+            <span class="city"><span class="time">14:15</span><span class="airport-sub">פוקט (HKT), טרמינל I</span></span>
           </div>
           <div class="leg-meta">משך טיסה: 6 שעות ו-50 דקות · מרחק: כ-4,977 ק״מ</div>
         </div>
@@ -1589,6 +1596,12 @@
   </div>
 </section>
 
+<section class="info-section container" id="sportsActivities">
+  <h2 data-i18n="sportsTitle">ספורט ופעילויות משותפות</h2>
+  <p class="sub" data-i18n="sportsSub">חדר כושר, בריכות, פאדל, כדורגל ועוד — לפי מיקום, עם קישור למקור ולמפה.</p>
+  <div id="sportsWrap"></div>
+</section>
+
 <section class="info-section container" id="flightInfo">
   <h2 data-i18n="flightInfoTitle">הטיסה והמטוסים שלנו — עוד פרטים</h2>
   <p class="sub" data-i18n="flightInfoSub">הכל על אתיחאד, אבו דאבי, המטוסים וטיפים לפני עלייה למטוס.</p>
@@ -1988,6 +2001,10 @@ const I18N = {
     insightBudgetLabel: 'הערכת עלות למשפחה',
     insightFitLabel: '🎯 למה זה מתאים לנו:',
     insightFooter: 'התובנה מתעדכנת לפי מזג האוויר בפועל של היום ⋅ ההערכה התקציבית היא הערכה גסה בלבד',
+    navSports: 'ספורט ופעילויות',
+    sportsTitle: 'ספורט ופעילויות משותפות', sportsSub: 'חדר כושר, בריכות, פאדל, כדורגל ועוד — לפי מיקום, עם קישור למקור ולמפה.',
+    sportsCatGym: 'חדר כושר', sportsCatPool: 'בריכת שחייה', sportsCatPadel: 'פאדל', sportsCatFootball: 'כדורגל', sportsCatOther: 'פעילות נוספת',
+    sportsSourceLink: 'המקור באינטרנט', sportsMapLink: '🗺️ מיקום ב-Google Maps',
   },
   en: {
     brand: 'HaVenture',
@@ -2029,6 +2046,10 @@ const I18N = {
     insightBudgetLabel: 'Estimated cost for the family',
     insightFitLabel: '🎯 Why this fits us:',
     insightFooter: 'Updates automatically based on today\'s actual weather ⋅ the budget is a rough estimate only',
+    navSports: 'Sports & Activities',
+    sportsTitle: 'Sports & Activities Together', sportsSub: 'Gym, pools, padel, football and more — organized by location, with a link to the source and to the map.',
+    sportsCatGym: 'Gym', sportsCatPool: 'Swimming Pool', sportsCatPadel: 'Padel', sportsCatFootball: 'Football', sportsCatOther: 'Other Activity',
+    sportsSourceLink: 'Source on the web', sportsMapLink: '🗺️ Location on Google Maps',
   }
 };
 
@@ -2047,6 +2068,28 @@ const DESTINATIONS = [
       mapQuery:'Dinso Resort & Villas Phuket, Vignette Collection', mapAreaHe:'פאטונג, פוקט', mapAreaEn:'Patong, Phuket',
       mapLat:7.8965, mapLon:98.2965
     },
+    sports:[
+      {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24 שעות — Dinso Resort', nameEn:'24-Hour Fitness Center — Dinso Resort',
+        descHe:'חדר כושר פתוח מסביב לשעון בתוך המלון, עם מכשירי הליכה, משקולות ומחצלות יוגה — ונוף לפאטונג בזמן האימון.',
+        descEn:'An around-the-clock fitness center inside the hotel, with treadmills, weights and yoga mats — with views over Patong while you work out.',
+        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
+      {category:'pool', icon:'🏊', nameHe:'שתי בריכות שחייה — Dinso Resort', nameEn:'Two Swimming Pools — Dinso Resort',
+        descHe:'בריכה למבוגרים ובריכה נפרדת לילדים בשטח המלון, עם קברנות ליד הבריכה למנוחה בצל.',
+        descEn:'A pool for adults and a separate pool for kids on the hotel grounds, with poolside cabanas for shaded downtime.',
+        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/outdoor-pool', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
+      {category:'padel', icon:'🎾', nameHe:'Sensei Padel Phuket — פאטונג', nameEn:'Sensei Padel Phuket — Patong',
+        descHe:'ארבעה מגרשי פאדל חיצוניים באיכות גבוהה, ממש בפאטונג — כולל סאונה, בריכה וג׳קוזי לאחר המשחק.',
+        descEn:'Four high-quality outdoor padel courts right in Patong — with a sauna, pool and jacuzzi to unwind after playing.',
+        sourceUrl:'https://senseipadel.com/', mapQuery:'Sensei Padel Phuket, 9/18 Sirirat Rd, Patong, Kathu, Phuket'},
+      {category:'football', icon:'⚽', nameHe:'Patong Football Club', nameEn:'Patong Football Club',
+        descHe:'ארבעה מגרשי דשא סינתטי (שניים מקורים) להשכרה שעתית — אידיאלי למשחק משפחתי חופשי, כ-1,500 ฿ לשעה.',
+        descEn:'Four artificial-turf pitches (two covered), available for hourly rental — great for an informal family kickabout, about 1,500 THB/hour.',
+        sourceUrl:'https://phuket-insider.com/en/places/patong-football-club/', mapQuery:'Patong Football Club, Phuket'},
+      {category:'other', icon:'🥊', nameHe:'מואי תאי, יוגה ופעילויות נוספות — Dinso Resort', nameEn:'Muay Thai, Yoga & More — Dinso Resort',
+        descHe:'שיעורי מואי תאי ויוגה, וגם פולו מים, דארטס ומשחקי קופסה — כולם בתוך שטח המלון.',
+        descEn:'Muay Thai and yoga classes, plus water polo, darts and board games — all on the hotel grounds.',
+        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'}
+    ],
     insights:{
       outdoor:[
         {titleHe:'טיול סירה לאיי פי-פי', titleEn:'Boat Day to the Phi Phi Islands',
@@ -2154,6 +2197,28 @@ const DESTINATIONS = [
       mapQuery:'Dusit Thani Krabi Beach Resort', mapAreaHe:'קרבי, תאילנד', mapAreaEn:'Krabi, Thailand',
       mapLat:8.1600, mapLon:98.7590
     },
+    sports:[
+      {category:'gym', icon:'🏋️', nameHe:'DFiT Club — חדר הכושר של Dusit Thani Krabi', nameEn:'DFiT Club — Dusit Thani Krabi Gym',
+        descHe:'חדר כושר מאובזר במלואו, כולל זירת מואי תאי, סאונה וחדר אדים.',
+        descEn:'A fully equipped gym, including a Muay Thai ring, sauna and steam room.',
+        sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
+      {category:'pool', icon:'🏊', nameHe:'שתי בריכות שחייה חופיות — Dusit Thani Krabi', nameEn:'Two Beachfront Pools — Dusit Thani Krabi',
+        descHe:'שתי בריכות שחייה לאורך החוף, בתוך גנים טרופיים.',
+        descEn:'Two swimming pools along the beachfront, set within tropical gardens.',
+        sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
+      {category:'padel', icon:'🎾', nameHe:'מגרש הפאדל הראשון בקרבי — Sofitel Krabi Phokeethra', nameEn:'Krabi\'s First Padel Court — Sofitel Krabi Phokeethra',
+        descHe:'מגרש פאדל פתוח גם לאורחים שאינם מתארחים במלון, כ-2 דקות נסיעה מחוף קלונג מואנג. פתוח 7:00–22:00, כ-800 ฿ לשעה לאדם.',
+        descEn:'A padel court open to non-guests too, about a 2-minute drive from Klong Muang Beach. Open 7am–10pm, around ฿800/hour per person.',
+        sourceUrl:'https://www.sofitelkrabiphokeethra.com/leisureandlifestyle/padel-court/', mapQuery:'Sofitel Krabi Phokeethra Golf & Spa Resort, Klong Muang, Krabi'},
+      {category:'other', icon:'🎾', nameHe:'מגרש טניס וטניס שולחן — Dusit Thani Krabi', nameEn:'Tennis & Table Tennis — Dusit Thani Krabi',
+        descHe:'מגרש טניס וטניס שולחן בשטח המלון — פעילות קלילה לכל הגילאים.',
+        descEn:'A tennis court and table tennis on the hotel grounds — an easy activity for every age.',
+        sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
+      {category:'other', icon:'🛶', nameHe:'מרכז ספורט ימי — Dusit Thani Krabi', nameEn:'Water Sports Centre — Dusit Thani Krabi',
+        descHe:'קיאקים, גלישת רוח ושייט זמינים ישירות מהחוף של המלון, ללא עלות נוספת.',
+        descEn:'Kayaking, windsurfing and sailing gear available right from the hotel\'s beach, at no extra cost.',
+        sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'}
+    ],
     insights:{
       outdoor:[
         {titleHe:'טיול ארבעת האיים', titleEn:'Four Islands Tour',
@@ -2261,6 +2326,28 @@ const DESTINATIONS = [
       mapQuery:'JW Marriott Khao Lak Resort & Spa', mapAreaHe:'קאולק, תאילנד', mapAreaEn:'Khao Lak, Thailand',
       mapLat:8.7000, mapLon:98.2530
     },
+    sports:[
+      {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24 שעות — JW Marriott Khao Lak', nameEn:'24-Hour Fitness Center — JW Marriott Khao Lak',
+        descHe:'חדר כושר מאובזר במלואו, פתוח מסביב לשעון.',
+        descEn:'A fully equipped fitness center, open 24 hours a day.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'pool', icon:'🏊', nameHe:'בריכת לגונה של 2.4 ק״מ — JW Marriott Khao Lak', nameEn:'2.4km Lagoon Pool — JW Marriott Khao Lak',
+        descHe:'בריכת לגונה מפותלת לאורך 2.4 ק״מ דרך שטח המלון, כולל אזור מים לילדים.',
+        descEn:'A winding 2.4km lagoon-style pool that runs through the resort grounds, including a kids\' Aqua Play Zone.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'other', icon:'🎾', nameHe:'סקווש וטניס — JW Marriott Khao Lak', nameEn:'Squash & Tennis — JW Marriott Khao Lak',
+        descHe:'מגרשי סקווש וטניס בשטח המלון.',
+        descEn:'Squash and tennis courts on the hotel grounds.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'other', icon:'🏐', nameHe:'כדורעף חופים ויוגת בוקר — JW Marriott Khao Lak', nameEn:'Beach Volleyball & Beach Yoga — JW Marriott Khao Lak',
+        descHe:'כדורעף חופים ושיעורי יוגה על החוף, מאורגנים על ידי המלון.',
+        descEn:'Beach volleyball and beach yoga sessions, organized by the hotel.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'other', icon:'🛶', nameHe:'השכרת קיאקים — JW Marriott Khao Lak', nameEn:'Kayak Rental — JW Marriott Khao Lak',
+        descHe:'השכרת קיאקים וציוד ימי ישירות מחוף המלון.',
+        descEn:'Kayak and watercraft rental right from the hotel\'s beach.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'}
+    ],
     insights:{
       outdoor:[
         {titleHe:'מפרץ פאנגה ואי ג׳יימס בונד', titleEn:'Phang Nga Bay & James Bond Island',
@@ -2368,6 +2455,28 @@ const DESTINATIONS = [
       mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach', mapAreaHe:'קלים, פוקט', mapAreaEn:'Kalim, Phuket',
       mapLat:7.9070, mapLon:98.2985
     },
+    sports:[
+      {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24/7 — Phuket Marriott Merlin Beach', nameEn:'24/7 Fitness Center — Phuket Marriott Merlin Beach',
+        descHe:'חדר כושר מאובזר במלואו, פתוח 24/7.',
+        descEn:'A fully equipped gym, open around the clock.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
+      {category:'pool', icon:'🏊', nameHe:'שלוש בריכות לגונה — Phuket Marriott Merlin Beach', nameEn:'Three Lagoon Pools — Phuket Marriott Merlin Beach',
+        descHe:'שלוש בריכות בסגנון לגונה, כולל בר בתוך הבריכה הראשית ובריכת ילדים עם מגלשה.',
+        descEn:'Three lagoon-style pools, including a swim-up bar at the main pool and a kids\' pool with a water slide.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
+      {category:'padel', icon:'🎾', nameHe:'Sensei Padel Phuket — פאטונג/קלים', nameEn:'Sensei Padel Phuket — Patong/Kalim',
+        descHe:'ארבעה מגרשי פאדל חיצוניים, דקות ספורות מהמלון — כולל סאונה, בריכה וג׳קוזי לאחר המשחק.',
+        descEn:'Four outdoor padel courts, just minutes from the hotel — with a sauna, pool and jacuzzi to unwind after playing.',
+        sourceUrl:'https://senseipadel.com/', mapQuery:'Sensei Padel Phuket, 9/18 Sirirat Rd, Patong, Kathu, Phuket'},
+      {category:'football', icon:'⚽', nameHe:'Patong Football Club', nameEn:'Patong Football Club',
+        descHe:'ארבעה מגרשי דשא סינתטי (שניים מקורים) להשכרה שעתית — כ-1,500 ฿ לשעה.',
+        descEn:'Four artificial-turf pitches (two covered), available for hourly rental — about 1,500 THB/hour.',
+        sourceUrl:'https://phuket-insider.com/en/places/patong-football-club/', mapQuery:'Patong Football Club, Phuket'},
+      {category:'other', icon:'🏓', nameHe:'חדר משחקים, מגרש טניס וקיאקים — Phuket Marriott Merlin Beach', nameEn:'Games Room, Tennis & Kayaking — Phuket Marriott Merlin Beach',
+        descHe:'חדר משחקים עם טניס שולחן, מגרש טניס, וקיאקים ישירות מהמפרץ הפרטי של המלון.',
+        descEn:'A games room with table tennis, a tennis court, and kayaking right from the hotel\'s private cove.',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'}
+    ],
     insights:{
       outdoor:[
         {titleHe:'שנורקלינג באי ראצ׳ה', titleEn:'Racha Island Snorkeling',
@@ -2618,6 +2727,8 @@ function render(){
   safeRun('renderTimeline', renderTimeline);
   safeRun('renderDayDetail', renderDayDetail);
   safeRun('renderDestinations', renderDestinations);
+  safeRun('renderSports', renderSports);
+  safeRun('initScrollReveal', initScrollReveal);
   safeRun('renderFlightInfo', renderFlightInfo);
   safeRun('renderFAQ', renderFAQ);
   safeRun('renderPrep', renderPrep);
@@ -2983,13 +3094,12 @@ function renderDestinations(){
     `;
     wrap.appendChild(section);
   });
-  initScrollReveal();
 }
 
 function initScrollReveal(){
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const targets = document.querySelectorAll(
-    '#destinations .hotel-card, #destinations .map-card, #destinations .weather-card, #destinations .timeout-card, #destinations .cards-grid .card'
+    '#destinations .hotel-card, #destinations .map-card, #destinations .weather-card, #destinations .timeout-card, #destinations .cards-grid .card, #sportsWrap .cards-grid .card'
   );
   if (reduceMotion || !('IntersectionObserver' in window)){
     targets.forEach(el => el.classList.add('reveal', 'in'));
@@ -3002,6 +3112,39 @@ function initScrollReveal(){
     el.classList.add('reveal');
     io.observe(el);
   });
+}
+
+const SPORTS_CAT_KEY = {gym:'sportsCatGym', pool:'sportsCatPool', padel:'sportsCatPadel', football:'sportsCatFootball', other:'sportsCatOther'};
+
+function renderSports(){
+  const t = I18N[LANG];
+  const wrap = document.getElementById('sportsWrap');
+  if (!wrap) return;
+  wrap.innerHTML = DESTINATIONS.map(dest => {
+    const name = LANG === 'he' ? dest.nameHe : dest.nameEn;
+    const items = dest.sports || [];
+    if (!items.length) return '';
+    return `
+      <div class="sports-dest-block">
+        <h3 class="block-title"><span class="icon">📍</span><span>${name}</span></h3>
+        <div class="cards-grid">
+          ${items.map(s => `
+            <div class="card">
+              <div class="body">
+                <span class="ctag">${s.icon} ${t[SPORTS_CAT_KEY[s.category]] || t.sportsCatOther}</span>
+                <p class="cname">${LANG === 'he' ? s.nameHe : s.nameEn}</p>
+                <p class="cdesc">${LANG === 'he' ? s.descHe : s.descEn}</p>
+                <div class="sport-links">
+                  <a class="clink" href="${s.sourceUrl}" target="_blank" rel="noopener">${t.sportsSourceLink} →</a>
+                  <a class="clink" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapQuery)}" target="_blank" rel="noopener">${t.sportsMapLink}</a>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 /* ===== Tab switcher (shared by Flight Info + FAQ) ===== */
