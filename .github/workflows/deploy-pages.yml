@@ -1,0 +1,49 @@
+name: Deploy Pages site (Thailand trip + Morzin budget)
+
+on:
+  push:
+    branches: ["claude/update-claude-md-BGuLn", "claude/thailand-trip-itinerary-uqcon2"]
+    paths:
+      - "01-personal/thailand-trip-2026/**"
+      - "01-personal/morzin-budget-2026/**"
+      - "04-reference/whatsapp-export/album/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build combined site
+        run: |
+          mkdir -p _site
+          cp -r 01-personal/thailand-trip-2026/. _site/
+          if [ -d "04-reference/whatsapp-export/album" ]; then
+            mkdir -p _site/whatsapp-export/album
+            cp -r 04-reference/whatsapp-export/album/. _site/whatsapp-export/album/
+          fi
+          if [ -d "01-personal/morzin-budget-2026" ]; then
+            mkdir -p _site/morzin-budget-2026
+            cp -r 01-personal/morzin-budget-2026/. _site/morzin-budget-2026/
+          fi
+      - name: Upload combined site as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
