@@ -450,6 +450,8 @@
     align-self:flex-start; background:var(--sand); border-radius:999px; padding:3px 10px; font-size:.72rem; font-weight:700; color:var(--sea-dark);
   }
   .card .ctag.price-tag{ background:#fff1c9; color:#8a6209; }
+  .card .ctag.distance-tag{ background:#d9f0ea; color:var(--sea-dark); }
+  .card .sport-tags{display:flex; flex-wrap:wrap; gap:6px;}
   .card .cdesc{font-size:.88rem; opacity:.8; margin:0; flex:1;}
   .card .clink{font-size:.82rem; font-weight:700; color:var(--coral); text-decoration:none; margin-top:6px;}
   .card .clink:hover{text-decoration:underline;}
@@ -2003,8 +2005,8 @@ const I18N = {
     insightFooter: 'התובנה מתעדכנת לפי מזג האוויר בפועל של היום ⋅ ההערכה התקציבית היא הערכה גסה בלבד',
     navSports: 'ספורט ופעילויות',
     sportsTitle: 'ספורט ופעילויות משותפות', sportsSub: 'חדר כושר, בריכות, פאדל, כדורגל ועוד — לפי מיקום, עם קישור למקור ולמפה.',
-    sportsCatGym: 'חדר כושר', sportsCatPool: 'בריכת שחייה', sportsCatPadel: 'פאדל', sportsCatFootball: 'כדורגל', sportsCatOther: 'פעילות נוספת',
-    sportsSourceLink: 'המקור באינטרנט', sportsMapLink: '🗺️ מיקום ב-Google Maps',
+    sportsCatGym: 'חדר כושר', sportsCatPool: 'בריכת שחייה', sportsCatPadel: 'פאדל', sportsCatFootball: 'כדורגל', sportsCatRunning: 'ריצה והליכה', sportsCatOther: 'פעילות נוספת',
+    sportsSourceLink: 'המקור באינטרנט', sportsMapLink: '🗺️ מיקום ב-Google Maps', sportsDistanceIcon: '📍',
   },
   en: {
     brand: 'HaVenture',
@@ -2048,8 +2050,8 @@ const I18N = {
     insightFooter: 'Updates automatically based on today\'s actual weather ⋅ the budget is a rough estimate only',
     navSports: 'Sports & Activities',
     sportsTitle: 'Sports & Activities Together', sportsSub: 'Gym, pools, padel, football and more — organized by location, with a link to the source and to the map.',
-    sportsCatGym: 'Gym', sportsCatPool: 'Swimming Pool', sportsCatPadel: 'Padel', sportsCatFootball: 'Football', sportsCatOther: 'Other Activity',
-    sportsSourceLink: 'Source on the web', sportsMapLink: '🗺️ Location on Google Maps',
+    sportsCatGym: 'Gym', sportsCatPool: 'Swimming Pool', sportsCatPadel: 'Padel', sportsCatFootball: 'Football', sportsCatRunning: 'Running & Walking', sportsCatOther: 'Other Activity',
+    sportsSourceLink: 'Source on the web', sportsMapLink: '🗺️ Location on Google Maps', sportsDistanceIcon: '📍',
   }
 };
 
@@ -2072,23 +2074,38 @@ const DESTINATIONS = [
       {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24 שעות — Dinso Resort', nameEn:'24-Hour Fitness Center — Dinso Resort',
         descHe:'חדר כושר פתוח מסביב לשעון בתוך המלון, עם מכשירי הליכה, משקולות ומחצלות יוגה — ונוף לפאטונג בזמן האימון.',
         descEn:'An around-the-clock fitness center inside the hotel, with treadmills, weights and yoga mats — with views over Patong while you work out.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
       {category:'pool', icon:'🏊', nameHe:'שתי בריכות שחייה — Dinso Resort', nameEn:'Two Swimming Pools — Dinso Resort',
         descHe:'בריכה למבוגרים ובריכה נפרדת לילדים בשטח המלון, עם קברנות ליד הבריכה למנוחה בצל.',
         descEn:'A pool for adults and a separate pool for kids on the hotel grounds, with poolside cabanas for shaded downtime.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/outdoor-pool', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
       {category:'padel', icon:'🎾', nameHe:'Sensei Padel Phuket — פאטונג', nameEn:'Sensei Padel Phuket — Patong',
         descHe:'ארבעה מגרשי פאדל חיצוניים באיכות גבוהה, ממש בפאטונג — כולל סאונה, בריכה וג׳קוזי לאחר המשחק.',
         descEn:'Four high-quality outdoor padel courts right in Patong — with a sauna, pool and jacuzzi to unwind after playing.',
+        distanceHe:'כ-10 דקות נסיעה (הערכה)', distanceEn:'~10 min drive (estimate)',
         sourceUrl:'https://senseipadel.com/', mapQuery:'Sensei Padel Phuket, 9/18 Sirirat Rd, Patong, Kathu, Phuket'},
       {category:'football', icon:'⚽', nameHe:'Patong Football Club', nameEn:'Patong Football Club',
         descHe:'ארבעה מגרשי דשא סינתטי (שניים מקורים) להשכרה שעתית — אידיאלי למשחק משפחתי חופשי, כ-1,500 ฿ לשעה.',
         descEn:'Four artificial-turf pitches (two covered), available for hourly rental — great for an informal family kickabout, about 1,500 THB/hour.',
+        distanceHe:'כ-10 דקות נסיעה (הערכה)', distanceEn:'~10 min drive (estimate)',
         sourceUrl:'https://phuket-insider.com/en/places/patong-football-club/', mapQuery:'Patong Football Club, Phuket'},
       {category:'other', icon:'🥊', nameHe:'מואי תאי, יוגה ופעילויות נוספות — Dinso Resort', nameEn:'Muay Thai, Yoga & More — Dinso Resort',
         descHe:'שיעורי מואי תאי ויוגה, וגם פולו מים, דארטס ומשחקי קופסה — כולם בתוך שטח המלון.',
         descEn:'Muay Thai and yoga classes, plus water polo, darts and board games — all on the hotel grounds.',
-        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'}
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
+      {category:'running', icon:'🏃', nameHe:'שביל טבע לתצפית בחופת העצים — Dinso Resort', nameEn:'Treetop-View Nature Path — Dinso Resort',
+        descHe:'שבילי גן שקטים על גבעת המלון עצמה, המובילים לנקודות תצפית בחופת העצים מעל פאטונג — הליכת בוקר נעימה בלי לצאת מהשטח.',
+        descEn:'Quiet garden paths on the hotel\'s own hillside, leading to treetop viewpoints over Patong — a pleasant morning walk without leaving the property.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.dinsoresort.com/phuket/discover-dinso/wellbeing-and-fitness', mapQuery:'Dinso Resort & Villas Phuket, Patong'},
+      {category:'running', icon:'🏃', nameHe:'מסלול ריצה/הליכה: פאטונג הדלנדס עד חוף פרדייס', nameEn:'Patong Headlands to Paradise Beach Run/Walk',
+        descHe:'מסלול ריצה נופי וידוע לאורך רחובות ת׳אוואווונג ומואן-נגרן מחוף פאטונג, עם נוף לים לאורך רוב הדרך — אפשר להאריך עד חוף פרדייס.',
+        descEn:'A well-known scenic running route along Thaweewong and Muen-Ngern roads from Patong Beach, with sea views most of the way — extendable all the way to Paradise Beach.',
+        distanceHe:'כ-12–15 דקות הליכה במורד הגבעה עד תחילת המסלול בחוף פאטונג', distanceEn:'~12–15 min walk downhill to the trailhead at Patong Beach',
+        sourceUrl:'https://greatruns.com/phuket-thailand-patong-headlands/', mapQuery:'Patong Beach, Phuket'}
     ],
     insights:{
       outdoor:[
@@ -2201,22 +2218,32 @@ const DESTINATIONS = [
       {category:'gym', icon:'🏋️', nameHe:'DFiT Club — חדר הכושר של Dusit Thani Krabi', nameEn:'DFiT Club — Dusit Thani Krabi Gym',
         descHe:'חדר כושר מאובזר במלואו, כולל זירת מואי תאי, סאונה וחדר אדים.',
         descEn:'A fully equipped gym, including a Muay Thai ring, sauna and steam room.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
       {category:'pool', icon:'🏊', nameHe:'שתי בריכות שחייה חופיות — Dusit Thani Krabi', nameEn:'Two Beachfront Pools — Dusit Thani Krabi',
         descHe:'שתי בריכות שחייה לאורך החוף, בתוך גנים טרופיים.',
         descEn:'Two swimming pools along the beachfront, set within tropical gardens.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
       {category:'padel', icon:'🎾', nameHe:'מגרש הפאדל הראשון בקרבי — Sofitel Krabi Phokeethra', nameEn:'Krabi\'s First Padel Court — Sofitel Krabi Phokeethra',
         descHe:'מגרש פאדל פתוח גם לאורחים שאינם מתארחים במלון, כ-2 דקות נסיעה מחוף קלונג מואנג. פתוח 7:00–22:00, כ-800 ฿ לשעה לאדם.',
         descEn:'A padel court open to non-guests too, about a 2-minute drive from Klong Muang Beach. Open 7am–10pm, around ฿800/hour per person.',
+        distanceHe:'כ-2 דקות נסיעה', distanceEn:'~2 min drive',
         sourceUrl:'https://www.sofitelkrabiphokeethra.com/leisureandlifestyle/padel-court/', mapQuery:'Sofitel Krabi Phokeethra Golf & Spa Resort, Klong Muang, Krabi'},
       {category:'other', icon:'🎾', nameHe:'מגרש טניס וטניס שולחן — Dusit Thani Krabi', nameEn:'Tennis & Table Tennis — Dusit Thani Krabi',
         descHe:'מגרש טניס וטניס שולחן בשטח המלון — פעילות קלילה לכל הגילאים.',
         descEn:'A tennis court and table tennis on the hotel grounds — an easy activity for every age.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
       {category:'other', icon:'🛶', nameHe:'מרכז ספורט ימי — Dusit Thani Krabi', nameEn:'Water Sports Centre — Dusit Thani Krabi',
         descHe:'קיאקים, גלישת רוח ושייט זמינים ישירות מהחוף של המלון, ללא עלות נוספת.',
         descEn:'Kayaking, windsurfing and sailing gear available right from the hotel\'s beach, at no extra cost.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'},
+      {category:'running', icon:'🏃', nameHe:'ריצה והליכה לאורך חוף קלונג מואנג', nameEn:'Running & Walking Along Klong Muang Beach',
+        descHe:'החוף השקט של המלון עצמו — קו חוף ישר ונוח לריצה או הליכה, עם נוף לצוקי הגיר ולאיי הונג, בצל עצי אשוח ים גבוהים.',
+        descEn:'The hotel\'s own quiet shoreline — a flat, easy stretch for running or walking, with views of the limestone cliffs and Hong Islands, shaded by tall casuarina trees.',
+        distanceHe:'צמוד למלון', distanceEn:'Right at the hotel',
         sourceUrl:'https://www.dusit.com/dusitthani-krabibeachresort/', mapQuery:'Dusit Thani Krabi Beach Resort, Klong Muang'}
     ],
     insights:{
@@ -2330,23 +2357,38 @@ const DESTINATIONS = [
       {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24 שעות — JW Marriott Khao Lak', nameEn:'24-Hour Fitness Center — JW Marriott Khao Lak',
         descHe:'חדר כושר מאובזר במלואו, פתוח מסביב לשעון.',
         descEn:'A fully equipped fitness center, open 24 hours a day.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
       {category:'pool', icon:'🏊', nameHe:'בריכת לגונה של 2.4 ק״מ — JW Marriott Khao Lak', nameEn:'2.4km Lagoon Pool — JW Marriott Khao Lak',
         descHe:'בריכת לגונה מפותלת לאורך 2.4 ק״מ דרך שטח המלון, כולל אזור מים לילדים.',
         descEn:'A winding 2.4km lagoon-style pool that runs through the resort grounds, including a kids\' Aqua Play Zone.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
       {category:'other', icon:'🎾', nameHe:'סקווש וטניס — JW Marriott Khao Lak', nameEn:'Squash & Tennis — JW Marriott Khao Lak',
         descHe:'מגרשי סקווש וטניס בשטח המלון.',
         descEn:'Squash and tennis courts on the hotel grounds.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
       {category:'other', icon:'🏐', nameHe:'כדורעף חופים ויוגת בוקר — JW Marriott Khao Lak', nameEn:'Beach Volleyball & Beach Yoga — JW Marriott Khao Lak',
         descHe:'כדורעף חופים ושיעורי יוגה על החוף, מאורגנים על ידי המלון.',
         descEn:'Beach volleyball and beach yoga sessions, organized by the hotel.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
       {category:'other', icon:'🛶', nameHe:'השכרת קיאקים — JW Marriott Khao Lak', nameEn:'Kayak Rental — JW Marriott Khao Lak',
         descHe:'השכרת קיאקים וציוד ימי ישירות מחוף המלון.',
         descEn:'Kayak and watercraft rental right from the hotel\'s beach.',
-        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'}
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'running', icon:'🏃', nameHe:'טיילת החוף של קאולק', nameEn:'Khao Lak Beachfront Walk/Run',
+        descHe:'רצועת החוף הארוכה של המלון עצמו, מול ים אנדמן — קו ישר ופתוח, אידיאלי לריצת בוקר או הליכת ערב.',
+        descEn:'The hotel\'s long stretch of white-sand beach facing the Andaman Sea — flat and open, ideal for an early run or evening walk.',
+        distanceHe:'צמוד למלון', distanceEn:'Right at the hotel',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/', mapQuery:'JW Marriott Khao Lak Resort & Spa'},
+      {category:'running', icon:'🏃', nameHe:'שביל ה-JW Garden — אגמי מים מתוקים ונוף להרים', nameEn:'JW Garden Trail — Freshwater Lakes & Mountain Views',
+        descHe:'מסלול ריצה/הליכה חדש בתוך שטח JW Garden של המלון, לאורך אגמי מים מתוקים עם נוף להרים ולחיות בר מקומיות.',
+        descEn:'A newly created running/walking track inside the hotel\'s own JW Garden, alongside freshwater lakes with mountain views and local wildlife.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktkl-jw-marriott-khao-lak-resort-and-spa/experiences/jw-garden/wilderness-experience/', mapQuery:'JW Marriott Khao Lak Resort & Spa'}
     ],
     insights:{
       outdoor:[
@@ -2459,23 +2501,38 @@ const DESTINATIONS = [
       {category:'gym', icon:'🏋️', nameHe:'חדר כושר 24/7 — Phuket Marriott Merlin Beach', nameEn:'24/7 Fitness Center — Phuket Marriott Merlin Beach',
         descHe:'חדר כושר מאובזר במלואו, פתוח 24/7.',
         descEn:'A fully equipped gym, open around the clock.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
       {category:'pool', icon:'🏊', nameHe:'שלוש בריכות לגונה — Phuket Marriott Merlin Beach', nameEn:'Three Lagoon Pools — Phuket Marriott Merlin Beach',
         descHe:'שלוש בריכות בסגנון לגונה, כולל בר בתוך הבריכה הראשית ובריכת ילדים עם מגלשה.',
         descEn:'Three lagoon-style pools, including a swim-up bar at the main pool and a kids\' pool with a water slide.',
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
         sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
       {category:'padel', icon:'🎾', nameHe:'Sensei Padel Phuket — פאטונג/קלים', nameEn:'Sensei Padel Phuket — Patong/Kalim',
         descHe:'ארבעה מגרשי פאדל חיצוניים, דקות ספורות מהמלון — כולל סאונה, בריכה וג׳קוזי לאחר המשחק.',
         descEn:'Four outdoor padel courts, just minutes from the hotel — with a sauna, pool and jacuzzi to unwind after playing.',
+        distanceHe:'כ-10 דקות נסיעה (הערכה)', distanceEn:'~10 min drive (estimate)',
         sourceUrl:'https://senseipadel.com/', mapQuery:'Sensei Padel Phuket, 9/18 Sirirat Rd, Patong, Kathu, Phuket'},
       {category:'football', icon:'⚽', nameHe:'Patong Football Club', nameEn:'Patong Football Club',
         descHe:'ארבעה מגרשי דשא סינתטי (שניים מקורים) להשכרה שעתית — כ-1,500 ฿ לשעה.',
         descEn:'Four artificial-turf pitches (two covered), available for hourly rental — about 1,500 THB/hour.',
+        distanceHe:'כ-10 דקות נסיעה (הערכה)', distanceEn:'~10 min drive (estimate)',
         sourceUrl:'https://phuket-insider.com/en/places/patong-football-club/', mapQuery:'Patong Football Club, Phuket'},
       {category:'other', icon:'🏓', nameHe:'חדר משחקים, מגרש טניס וקיאקים — Phuket Marriott Merlin Beach', nameEn:'Games Room, Tennis & Kayaking — Phuket Marriott Merlin Beach',
         descHe:'חדר משחקים עם טניס שולחן, מגרש טניס, וקיאקים ישירות מהמפרץ הפרטי של המלון.',
         descEn:'A games room with table tennis, a tennis court, and kayaking right from the hotel\'s private cove.',
-        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'}
+        distanceHe:'בתוך המלון', distanceEn:'On-site',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
+      {category:'running', icon:'🏃', nameHe:'חוף המפרץ הפרטי — Merlin/Tri Trang', nameEn:'Private Cove Beach — Merlin/Tri Trang',
+        descHe:'הליכה או ריצה קלה על חוף המפרץ הפרטי והשקט של המלון, תחום בין שני ראשי יבשה משני צדדיו.',
+        descEn:'An easy walk or jog on the hotel\'s own quiet private cove, framed by headlands on both sides.',
+        distanceHe:'צמוד למלון', distanceEn:'Right at the hotel',
+        sourceUrl:'https://www.marriott.com/en-us/hotels/hktmb-phuket-marriott-resort-and-spa-merlin-beach/overview/', mapQuery:'Phuket Marriott Resort & Spa, Merlin Beach'},
+      {category:'running', icon:'🏃', nameHe:'הליכה לתצפית מעל מפרץ טרי-טראנג', nameEn:'Walk to the Tri Trang Bay Viewpoint',
+        descHe:'הליכה קלה מהמלון בכביש העולה לכיוון חוף פרדייס, חולף על פני מסעדות קטנות בנויות בצוק עם נוף פנורמי למפרץ, לפאטונג ולקלים.',
+        descEn:'An easy walk from the hotel up the road toward Paradise Beach, passing small cliffside restaurants with panoramic views over the bay to Patong and Kalim.',
+        distanceHe:'הליכה קלה, דקות ספורות מהמלון', distanceEn:'Easy walk, just minutes from the hotel',
+        sourceUrl:'https://www.phuket101.net/tri-tra-beach/', mapQuery:'Tri Trang Beach, Phuket'}
     ],
     insights:{
       outdoor:[
@@ -3114,7 +3171,7 @@ function initScrollReveal(){
   });
 }
 
-const SPORTS_CAT_KEY = {gym:'sportsCatGym', pool:'sportsCatPool', padel:'sportsCatPadel', football:'sportsCatFootball', other:'sportsCatOther'};
+const SPORTS_CAT_KEY = {gym:'sportsCatGym', pool:'sportsCatPool', padel:'sportsCatPadel', football:'sportsCatFootball', running:'sportsCatRunning', other:'sportsCatOther'};
 
 function renderSports(){
   const t = I18N[LANG];
@@ -3131,7 +3188,10 @@ function renderSports(){
           ${items.map(s => `
             <div class="card">
               <div class="body">
-                <span class="ctag">${s.icon} ${t[SPORTS_CAT_KEY[s.category]] || t.sportsCatOther}</span>
+                <div class="sport-tags">
+                  <span class="ctag">${s.icon} ${t[SPORTS_CAT_KEY[s.category]] || t.sportsCatOther}</span>
+                  <span class="ctag distance-tag">${t.sportsDistanceIcon} ${LANG === 'he' ? s.distanceHe : s.distanceEn}</span>
+                </div>
                 <p class="cname">${LANG === 'he' ? s.nameHe : s.nameEn}</p>
                 <p class="cdesc">${LANG === 'he' ? s.descHe : s.descEn}</p>
                 <div class="sport-links">
