@@ -4,6 +4,8 @@
   "heroStatement": "Nineteen days, four hotels, one island twice — Phuket to Krabi to Khao Lak and back to Phuket, almost exactly as planned and still full of surprises.",
   "heroStatementNote": "[placeholder — replace with your own line once you've picked a favorite moment; keep it specific, not a generic travel tagline]",
   "route": "Phuket → Krabi → Khao Lak → Phuket",
+  "mediaBudget": { "photos": 80, "videos": 20 },
+  "tripHighlight": { "value": "1", "label": "island, twice" },
   "flights": {
     "out": { "date": "2026-08-17", "route": "Tel Aviv → Abu Dhabi → Phuket" },
     "back": { "date": "2026-09-04", "route": "Phuket → Abu Dhabi → Tel Aviv" }

@@ -11,7 +11,6 @@ function formatDate(iso) {
 function formatDateRange(startIso, endIsoExclusive) {
   const end = new Date(`${endIsoExclusive}T12:00:00`);
   end.setDate(end.getDate() - 1);
-  const endIso = end.toISOString().slice(0, 10);
   return `${DAY_FORMAT.format(new Date(`${startIso}T12:00:00`))} – ${DAY_FORMAT.format(end)}`;
 }
 
@@ -58,11 +57,22 @@ function groupBy(items, keyFn) {
   return map;
 }
 
+function tripDayCount(tripMeta) {
+  const start = new Date(`${tripMeta.tripStart}T00:00:00`);
+  const end = new Date(`${tripMeta.tripEnd}T00:00:00`);
+  return Math.round((end - start) / 86400000) + 1;
+}
+
 function renderHero(tripMeta) {
   document.getElementById("heroDates").textContent =
     `${formatDate(tripMeta.tripStart)} – ${formatDate(tripMeta.tripEnd)}, 2026`;
   document.getElementById("heroStatement").textContent = tripMeta.heroStatement;
-  document.getElementById("heroRoute").textContent = tripMeta.route;
+
+  const highlight = tripMeta.tripHighlight || { value: "", label: "" };
+  document.getElementById("statStrip").innerHTML = `
+    <div class="stat"><b>${tripDayCount(tripMeta)}</b><span>days</span></div>
+    <div class="stat"><b>${tripMeta.legs.length}</b><span>stops</span></div>
+    <div class="stat"><b>${highlight.value}</b><span>${highlight.label}</span></div>`;
 }
 
 function renderTimeline(photos, tripMeta) {
@@ -80,7 +90,7 @@ function renderTimeline(photos, tripMeta) {
       return `
         <div class="timeline-day">
           <p class="timeline-date">${formatDate(date)} · ${leg}</p>
-          <div class="grid">
+          <div class="mosaic">
             ${items.map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`).join("")}
           </div>
         </div>`;
@@ -88,32 +98,38 @@ function renderTimeline(photos, tripMeta) {
     .join("");
 }
 
+const STOP_COLORS = ["--stop-1", "--stop-2", "--stop-3", "--stop-4"];
+
 function renderLocations(photos, tripMeta) {
   const byLeg = groupBy(photos, (p) => p.leg);
   const content = document.getElementById("locationsContent");
 
   content.innerHTML = tripMeta.legs
-    .map((leg) => {
+    .map((leg, index) => {
       const items = byLeg.get(leg.id) || [];
+      const colorVar = STOP_COLORS[index % STOP_COLORS.length];
+      const style = `--stop-color: var(${colorVar}); --stop-soft: var(${colorVar}-soft);`;
       return `
-        <section class="leg" data-leg="${leg.id}">
-          <div class="leg-header">
+        <section class="stop" data-leg="${leg.id}" style="${style}">
+          <div class="stop-dot"></div>
+          <div class="folder">
+            <span class="folder-tab">Stop ${index + 1}</span>
             <h2 class="leg-name">${leg.name}</h2>
             <p class="leg-meta">${formatDateRange(leg.start, leg.end)} · ${leg.hotel}</p>
             <p class="leg-reflection">${leg.reflection}</p>
+            ${items.length
+              ? `<div class="mosaic">${items
+                  .map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`)
+                  .join("")}</div>`
+              : emptyState("python scripts/process_media.py")}
           </div>
-          ${items.length
-            ? `<div class="grid">${items
-                .map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`)
-                .join("")}</div>`
-            : emptyState("python scripts/process_media.py")}
         </section>`;
     })
     .join("");
 
   const filter = document.getElementById("locationFilter");
   filter.innerHTML =
-    `<button type="button" data-leg="all" class="is-active">All</button>` +
+    `<button type="button" data-leg="all" class="is-active">All stops</button>` +
     tripMeta.legs.map((leg) => `<button type="button" data-leg="${leg.id}">${leg.name}</button>`).join("");
 
   filter.addEventListener("click", (e) => {
@@ -122,8 +138,8 @@ function renderLocations(photos, tripMeta) {
     filter.querySelectorAll("button").forEach((b) => b.classList.remove("is-active"));
     button.classList.add("is-active");
     const legId = button.dataset.leg;
-    content.querySelectorAll(".leg").forEach((section) => {
-      section.style.display = legId === "all" || section.dataset.leg === legId ? "" : "none";
+    content.querySelectorAll(".stop").forEach((section) => {
+      section.hidden = legId !== "all" && section.dataset.leg !== legId;
     });
   });
 }

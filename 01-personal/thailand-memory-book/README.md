@@ -4,23 +4,58 @@ A static, shareable memory book for the Thailand trip (Aug 17 – Sep 4, 2026):
 Phuket → Krabi → Khao Lak → Phuket. Two views — a day-by-day timeline and
 a by-location gallery — both built from the same photo/video set.
 
-## Adding your photos and videos
+## Getting your photos into this project
 
-1. Drop files (any layout — flat or in subfolders, any mix of devices) into
-   `media/originals/`. Nothing needs to be sorted by hand.
-2. Install the one dependency and run the processing script:
-   ```bash
-   pip install -r scripts/requirements.txt
-   python scripts/process_media.py
-   ```
-3. The script reads each photo's capture date (and GPS, if present) from its
-   metadata, works out which leg of the trip it belongs to, resizes it for
-   the web, and writes `data/photo-index.json`. Re-run it any time you add
-   more files — it's safe to run repeatedly.
+This runs in a git repo, not on your own machine directly, so:
 
-Video compression requires `ffmpeg` on your machine. If it's not installed,
-the script still classifies and includes the video, just uncompressed —
-install ffmpeg and re-run for smaller files.
+1. Clone this repo (or pull the latest on your existing clone) on the
+   machine where your photos/videos actually are.
+2. Copy files — any layout, flat or in subfolders, any mix of devices,
+   HEIC included — into `01-personal/thailand-memory-book/media/originals/`.
+   Nothing needs to be sorted by hand.
+3. Commit and push. The next session picks them up from there and runs the
+   processing script below.
+
+## Processing your photos and videos
+
+```bash
+pip install -r scripts/requirements.txt
+python scripts/process_media.py
+```
+
+This reads each photo's capture date (and GPS, if present) from its
+metadata, works out which leg of the trip it belongs to, resizes it for the
+web, and writes `data/photo-index.json`. Re-run it any time you add more
+files — it's safe to run repeatedly.
+
+Video compression and duration reads require `ffmpeg`/`ffprobe` on whichever
+machine runs the script. Without it, videos can't be reliably classified
+(see the >4s rule below) and get skipped with a note telling you to install
+ffmpeg.
+
+### Live Photos and short clips
+
+A clip only counts as a real "video" if it's **longer than 4 seconds**.
+Anything shorter — an iPhone Live Photo's motion clip, an accidental
+micro-recording — is dropped automatically rather than cluttering the
+video count. If you genuinely want a short clip included, force it in (see
+overrides below).
+
+### How many photos/videos end up on the page
+
+You don't need to manually curate down to "the best ones" — the script
+does this for you, driven by real metadata:
+
+- `data/trip-meta.json`'s `mediaBudget` sets the total target across the
+  whole trip (default: 80 photos, 20 videos). Each leg gets a share
+  proportional to how many days you spent there.
+- If a leg has more photos than its quota, near-duplicate bursts (several
+  shots taken seconds apart) collapse to one first, then the rest are evenly
+  sampled across the whole stay — so the kept set still spans the entire
+  leg instead of clumping at the start.
+- **Nothing is deleted.** Anything not selected just isn't copied into
+  `media/optimized/` or listed on the page. Running the script again after
+  adjusting `mediaBudget` or overrides re-selects from the same originals.
 
 ### Files with no readable date
 
@@ -41,17 +76,24 @@ a resort's exact coordinates), but prints a warning when the two disagree
 by more than a nearby leg. If the GPS reading is actually the correct one,
 add an override as above.
 
-## How many photos/videos to use
+### Forcing a specific file in
 
-For something people will actually browse rather than skim past:
+If the balancing step leaves out a shot you want on the page regardless
+(or a ≤4s clip you want kept as a real video), force it in:
 
-- **~15–25 photos per location** (~60–100 total) — your best shot per
-  moment, not every near-duplicate.
-- Resize target is already handled by the script: max 2400px on the long
-  edge, JPEG quality 82 (roughly 150–400KB per photo).
-- **1–3 short video highlights per location** (10–30 seconds), compressed
-  to 1080p. For longer raw footage, link out to a Google Photos/Drive album
-  instead of embedding it — keeps the page fast.
+```json
+{ "IMG_4021.jpg": { "include": true } }
+```
+
+Forced files bypass both the burst-thinning and the leg's quota — they're
+always included, on top of whatever the quota naturally selects.
+
+## Output size
+
+Every kept photo is resized to a max of 2400px on the long edge at JPEG
+quality 82 (roughly 150–400KB each). Kept videos are compressed to 1080p.
+For a long raw video you want to preserve but not embed, link out to a
+Google Photos/Drive album instead — keeps the page fast.
 
 ## Editing the text
 
