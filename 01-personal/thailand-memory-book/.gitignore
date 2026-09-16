@@ -1,0 +1,3 @@
+media/originals/*
+!media/originals/.gitkeep
+__pycache__/

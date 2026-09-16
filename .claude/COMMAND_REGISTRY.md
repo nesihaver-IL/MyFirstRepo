@@ -50,6 +50,9 @@
 - nano-banana-pro
 - github-trending
 
+#### Design Language (added 2026-09-15)
+- emil-kowalski-design
+
 ### Aliases (Short Names)
 You can use these trigger phrases to activate commands:
 
@@ -106,6 +109,8 @@ You can use these trigger phrases to activate commands:
 | "chart" | analytics-metrics | KPI displays, metrics dashboards |
 | "copilot" | copilot-docs | GitHub Copilot custom instructions |
 | "figma" | figma | Figma API, design tokens, component gen |
+| "apply design polish" | emil-kowalski-design | Typography, spacing, motion, color restraint |
+| "make it look designed" | emil-kowalski-design | Emil Kowalski-style visual pass |
 | "generate image" | nano-banana-pro | Gemini 3 Pro image generation |
 | "trending" | github-trending | GitHub trending repos discovery |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
@@ -253,6 +258,7 @@ Located in `.claude/agents/*/AGENT.md`.
 | `aws-infra-agent` | `garmin-health/backend/` + `aws-ai-agent/` | Terraform, Lambda, DynamoDB, IAM operations |
 | `jira-confluence-agent` | `02-work/automation-integrations/` | JIRA/Confluence automation, sprint workflows |
 | `code-quality-agent` | All projects | Pre-PR quality gate, security scan, test validation |
+| `impeccable` | Any project (on request) | Strip AI-authorship tells from code and visible copy before sharing a deliverable |
 
 ### Invoking Agents
 ```
@@ -260,6 +266,7 @@ Located in `.claude/agents/*/AGENT.md`.
 "AWS infra agent: check why the Lambda is failing"
 "JIRA agent: build the sprint review automation"
 "Quality agent: run the full pre-PR check"
+"Impeccable: review the memory book for AI tells before we ship it"
 ```
 
 ## Diagnostic Scripts
@@ -273,7 +280,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-03-13
-Total Skills: 28
-Total Agents: 4
+Last Updated: 2026-09-15
+Total Skills: 29
+Total Agents: 5
 Status: ✅ Active

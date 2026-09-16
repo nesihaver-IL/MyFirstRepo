@@ -1,0 +1,61 @@
+{
+  "tripStart": "2026-08-17",
+  "tripEnd": "2026-09-04",
+  "heroStatement": "Nineteen days, four hotels, one island twice — Phuket to Krabi to Khao Lak and back to Phuket, almost exactly as planned and still full of surprises.",
+  "heroStatementNote": "[placeholder — replace with your own line once you've picked a favorite moment; keep it specific, not a generic travel tagline]",
+  "route": "Phuket → Krabi → Khao Lak → Phuket",
+  "flights": {
+    "out": { "date": "2026-08-17", "route": "Tel Aviv → Abu Dhabi → Phuket" },
+    "back": { "date": "2026-09-04", "route": "Phuket → Abu Dhabi → Tel Aviv" }
+  },
+  "legs": [
+    {
+      "id": "phuket1",
+      "name": "Phuket (Part 1)",
+      "start": "2026-08-18",
+      "end": "2026-08-22",
+      "hotel": "Dinso Resort & Villas Phuket, Vignette Collection",
+      "area": "Patong hillside",
+      "lat": 7.901,
+      "lon": 98.2977,
+      "blurb": "A Wabi-Sabi-inspired boutique resort on a hillside above Patong.",
+      "reflection": "[placeholder] Big Buddha, the jungle zipline, Bangla Road at night, a day trip to Phi Phi and James Bond Island — the trip's first taste of the Andaman coast."
+    },
+    {
+      "id": "krabi",
+      "name": "Krabi",
+      "start": "2026-08-22",
+      "end": "2026-08-26",
+      "hotel": "Dusit Thani Krabi Beach Resort",
+      "area": "Klong Muang Beach",
+      "lat": 8.147,
+      "lon": 98.766,
+      "blurb": "A beachfront resort on Klong Muang Beach, framed by limestone cliffs.",
+      "reflection": "[placeholder] Railay Beach and rock climbing, the Four Islands tour, Tiger Cave Temple, the Emerald Pool, and the Ao Nang night market."
+    },
+    {
+      "id": "khaolak",
+      "name": "Khao Lak",
+      "start": "2026-08-26",
+      "end": "2026-08-30",
+      "hotel": "JW Marriott Khao Lak Resort & Spa",
+      "area": "Khao Lak beachfront",
+      "lat": 8.671,
+      "lon": 98.24,
+      "blurb": "A beachfront resort among tropical gardens facing the Andaman Sea.",
+      "reflection": "[placeholder] Phang Nga Bay by canoe, Khao Sok National Park, the Lam Ru waterfall, the tsunami memorial, and the elephant sanctuary."
+    },
+    {
+      "id": "phuket2",
+      "name": "Phuket (Part 2)",
+      "start": "2026-08-30",
+      "end": "2026-09-04",
+      "hotel": "Phuket Marriott Resort & Spa, Merlin Beach",
+      "area": "Tri-Trang / Merlin Beach",
+      "lat": 7.886,
+      "lon": 98.303,
+      "blurb": "A beachfront resort on its own secluded cove, minutes south of Patong.",
+      "reflection": "[placeholder] Freedom Beach, the old town, snorkeling off Racha Island, parasailing, and a last sunset at Kalim Beach."
+    }
+  ]
+}
