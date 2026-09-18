@@ -5,6 +5,7 @@ on:
     branches: ["claude/update-claude-md-BGuLn", "claude/thailand-trip-itinerary-uqcon2"]
     paths:
       - "01-personal/thailand-trip-2026/**"
+      - "01-personal/thailand-memory-book/**"
       - "01-personal/morzin-budget-2026/**"
       - "04-reference/whatsapp-export/album/**"
       - ".github/workflows/deploy-pages.yml"
@@ -39,6 +40,10 @@ jobs:
           if [ -d "01-personal/morzin-budget-2026" ]; then
             mkdir -p _site/morzin-budget-2026
             cp -r 01-personal/morzin-budget-2026/. _site/morzin-budget-2026/
+          fi
+          if [ -d "01-personal/thailand-memory-book" ]; then
+            mkdir -p _site/thailand-memory-book
+            cp -r 01-personal/thailand-memory-book/. _site/thailand-memory-book/
           fi
       - name: Upload combined site as Pages artifact
         uses: actions/upload-pages-artifact@v3
