@@ -1,2 +1,4 @@
 Pillow>=10.0
 pillow-heif>=0.15
+imagehash>=4.3
+numpy>=1.26

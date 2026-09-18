@@ -49,10 +49,12 @@ does this for you, driven by real metadata:
 - `data/trip-meta.json`'s `mediaBudget` sets the total target across the
   whole trip (default: 80 photos, 20 videos). Each leg gets a share
   proportional to how many days you spent there.
-- If a leg has more photos than its quota, near-duplicate bursts (several
-  shots taken seconds apart) collapse to one first, then the rest are evenly
-  sampled across the whole stay — so the kept set still spans the entire
-  leg instead of clumping at the start.
+- Near-duplicate photos are detected by actual visual content, not just
+  timing — the same shot taken twice minutes apart is caught the same way
+  as a rapid-fire burst — and only the sharpest (least blurry) copy of each
+  is kept. The remaining unique shots are then evenly sampled across the
+  whole stay, so the kept set still spans the entire leg instead of
+  clumping at the start.
 - **Nothing is deleted.** Anything not selected just isn't copied into
   `media/optimized/` or listed on the page. Running the script again after
   adjusting `mediaBudget` or overrides re-selects from the same originals.

@@ -15,9 +15,10 @@ a secondary confirmation signal), then balances how many end up on the page:
   video content, and is dropped.
 - Each trip leg gets a photo/video quota from data/trip-meta.json's
   `mediaBudget`, sized to that leg's share of the trip's total days.
-- Photos over quota are thinned by burst first (near-duplicate shots taken
-  seconds apart collapse to one), then evenly sampled across the stay so the
-  kept set still spans the whole leg instead of clumping.
+- Photos are deduplicated by actual visual content first (not just timing) —
+  near-identical shots collapse to whichever is sharpest — then evenly
+  sampled across the stay so the kept set still spans the whole leg instead
+  of clumping.
 - Nothing is deleted — anything not selected just isn't copied into
   media/optimized/ or listed in data/photo-index.json. Force a specific file
   in past its quota with `"include": true` in media/overrides.json.
@@ -34,10 +35,12 @@ import sys
 from dataclasses import dataclass, asdict
 from datetime import date, datetime
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
+import imagehash
+import numpy as np
 import pillow_heif
-from PIL import Image, ExifTags, ImageOps
+from PIL import Image, ExifTags, ImageFilter, ImageOps
 
 pillow_heif.register_heif_opener()
 
@@ -53,8 +56,9 @@ JPEG_QUALITY = 82
 VIDEO_MAX_HEIGHT = 1080
 VIDEO_CRF = 23
 MIN_VIDEO_SECONDS = 4.0
-BURST_GAP_SECONDS = 90
 FLIGHT_PHOTO_RESERVE = 2
+DUPLICATE_HASH_THRESHOLD = 8
+ANALYSIS_SIZE = (400, 400)
 
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".heic", ".heif"}
 VIDEO_EXTS = {".mp4", ".mov", ".m4v"}
@@ -74,6 +78,8 @@ class Candidate:
     leg: str
     duration: Optional[float] = None
     forced: bool = False
+    phash: Optional[Any] = None
+    sharpness: Optional[float] = None
 
 
 @dataclass
@@ -164,6 +170,21 @@ def read_video_metadata(path: Path):
         return None, None
 
 
+def analyze_image(path: Path) -> tuple[Optional[Any], Optional[float]]:
+    """Returns (perceptual_hash, sharpness) from a small downscaled copy, so
+    comparisons are fast and not biased by differing original resolutions."""
+    try:
+        with Image.open(path) as img:
+            small = ImageOps.exif_transpose(img).convert("RGB")
+            small.thumbnail(ANALYSIS_SIZE)
+            phash = imagehash.phash(small)
+            edges = small.convert("L").filter(ImageFilter.FIND_EDGES)
+            sharpness = float(np.asarray(edges, dtype=np.float64).var())
+            return phash, sharpness
+    except Exception:
+        return None, None
+
+
 def classify_leg(capture_date: str, trip_meta: dict) -> str:
     if capture_date == trip_meta["tripStart"]:
         return "flight-out"
@@ -217,15 +238,34 @@ def compute_quotas(trip_meta: dict, media_budget: dict) -> tuple[dict[str, int],
     return photo_quotas, video_quotas
 
 
-def thin_bursts(candidates: list[Candidate], gap_seconds: int = BURST_GAP_SECONDS) -> list[Candidate]:
-    if not candidates:
-        return []
-    ordered = sorted(candidates, key=lambda c: c.capture_dt)
-    kept = [ordered[0]]
-    for candidate in ordered[1:]:
-        if (candidate.capture_dt - kept[-1].capture_dt).total_seconds() > gap_seconds:
-            kept.append(candidate)
-    return kept
+def deduplicate_by_content(candidates: list[Candidate]) -> tuple[list[Candidate], list[tuple[str, str]]]:
+    """Clusters photos with near-identical visual content — regardless of
+    when they were taken — and keeps only the sharpest in each cluster.
+    Returns (kept, dropped_pairs) where dropped_pairs is
+    [(dropped_rel_name, kept_rel_name), ...] for reporting."""
+    remaining = list(candidates)
+    kept: list[Candidate] = []
+    dropped_pairs: list[tuple[str, str]] = []
+
+    while remaining:
+        anchor = remaining.pop(0)
+        cluster = [anchor]
+        still_remaining = []
+        for other in remaining:
+            if (anchor.phash is not None and other.phash is not None
+                    and anchor.phash - other.phash <= DUPLICATE_HASH_THRESHOLD):
+                cluster.append(other)
+            else:
+                still_remaining.append(other)
+        remaining = still_remaining
+
+        best = max(cluster, key=lambda c: c.sharpness or 0)
+        kept.append(best)
+        for c in cluster:
+            if c is not best:
+                dropped_pairs.append((c.rel_name, best.rel_name))
+
+    return kept, dropped_pairs
 
 
 def even_sample(candidates: list[Candidate], quota: int) -> list[Candidate]:
@@ -239,13 +279,19 @@ def even_sample(candidates: list[Candidate], quota: int) -> list[Candidate]:
     return [candidates[i] for i in indices]
 
 
-def select_bucket(candidates: list[Candidate], quota: int, thin: bool) -> list[Candidate]:
+def select_bucket(
+    candidates: list[Candidate], quota: int, dedup: bool
+) -> tuple[list[Candidate], list[tuple[str, str]]]:
     forced = [c for c in candidates if c.forced]
     rest = sorted((c for c in candidates if not c.forced), key=lambda c: c.capture_dt)
-    if thin:
-        rest = thin_bursts(rest)
-    remaining_quota = max(quota - len(forced), 0)
-    return sorted(forced + even_sample(rest, remaining_quota), key=lambda c: c.capture_dt)
+    dropped_pairs: list[tuple[str, str]] = []
+    if dedup:
+        rest, dropped_pairs = deduplicate_by_content(rest)
+        rest = sorted(rest, key=lambda c: c.capture_dt)
+    # Forced items are additive on top of the quota, not counted against it —
+    # forcing a file in shouldn't silently bump something else out.
+    selected = sorted(forced + even_sample(rest, quota), key=lambda c: c.capture_dt)
+    return selected, dropped_pairs
 
 
 def process_image(path: Path, dest_dir: Path, out_name: str) -> tuple[int, int]:
@@ -321,10 +367,14 @@ def gather_candidates(trip_meta: dict, overrides: dict) -> tuple[list[Candidate]
         capture_date = capture_dt.strftime("%Y-%m-%d")
         leg = override.get("leg") or classify_leg(capture_date, trip_meta)
 
+        phash = sharpness = None
+        if is_image:
+            phash, sharpness = analyze_image(path)
+
         candidates.append(Candidate(
             path=path, rel_name=rel_name, is_image=is_image, capture_dt=capture_dt,
             lat=lat, lon=lon, low_confidence=low_confidence, leg=leg,
-            duration=duration, forced=forced,
+            duration=duration, forced=forced, phash=phash, sharpness=sharpness,
         ))
 
     return candidates, needs_override, dropped_short_clips, duration_unknown
@@ -360,19 +410,25 @@ def main() -> int:
     buckets = ["flight-out"] + [leg["id"] for leg in trip_meta["legs"]] + ["flight-return"]
     selected: list[Candidate] = []
     report_rows = []
+    duplicate_pairs: list[tuple[str, str]] = []
     for bucket in buckets:
         bucket_photos = [c for c in candidates if c.leg == bucket and c.is_image]
         bucket_videos = [c for c in candidates if c.leg == bucket and not c.is_image]
-        kept_photos = select_bucket(bucket_photos, photo_quotas.get(bucket, 0), thin=True)
-        kept_videos = select_bucket(bucket_videos, video_quotas.get(bucket, 0), thin=False)
+        kept_photos, bucket_dup_pairs = select_bucket(bucket_photos, photo_quotas.get(bucket, 0), dedup=True)
+        kept_videos, _ = select_bucket(bucket_videos, video_quotas.get(bucket, 0), dedup=False)
         selected.extend(kept_photos)
         selected.extend(kept_videos)
+        duplicate_pairs.extend(bucket_dup_pairs)
         report_rows.append((
             bucket, photo_quotas.get(bucket, 0), len(bucket_photos), len(kept_photos),
             video_quotas.get(bucket, 0), len(bucket_videos), len(kept_videos),
         ))
 
-    excluded = [c.rel_name for c in candidates if c not in selected]
+    duplicate_dropped_names = {dropped for dropped, _kept in duplicate_pairs}
+    excluded = [
+        c.rel_name for c in candidates
+        if c not in selected and c.rel_name not in duplicate_dropped_names
+    ]
 
     records: list[MediaRecord] = []
     for c in selected:
@@ -407,6 +463,14 @@ def main() -> int:
     print(f"{'bucket':<14}{'photos (quota/found/kept)':<28}{'videos (quota/found/kept)'}")
     for bucket, pq, pf, pk, vq, vf, vk in report_rows:
         print(f"{bucket:<14}{f'{pq}/{pf}/{pk}':<28}{f'{vq}/{vf}/{vk}'}")
+
+    if duplicate_pairs:
+        print(f"\n{len(duplicate_pairs)} near-duplicate photo(s) removed (kept the sharpest of each):")
+        for dropped, kept in duplicate_pairs[:10]:
+            print(f"  {dropped}  -- duplicate of -->  {kept} (kept, sharper)")
+        if len(duplicate_pairs) > 10:
+            print(f"  ...and {len(duplicate_pairs) - 10} more")
+        print('Force a dropped one back in with: { "include": true } in media/overrides.json')
 
     if excluded:
         shown = excluded[:10]
