@@ -1,4 +1,4 @@
-name: Deploy Pages site (Thailand trip + Morzin budget)
+name: Deploy Pages site (Thailand trip + Memory Book + Morzin budget)
 
 on:
   push:
