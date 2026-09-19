@@ -23,11 +23,12 @@ function legLabel(legId, tripMeta) {
 }
 
 function mediaThumb(item) {
-  const src = `${MEDIA_BASE}/${item.filename}`;
+  const src = `${MEDIA_BASE}/${item.thumb}`;
+  const img = `<img src="${src}" loading="lazy" alt="">`;
   if (item.type === "video") {
-    return `<video src="${src}" muted playsinline preload="metadata"></video>`;
+    return `${img}<span class="play-badge" aria-hidden="true">▶</span>`;
   }
-  return `<img src="${src}" loading="lazy" alt="">`;
+  return img;
 }
 
 function mediaFull(item) {

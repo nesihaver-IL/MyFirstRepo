@@ -53,6 +53,8 @@ PHOTO_INDEX_PATH = PROJECT_ROOT / "data" / "photo-index.json"
 
 MAX_LONG_EDGE = 2400
 JPEG_QUALITY = 82
+THUMB_LONG_EDGE = 480
+THUMB_QUALITY = 70
 VIDEO_MAX_HEIGHT = 1080
 VIDEO_CRF = 23
 MIN_VIDEO_SECONDS = 4.0
@@ -86,6 +88,7 @@ class Candidate:
 class MediaRecord:
     id: str
     filename: str
+    thumb: str
     type: str
     leg: str
     date: str
@@ -294,12 +297,16 @@ def select_bucket(
     return selected, dropped_pairs
 
 
-def process_image(path: Path, dest_dir: Path, out_name: str) -> tuple[int, int]:
+def process_image(path: Path, dest_dir: Path, out_name: str, thumb_name: str) -> tuple[int, int]:
     with Image.open(path) as img:
-        img = ImageOps.exif_transpose(img)
-        img = img.convert("RGB")
-        img.thumbnail((MAX_LONG_EDGE, MAX_LONG_EDGE), Image.LANCZOS)
+        img = ImageOps.exif_transpose(img).convert("RGB")
         dest_dir.mkdir(parents=True, exist_ok=True)
+
+        thumb = img.copy()
+        thumb.thumbnail((THUMB_LONG_EDGE, THUMB_LONG_EDGE), Image.LANCZOS)
+        thumb.save(dest_dir / thumb_name, "JPEG", quality=THUMB_QUALITY, optimize=True)
+
+        img.thumbnail((MAX_LONG_EDGE, MAX_LONG_EDGE), Image.LANCZOS)
         img.save(dest_dir / out_name, "JPEG", quality=JPEG_QUALITY, optimize=True)
         return img.size
 
@@ -317,6 +324,21 @@ def process_video(path: Path, dest_dir: Path, out_name: str) -> bool:
             str(dest_dir / out_name),
         ],
         capture_output=True, timeout=600,
+    )
+    return result.returncode == 0
+
+
+def make_video_poster(path: Path, dest_dir: Path, thumb_name: str) -> bool:
+    if not shutil.which("ffmpeg"):
+        return False
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    result = subprocess.run(
+        [
+            "ffmpeg", "-y", "-ss", "0.3", "-i", str(path), "-frames:v", "1",
+            "-vf", f"scale='min({THUMB_LONG_EDGE},iw)':-2",
+            str(dest_dir / thumb_name),
+        ],
+        capture_output=True, timeout=60,
     )
     return result.returncode == 0
 
@@ -437,20 +459,24 @@ def main() -> int:
         uid = short_id(c.path)
         out_ext = ".jpg" if c.is_image else ".mp4"
         out_name = f"{capture_date}_{capture_time.replace(':', '')}_{uid}{out_ext}"
+        thumb_name = f"thumb_{capture_date}_{capture_time.replace(':', '')}_{uid}.jpg"
         dest_dir = OPTIMIZED_DIR / c.leg
 
         width = height = None
         if c.is_image:
-            width, height = process_image(c.path, dest_dir, out_name)
+            width, height = process_image(c.path, dest_dir, out_name, thumb_name)
         else:
             ok = process_video(c.path, dest_dir, out_name)
             if not ok:
                 print(f"  ffmpeg unavailable or failed for {c.rel_name} — copying original instead")
                 dest_dir.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(c.path, dest_dir / out_name)
+            if not make_video_poster(c.path, dest_dir, thumb_name):
+                print(f"  couldn't extract a poster frame for {c.rel_name} — grid tile will show blank")
 
         records.append(MediaRecord(
-            id=uid, filename=f"{c.leg}/{out_name}", type="photo" if c.is_image else "video",
+            id=uid, filename=f"{c.leg}/{out_name}", thumb=f"{c.leg}/{thumb_name}",
+            type="photo" if c.is_image else "video",
             leg=c.leg, date=capture_date, time=capture_time,
             lat=c.lat, lon=c.lon, low_confidence=c.low_confidence,
             width=width, height=height,
