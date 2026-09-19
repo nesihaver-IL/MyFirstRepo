@@ -44,6 +44,9 @@ jobs:
           if [ -d "01-personal/thailand-memory-book" ]; then
             mkdir -p _site/thailand-memory-book
             cp -r 01-personal/thailand-memory-book/. _site/thailand-memory-book/
+            # raw originals and build tooling aren't needed to serve the site
+            rm -rf _site/thailand-memory-book/media/originals
+            rm -rf _site/thailand-memory-book/scripts
           fi
       - name: Upload combined site as Pages artifact
         uses: actions/upload-pages-artifact@v3
