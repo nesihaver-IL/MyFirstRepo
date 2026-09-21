@@ -1,25 +1,78 @@
 const MEDIA_BASE = "media/optimized";
+const LANG_KEY = "haventure-lang";
 
-const WEEKDAY_FORMAT = new Intl.DateTimeFormat("en-US", { weekday: "short" });
-const DAY_FORMAT = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+const I18N = {
+  en: {
+    timeline: "Timeline",
+    route: "The Route",
+    allStops: "All stops",
+    stop: "Stop",
+    flyingOut: "Flying out",
+    flyingHome: "Flying home",
+    other: "Other",
+    footer: "Nineteen days, four stops, more photos than we could choose from.",
+    emptyTitle: "No photos here yet.",
+    emptyBody: (cmd) => `Drop files into <code>media/originals/</code>, then run <code>${cmd}</code>.`,
+    days: "days",
+    stops: "stops",
+  },
+  he: {
+    timeline: "ציר זמן",
+    route: "המסלול",
+    allStops: "כל התחנות",
+    stop: "תחנה",
+    flyingOut: "טיסת הלוך",
+    flyingHome: "טיסת חזור",
+    other: "אחר",
+    footer: "תשעה עשר ימים, ארבע תחנות, יותר תמונות ממה שיכולנו לבחור.",
+    emptyTitle: "אין עדיין תמונות כאן.",
+    emptyBody: (cmd) => `שימו קבצים בתוך <code>media/originals/</code>, ואז הריצו <code>${cmd}</code>.`,
+    days: "ימים",
+    stops: "תחנות",
+  },
+};
+
+let LANG = localStorage.getItem(LANG_KEY) || "en";
+let TRIP_META = null;
+let PHOTOS = [];
+let MUSIC_WAS_PLAYING = false;
+
+function t(key, ...args) {
+  const entry = I18N[LANG][key];
+  return typeof entry === "function" ? entry(...args) : entry;
+}
+
+function dateFormatters() {
+  const locale = LANG === "he" ? "he-IL" : "en-US";
+  return {
+    weekday: new Intl.DateTimeFormat(locale, { weekday: "short" }),
+    day: new Intl.DateTimeFormat(locale, { month: "short", day: "numeric" }),
+  };
+}
 
 function formatDate(iso) {
+  const { weekday, day } = dateFormatters();
   const d = new Date(`${iso}T12:00:00`);
-  return `${WEEKDAY_FORMAT.format(d)}, ${DAY_FORMAT.format(d)}`;
+  return `${weekday.format(d)}, ${day.format(d)}`;
 }
 
 function formatDateRange(startIso, endIsoExclusive) {
+  const { day } = dateFormatters();
   const end = new Date(`${endIsoExclusive}T12:00:00`);
   end.setDate(end.getDate() - 1);
-  return `${DAY_FORMAT.format(new Date(`${startIso}T12:00:00`))} – ${DAY_FORMAT.format(end)}`;
+  return `${day.format(new Date(`${startIso}T12:00:00`))} – ${day.format(end)}`;
+}
+
+function legName(leg) {
+  return LANG === "he" ? leg.nameHe : leg.nameEn;
 }
 
 function legLabel(legId, tripMeta) {
   const leg = tripMeta.legs.find((l) => l.id === legId);
-  if (leg) return leg.name;
-  if (legId === "flight-out") return "Flying out";
-  if (legId === "flight-return") return "Flying home";
-  return "Other";
+  if (leg) return legName(leg);
+  if (legId === "flight-out") return t("flyingOut");
+  if (legId === "flight-return") return t("flyingHome");
+  return t("other");
 }
 
 function mediaThumb(item) {
@@ -42,9 +95,8 @@ function mediaFull(item) {
 function emptyState(command) {
   return `
     <div class="empty-state">
-      <p>No photos here yet.</p>
-      <p>Drop files into <code>media/originals/</code>, then run
-      <code>${command}</code>.</p>
+      <p>${t("emptyTitle")}</p>
+      <p>${t("emptyBody", command)}</p>
     </div>`;
 }
 
@@ -67,13 +119,17 @@ function tripDayCount(tripMeta) {
 function renderHero(tripMeta) {
   document.getElementById("heroDates").textContent =
     `${formatDate(tripMeta.tripStart)} – ${formatDate(tripMeta.tripEnd)}, 2026`;
-  document.getElementById("heroStatement").textContent = tripMeta.heroStatement;
+  document.getElementById("heroSubtitle").textContent =
+    LANG === "he" ? tripMeta.subtitleHe : tripMeta.subtitleEn;
+  document.getElementById("heroStatement").textContent =
+    LANG === "he" ? tripMeta.heroStatementHe : tripMeta.heroStatementEn;
 
-  const highlight = tripMeta.tripHighlight || { value: "", label: "" };
+  const highlight = tripMeta.tripHighlight || { value: "", labelEn: "", labelHe: "" };
+  const highlightLabel = LANG === "he" ? highlight.labelHe : highlight.labelEn;
   document.getElementById("statStrip").innerHTML = `
-    <div class="stat"><b>${tripDayCount(tripMeta)}</b><span>days</span></div>
-    <div class="stat"><b>${tripMeta.legs.length}</b><span>stops</span></div>
-    <div class="stat"><b>${highlight.value}</b><span>${highlight.label}</span></div>`;
+    <div class="stat"><b>${tripDayCount(tripMeta)}</b><span>${t("days")}</span></div>
+    <div class="stat"><b>${tripMeta.legs.length}</b><span>${t("stops")}</span></div>
+    <div class="stat"><b>${highlight.value}</b><span>${highlightLabel}</span></div>`;
 }
 
 function renderTimeline(photos, tripMeta) {
@@ -110,14 +166,15 @@ function renderLocations(photos, tripMeta) {
       const items = byLeg.get(leg.id) || [];
       const colorVar = STOP_COLORS[index % STOP_COLORS.length];
       const style = `--stop-color: var(${colorVar}); --stop-soft: var(${colorVar}-soft);`;
+      const reflection = LANG === "he" ? leg.reflectionHe : leg.reflectionEn;
       return `
         <section class="stop" data-leg="${leg.id}" style="${style}">
           <div class="stop-dot"></div>
           <div class="folder">
-            <span class="folder-tab">Stop ${index + 1}</span>
-            <h2 class="leg-name">${leg.name}</h2>
+            <span class="folder-tab">${t("stop")} ${index + 1}</span>
+            <h2 class="leg-name">${legName(leg)}</h2>
             <p class="leg-meta">${formatDateRange(leg.start, leg.end)} · ${leg.hotel}</p>
-            <p class="leg-reflection">${leg.reflection}</p>
+            <p class="leg-reflection">${reflection}</p>
             ${items.length
               ? `<div class="mosaic">${items
                   .map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`)
@@ -129,17 +186,27 @@ function renderLocations(photos, tripMeta) {
     .join("");
 
   const filter = document.getElementById("locationFilter");
+  const activeLeg = filter.querySelector("button.is-active")?.dataset.leg || "all";
   filter.innerHTML =
-    `<button type="button" data-leg="all" class="is-active">All stops</button>` +
-    tripMeta.legs.map((leg) => `<button type="button" data-leg="${leg.id}">${leg.name}</button>`).join("");
+    `<button type="button" data-leg="all" class="${activeLeg === "all" ? "is-active" : ""}">${t("allStops")}</button>` +
+    tripMeta.legs
+      .map((leg) => `<button type="button" data-leg="${leg.id}" class="${activeLeg === leg.id ? "is-active" : ""}">${legName(leg)}</button>`)
+      .join("");
 
+  content.querySelectorAll(".stop").forEach((section) => {
+    section.hidden = activeLeg !== "all" && section.dataset.leg !== activeLeg;
+  });
+}
+
+function setupLocationFilter() {
+  const filter = document.getElementById("locationFilter");
   filter.addEventListener("click", (e) => {
     const button = e.target.closest("button");
     if (!button) return;
     filter.querySelectorAll("button").forEach((b) => b.classList.remove("is-active"));
     button.classList.add("is-active");
     const legId = button.dataset.leg;
-    content.querySelectorAll(".stop").forEach((section) => {
+    document.querySelectorAll("#locationsContent .stop").forEach((section) => {
       section.hidden = legId !== "all" && section.dataset.leg !== legId;
     });
   });
@@ -160,17 +227,26 @@ function setupViewToggle() {
 function setupLightbox(photosById) {
   const lightbox = document.getElementById("lightbox");
   const lightboxContent = document.getElementById("lightboxContent");
+  const music = document.getElementById("bgMusic");
 
   function open(id) {
     const item = photosById.get(id);
     if (!item) return;
     lightboxContent.innerHTML = mediaFull(item);
     lightbox.classList.add("is-open");
+    if (item.type === "video") {
+      MUSIC_WAS_PLAYING = !music.paused;
+      music.pause();
+    }
   }
 
   function close() {
     lightbox.classList.remove("is-open");
     lightboxContent.innerHTML = "";
+    if (MUSIC_WAS_PLAYING) {
+      music.play().catch(() => {});
+      MUSIC_WAS_PLAYING = false;
+    }
   }
 
   document.body.addEventListener("click", (e) => {
@@ -187,6 +263,56 @@ function setupLightbox(photosById) {
   });
 }
 
+function setupMusicToggle() {
+  const button = document.getElementById("musicToggle");
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.4;
+
+  button.addEventListener("click", () => {
+    if (music.paused) {
+      music.play().then(() => {
+        button.classList.add("is-playing");
+        button.textContent = "🔇";
+      }).catch(() => {
+        button.textContent = "🎵";
+      });
+    } else {
+      music.pause();
+      button.classList.remove("is-playing");
+      button.textContent = "🎵";
+    }
+  });
+}
+
+function applyStaticI18n() {
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = t(el.dataset.i18n);
+  });
+}
+
+function renderAll() {
+  document.documentElement.lang = LANG;
+  document.documentElement.dir = LANG === "he" ? "rtl" : "ltr";
+  applyStaticI18n();
+  renderHero(TRIP_META);
+  renderTimeline(PHOTOS, TRIP_META);
+  renderLocations(PHOTOS, TRIP_META);
+}
+
+function setupLangToggle() {
+  const nav = document.getElementById("langToggle");
+  nav.querySelectorAll("button").forEach((button) => {
+    button.addEventListener("click", () => {
+      LANG = button.dataset.lang;
+      localStorage.setItem(LANG_KEY, LANG);
+      nav.querySelectorAll("button").forEach((b) => b.classList.remove("is-active"));
+      button.classList.add("is-active");
+      renderAll();
+    });
+  });
+  nav.querySelectorAll("button").forEach((b) => b.classList.toggle("is-active", b.dataset.lang === LANG));
+}
+
 async function init() {
   const [tripMeta, photos] = await Promise.all([
     fetch("data/trip-meta.json").then((r) => r.json()),
@@ -195,10 +321,14 @@ async function init() {
       .catch(() => []),
   ]);
 
-  renderHero(tripMeta);
-  renderTimeline(photos, tripMeta);
-  renderLocations(photos, tripMeta);
+  TRIP_META = tripMeta;
+  PHOTOS = photos;
+
+  renderAll();
   setupViewToggle();
+  setupLocationFilter();
+  setupLangToggle();
+  setupMusicToggle();
   setupLightbox(new Map(photos.map((p) => [p.id, p])));
 }
 

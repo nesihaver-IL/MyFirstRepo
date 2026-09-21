@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thailand, 2026</title>
-<meta name="description" content="Three weeks across Phuket, Krabi, and Khao Lak.">
+<title>HaVenture</title>
+<meta name="description" content="The Haver family's Thailand trip, in photos and video.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,10 +13,16 @@
 </head>
 <body>
 
+<nav class="lang-toggle" id="langToggle">
+  <button type="button" data-lang="en" class="is-active">EN</button>
+  <button type="button" data-lang="he">HE</button>
+</nav>
+
 <header class="hero">
   <div class="wrap">
     <p class="hero-eyebrow" id="heroDates"></p>
-    <h1 class="hero-title">Thailand, 2026</h1>
+    <h1 class="hero-title">HaVenture</h1>
+    <p class="hero-subtitle" id="heroSubtitle"></p>
     <p class="hero-statement" id="heroStatement"></p>
     <div class="stat-strip" id="statStrip"></div>
   </div>
@@ -24,8 +30,8 @@
 
 <div class="wrap">
   <nav class="view-toggle">
-    <button type="button" data-view="timeline" class="is-active">Timeline</button>
-    <button type="button" data-view="locations">The Route</button>
+    <button type="button" data-view="timeline" class="is-active" data-i18n="timeline">Timeline</button>
+    <button type="button" data-view="locations" data-i18n="route">The Route</button>
   </nav>
 
   <section class="view is-active" id="timelineView"></section>
@@ -41,8 +47,13 @@
   <div id="lightboxContent"></div>
 </div>
 
+<button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music">🎵</button>
+<audio id="bgMusic" loop preload="none">
+  <source src="media/music/background.mp3" type="audio/mpeg">
+</audio>
+
 <footer>
-  <div class="wrap">Nineteen days, four stops, more photos than we could choose from.</div>
+  <div class="wrap" id="footerText" data-i18n="footer">Nineteen days, four stops, more photos than we could choose from.</div>
 </footer>
 
 <script src="app.js"></script>

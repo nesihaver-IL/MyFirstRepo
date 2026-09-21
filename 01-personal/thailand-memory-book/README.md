@@ -1,8 +1,10 @@
-# Thailand, 2026 — Memory Book
+# HaVenture — Memory Book
 
-A static, shareable memory book for the Thailand trip (Aug 17 – Sep 4, 2026):
-Phuket → Krabi → Khao Lak → Phuket. Two views — a day-by-day timeline and
-a by-location gallery — both built from the same photo/video set.
+A static, shareable memory book for the Haver family's Thailand trip
+(Aug 17 – Sep 4, 2026): Phuket → Krabi → Khao Lak → Phuket. Two views — a
+day-by-day timeline and a by-location gallery — both built from the same
+photo/video set. Supports English and Hebrew (with a language toggle) and
+an optional looping background track.
 
 ## Getting your photos into this project
 
@@ -47,7 +49,7 @@ You don't need to manually curate down to "the best ones" — the script
 does this for you, driven by real metadata:
 
 - `data/trip-meta.json`'s `mediaBudget` sets the total target across the
-  whole trip (default: 80 photos, 20 videos). Each leg gets a share
+  whole trip (default: 200 photos, 20 videos). Each leg gets a share
   proportional to how many days you spent there.
 - Near-duplicate photos are detected by actual visual content, not just
   timing — the same shot taken twice minutes apart is caught the same way
@@ -100,10 +102,19 @@ Google Photos/Drive album instead — keeps the page fast.
 ## Editing the text
 
 `data/trip-meta.json` holds the hero statement and each location's
-reflection text — all marked `[placeholder]`. Replace them with your own
-lines once you've seen which photos made it in; keep them specific rather
-than generic ("the night we got caught in the market rain" beats "an
-unforgettable evening").
+reflection text, in both languages (`...En`/`...He` suffixed fields) — all
+marked `[placeholder]`. Replace them with your own lines once you've seen
+which photos made it in; keep them specific rather than generic ("the
+night we got caught in the market rain" beats "an unforgettable evening").
+Update both language versions when you edit — the page doesn't auto-
+translate.
+
+## Background music
+
+Drop an MP3 named `background.mp3` into `media/music/` (see the README
+in that folder for details) and the existing 🎵 button starts working —
+no code changes needed. Until you add a file, the button just does
+nothing when tapped.
 
 ## Viewing locally
 

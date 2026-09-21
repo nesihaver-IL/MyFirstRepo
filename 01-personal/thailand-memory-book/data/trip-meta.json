@@ -1,11 +1,16 @@
 {
+  "brand": "HaVenture",
+  "subtitleEn": "Thailand, 2026",
+  "subtitleHe": "תאילנד, 2026",
   "tripStart": "2026-08-17",
   "tripEnd": "2026-09-04",
-  "heroStatement": "Nineteen days, four hotels, one island twice — Phuket to Krabi to Khao Lak and back to Phuket, almost exactly as planned and still full of surprises.",
-  "heroStatementNote": "[placeholder — replace with your own line once you've picked a favorite moment; keep it specific, not a generic travel tagline]",
-  "route": "Phuket → Krabi → Khao Lak → Phuket",
-  "mediaBudget": { "photos": 80, "videos": 20 },
-  "tripHighlight": { "value": "1", "label": "island, twice" },
+  "heroStatementEn": "Nineteen days, four hotels, one island twice — Phuket to Krabi to Khao Lak and back to Phuket, almost exactly as planned and still full of surprises.",
+  "heroStatementHe": "תשעה עשר ימים, ארבעה מלונות, אי אחד פעמיים — פוקט לקרבי לקאולק ובחזרה לפוקט, כמעט בדיוק כמתוכנן ועדיין מלא הפתעות.",
+  "heroStatementNote": "[placeholder — replace with your own line once you've picked a favorite moment; keep it specific, not a generic travel tagline. Update both heroStatementEn and heroStatementHe.]",
+  "routeEn": "Phuket → Krabi → Khao Lak → Phuket",
+  "routeHe": "פוקט ← קרבי ← קאולק ← פוקט",
+  "mediaBudget": { "photos": 200, "videos": 20 },
+  "tripHighlight": { "value": "1", "labelEn": "island, twice", "labelHe": "אי אחד, פעמיים" },
   "flights": {
     "out": { "date": "2026-08-17", "route": "Tel Aviv → Abu Dhabi → Phuket" },
     "back": { "date": "2026-09-04", "route": "Phuket → Abu Dhabi → Tel Aviv" }
@@ -13,51 +18,63 @@
   "legs": [
     {
       "id": "phuket1",
-      "name": "Phuket (Part 1)",
+      "nameEn": "Phuket (Part 1)",
+      "nameHe": "פוקט (חלק 1)",
       "start": "2026-08-18",
       "end": "2026-08-22",
       "hotel": "Dinso Resort & Villas Phuket, Vignette Collection",
       "area": "Patong hillside",
       "lat": 7.901,
       "lon": 98.2977,
-      "blurb": "A Wabi-Sabi-inspired boutique resort on a hillside above Patong.",
-      "reflection": "[placeholder] Big Buddha, the jungle zipline, Bangla Road at night, a day trip to Phi Phi and James Bond Island — the trip's first taste of the Andaman coast."
+      "blurbEn": "A Wabi-Sabi-inspired boutique resort on a hillside above Patong.",
+      "blurbHe": "ריזורט בוטיק בהשראת וואבי-סאבי, על גבעה מעל פאטונג.",
+      "reflectionEn": "[placeholder] Big Buddha, the jungle zipline, Bangla Road at night, a day trip to Phi Phi and James Bond Island — the trip's first taste of the Andaman coast.",
+      "reflectionHe": "[placeholder] הבודהה הגדול, זיפליין ביער, רחוב בנגלה בלילה, טיול יום לפי-פי ולאיי ג'יימס בונד — הטעימה הראשונה של החוף האנדמני."
     },
     {
       "id": "krabi",
-      "name": "Krabi",
+      "nameEn": "Krabi",
+      "nameHe": "קרבי",
       "start": "2026-08-22",
       "end": "2026-08-26",
       "hotel": "Dusit Thani Krabi Beach Resort",
       "area": "Klong Muang Beach",
       "lat": 8.147,
       "lon": 98.766,
-      "blurb": "A beachfront resort on Klong Muang Beach, framed by limestone cliffs.",
-      "reflection": "[placeholder] Railay Beach and rock climbing, the Four Islands tour, Tiger Cave Temple, the Emerald Pool, and the Ao Nang night market."
+      "blurbEn": "A beachfront resort on Klong Muang Beach, framed by limestone cliffs.",
+      "blurbHe": "ריזורט חוף על חוף קלונג מואנג, מוקף צוקי גיר.",
+      "reflectionEn": "[placeholder] Railay Beach and rock climbing, the Four Islands tour, Tiger Cave Temple, the Emerald Pool, and the Ao Nang night market.",
+      "reflectionHe": "[placeholder] חוף ריילי וטיפוס סלעים, סיור ארבעת האיים, מקדש מערת הנמר, הבריכה האזמרגדית ושוק הלילה של אאו-נאנג."
     },
     {
       "id": "khaolak",
-      "name": "Khao Lak",
+      "nameEn": "Khao Lak",
+      "nameHe": "קאולק",
       "start": "2026-08-26",
       "end": "2026-08-30",
       "hotel": "JW Marriott Khao Lak Resort & Spa",
       "area": "Khao Lak beachfront",
       "lat": 8.671,
       "lon": 98.24,
-      "blurb": "A beachfront resort among tropical gardens facing the Andaman Sea.",
-      "reflection": "[placeholder] Phang Nga Bay by canoe, Khao Sok National Park, the Lam Ru waterfall, the tsunami memorial, and the elephant sanctuary."
+      "blurbEn": "A beachfront resort among tropical gardens facing the Andaman Sea.",
+      "blurbHe": "ריזורט חוף בין גנים טרופיים מול ים אנדמן.",
+      "reflectionEn": "[placeholder] Phang Nga Bay by canoe, Khao Sok National Park, the Lam Ru waterfall, the tsunami memorial, and the elephant sanctuary.",
+      "reflectionHe": "[placeholder] מפרץ פאנגה בקאנו, פארק לאומי קאו-סוק, מפל לאם-רו, אנדרטת הצונאמי ומקלט הפילים."
     },
     {
       "id": "phuket2",
-      "name": "Phuket (Part 2)",
+      "nameEn": "Phuket (Part 2)",
+      "nameHe": "פוקט (חלק 2)",
       "start": "2026-08-30",
       "end": "2026-09-04",
       "hotel": "Phuket Marriott Resort & Spa, Merlin Beach",
       "area": "Tri-Trang / Merlin Beach",
       "lat": 7.886,
       "lon": 98.303,
-      "blurb": "A beachfront resort on its own secluded cove, minutes south of Patong.",
-      "reflection": "[placeholder] Freedom Beach, the old town, snorkeling off Racha Island, parasailing, and a last sunset at Kalim Beach."
+      "blurbEn": "A beachfront resort on its own secluded cove, minutes south of Patong.",
+      "blurbHe": "ריזורט חוף על מפרץ פרטי משלו, דקות מדרום לפאטונג.",
+      "reflectionEn": "[placeholder] Freedom Beach, the old town, snorkeling off Racha Island, parasailing, and a last sunset at Kalim Beach.",
+      "reflectionHe": "[placeholder] חוף פרידום, העיר העתיקה, שנורקלינג באי ראצ'ה, פאראסיילינג ושקיעה אחרונה בחוף קאלים."
     }
   ]
 }
