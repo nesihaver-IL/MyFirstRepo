@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Build combined site
         run: |
           mkdir -p _site
@@ -47,11 +47,18 @@ jobs:
             # raw originals and build tooling aren't needed to serve the site
             rm -rf _site/thailand-memory-book/media/originals
             rm -rf _site/thailand-memory-book/scripts
+            # drop precise lodging coordinates from the published copy only —
+            # the source file keeps them for the pipeline's own GPS checks,
+            # but nothing in the page itself renders lat/lon
+            META="_site/thailand-memory-book/data/trip-meta.json"
+            if [ -f "$META" ]; then
+              python3 -c "import json; p='$META'; d = json.load(open(p, encoding='utf-8')); [(leg.pop('lat', None), leg.pop('lon', None)) for leg in d.get('legs', [])]; json.dump(d, open(p, 'w', encoding='utf-8'), indent=2, ensure_ascii=False)"
+            fi
           fi
       - name: Upload combined site as Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
           path: _site
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

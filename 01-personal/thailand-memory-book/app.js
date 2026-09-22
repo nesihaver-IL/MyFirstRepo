@@ -15,6 +15,7 @@ const I18N = {
     emptyBody: (cmd) => `Drop files into <code>media/originals/</code>, then run <code>${cmd}</code>.`,
     days: "days",
     stops: "stops",
+    loadError: "Couldn't load the trip data. Try refreshing the page.",
   },
   he: {
     timeline: "ציר זמן",
@@ -29,6 +30,7 @@ const I18N = {
     emptyBody: (cmd) => `שימו קבצים בתוך <code>media/originals/</code>, ואז הריצו <code>${cmd}</code>.`,
     days: "ימים",
     stops: "תחנות",
+    loadError: "טעינת נתוני הטיול נכשלה. נסו לרענן את הדף.",
   },
 };
 
@@ -36,6 +38,11 @@ let LANG = localStorage.getItem(LANG_KEY) || "en";
 let TRIP_META = null;
 let PHOTOS = [];
 let MUSIC_WAS_PLAYING = false;
+
+const HTML_ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (ch) => HTML_ESCAPES[ch]);
+}
 
 function t(key, ...args) {
   const entry = I18N[LANG][key];
@@ -76,7 +83,7 @@ function legLabel(legId, tripMeta) {
 }
 
 function mediaThumb(item) {
-  const src = `${MEDIA_BASE}/${item.thumb}`;
+  const src = `${MEDIA_BASE}/${escapeHtml(item.thumb)}`;
   const img = `<img src="${src}" loading="lazy" alt="">`;
   if (item.type === "video") {
     return `${img}<span class="play-badge" aria-hidden="true">▶</span>`;
@@ -85,7 +92,7 @@ function mediaThumb(item) {
 }
 
 function mediaFull(item) {
-  const src = `${MEDIA_BASE}/${item.filename}`;
+  const src = `${MEDIA_BASE}/${escapeHtml(item.filename)}`;
   if (item.type === "video") {
     return `<video src="${src}" controls autoplay playsinline></video>`;
   }
@@ -129,7 +136,7 @@ function renderHero(tripMeta) {
   document.getElementById("statStrip").innerHTML = `
     <div class="stat"><b>${tripDayCount(tripMeta)}</b><span>${t("days")}</span></div>
     <div class="stat"><b>${tripMeta.legs.length}</b><span>${t("stops")}</span></div>
-    <div class="stat"><b>${highlight.value}</b><span>${highlightLabel}</span></div>`;
+    <div class="stat"><b>${escapeHtml(highlight.value)}</b><span>${escapeHtml(highlightLabel)}</span></div>`;
 }
 
 function renderTimeline(photos, tripMeta) {
@@ -146,9 +153,9 @@ function renderTimeline(photos, tripMeta) {
       const leg = legLabel(items[0].leg, tripMeta);
       return `
         <div class="timeline-day">
-          <p class="timeline-date">${formatDate(date)} · ${leg}</p>
+          <p class="timeline-date">${formatDate(date)} · ${escapeHtml(leg)}</p>
           <div class="mosaic">
-            ${items.map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`).join("")}
+            ${items.map((item) => `<figure data-id="${escapeHtml(item.id)}">${mediaThumb(item)}</figure>`).join("")}
           </div>
         </div>`;
     })
@@ -168,16 +175,16 @@ function renderLocations(photos, tripMeta) {
       const style = `--stop-color: var(${colorVar}); --stop-soft: var(${colorVar}-soft);`;
       const reflection = LANG === "he" ? leg.reflectionHe : leg.reflectionEn;
       return `
-        <section class="stop" data-leg="${leg.id}" style="${style}">
+        <section class="stop" data-leg="${escapeHtml(leg.id)}" style="${style}">
           <div class="stop-dot"></div>
           <div class="folder">
             <span class="folder-tab">${t("stop")} ${index + 1}</span>
-            <h2 class="leg-name">${legName(leg)}</h2>
-            <p class="leg-meta">${formatDateRange(leg.start, leg.end)} · ${leg.hotel}</p>
-            <p class="leg-reflection">${reflection}</p>
+            <h2 class="leg-name">${escapeHtml(legName(leg))}</h2>
+            <p class="leg-meta">${formatDateRange(leg.start, leg.end)} · ${escapeHtml(leg.hotel)}</p>
+            <p class="leg-reflection">${escapeHtml(reflection)}</p>
             ${items.length
               ? `<div class="mosaic">${items
-                  .map((item) => `<figure data-id="${item.id}">${mediaThumb(item)}</figure>`)
+                  .map((item) => `<figure data-id="${escapeHtml(item.id)}">${mediaThumb(item)}</figure>`)
                   .join("")}</div>`
               : emptyState("python scripts/process_media.py")}
           </div>
@@ -190,7 +197,7 @@ function renderLocations(photos, tripMeta) {
   filter.innerHTML =
     `<button type="button" data-leg="all" class="${activeLeg === "all" ? "is-active" : ""}">${t("allStops")}</button>` +
     tripMeta.legs
-      .map((leg) => `<button type="button" data-leg="${leg.id}" class="${activeLeg === leg.id ? "is-active" : ""}">${legName(leg)}</button>`)
+      .map((leg) => `<button type="button" data-leg="${escapeHtml(leg.id)}" class="${activeLeg === leg.id ? "is-active" : ""}">${escapeHtml(legName(leg))}</button>`)
       .join("");
 
   content.querySelectorAll(".stop").forEach((section) => {
@@ -315,11 +322,18 @@ function setupLangToggle() {
 
 async function init() {
   const [tripMeta, photos] = await Promise.all([
-    fetch("data/trip-meta.json").then((r) => r.json()),
+    fetch("data/trip-meta.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .catch(() => null),
     fetch("data/photo-index.json")
       .then((r) => (r.ok ? r.json() : []))
       .catch(() => []),
   ]);
+
+  if (!tripMeta) {
+    document.getElementById("timelineView").innerHTML = `<div class="empty-state"><p>${t("loadError")}</p></div>`;
+    return;
+  }
 
   TRIP_META = tripMeta;
   PHOTOS = photos;

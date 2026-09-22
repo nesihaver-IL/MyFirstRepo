@@ -7,9 +7,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "08:21",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -21,9 +18,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "11:12",
-    "lat": 7.887322222222222,
-    "lon": 98.30438888888888,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -35,9 +29,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "11:20",
-    "lat": 7.887361111111111,
-    "lon": 98.30432777777777,
-    "low_confidence": false,
     "width": 1350,
     "height": 2400
   },
@@ -49,9 +40,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "11:44",
-    "lat": 7.887275,
-    "lon": 98.30438888888888,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -63,9 +51,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "11:44",
-    "lat": 7.887275,
-    "lon": 98.30438888888888,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -77,9 +62,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "11:45",
-    "lat": 7.887266666666666,
-    "lon": 98.30445,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -91,9 +73,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "14:45",
-    "lat": 7.917933333333334,
-    "lon": 98.32991666666666,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -105,9 +84,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "15:00",
-    "lat": 7.918125,
-    "lon": 98.32972777777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -119,9 +95,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "16:26",
-    "lat": 7.8873388888888885,
-    "lon": 98.30434444444444,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -133,9 +106,6 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "17:05",
-    "lat": 7.887727777777777,
-    "lon": 98.30416944444444,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -147,9 +117,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:04",
-    "lat": 7.887944444444444,
-    "lon": 98.30438888888888,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -161,9 +128,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:04",
-    "lat": 7.8878861111111105,
-    "lon": 98.30419166666667,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -175,9 +139,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:05",
-    "lat": 7.887913888888888,
-    "lon": 98.30433611111111,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -189,9 +150,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:10",
-    "lat": 7.88793611111111,
-    "lon": 98.30428333333333,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -203,9 +161,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:14",
-    "lat": 7.887941666666666,
-    "lon": 98.30431388888888,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -217,9 +172,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "21:19",
-    "lat": 7.887997222222221,
-    "lon": 98.30422222222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -231,9 +183,6 @@
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "22:06",
-    "lat": 7.887844444444444,
-    "lon": 98.30385555555556,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -245,9 +194,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "05:15",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -259,9 +205,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "06:14",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -273,9 +216,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "08:22",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -287,9 +227,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "08:55",
-    "lat": 7.909691666666667,
-    "lon": 98.43218333333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -301,9 +238,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "09:58",
-    "lat": 7.90626388888889,
-    "lon": 98.55051388888889,
-    "low_confidence": false,
     "width": 1350,
     "height": 2400
   },
@@ -315,9 +249,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:34",
-    "lat": 7.909269444444445,
-    "lon": 98.54952222222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -329,9 +260,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:37",
-    "lat": 7.9092722222222225,
-    "lon": 98.5495,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -343,9 +271,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:38",
-    "lat": 7.909269444444445,
-    "lon": 98.54950833333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -357,9 +282,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:40",
-    "lat": 7.9092722222222225,
-    "lon": 98.54951388888888,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -371,9 +293,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:40",
-    "lat": 7.909275,
-    "lon": 98.5495,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -385,9 +304,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:41",
-    "lat": 7.909283333333334,
-    "lon": 98.54950833333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -399,9 +315,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:41",
-    "lat": 7.909283333333334,
-    "lon": 98.54950833333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -413,9 +326,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:48",
-    "lat": 7.909266666666667,
-    "lon": 98.54947777777778,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -427,9 +337,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:49",
-    "lat": 7.9092722222222225,
-    "lon": 98.54947777777778,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -441,9 +348,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:54",
-    "lat": 7.909291666666667,
-    "lon": 98.54946111111111,
-    "low_confidence": false,
     "width": 543,
     "height": 965
   },
@@ -455,9 +359,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:55",
-    "lat": 7.909286111111111,
-    "lon": 98.54945277777777,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -469,9 +370,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "11:59",
-    "lat": 8.197688888888889,
-    "lon": 98.49180555555556,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -483,9 +381,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "12:16",
-    "lat": 8.196727777777777,
-    "lon": 98.49109722222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -497,9 +392,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "12:29",
-    "lat": 8.197680555555555,
-    "lon": 98.49212777777778,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -511,9 +403,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "12:29",
-    "lat": 8.197700000000001,
-    "lon": 98.49214166666667,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -525,9 +414,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "12:53",
-    "lat": 8.274322222222223,
-    "lon": 98.499825,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -539,9 +425,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "12:54",
-    "lat": 8.274333333333335,
-    "lon": 98.49984722222223,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -553,9 +436,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "13:05",
-    "lat": 8.274561111111112,
-    "lon": 98.50012222222222,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -567,9 +447,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "13:09",
-    "lat": 8.274586111111113,
-    "lon": 98.50013055555556,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -581,9 +458,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "13:09",
-    "lat": 8.274602777777778,
-    "lon": 98.50011388888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -595,9 +469,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "13:10",
-    "lat": 8.274577777777779,
-    "lon": 98.50011388888889,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -609,9 +480,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "15:18",
-    "lat": 8.221733333333333,
-    "lon": 98.50189166666667,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -623,9 +491,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "15:20",
-    "lat": 8.221752777777779,
-    "lon": 98.50129722222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -637,9 +502,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "15:20",
-    "lat": 8.221677777777778,
-    "lon": 98.50081666666667,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -651,9 +513,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "15:22",
-    "lat": 8.222338888888888,
-    "lon": 98.5004888888889,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -665,9 +524,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "15:34",
-    "lat": 8.222591666666666,
-    "lon": 98.50036666666666,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -679,9 +535,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "19:06",
-    "lat": 7.887547222222222,
-    "lon": 98.304275,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -693,9 +546,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "22:27",
-    "lat": 7.892149999999999,
-    "lon": 98.29805833333333,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -707,9 +557,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "01:52",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -721,9 +568,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "08:58",
-    "lat": 7.887149999999999,
-    "lon": 98.305275,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -735,9 +579,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "08:59",
-    "lat": 7.8871166666666666,
-    "lon": 98.30522222222221,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -749,9 +590,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "11:52",
-    "lat": 7.8873999999999995,
-    "lon": 98.30422222222222,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -763,9 +601,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "13:51",
-    "lat": 8.022111111111112,
-    "lon": 98.32860555555555,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -777,9 +612,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "14:36",
-    "lat": 8.022200000000002,
-    "lon": 98.32865277777778,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -791,9 +623,6 @@
     "leg": "krabi",
     "date": "2026-08-22",
     "time": "22:03",
-    "lat": 8.04275,
-    "lon": 98.81236944444444,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -805,9 +634,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "09:32",
-    "lat": 8.05155,
-    "lon": 98.75615555555555,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -819,9 +645,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "09:38",
-    "lat": 8.051438888888889,
-    "lon": 98.75631666666666,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -833,9 +656,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "10:36",
-    "lat": 8.053069444444445,
-    "lon": 98.75620277777777,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -847,9 +667,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "10:36",
-    "lat": 8.053069444444445,
-    "lon": 98.7561861111111,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -861,9 +678,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "10:36",
-    "lat": 8.053072222222223,
-    "lon": 98.75618055555556,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -875,9 +689,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "11:07",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -889,9 +700,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:02",
-    "lat": 8.051886111111111,
-    "lon": 98.75550833333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -903,9 +711,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:04",
-    "lat": 8.0519,
-    "lon": 98.75550833333334,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -917,9 +722,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:07",
-    "lat": 8.051905555555557,
-    "lon": 98.755525,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -931,9 +733,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:07",
-    "lat": 8.05188888888889,
-    "lon": 98.75556944444445,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -945,9 +744,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:39",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1350,
     "height": 2400
   },
@@ -959,9 +755,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:47",
-    "lat": 8.051911111111112,
-    "lon": 98.75562222222223,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -973,9 +766,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "17:37",
-    "lat": 8.051891666666668,
-    "lon": 98.755675,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -987,9 +777,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "17:39",
-    "lat": 8.051858333333334,
-    "lon": 98.75562222222223,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1001,9 +788,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "17:46",
-    "lat": 8.052505555555557,
-    "lon": 98.75566944444445,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1015,9 +799,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "11:14",
-    "lat": 8.051694444444445,
-    "lon": 98.75608055555556,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1029,9 +810,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "14:14",
-    "lat": 8.05173888888889,
-    "lon": 98.75629444444445,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1043,9 +821,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "15:20",
-    "lat": 8.051711111111112,
-    "lon": 98.75611111111111,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1057,9 +832,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "16:35",
-    "lat": 8.051897222222223,
-    "lon": 98.75558333333333,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1071,9 +843,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "18:14",
-    "lat": 8.051708333333334,
-    "lon": 98.75614166666666,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1085,9 +854,6 @@
     "leg": "krabi",
     "date": "2026-08-24",
     "time": "18:23",
-    "lat": 8.051725000000001,
-    "lon": 98.75613333333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1099,9 +865,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "10:14",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 2400,
     "height": 1350
   },
@@ -1113,9 +876,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "10:15",
-    "lat": 8.049613888888889,
-    "lon": 98.77454444444444,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1127,9 +887,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "11:00",
-    "lat": 8.08161111111111,
-    "lon": 98.68196944444445,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1141,9 +898,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "11:10",
-    "lat": 8.079649999999999,
-    "lon": 98.67815277777778,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1155,9 +909,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "11:21",
-    "lat": 8.077233333333334,
-    "lon": 98.67935277777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1169,9 +920,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "11:29",
-    "lat": 8.079102777777777,
-    "lon": 98.68041944444445,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1183,9 +931,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:08",
-    "lat": 8.079252777777777,
-    "lon": 98.6810138888889,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1197,9 +942,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:09",
-    "lat": 8.079247222222222,
-    "lon": 98.68103055555557,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1211,9 +953,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:18",
-    "lat": 8.079144444444443,
-    "lon": 98.68103055555557,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1225,9 +964,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:18",
-    "lat": 8.079147222222222,
-    "lon": 98.6810138888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1239,9 +975,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:19",
-    "lat": 8.079152777777777,
-    "lon": 98.68103888888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1253,9 +986,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:57",
-    "lat": 8.078633333333332,
-    "lon": 98.68007777777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1267,9 +997,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:57",
-    "lat": 8.078644444444445,
-    "lon": 98.68007777777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1281,9 +1008,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:58",
-    "lat": 8.078419444444444,
-    "lon": 98.67981666666667,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1295,9 +1019,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:58",
-    "lat": 8.078413888888889,
-    "lon": 98.67980277777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1309,9 +1030,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:58",
-    "lat": 8.07841111111111,
-    "lon": 98.67980277777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1323,9 +1041,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "13:39",
-    "lat": 8.104038888888889,
-    "lon": 98.68263888888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1337,9 +1052,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "13:42",
-    "lat": 8.10403611111111,
-    "lon": 98.68265555555556,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1351,9 +1063,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "13:43",
-    "lat": 8.104002777777778,
-    "lon": 98.68265555555556,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1365,9 +1074,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "16:17",
-    "lat": 8.051497222222222,
-    "lon": 98.75634722222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1379,9 +1085,6 @@
     "leg": "khaolak",
     "date": "2026-08-26",
     "time": "17:50",
-    "lat": 8.701430555555556,
-    "lon": 98.23867777777778,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1393,9 +1096,6 @@
     "leg": "khaolak",
     "date": "2026-08-26",
     "time": "18:47",
-    "lat": 8.702527777777776,
-    "lon": 98.24021944444445,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1407,9 +1107,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "13:00",
-    "lat": 8.702591666666667,
-    "lon": 98.24024166666666,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1421,9 +1118,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "13:34",
-    "lat": 8.700899999999999,
-    "lon": 98.24062222222223,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1435,9 +1129,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "13:40",
-    "lat": 8.701083333333333,
-    "lon": 98.24054722222222,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1449,9 +1140,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "18:19",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1463,9 +1151,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "18:52",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1477,9 +1162,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "19:00",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1491,9 +1173,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "20:56",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1505,9 +1184,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "21:01",
-    "lat": 8.700433333333333,
-    "lon": 98.23923611111111,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1519,9 +1195,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "21:07",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1533,9 +1206,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "21:08",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1547,9 +1217,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "22:37",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -1561,9 +1228,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "22:55",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1575,9 +1239,6 @@
     "leg": "khaolak",
     "date": "2026-08-27",
     "time": "23:15",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1589,9 +1250,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "08:40",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1603,9 +1261,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "08:47",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -1617,9 +1272,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "08:49",
-    "lat": 8.703644444444445,
-    "lon": 98.242775,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1631,9 +1283,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "08:55",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1645,9 +1294,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "08:55",
-    "lat": 8.70365,
-    "lon": 98.24275833333333,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1659,9 +1305,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "13:44",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1673,9 +1316,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "13:46",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1687,9 +1327,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "14:04",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1701,9 +1338,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "14:47",
-    "lat": 8.700744444444444,
-    "lon": 98.24057777777777,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1715,9 +1349,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "15:13",
-    "lat": 8.701324999999999,
-    "lon": 98.239625,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1729,9 +1360,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "15:16",
-    "lat": 8.701605555555554,
-    "lon": 98.23967777777779,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1743,9 +1371,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "20:44",
-    "lat": 8.701463888888888,
-    "lon": 98.23863888888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1757,9 +1382,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "21:58",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1771,9 +1393,6 @@
     "leg": "khaolak",
     "date": "2026-08-28",
     "time": "21:59",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1785,9 +1404,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "11:08",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1799,9 +1415,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "11:09",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1813,9 +1426,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "11:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1827,9 +1437,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "11:11",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1841,9 +1448,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "11:47",
-    "lat": 8.700705555555555,
-    "lon": 98.24053888888889,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1855,9 +1459,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "18:05",
-    "lat": 7.882575,
-    "lon": 98.27170555555556,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1869,9 +1470,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "18:43",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -1883,9 +1481,6 @@
     "leg": "khaolak",
     "date": "2026-08-29",
     "time": "21:32",
-    "lat": 7.890897222222222,
-    "lon": 98.2937861111111,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1897,9 +1492,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "10:06",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1911,9 +1503,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "11:04",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1925,9 +1514,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "11:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1939,9 +1525,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "11:19",
-    "lat": 7.8834277777777775,
-    "lon": 98.27318611111112,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -1953,9 +1536,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "12:02",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1967,9 +1547,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "12:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -1981,9 +1558,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "12:33",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -1995,9 +1569,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "13:04",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2009,9 +1580,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "13:12",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2023,9 +1591,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "13:15",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2037,9 +1602,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "13:16",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2051,9 +1613,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "13:16",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2065,9 +1624,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "14:46",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2079,9 +1635,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "15:49",
-    "lat": 7.882361111111112,
-    "lon": 98.27174444444444,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2093,9 +1646,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "15:50",
-    "lat": 7.882358333333334,
-    "lon": 98.27175833333334,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2107,9 +1657,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "15:53",
-    "lat": 7.882361111111112,
-    "lon": 98.27176666666666,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2121,9 +1668,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "15:58",
-    "lat": 7.882788888888889,
-    "lon": 98.27223333333333,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2135,9 +1679,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "16:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2149,9 +1690,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "16:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2163,9 +1701,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "16:12",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2177,9 +1712,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "16:13",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2191,9 +1723,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "16:26",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 543,
     "height": 965
   },
@@ -2205,9 +1734,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:33",
-    "lat": 7.882508333333334,
-    "lon": 98.27197222222222,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2219,9 +1745,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:36",
-    "lat": 7.882508333333334,
-    "lon": 98.27189722222222,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2233,9 +1756,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:37",
-    "lat": 7.882538888888889,
-    "lon": 98.272025,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2247,9 +1767,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:38",
-    "lat": 7.882505555555556,
-    "lon": 98.27186666666667,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2261,9 +1778,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:40",
-    "lat": 7.882483333333334,
-    "lon": 98.27185,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2275,9 +1789,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:46",
-    "lat": 7.8825,
-    "lon": 98.27187222222223,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2289,9 +1800,6 @@
     "leg": "phuket2",
     "date": "2026-08-30",
     "time": "18:47",
-    "lat": 7.882513888888889,
-    "lon": 98.27188888888888,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2303,9 +1811,6 @@
     "leg": "phuket2",
     "date": "2026-09-01",
     "time": "12:30",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2317,9 +1822,6 @@
     "leg": "phuket2",
     "date": "2026-09-01",
     "time": "12:54",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2331,9 +1833,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "05:37",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -2345,9 +1844,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "06:06",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": null,
     "height": null
   },
@@ -2359,9 +1855,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "11:28",
-    "lat": 7.884813888888888,
-    "lon": 98.28704722222221,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2373,9 +1866,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "12:12",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2387,9 +1877,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "12:12",
-    "lat": 7.921291666666667,
-    "lon": 98.29232777777777,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2401,9 +1888,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "12:20",
-    "lat": 7.921197222222222,
-    "lon": 98.29220555555555,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2415,9 +1899,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "12:30",
-    "lat": 7.922905555555555,
-    "lon": 98.29216666666666,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2429,9 +1910,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "12:44",
-    "lat": 7.923055555555556,
-    "lon": 98.29368611111111,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2443,9 +1921,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "13:02",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2457,9 +1932,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "15:32",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2471,9 +1943,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "16:27",
-    "lat": 7.885897222222222,
-    "lon": 98.38761944444445,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2485,9 +1954,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "17:02",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2499,9 +1965,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "17:07",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2513,9 +1976,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "17:10",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 836,
     "height": 627
   },
@@ -2527,9 +1987,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "18:50",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2541,9 +1998,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "19:31",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2555,9 +2009,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "19:34",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2569,9 +2020,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "19:45",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2583,9 +2031,6 @@
     "leg": "phuket2",
     "date": "2026-09-02",
     "time": "19:51",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2597,9 +2042,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:02",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2611,9 +2053,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:05",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2625,9 +2064,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:45",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2639,9 +2075,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:45",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2653,9 +2086,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:45",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2667,9 +2097,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:49",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 2400,
     "height": 1800
   },
@@ -2681,9 +2108,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:51",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   },
@@ -2695,9 +2119,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "14:53",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 543,
     "height": 965
   },
@@ -2709,9 +2130,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "18:27",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 543,
     "height": 965
   },
@@ -2723,9 +2141,6 @@
     "leg": "phuket2",
     "date": "2026-09-03",
     "time": "18:39",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2737,9 +2152,6 @@
     "leg": "flight-return",
     "date": "2026-09-04",
     "time": "09:16",
-    "lat": 7.882472222222223,
-    "lon": 98.2718111111111,
-    "low_confidence": false,
     "width": 1800,
     "height": 2400
   },
@@ -2751,9 +2163,6 @@
     "leg": "flight-return",
     "date": "2026-09-04",
     "time": "21:18",
-    "lat": null,
-    "lon": null,
-    "low_confidence": false,
     "width": 627,
     "height": 836
   }

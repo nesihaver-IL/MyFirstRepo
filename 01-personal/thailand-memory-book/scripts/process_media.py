@@ -93,9 +93,6 @@ class MediaRecord:
     leg: str
     date: str
     time: Optional[str]
-    lat: Optional[float]
-    lon: Optional[float]
-    low_confidence: bool
     width: Optional[int] = None
     height: Optional[int] = None
 
@@ -321,6 +318,7 @@ def process_video(path: Path, dest_dir: Path, out_name: str) -> bool:
             "-vf", f"scale=-2:'min({VIDEO_MAX_HEIGHT},ih)'",
             "-c:v", "libx264", "-crf", str(VIDEO_CRF), "-preset", "medium",
             "-c:a", "aac", "-b:a", "128k",
+            "-map_metadata", "-1",
             str(dest_dir / out_name),
         ],
         capture_output=True, timeout=600,
@@ -478,7 +476,6 @@ def main() -> int:
             id=uid, filename=f"{c.leg}/{out_name}", thumb=f"{c.leg}/{thumb_name}",
             type="photo" if c.is_image else "video",
             leg=c.leg, date=capture_date, time=capture_time,
-            lat=c.lat, lon=c.lon, low_confidence=c.low_confidence,
             width=width, height=height,
         ))
 
