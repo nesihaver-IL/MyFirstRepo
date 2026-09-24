@@ -90,18 +90,17 @@ a { color: inherit; }
 
 .lang-toggle button.is-active { background: var(--stop-1); color: #fff; }
 
-/* Music toggle */
+/* Soundtrack */
 
-.music-toggle {
-  position: fixed; bottom: var(--space-4); right: var(--space-4); z-index: 50;
-  width: 52px; height: 52px; border-radius: 50%; border: none;
-  background: var(--stop-1); color: #fff; font-size: 1.3rem; cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  transition: transform var(--duration-base) var(--ease-out);
+.soundtrack { max-width: 560px; margin: 0 auto var(--space-5); text-align: center; }
+
+.soundtrack-label {
+  font-family: var(--font-display); font-weight: 700; font-size: 0.85rem;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--color-ink-soft);
+  margin: 0 0 var(--space-2);
 }
 
-.music-toggle:hover { transform: scale(1.06); }
-.music-toggle.is-playing { background: var(--stop-2); }
+.soundtrack-embed { display: block; width: 100%; border-radius: 12px; }
 
 .stat-strip { display: flex; justify-content: center; gap: var(--space-4); margin: var(--space-4) 0; flex-wrap: wrap; }
 .stat { text-align: center; }

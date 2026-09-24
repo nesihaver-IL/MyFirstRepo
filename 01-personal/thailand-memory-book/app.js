@@ -16,6 +16,7 @@ const I18N = {
     days: "days",
     stops: "stops",
     loadError: "Couldn't load the trip data. Try refreshing the page.",
+    soundtrack: "Our trip soundtrack",
   },
   he: {
     timeline: "ציר זמן",
@@ -31,13 +32,13 @@ const I18N = {
     days: "ימים",
     stops: "תחנות",
     loadError: "טעינת נתוני הטיול נכשלה. נסו לרענן את הדף.",
+    soundtrack: "הפסקול של הטיול שלנו",
   },
 };
 
 let LANG = localStorage.getItem(LANG_KEY) || "en";
 let TRIP_META = null;
 let PHOTOS = [];
-let MUSIC_WAS_PLAYING = false;
 
 const HTML_ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
 function escapeHtml(value) {
@@ -237,26 +238,17 @@ function setupViewToggle() {
 function setupLightbox(photosById) {
   const lightbox = document.getElementById("lightbox");
   const lightboxContent = document.getElementById("lightboxContent");
-  const music = document.getElementById("bgMusic");
 
   function open(id) {
     const item = photosById.get(id);
     if (!item) return;
     lightboxContent.innerHTML = mediaFull(item);
     lightbox.classList.add("is-open");
-    if (item.type === "video") {
-      MUSIC_WAS_PLAYING = !music.paused;
-      music.pause();
-    }
   }
 
   function close() {
     lightbox.classList.remove("is-open");
     lightboxContent.innerHTML = "";
-    if (MUSIC_WAS_PLAYING) {
-      music.play().catch(() => {});
-      MUSIC_WAS_PLAYING = false;
-    }
   }
 
   document.body.addEventListener("click", (e) => {
@@ -270,27 +262,6 @@ function setupLightbox(photosById) {
   });
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") close();
-  });
-}
-
-function setupMusicToggle() {
-  const button = document.getElementById("musicToggle");
-  const music = document.getElementById("bgMusic");
-  music.volume = 0.4;
-
-  button.addEventListener("click", () => {
-    if (music.paused) {
-      music.play().then(() => {
-        button.classList.add("is-playing");
-        button.textContent = "🔇";
-      }).catch(() => {
-        button.textContent = "🎵";
-      });
-    } else {
-      music.pause();
-      button.classList.remove("is-playing");
-      button.textContent = "🎵";
-    }
   });
 }
 
@@ -345,7 +316,6 @@ async function init() {
   setupViewToggle();
   setupLocationFilter();
   setupLangToggle();
-  setupMusicToggle();
   setupLightbox(new Map(photos.map((p) => [p.id, p])));
 }
 
