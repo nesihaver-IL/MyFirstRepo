@@ -4,7 +4,7 @@ A static, shareable memory book for the Haver family's Thailand trip
 (Aug 17 – Sep 4, 2026): Phuket → Krabi → Khao Lak → Phuket. Two views — a
 day-by-day timeline and a by-location gallery — both built from the same
 photo/video set. Supports English and Hebrew (with a language toggle) and
-an embedded Spotify track for the trip's soundtrack.
+an optional looping background track.
 
 ## Getting your photos into this project
 
@@ -114,18 +114,18 @@ night we got caught in the market rain" beats "an unforgettable evening").
 Update both language versions when you edit — the page doesn't auto-
 translate.
 
-## Soundtrack
+## Background music
 
-The page embeds a track via Spotify's official embed widget (an iframe
-with Spotify's own player — album art, play button, progress bar). No
-audio file is hosted in this repo; playback happens entirely inside
-Spotify's frame, subject to Spotify's own rules (a visitor not logged
-into Spotify Premium in that browser typically only gets a short
-preview, not the full track).
+Drop an MP3 named `background.mp3` into `media/music/` (see the README
+in that folder for details) and the existing 🎵 button starts working —
+no code changes needed. Until you add a file, the button just does
+nothing when tapped.
 
-To change the track, replace the track ID in the `iframe src` in
-`index.html` (`.../embed/track/<id>?...`) with the ID from any Spotify
-track's share link (`open.spotify.com/track/<id>`).
+It can't start the instant the page loads — no browser allows unmuted
+audio to play before the visitor has interacted with the page at all, so
+instead it starts on their very first tap/click anywhere on the page
+(as close to automatic as browsers allow), and the button lets them
+pause or replay it manually at any time.
 
 ## Viewing locally
 

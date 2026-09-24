@@ -16,7 +16,6 @@ const I18N = {
     days: "days",
     stops: "stops",
     loadError: "Couldn't load the trip data. Try refreshing the page.",
-    soundtrack: "Our trip soundtrack",
   },
   he: {
     timeline: "ציר זמן",
@@ -32,7 +31,6 @@ const I18N = {
     days: "ימים",
     stops: "תחנות",
     loadError: "טעינת נתוני הטיול נכשלה. נסו לרענן את הדף.",
-    soundtrack: "הפסקול של הטיול שלנו",
   },
 };
 
@@ -235,7 +233,61 @@ function setupViewToggle() {
   });
 }
 
-function setupLightbox(photosById) {
+function setupMusicPlayback() {
+  const button = document.getElementById("musicToggle");
+  const music = document.getElementById("bgMusic");
+  music.volume = 0.4;
+  let wasPlayingBeforeVideo = false;
+
+  function updateButton() {
+    button.classList.toggle("is-playing", !music.paused);
+    button.textContent = music.paused ? "🎵" : "🔇";
+  }
+
+  function tryPlay() {
+    music.play().then(updateButton).catch(() => updateButton());
+  }
+
+  // Starts on the visitor's very first tap/click anywhere on the page —
+  // true autoplay on load isn't possible (browsers require a user
+  // gesture before unmuted audio can play), so this is the closest
+  // approximation. The button itself is excluded here and handles its
+  // own taps below: without this, a first tap landing on the button
+  // would fire both listeners — this one starts playback, then the
+  // button's own handler would read `music.paused` as already false
+  // and immediately pause it again.
+  document.addEventListener("click", (e) => {
+    if (e.target.closest("#musicToggle")) return;
+    tryPlay();
+  }, { once: true });
+
+  button.addEventListener("click", () => {
+    if (music.paused) {
+      tryPlay();
+    } else {
+      music.pause();
+      updateButton();
+    }
+  });
+
+  return {
+    pauseForVideo() {
+      wasPlayingBeforeVideo = !music.paused;
+      if (!music.paused) {
+        music.pause();
+        updateButton();
+      }
+    },
+    resumeAfterVideo() {
+      if (wasPlayingBeforeVideo) {
+        wasPlayingBeforeVideo = false;
+        tryPlay();
+      }
+    },
+  };
+}
+
+function setupLightbox(photosById, musicControls) {
   const lightbox = document.getElementById("lightbox");
   const lightboxContent = document.getElementById("lightboxContent");
 
@@ -244,11 +296,15 @@ function setupLightbox(photosById) {
     if (!item) return;
     lightboxContent.innerHTML = mediaFull(item);
     lightbox.classList.add("is-open");
+    if (item.type === "video") {
+      musicControls.pauseForVideo();
+    }
   }
 
   function close() {
     lightbox.classList.remove("is-open");
     lightboxContent.innerHTML = "";
+    musicControls.resumeAfterVideo();
   }
 
   document.body.addEventListener("click", (e) => {
@@ -316,7 +372,8 @@ async function init() {
   setupViewToggle();
   setupLocationFilter();
   setupLangToggle();
-  setupLightbox(new Map(photos.map((p) => [p.id, p])));
+  const musicControls = setupMusicPlayback();
+  setupLightbox(new Map(photos.map((p) => [p.id, p])), musicControls);
 }
 
 init();
