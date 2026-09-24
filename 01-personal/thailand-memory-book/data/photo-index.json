@@ -1,5 +1,17 @@
 [
   {
+    "id": "e1790ef4",
+    "filename": "phuket1/2026-08-19_0817_e1790ef4.jpg",
+    "thumb": "phuket1/thumb_2026-08-19_0817_e1790ef4.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-19",
+    "time": "08:17",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
     "id": "f3028ed0",
     "filename": "phuket1/2026-08-19_0821_f3028ed0.mp4",
     "thumb": "phuket1/thumb_2026-08-19_0821_f3028ed0.jpg",
@@ -11,15 +23,15 @@
     "height": null
   },
   {
-    "id": "7b7f9801",
-    "filename": "phuket1/2026-08-19_1112_7b7f9801.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1112_7b7f9801.jpg",
+    "id": "d519b90d",
+    "filename": "phuket1/2026-08-19_1118_d519b90d.jpg",
+    "thumb": "phuket1/thumb_2026-08-19_1118_d519b90d.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-19",
-    "time": "11:12",
-    "width": 1800,
-    "height": 2400
+    "time": "11:18",
+    "width": 627,
+    "height": 836
   },
   {
     "id": "822569e7",
@@ -33,20 +45,9 @@
     "height": 2400
   },
   {
-    "id": "8ca240c2",
-    "filename": "phuket1/2026-08-19_1144_8ca240c2.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1144_8ca240c2.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-19",
-    "time": "11:44",
-    "width": 2400,
-    "height": 1800
-  },
-  {
-    "id": "63b3713d",
-    "filename": "phuket1/2026-08-19_1144_63b3713d.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1144_63b3713d.jpg",
+    "id": "28209f9b",
+    "filename": "phuket1/2026-08-19_1144_28209f9b.jpg",
+    "thumb": "phuket1/thumb_2026-08-19_1144_28209f9b.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-19",
@@ -66,37 +67,26 @@
     "height": 2400
   },
   {
-    "id": "394f90d6",
-    "filename": "phuket1/2026-08-19_1445_394f90d6.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1445_394f90d6.jpg",
+    "id": "3075137c",
+    "filename": "phuket1/2026-08-19_1147_3075137c.jpg",
+    "thumb": "phuket1/thumb_2026-08-19_1147_3075137c.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-19",
-    "time": "14:45",
-    "width": 627,
-    "height": 836
+    "time": "11:47",
+    "width": 836,
+    "height": 627
   },
   {
-    "id": "5166bf7d",
-    "filename": "phuket1/2026-08-19_1500_5166bf7d.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1500_5166bf7d.jpg",
+    "id": "97bade71",
+    "filename": "phuket1/2026-08-19_1513_97bade71.jpg",
+    "thumb": "phuket1/thumb_2026-08-19_1513_97bade71.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-19",
-    "time": "15:00",
+    "time": "15:13",
     "width": 1800,
     "height": 2400
-  },
-  {
-    "id": "0634dd80",
-    "filename": "phuket1/2026-08-19_1626_0634dd80.jpg",
-    "thumb": "phuket1/thumb_2026-08-19_1626_0634dd80.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-19",
-    "time": "16:26",
-    "width": 2400,
-    "height": 1800
   },
   {
     "id": "29f4fffa",
@@ -106,6 +96,17 @@
     "leg": "phuket1",
     "date": "2026-08-19",
     "time": "17:05",
+    "width": 1800,
+    "height": 2400
+  },
+  {
+    "id": "9e936204",
+    "filename": "phuket1/2026-08-20_1949_9e936204.jpg",
+    "thumb": "phuket1/thumb_2026-08-20_1949_9e936204.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-20",
+    "time": "19:49",
     "width": 1800,
     "height": 2400
   },
@@ -121,26 +122,15 @@
     "height": 836
   },
   {
-    "id": "7baf1440",
-    "filename": "phuket1/2026-08-20_2004_7baf1440.jpg",
-    "thumb": "phuket1/thumb_2026-08-20_2004_7baf1440.jpg",
+    "id": "bc3e4667",
+    "filename": "phuket1/2026-08-20_2004_bc3e4667.jpg",
+    "thumb": "phuket1/thumb_2026-08-20_2004_bc3e4667.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-20",
     "time": "20:04",
-    "width": 2400,
-    "height": 1800
-  },
-  {
-    "id": "78e40adf",
-    "filename": "phuket1/2026-08-20_2005_78e40adf.jpg",
-    "thumb": "phuket1/thumb_2026-08-20_2005_78e40adf.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-20",
-    "time": "20:05",
-    "width": 2400,
-    "height": 1800
+    "width": 836,
+    "height": 627
   },
   {
     "id": "ad1775c0",
@@ -154,15 +144,15 @@
     "height": 2400
   },
   {
-    "id": "66fe6e9f",
-    "filename": "phuket1/2026-08-20_2014_66fe6e9f.jpg",
-    "thumb": "phuket1/thumb_2026-08-20_2014_66fe6e9f.jpg",
+    "id": "97a06e89",
+    "filename": "phuket1/2026-08-20_2013_97a06e89.jpg",
+    "thumb": "phuket1/thumb_2026-08-20_2013_97a06e89.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-20",
-    "time": "20:14",
-    "width": 1800,
-    "height": 2400
+    "time": "20:13",
+    "width": 2400,
+    "height": 1800
   },
   {
     "id": "0b3878a3",
@@ -187,6 +177,42 @@
     "height": 2400
   },
   {
+    "id": "2378779f",
+    "filename": "phuket1/2026-08-21_0337_2378779f.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0337_2378779f.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "03:37",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
+    "id": "90bc04f1",
+    "filename": "phuket1/2026-08-21_0340_90bc04f1.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0340_90bc04f1.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "03:40",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
+    "id": "d159c641",
+    "filename": "phuket1/2026-08-21_0459_d159c641.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0459_d159c641.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "04:59",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
     "id": "8bab9958",
     "filename": "phuket1/2026-08-21_0515_8bab9958.mp4",
     "thumb": "phuket1/thumb_2026-08-21_0515_8bab9958.jpg",
@@ -196,6 +222,18 @@
     "time": "05:15",
     "width": null,
     "height": null
+  },
+  {
+    "id": "4f1ffb9e",
+    "filename": "phuket1/2026-08-21_0609_4f1ffb9e.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0609_4f1ffb9e.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "06:09",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
   },
   {
     "id": "6820ec40",
@@ -209,6 +247,18 @@
     "height": null
   },
   {
+    "id": "5c4081c9",
+    "filename": "phuket1/2026-08-21_0818_5c4081c9.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0818_5c4081c9.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "08:18",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
     "id": "429e2db8",
     "filename": "phuket1/2026-08-21_0822_429e2db8.mp4",
     "thumb": "phuket1/thumb_2026-08-21_0822_429e2db8.jpg",
@@ -218,6 +268,18 @@
     "time": "08:22",
     "width": null,
     "height": null
+  },
+  {
+    "id": "3aa98d1c",
+    "filename": "phuket1/2026-08-21_0834_3aa98d1c.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_0834_3aa98d1c.jpg",
+    "type": "photo",
+    "leg": "phuket1",
+    "date": "2026-08-21",
+    "time": "08:34",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
   },
   {
     "id": "0a968584",
@@ -242,17 +304,6 @@
     "height": 2400
   },
   {
-    "id": "0190e4bb",
-    "filename": "phuket1/2026-08-21_1034_0190e4bb.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1034_0190e4bb.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-21",
-    "time": "10:34",
-    "width": 1800,
-    "height": 2400
-  },
-  {
     "id": "69b31147",
     "filename": "phuket1/2026-08-21_1037_69b31147.jpg",
     "thumb": "phuket1/thumb_2026-08-21_1037_69b31147.jpg",
@@ -264,13 +315,13 @@
     "height": 627
   },
   {
-    "id": "ec43b585",
-    "filename": "phuket1/2026-08-21_1038_ec43b585.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1038_ec43b585.jpg",
+    "id": "2bff6b8f",
+    "filename": "phuket1/2026-08-21_1039_2bff6b8f.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1039_2bff6b8f.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
-    "time": "10:38",
+    "time": "10:39",
     "width": 1800,
     "height": 2400
   },
@@ -286,24 +337,13 @@
     "height": 2400
   },
   {
-    "id": "6df13286",
-    "filename": "phuket1/2026-08-21_1040_6df13286.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1040_6df13286.jpg",
+    "id": "e4718d0c",
+    "filename": "phuket1/2026-08-21_1040_e4718d0c.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1040_e4718d0c.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:40",
-    "width": 627,
-    "height": 836
-  },
-  {
-    "id": "12f2adbb",
-    "filename": "phuket1/2026-08-21_1041_12f2adbb.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1041_12f2adbb.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-21",
-    "time": "10:41",
     "width": 1800,
     "height": 2400
   },
@@ -319,15 +359,15 @@
     "height": 2400
   },
   {
-    "id": "fb8bb259",
-    "filename": "phuket1/2026-08-21_1048_fb8bb259.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1048_fb8bb259.jpg",
+    "id": "087ec15f",
+    "filename": "phuket1/2026-08-21_1046_087ec15f.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1046_087ec15f.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
-    "time": "10:48",
+    "time": "10:46",
     "width": 2400,
-    "height": 1800
+    "height": 1349
   },
   {
     "id": "84a22c8f",
@@ -359,17 +399,6 @@
     "leg": "phuket1",
     "date": "2026-08-21",
     "time": "10:55",
-    "width": 1800,
-    "height": 2400
-  },
-  {
-    "id": "18f0381b",
-    "filename": "phuket1/2026-08-21_1159_18f0381b.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1159_18f0381b.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-21",
-    "time": "11:59",
     "width": 1800,
     "height": 2400
   },
@@ -418,15 +447,15 @@
     "height": 836
   },
   {
-    "id": "352d0764",
-    "filename": "phuket1/2026-08-21_1254_352d0764.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1254_352d0764.jpg",
+    "id": "666c49ab",
+    "filename": "phuket1/2026-08-21_1258_666c49ab.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1258_666c49ab.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
-    "time": "12:54",
-    "width": 627,
-    "height": 836
+    "time": "12:58",
+    "width": 543,
+    "height": 965
   },
   {
     "id": "6c532c7e",
@@ -440,20 +469,9 @@
     "height": 1800
   },
   {
-    "id": "985d089d",
-    "filename": "phuket1/2026-08-21_1309_985d089d.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1309_985d089d.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-21",
-    "time": "13:09",
-    "width": 836,
-    "height": 627
-  },
-  {
-    "id": "308f8740",
-    "filename": "phuket1/2026-08-21_1309_308f8740.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1309_308f8740.jpg",
+    "id": "d3d377bb",
+    "filename": "phuket1/2026-08-21_1309_d3d377bb.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1309_d3d377bb.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
@@ -462,24 +480,13 @@
     "height": 2400
   },
   {
-    "id": "af54c6d9",
-    "filename": "phuket1/2026-08-21_1310_af54c6d9.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1310_af54c6d9.jpg",
+    "id": "28eb8829",
+    "filename": "phuket1/2026-08-21_1322_28eb8829.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1322_28eb8829.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
-    "time": "13:10",
-    "width": 2400,
-    "height": 1800
-  },
-  {
-    "id": "8ac4c2b5",
-    "filename": "phuket1/2026-08-21_1518_8ac4c2b5.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1518_8ac4c2b5.jpg",
-    "type": "photo",
-    "leg": "phuket1",
-    "date": "2026-08-21",
-    "time": "15:18",
+    "time": "13:22",
     "width": 1800,
     "height": 2400
   },
@@ -495,9 +502,9 @@
     "height": 2400
   },
   {
-    "id": "aeefdc98",
-    "filename": "phuket1/2026-08-21_1520_aeefdc98.jpg",
-    "thumb": "phuket1/thumb_2026-08-21_1520_aeefdc98.jpg",
+    "id": "6dda8b94",
+    "filename": "phuket1/2026-08-21_1520_6dda8b94.jpg",
+    "thumb": "phuket1/thumb_2026-08-21_1520_6dda8b94.jpg",
     "type": "photo",
     "leg": "phuket1",
     "date": "2026-08-21",
@@ -616,15 +623,28 @@
     "height": 1800
   },
   {
-    "id": "00c662d5",
-    "filename": "krabi/2026-08-22_2203_00c662d5.jpg",
-    "thumb": "krabi/thumb_2026-08-22_2203_00c662d5.jpg",
+    "id": "7ac6c852",
+    "filename": "krabi/2026-08-23_0607_7ac6c852.jpg",
+    "thumb": "krabi/thumb_2026-08-23_0607_7ac6c852.jpg",
     "type": "photo",
     "leg": "krabi",
-    "date": "2026-08-22",
-    "time": "22:03",
-    "width": 1800,
-    "height": 2400
+    "date": "2026-08-23",
+    "time": "06:07",
+    "width": 1920,
+    "height": 1440,
+    "source": "video-frame"
+  },
+  {
+    "id": "4f3ee970",
+    "filename": "krabi/2026-08-23_0607_4f3ee970.jpg",
+    "thumb": "krabi/thumb_2026-08-23_0607_4f3ee970.jpg",
+    "type": "photo",
+    "leg": "krabi",
+    "date": "2026-08-23",
+    "time": "06:07",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
   },
   {
     "id": "75ec2970",
@@ -711,17 +731,6 @@
     "leg": "krabi",
     "date": "2026-08-23",
     "time": "13:04",
-    "width": 2400,
-    "height": 1800
-  },
-  {
-    "id": "f6af15a0",
-    "filename": "krabi/2026-08-23_1307_f6af15a0.jpg",
-    "thumb": "krabi/thumb_2026-08-23_1307_f6af15a0.jpg",
-    "type": "photo",
-    "leg": "krabi",
-    "date": "2026-08-23",
-    "time": "13:07",
     "width": 2400,
     "height": 1800
   },
@@ -858,6 +867,42 @@
     "height": 2400
   },
   {
+    "id": "4699c32e",
+    "filename": "krabi/2026-08-25_0400_4699c32e.jpg",
+    "thumb": "krabi/thumb_2026-08-25_0400_4699c32e.jpg",
+    "type": "photo",
+    "leg": "krabi",
+    "date": "2026-08-25",
+    "time": "04:00",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
+    "id": "fbbe9654",
+    "filename": "krabi/2026-08-25_0421_fbbe9654.jpg",
+    "thumb": "krabi/thumb_2026-08-25_0421_fbbe9654.jpg",
+    "type": "photo",
+    "leg": "krabi",
+    "date": "2026-08-25",
+    "time": "04:21",
+    "width": 1440,
+    "height": 1920,
+    "source": "video-frame"
+  },
+  {
+    "id": "423d8218",
+    "filename": "krabi/2026-08-25_0509_423d8218.jpg",
+    "thumb": "krabi/thumb_2026-08-25_0509_423d8218.jpg",
+    "type": "photo",
+    "leg": "krabi",
+    "date": "2026-08-25",
+    "time": "05:09",
+    "width": 1920,
+    "height": 1440,
+    "source": "video-frame"
+  },
+  {
     "id": "8e2c78cc",
     "filename": "krabi/2026-08-25_1014_8e2c78cc.jpg",
     "thumb": "krabi/thumb_2026-08-25_1014_8e2c78cc.jpg",
@@ -891,17 +936,6 @@
     "height": 2400
   },
   {
-    "id": "16018331",
-    "filename": "krabi/2026-08-25_1110_16018331.jpg",
-    "thumb": "krabi/thumb_2026-08-25_1110_16018331.jpg",
-    "type": "photo",
-    "leg": "krabi",
-    "date": "2026-08-25",
-    "time": "11:10",
-    "width": 627,
-    "height": 836
-  },
-  {
     "id": "3c46b591",
     "filename": "krabi/2026-08-25_1121_3c46b591.jpg",
     "thumb": "krabi/thumb_2026-08-25_1121_3c46b591.jpg",
@@ -931,17 +965,6 @@
     "leg": "krabi",
     "date": "2026-08-25",
     "time": "12:08",
-    "width": 2400,
-    "height": 1800
-  },
-  {
-    "id": "e7cfa378",
-    "filename": "krabi/2026-08-25_1209_e7cfa378.jpg",
-    "thumb": "krabi/thumb_2026-08-25_1209_e7cfa378.jpg",
-    "type": "photo",
-    "leg": "krabi",
-    "date": "2026-08-25",
-    "time": "12:09",
     "width": 2400,
     "height": 1800
   },
@@ -1004,17 +1027,6 @@
     "id": "8805d355",
     "filename": "krabi/2026-08-25_1258_8805d355.jpg",
     "thumb": "krabi/thumb_2026-08-25_1258_8805d355.jpg",
-    "type": "photo",
-    "leg": "krabi",
-    "date": "2026-08-25",
-    "time": "12:58",
-    "width": 1800,
-    "height": 2400
-  },
-  {
-    "id": "00292623",
-    "filename": "krabi/2026-08-25_1258_00292623.jpg",
-    "thumb": "krabi/thumb_2026-08-25_1258_00292623.jpg",
     "type": "photo",
     "leg": "krabi",
     "date": "2026-08-25",
@@ -1241,6 +1253,18 @@
     "time": "23:15",
     "width": 1800,
     "height": 2400
+  },
+  {
+    "id": "644e6e99",
+    "filename": "khaolak/2026-08-28_0816_644e6e99.jpg",
+    "thumb": "khaolak/thumb_2026-08-28_0816_644e6e99.jpg",
+    "type": "photo",
+    "leg": "khaolak",
+    "date": "2026-08-28",
+    "time": "08:16",
+    "width": 1920,
+    "height": 1440,
+    "source": "video-frame"
   },
   {
     "id": "e6f5fc42",
@@ -1485,6 +1509,18 @@
     "height": 1800
   },
   {
+    "id": "ffa0fbf4",
+    "filename": "phuket2/2026-08-30_0849_ffa0fbf4.jpg",
+    "thumb": "phuket2/thumb_2026-08-30_0849_ffa0fbf4.jpg",
+    "type": "photo",
+    "leg": "phuket2",
+    "date": "2026-08-30",
+    "time": "08:49",
+    "width": 1920,
+    "height": 1440,
+    "source": "video-frame"
+  },
+  {
     "id": "5103ce16",
     "filename": "phuket2/2026-08-30_1006_5103ce16.jpg",
     "thumb": "phuket2/thumb_2026-08-30_1006_5103ce16.jpg",
@@ -1573,6 +1609,17 @@
     "height": 836
   },
   {
+    "id": "886c0ff9",
+    "filename": "phuket2/2026-08-30_1305_886c0ff9.jpg",
+    "thumb": "phuket2/thumb_2026-08-30_1305_886c0ff9.jpg",
+    "type": "photo",
+    "leg": "phuket2",
+    "date": "2026-08-30",
+    "time": "13:05",
+    "width": 836,
+    "height": 627
+  },
+  {
     "id": "68269cee",
     "filename": "phuket2/2026-08-30_1312_68269cee.jpg",
     "thumb": "phuket2/thumb_2026-08-30_1312_68269cee.jpg",
@@ -1604,17 +1651,6 @@
     "time": "13:16",
     "width": 836,
     "height": 627
-  },
-  {
-    "id": "2faf2b0a",
-    "filename": "phuket2/2026-08-30_1316_2faf2b0a.jpg",
-    "thumb": "phuket2/thumb_2026-08-30_1316_2faf2b0a.jpg",
-    "type": "photo",
-    "leg": "phuket2",
-    "date": "2026-08-30",
-    "time": "13:16",
-    "width": 627,
-    "height": 836
   },
   {
     "id": "c1285bc9",
@@ -1705,17 +1741,6 @@
     "height": 2400
   },
   {
-    "id": "eeb361e4",
-    "filename": "phuket2/2026-08-30_1613_eeb361e4.jpg",
-    "thumb": "phuket2/thumb_2026-08-30_1613_eeb361e4.jpg",
-    "type": "photo",
-    "leg": "phuket2",
-    "date": "2026-08-30",
-    "time": "16:13",
-    "width": 627,
-    "height": 836
-  },
-  {
     "id": "b96b4036",
     "filename": "phuket2/2026-08-30_1626_b96b4036.jpg",
     "thumb": "phuket2/thumb_2026-08-30_1626_b96b4036.jpg",
@@ -1725,6 +1750,17 @@
     "time": "16:26",
     "width": 543,
     "height": 965
+  },
+  {
+    "id": "cc942de3",
+    "filename": "phuket2/2026-08-30_1832_cc942de3.jpg",
+    "thumb": "phuket2/thumb_2026-08-30_1832_cc942de3.jpg",
+    "type": "photo",
+    "leg": "phuket2",
+    "date": "2026-08-30",
+    "time": "18:32",
+    "width": 2400,
+    "height": 1800
   },
   {
     "id": "3a222844",
@@ -1793,17 +1829,6 @@
     "height": 2400
   },
   {
-    "id": "f21cac0c",
-    "filename": "phuket2/2026-08-30_1847_f21cac0c.jpg",
-    "thumb": "phuket2/thumb_2026-08-30_1847_f21cac0c.jpg",
-    "type": "photo",
-    "leg": "phuket2",
-    "date": "2026-08-30",
-    "time": "18:47",
-    "width": 2400,
-    "height": 1800
-  },
-  {
     "id": "e33fbd8b",
     "filename": "phuket2/2026-09-01_1230_e33fbd8b.jpg",
     "thumb": "phuket2/thumb_2026-09-01_1230_e33fbd8b.jpg",
@@ -1824,6 +1849,18 @@
     "time": "12:54",
     "width": 1800,
     "height": 2400
+  },
+  {
+    "id": "6a310434",
+    "filename": "phuket2/2026-09-02_0529_6a310434.jpg",
+    "thumb": "phuket2/thumb_2026-09-02_0529_6a310434.jpg",
+    "type": "photo",
+    "leg": "phuket2",
+    "date": "2026-09-02",
+    "time": "05:29",
+    "width": 1920,
+    "height": 1440,
+    "source": "video-frame"
   },
   {
     "id": "84f120eb",
@@ -1991,17 +2028,6 @@
     "height": 836
   },
   {
-    "id": "bfa157f8",
-    "filename": "phuket2/2026-09-02_1931_bfa157f8.jpg",
-    "thumb": "phuket2/thumb_2026-09-02_1931_bfa157f8.jpg",
-    "type": "photo",
-    "leg": "phuket2",
-    "date": "2026-09-02",
-    "time": "19:31",
-    "width": 627,
-    "height": 836
-  },
-  {
     "id": "80c56598",
     "filename": "phuket2/2026-09-02_1934_80c56598.jpg",
     "thumb": "phuket2/thumb_2026-09-02_1934_80c56598.jpg",
@@ -2057,6 +2083,17 @@
     "height": 2400
   },
   {
+    "id": "c138877d",
+    "filename": "phuket2/2026-09-03_1408_c138877d.jpg",
+    "thumb": "phuket2/thumb_2026-09-03_1408_c138877d.jpg",
+    "type": "photo",
+    "leg": "phuket2",
+    "date": "2026-09-03",
+    "time": "14:08",
+    "width": 2400,
+    "height": 1800
+  },
+  {
     "id": "a996dacb",
     "filename": "phuket2/2026-09-03_1445_a996dacb.jpg",
     "thumb": "phuket2/thumb_2026-09-03_1445_a996dacb.jpg",
@@ -2071,17 +2108,6 @@
     "id": "df44bfe6",
     "filename": "phuket2/2026-09-03_1445_df44bfe6.jpg",
     "thumb": "phuket2/thumb_2026-09-03_1445_df44bfe6.jpg",
-    "type": "photo",
-    "leg": "phuket2",
-    "date": "2026-09-03",
-    "time": "14:45",
-    "width": 1800,
-    "height": 2400
-  },
-  {
-    "id": "b7c86d9f",
-    "filename": "phuket2/2026-09-03_1445_b7c86d9f.jpg",
-    "thumb": "phuket2/thumb_2026-09-03_1445_b7c86d9f.jpg",
     "type": "photo",
     "leg": "phuket2",
     "date": "2026-09-03",

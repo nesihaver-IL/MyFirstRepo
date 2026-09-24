@@ -199,6 +199,14 @@ a { color: inherit; }
   font-size: 1rem; padding-left: 3px; pointer-events: none;
 }
 
+.clip-badge {
+  position: absolute; bottom: 6px; right: 6px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: rgba(20, 15, 8, 0.5); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; line-height: 1; pointer-events: none;
+}
+
 /* Empty state */
 
 .empty-state {

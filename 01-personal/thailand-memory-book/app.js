@@ -88,6 +88,9 @@ function mediaThumb(item) {
   if (item.type === "video") {
     return `${img}<span class="play-badge" aria-hidden="true">▶</span>`;
   }
+  if (item.source === "video-frame") {
+    return `${img}<span class="clip-badge" aria-hidden="true" title="From a short clip">✦</span>`;
+  }
   return img;
 }
 

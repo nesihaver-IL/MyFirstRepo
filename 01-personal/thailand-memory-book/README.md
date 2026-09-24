@@ -39,9 +39,14 @@ ffmpeg.
 
 A clip only counts as a real "video" if it's **longer than 4 seconds**.
 Anything shorter — an iPhone Live Photo's motion clip, an accidental
-micro-recording — is dropped automatically rather than cluttering the
-video count. If you genuinely want a short clip included, force it in (see
-overrides below).
+micro-recording — isn't cluttering the video count, but it isn't thrown
+away either: the script grabs the sharpest of a few sampled frames from
+it and turns it into a regular photo, which then competes for a photo
+slot the same as any other picture (so it might still get cut if the
+leg's photo quota is already full). A photo made this way shows a small
+✦ marker in its corner so you can tell it apart from a photo taken
+normally. If you genuinely want a short clip kept as a real video
+instead, force it in (see overrides below).
 
 ### How many photos/videos end up on the page
 

@@ -12,7 +12,9 @@ a secondary confirmation signal), then balances how many end up on the page:
 
 - A video only counts as a "video" if it's longer than 4 seconds — anything
   shorter is a Live Photo's motion clip or a stray micro-clip, not real
-  video content, and is dropped.
+  video content, so it's converted into a still photo (the sharpest of a
+  few sampled frames) and competes for a photo slot like any other picture.
+  Force one to stay a real video instead with `"include": true`.
 - Each trip leg gets a photo/video quota from data/trip-meta.json's
   `mediaBudget`, sized to that leg's share of the trip's total days.
 - Photos are deduplicated by actual visual content first (not just timing) —
@@ -47,6 +49,7 @@ pillow_heif.register_heif_opener()
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 ORIGINALS_DIR = PROJECT_ROOT / "media" / "originals"
 OPTIMIZED_DIR = PROJECT_ROOT / "media" / "optimized"
+SHORT_CLIP_FRAMES_DIR = PROJECT_ROOT / "media" / ".short-clip-frames"
 TRIP_META_PATH = PROJECT_ROOT / "data" / "trip-meta.json"
 OVERRIDES_PATH = PROJECT_ROOT / "media" / "overrides.json"
 PHOTO_INDEX_PATH = PROJECT_ROOT / "data" / "photo-index.json"
@@ -82,6 +85,8 @@ class Candidate:
     forced: bool = False
     phash: Optional[Any] = None
     sharpness: Optional[float] = None
+    source_path: Optional[Path] = None
+    converted_from_clip: bool = False
 
 
 @dataclass
@@ -95,6 +100,7 @@ class MediaRecord:
     time: Optional[str]
     width: Optional[int] = None
     height: Optional[int] = None
+    source: Optional[str] = None
 
 
 def load_trip_meta() -> dict:
@@ -341,11 +347,65 @@ def make_video_poster(path: Path, dest_dir: Path, thumb_name: str) -> bool:
     return result.returncode == 0
 
 
-def gather_candidates(trip_meta: dict, overrides: dict) -> tuple[list[Candidate], list[str], list[str], list[str]]:
+def extract_sharpest_frame(path: Path, duration: float) -> Optional[Path]:
+    """Turns a short clip into a still photo: samples a few frames across
+    the clip, keeps whichever is least blurry (by the same sharpness
+    metric used for photo dedup), and returns its path — or None if
+    ffmpeg is unavailable or every sample failed to extract."""
+    if not shutil.which("ffmpeg"):
+        return None
+    SHORT_CLIP_FRAMES_DIR.mkdir(parents=True, exist_ok=True)
+    stem = short_id(path)
+    offsets = (duration * 0.25, duration * 0.5, duration * 0.75) if duration > 0.4 else (duration / 2,)
+
+    scored: list[tuple[float, Path]] = []
+    for i, offset in enumerate(offsets):
+        candidate_path = SHORT_CLIP_FRAMES_DIR / f"{stem}_{i}.jpg"
+        result = subprocess.run(
+            ["ffmpeg", "-y", "-ss", f"{offset:.2f}", "-i", str(path), "-frames:v", "1", str(candidate_path)],
+            capture_output=True, timeout=30,
+        )
+        if result.returncode == 0 and candidate_path.exists():
+            _, sharpness = analyze_image(candidate_path)
+            scored.append((sharpness or 0.0, candidate_path))
+
+    if not scored:
+        return None
+
+    scored.sort(key=lambda item: item[0], reverse=True)
+    best_path = SHORT_CLIP_FRAMES_DIR / f"{stem}.jpg"
+    _best_sharpness, winner = scored[0]
+    winner.replace(best_path)
+    for _sharpness, loser in scored[1:]:
+        loser.unlink(missing_ok=True)
+    return best_path
+
+
+def cleanup_stale_optimized_files(records: list["MediaRecord"]) -> int:
+    """Removes files under OPTIMIZED_DIR that this run's records no longer
+    reference — e.g. a photo that used to win a duplicate cluster but lost
+    to a sharper candidate on a later run. Never touches media/originals/."""
+    if not OPTIMIZED_DIR.exists():
+        return 0
+    referenced = {r.filename for r in records} | {r.thumb for r in records}
+    removed = 0
+    for path in OPTIMIZED_DIR.rglob("*"):
+        if not path.is_file() or path.name == ".gitkeep":
+            continue
+        rel_name = path.relative_to(OPTIMIZED_DIR).as_posix()
+        if rel_name not in referenced:
+            path.unlink()
+            removed += 1
+    return removed
+
+
+def gather_candidates(trip_meta: dict, overrides: dict) -> tuple[list[Candidate], list[str], list[str], list[str], list[str]]:
     """Scans ORIGINALS_DIR and resolves metadata for every file. Returns
-    (candidates, needs_override, dropped_short_clips, duration_unknown)."""
+    (candidates, needs_override, converted_short_clips, dropped_short_clips,
+    duration_unknown)."""
     candidates: list[Candidate] = []
     needs_override: list[str] = []
+    converted_short_clips: list[str] = []
     dropped_short_clips: list[str] = []
     duration_unknown: list[str] = []
 
@@ -376,28 +436,37 @@ def gather_candidates(trip_meta: dict, overrides: dict) -> tuple[list[Candidate]
                 continue
 
         forced = bool(override.get("include"))
+        source_path = path
+        converted_from_clip = False
         if is_video and not forced:
             if duration is None:
                 duration_unknown.append(rel_name)
                 continue
             if duration <= MIN_VIDEO_SECONDS:
-                dropped_short_clips.append(rel_name)
-                continue
+                frame_path = extract_sharpest_frame(path, duration)
+                if frame_path is None:
+                    dropped_short_clips.append(rel_name)
+                    continue
+                is_image = True
+                source_path = frame_path
+                converted_from_clip = True
+                converted_short_clips.append(rel_name)
 
         capture_date = capture_dt.strftime("%Y-%m-%d")
         leg = override.get("leg") or classify_leg(capture_date, trip_meta)
 
         phash = sharpness = None
         if is_image:
-            phash, sharpness = analyze_image(path)
+            phash, sharpness = analyze_image(source_path)
 
         candidates.append(Candidate(
             path=path, rel_name=rel_name, is_image=is_image, capture_dt=capture_dt,
             lat=lat, lon=lon, low_confidence=low_confidence, leg=leg,
             duration=duration, forced=forced, phash=phash, sharpness=sharpness,
+            source_path=source_path, converted_from_clip=converted_from_clip,
         ))
 
-    return candidates, needs_override, dropped_short_clips, duration_unknown
+    return candidates, needs_override, converted_short_clips, dropped_short_clips, duration_unknown
 
 
 def find_gps_mismatches(candidates: list[Candidate], trip_meta: dict) -> list[str]:
@@ -423,7 +492,7 @@ def main() -> int:
         print(f"No files found in {ORIGINALS_DIR} — drop your trip photos/videos in there and re-run.")
         return 0
 
-    candidates, needs_override, dropped_short_clips, duration_unknown = gather_candidates(trip_meta, overrides)
+    candidates, needs_override, converted_short_clips, dropped_short_clips, duration_unknown = gather_candidates(trip_meta, overrides)
     gps_mismatches = find_gps_mismatches(candidates, trip_meta)
     photo_quotas, video_quotas = compute_quotas(trip_meta, media_budget)
 
@@ -462,7 +531,7 @@ def main() -> int:
 
         width = height = None
         if c.is_image:
-            width, height = process_image(c.path, dest_dir, out_name, thumb_name)
+            width, height = process_image(c.source_path or c.path, dest_dir, out_name, thumb_name)
         else:
             ok = process_video(c.path, dest_dir, out_name)
             if not ok:
@@ -477,12 +546,24 @@ def main() -> int:
             type="photo" if c.is_image else "video",
             leg=c.leg, date=capture_date, time=capture_time,
             width=width, height=height,
+            source="video-frame" if c.converted_from_clip else None,
         ))
 
     records.sort(key=lambda r: (r.date, r.time or ""))
-    PHOTO_INDEX_PATH.write_text(json.dumps([asdict(r) for r in records], indent=2))
+    stale_removed = cleanup_stale_optimized_files(records)
 
-    print(f"Kept {len(records)} of {len(candidates)} classified file(s) → {OPTIMIZED_DIR}\n")
+    def record_to_dict(record: MediaRecord) -> dict:
+        data = asdict(record)
+        if data.get("source") is None:
+            del data["source"]
+        return data
+
+    PHOTO_INDEX_PATH.write_text(json.dumps([record_to_dict(r) for r in records], indent=2))
+
+    print(f"Kept {len(records)} of {len(candidates)} classified file(s) → {OPTIMIZED_DIR}")
+    if stale_removed:
+        print(f"Removed {stale_removed} stale file(s) from a previous run that are no longer in the book")
+    print()
     print(f"{'bucket':<14}{'photos (quota/found/kept)':<28}{'videos (quota/found/kept)'}")
     for bucket, pq, pf, pk, vq, vf, vk in report_rows:
         print(f"{bucket:<14}{f'{pq}/{pf}/{pk}':<28}{f'{vq}/{vf}/{vk}'}")
@@ -504,11 +585,17 @@ def main() -> int:
             print(f"  ...and {len(excluded) - len(shown)} more")
         print('Force one in with media/overrides.json: { "path/to/file.jpg": { "include": true } }')
 
+    if converted_short_clips:
+        kept_converted = sum(1 for c in selected if c.converted_from_clip)
+        print(f"\n{len(converted_short_clips)} clip(s) were ≤4s (Live Photo motion clips or micro-clips) and were turned into a still photo — {kept_converted} of those made it into the book like any other photo:")
+        for name in converted_short_clips[:10]:
+            print(f"  {name}")
+        print('Force one in as a real video instead with: { "include": true } in media/overrides.json')
+
     if dropped_short_clips:
-        print(f"\n{len(dropped_short_clips)} clip(s) were ≤4s (Live Photo motion clips or micro-clips) and were dropped:")
+        print(f"\n{len(dropped_short_clips)} clip(s) were ≤4s and couldn't be turned into a photo (ffmpeg missing or the file is broken) — dropped entirely:")
         for name in dropped_short_clips[:10]:
             print(f"  {name}")
-        print('Force one in as a real video with: { "include": true } in media/overrides.json')
 
     if duration_unknown:
         print(f"\n{len(duration_unknown)} video file(s) had no readable duration and were skipped (install ffmpeg to classify them):")
