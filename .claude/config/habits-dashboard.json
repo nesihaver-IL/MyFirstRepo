@@ -1,0 +1,6 @@
+{
+  "artifactUrl": "https://claude.ai/code/artifact/7d4e14dc-6007-4a8a-a1ac-c8cdfefe9b50",
+  "lastRunAt": "2026-07-20T16:58:22Z",
+  "lastRunBranch": "claude/code-habits-dashboard-6ru3f3",
+  "note": "Read this file's artifactUrl and pass it as `url` to the Artifact tool so every run updates the same link instead of minting a new one. Update lastRunAt/lastRunBranch after each run."
+}
