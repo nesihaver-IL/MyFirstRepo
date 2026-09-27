@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HaVenture</title>
-<meta name="description" content="The Haver family's Thailand trip, in photos and video.">
+<title>HaVenture — Stories</title>
+<meta name="description" content="The Haver family's Thailand trip, one story at a time.">
 <meta name="robots" content="noindex, nofollow">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E">
@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="stories.css">
 </head>
 <body>
 
@@ -20,33 +21,32 @@
   <button type="button" data-lang="he">HE</button>
 </nav>
 
-<header class="hero">
+<header class="stories-head">
   <div class="wrap">
-    <p class="hero-eyebrow" id="heroDates"></p>
-    <h1 class="hero-title">HaVenture</h1>
-    <p class="hero-subtitle" id="heroSubtitle"></p>
-    <p class="hero-statement" id="heroStatement"></p>
-    <div class="stat-strip" id="statStrip"></div>
+    <h1 class="stories-title">HaVenture</h1>
+    <a class="footer-link" href="index.html" data-i18n="backToBook">← Full book</a>
+    <nav class="view-toggle group-toggle" id="groupToggle">
+      <button type="button" data-group="day" class="is-active" data-i18n="byDay">By day</button>
+      <button type="button" data-group="location" data-i18n="byLocation">By location</button>
+    </nav>
   </div>
 </header>
 
-<div class="wrap">
-  <nav class="view-toggle">
-    <button type="button" data-view="timeline" class="is-active" data-i18n="timeline">Timeline</button>
-    <button type="button" data-view="locations" data-i18n="route">The Route</button>
-  </nav>
+<div class="story-tray" id="storyTray"></div>
 
-  <section class="view is-active" id="timelineView"></section>
-
-  <section class="view" id="locationsView">
-    <div class="location-filter" id="locationFilter"></div>
-    <div id="locationsContent"></div>
-  </section>
-</div>
-
-<div class="lightbox" id="lightbox">
-  <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
-  <div id="lightboxContent"></div>
+<div class="story-viewer" id="storyViewer">
+  <div class="story-segments" id="storySegments"></div>
+  <div class="story-header">
+    <span class="story-avatar" id="storyAvatar"></span>
+    <div class="story-header-text">
+      <b id="storyTitle"></b>
+      <span id="storySubtitle"></span>
+    </div>
+    <button type="button" class="story-close" id="storyClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="story-media" id="storyMedia"></div>
+  <div class="story-tap prev" id="storyPrev"></div>
+  <div class="story-tap next" id="storyNext"></div>
 </div>
 
 <button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music">🎵</button>
@@ -55,14 +55,12 @@
 </audio>
 
 <footer>
-  <div class="wrap" id="footerText" data-i18n="footer">Nineteen days, four stops, more photos than we could choose from.</div>
   <div class="wrap footer-links">
-    <a class="footer-link" href="stories.html" data-i18n="tryStories">Try the Stories view ↗</a>
     <a class="google-photos-btn" href="https://photos.app.goo.gl/aG3CTPYC4m85oYo6A" target="_blank" rel="noopener" data-i18n="explorePhotos">Explore all our Thailand photos</a>
   </div>
 </footer>
 
 <script src="shared.js"></script>
-<script src="app.js"></script>
+<script src="stories.js"></script>
 </body>
 </html>
