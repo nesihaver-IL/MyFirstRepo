@@ -9,7 +9,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - **Work projects** (`02-work/`) for professional deliverables using Azure AI Foundry and enterprise automation
 - **Planning & research** (`03-plans/`) for strategy documents and technical roadmaps
 - **Reference materials** (`04-reference/`) for knowledge base, cheatsheets, and archived data
-- **Claude Code ecosystem** (`.claude/`) with skills and agents auto-loaded — see `.claude/COMMAND_REGISTRY.md` for the current count (36 skills, 4 agents as of 2026-07-16; don't hardcode a number here, it goes stale)
+- **Claude Code ecosystem** (`.claude/`) with skills and agents auto-loaded — see `.claude/COMMAND_REGISTRY.md` for the current count (don't hardcode a number here, it goes stale)
 
 ## Project Architecture Map
 
@@ -21,6 +21,8 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **AWS AI Agent** | `01-personal/aws-ai-agent/` | Python, AWS Bedrock, LangChain | Generic AWS Bedrock agent framework using Strands/AgentCore patterns |
 | **Math Practice** | `01-personal/math-practice/` | Python, JavaScript | Grade 5 math exam generator with Hebrew UI |
 | **Interview Coach** | `01-personal/interview-coach/` | JavaScript (Node submodule) | Career coaching skill and utility scripts |
+| **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
+| **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
 
@@ -56,6 +58,10 @@ early-to-mid April 2026.
 - Clean separation of concerns — no domain logic, reusable patterns
 - Bedrock model invocation, tool use, prompt management
 - Terraform infrastructure for backend services
+
+**Thailand Trip 2026 / Morzin Budget 2026** (static sites):
+- Both deploy to GitHub Pages via `.github/workflows/deploy-pages.yml` on push to `main`
+- Thailand Trip 2026 also bundles the `whatsapp-export` album (see `04-reference/whatsapp-export/`)
 
 ## Build, Test & Run Commands
 
@@ -140,6 +146,7 @@ Use the skill system (invoke via natural language or slash commands):
 | Azure Foundry work | `azure-ai-foundry` | "build an agent in Azure AI Foundry" |
 | JIRA/Confluence | `jira-confluence` | "create a JIRA ticket for this" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
+| Workspace snapshot / hygiene check | `habits-dashboard` | "show me the habits dashboard" |
 
 ### Domain-Specialized Agents
 
@@ -207,6 +214,11 @@ All Claude-generated branches follow the pattern: `claude/<description>-<id>`
 
 Example: `claude/update-claude-md-BGuLn`
 
+**Important**: `main` is the single trunk. Every PR targets `main` — never another `claude/*`
+branch. (Recovered 2026-09-27 after `claude/update-claude-md-BGuLn` had drifted into being
+GitHub's default branch and silently became a second trunk for several months; see D-009 in
+DECISIONS.md.)
+
 ### Creating Pull Requests
 
 1. Run `security-audit` and `test-runner` on all changed code
@@ -267,7 +279,7 @@ Reserve Bash for: running processes, git commands, system utilities, and anythin
 
 ## Skill & Agent Registry
 
-Full listing: `.claude/COMMAND_REGISTRY.md` (36 skills, 4 agents as of 2026-07-16, auto-loaded on startup)
+Full listing: `.claude/COMMAND_REGISTRY.md` (auto-loaded on startup — see that file for the current count)
 
 Use short trigger phrases in conversation: "run tests", "terraform plan", "create issue", "update docs", etc.
 

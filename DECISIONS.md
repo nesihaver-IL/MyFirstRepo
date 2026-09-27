@@ -132,4 +132,45 @@ to persist workspace context across Claude Code sessions.
 
 ---
 
-_Updated: 2026-03-21_
+### D-009 — Recover `main` as the Single Trunk (Shadow-Branch Reconciliation)
+
+**Date**: 2026-09-27
+**Status**: Active
+
+**Decision**: Merge `claude/update-claude-md-BGuLn` back into `main`, then reset GitHub's
+default branch to `main`.
+
+**Background**: Around PR #28, GitHub's default branch silently became
+`claude/update-claude-md-BGuLn` instead of `main` (root cause not established — most likely an
+accidental branch-picker click at some point, since nothing in the repo's history explains it).
+New PRs base off whatever GitHub reports as default, so PRs #28, #29, #30, #31, #42 all targeted
+and merged into that branch instead of `main`. Real, substantial work accumulated there over
+~2 months — the Thailand Trip 2026 (HaVenture) site and the Morzin Budget 2026 tracker — while
+`main` kept evolving separately via correctly-targeted PRs (#32, #34, and this one). The two
+trunks diverged for months without anyone noticing, discovered only during a full work-tree
+branch audit.
+
+**Rationale**:
+- A repository must have exactly one trunk; two trunks accumulating independent real work is a
+  silent data-loss risk (either could be "cleaned up" as a stale branch by someone who doesn't
+  know it holds unique content)
+- `claude/update-claude-md-BGuLn`'s version of several files (notably `CLAUDE.md`) was more
+  current and better-written than `main`'s (e.g. it already fixed the "hardcoded skill count
+  goes stale" problem this workspace had already run into once) — merged content takes the
+  better version file-by-file rather than defaulting to either side wholesale
+- `.github/workflows/deploy-pages.yml` (introduced on the shadow branch) triggered only on
+  pushes to `claude/update-claude-md-BGuLn` — silently updated to trigger on `main` as part of
+  this merge, otherwise the Pages deploy would have quietly stopped working the moment that
+  branch was retired
+
+**Not yet resolved by this decision**: PRs #28 (nano-banana-studio) and #42 (Thailand trip
+background music) were still open against the shadow branch at merge time. They need a
+follow-up sync into `main` once they land — this merge does not wait for them.
+
+**Action taken**: Merged, resolved the one `CLAUDE.md` conflict by hand (kept the shadow
+branch's structure, added table rows for the two new projects), fixed the Pages workflow
+trigger, then updated the GitHub repository's default branch setting to `main`.
+
+---
+
+_Updated: 2026-09-27_
