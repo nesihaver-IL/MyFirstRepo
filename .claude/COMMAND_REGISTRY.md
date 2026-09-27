@@ -41,6 +41,9 @@
 #### Design & Utilities
 - analytics-metrics
 
+#### Design Language (added 2026-09-15)
+- emil-kowalski-design
+
 #### Workspace Insight (added 2026-07-20)
 - habits-dashboard
 
@@ -98,6 +101,8 @@ You can use these trigger phrases to activate commands:
 | "owasp" | security-audit | OWASP Top 10 compliance check |
 | "dashboard" | analytics-metrics | Data visualization / Recharts charts |
 | "chart" | analytics-metrics | KPI displays, metrics dashboards |
+| "apply design polish" | emil-kowalski-design | Typography, spacing, motion, color restraint |
+| "make it look designed" | emil-kowalski-design | Emil Kowalski-style visual pass |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
 | "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
 | "bedrock flows" | aws-bedrock | Visual agentic flow builder |
@@ -220,6 +225,7 @@ Located in `.claude/agents/*/AGENT.md`.
 | `aws-infra-agent` | `garmin-health/backend/` + `aws-ai-agent/` | Terraform, Lambda, DynamoDB, IAM operations |
 | `jira-confluence-agent` | `02-work/automation-integrations/` | JIRA/Confluence automation, sprint workflows |
 | `code-quality-agent` | All projects | Pre-PR quality gate, security scan, test validation |
+| `impeccable` | Any project (on request) | Strip AI-authorship tells from code and visible copy before sharing a deliverable |
 
 ### Invoking Agents
 ```
@@ -227,6 +233,7 @@ Located in `.claude/agents/*/AGENT.md`.
 "AWS infra agent: check why the Lambda is failing"
 "JIRA agent: build the sprint review automation"
 "Quality agent: run the full pre-PR check"
+"Impeccable: review the memory book for AI tells before we ship it"
 ```
 
 ## Diagnostic Scripts
@@ -240,7 +247,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-07-20 (regenerated against .claude/skills/ + .claude/skills-archive/, +habits-dashboard)
-Total Skills: 24 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
-Total Agents: 4
+Last Updated: 2026-09-27 (regenerated against .claude/skills/ + .claude/skills-archive/, +emil-kowalski-design, +impeccable agent)
+Total Skills: 26 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Total Agents: 5
 Status: ✅ Active
