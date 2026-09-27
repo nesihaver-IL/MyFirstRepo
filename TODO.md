@@ -10,10 +10,13 @@ See individual project `TODO.md` files for task-level detail.
 - [ ] **Garmin Health Analytics** — Build analytics pipeline and dashboard
   - Plan: `.plans/PLAN-garmin-health-analytics-2026-02-20.md`
   - Location: `01-personal/garmin-health/analytics/`
+  - Last commit: 2026-04-16 — confirm this is still active before continuing
 
 - [ ] **Math Practice App** — Build interactive math practice application
   - Plan: `.plans/PLAN-math-practice-app-2026-02-20.md`
   - Location: `01-personal/math-practice/`
+  - Last commit: 2026-04-16 — note: an archived copy already exists at
+    `01-personal/archive/math-practice/`; double-check whether this is actually done
 
 - [ ] **AWS AI Agent** — Develop AWS Bedrock AI Agent implementation
   - Location: `01-personal/aws-ai-agent/`
@@ -63,7 +66,12 @@ See individual project `TODO.md` files for task-level detail.
 - [x] Migrate garmin-analytics → garmin-health unified project structure
 - [x] Add 9 new Claude Code skills (aws-bedrock, aws-eventbridge, aws-lambda, aws-step-functions, cyber-exec-brief, excel-pm-planner, garmin-analyzer, pptx-builder, resume-optimizer)
 - [x] Run security audit (report: `.claude/SECURITY_AUDIT_REPORT_20260314.md`)
+- [x] Archive dormant personal projects `sandbox` (idle since 2026-01-09) and `marketplace`
+      (idle since 2026-02-17) into `01-personal/archive/`
+- [x] Fix stale skill-count references in CLAUDE.md / CLAUDE-STATUS.md (now point to
+      `.claude/COMMAND_REGISTRY.md` instead of a hardcoded number)
+- [x] Document 8 previously-undocumented project folders in CLAUDE.md's Project Architecture Map
 
 ---
 
-_Updated: 2026-03-21_
+_Updated: 2026-07-16_
