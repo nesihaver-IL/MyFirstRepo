@@ -27,14 +27,19 @@ function buildDayBlocks(photos, tripMeta) {
 
 function buildLocationBlocks(photos, tripMeta) {
   const byLeg = groupBy(photos, (p) => p.leg);
-  return tripMeta.legs
-    .map((leg) => {
-      const items = byLeg.get(leg.id) || [];
+  // "flight-out"/"flight-return" (and the rare "other") aren't real legs in
+  // trip-meta.json, so they're not in tripMeta.legs — iterating only that
+  // array silently drops any photo classified into one of those buckets.
+  const legIds = ["flight-out", ...tripMeta.legs.map((l) => l.id), "flight-return", "other"];
+  return legIds
+    .map((legId) => {
+      const items = byLeg.get(legId) || [];
       if (!items.length) return null;
+      const leg = tripMeta.legs.find((l) => l.id === legId);
       return {
-        id: `leg-${leg.id}`,
-        titleText: legName(leg),
-        subtitleText: formatDateRange(leg.start, leg.end),
+        id: `leg-${legId}`,
+        titleText: leg ? legName(leg) : legLabel(legId, tripMeta),
+        subtitleText: leg ? formatDateRange(leg.start, leg.end) : formatDate(items[0].date),
         items,
       };
     })
@@ -183,6 +188,15 @@ function showItem(itemIndex) {
       if (!videoEl.duration) return;
       const activeSpan = segmentsWrap.querySelector(".segment.is-active > span");
       if (activeSpan) activeSpan.style.width = `${(videoEl.currentTime / videoEl.duration) * 100}%`;
+    });
+    // Advancing into a video via the auto-advance timer (not a direct tap)
+    // isn't a fresh user gesture, and some browsers — mobile Safari in
+    // particular — block autoplay-with-sound without one. When that
+    // happens the video just sits paused and 'ended' never fires, so the
+    // story would otherwise freeze here indefinitely. Fall back to the
+    // same fixed-length auto-advance a photo gets.
+    videoEl.play().catch(() => {
+      advanceTimer = setTimeout(() => showItem(currentItemIndex + 1), AUTO_ADVANCE_MS);
     });
   } else {
     const activeSpan = segmentsWrap.querySelector(".segment.is-active > span");

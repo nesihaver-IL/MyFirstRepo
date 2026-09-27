@@ -66,20 +66,31 @@ function renderLocations(photos, tripMeta) {
   const byLeg = groupBy(photos, (p) => p.leg);
   const content = document.getElementById("locationsContent");
 
-  content.innerHTML = tripMeta.legs
-    .map((leg, index) => {
-      const items = byLeg.get(leg.id) || [];
+  // "flight-out"/"flight-return"/"other" aren't real legs in trip-meta.json
+  // (so they have no hotel/reflection text), but photos can still be
+  // classified into them — include any that actually have photos so
+  // nothing silently disappears from this view.
+  const extraIds = ["flight-out", "flight-return", "other"].filter((id) => (byLeg.get(id) || []).length > 0);
+  const sections = [...tripMeta.legs.map((leg) => ({ leg, id: leg.id })), ...extraIds.map((id) => ({ leg: null, id }))];
+
+  content.innerHTML = sections
+    .map(({ leg, id }, index) => {
+      const items = byLeg.get(id) || [];
       const colorVar = STOP_COLORS[index % STOP_COLORS.length];
       const style = `--stop-color: var(${colorVar}); --stop-soft: var(${colorVar}-soft);`;
-      const reflection = LANG === "he" ? leg.reflectionHe : leg.reflectionEn;
+      const title = leg ? legName(leg) : legLabel(id, tripMeta);
+      const meta = leg
+        ? `${formatDateRange(leg.start, leg.end)} · ${escapeHtml(leg.hotel)}`
+        : (items.length ? formatDate(items[0].date) : "");
+      const reflection = leg ? (LANG === "he" ? leg.reflectionHe : leg.reflectionEn) : "";
       return `
-        <section class="stop" data-leg="${escapeHtml(leg.id)}" style="${style}">
+        <section class="stop" data-leg="${escapeHtml(id)}" style="${style}">
           <div class="stop-dot"></div>
           <div class="folder">
-            <span class="folder-tab">${t("stop")} ${index + 1}</span>
-            <h2 class="leg-name">${escapeHtml(legName(leg))}</h2>
-            <p class="leg-meta">${formatDateRange(leg.start, leg.end)} · ${escapeHtml(leg.hotel)}</p>
-            <p class="leg-reflection">${escapeHtml(reflection)}</p>
+            ${leg ? `<span class="folder-tab">${t("stop")} ${index + 1}</span>` : ""}
+            <h2 class="leg-name">${escapeHtml(title)}</h2>
+            <p class="leg-meta">${meta}</p>
+            ${reflection ? `<p class="leg-reflection">${escapeHtml(reflection)}</p>` : ""}
             ${items.length
               ? `<div class="mosaic">${items
                   .map((item) => `<figure data-id="${escapeHtml(item.id)}">${mediaThumb(item)}</figure>`)
@@ -94,8 +105,8 @@ function renderLocations(photos, tripMeta) {
   const activeLeg = filter.querySelector("button.is-active")?.dataset.leg || "all";
   filter.innerHTML =
     `<button type="button" data-leg="all" class="${activeLeg === "all" ? "is-active" : ""}">${t("allStops")}</button>` +
-    tripMeta.legs
-      .map((leg) => `<button type="button" data-leg="${escapeHtml(leg.id)}" class="${activeLeg === leg.id ? "is-active" : ""}">${escapeHtml(legName(leg))}</button>`)
+    sections
+      .map(({ leg, id }) => `<button type="button" data-leg="${escapeHtml(id)}" class="${activeLeg === id ? "is-active" : ""}">${escapeHtml(leg ? legName(leg) : legLabel(id, tripMeta))}</button>`)
       .join("");
 
   content.querySelectorAll(".stop").forEach((section) => {
