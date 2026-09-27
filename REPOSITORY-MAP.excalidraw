@@ -1,0 +1,34 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://excalidraw.com",
+  "elements": [
+    {"type":"cameraUpdate","width":1600,"height":1200,"x":0,"y":0},
+
+    {"type":"text","id":"title","x":500,"y":30,"text":"MyFirstRepo — Complete Repository Map","fontSize":32,"strokeColor":"#1e1e1e","fontWeight":"bold"},
+
+    {"type":"rectangle","id":"conf","x":50,"y":100,"width":350,"height":280,"backgroundColor":"#a5d8ff","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#2563eb","strokeWidth":3,"label":{"text":"🔧 Configuration Files\n\nROOT LEVEL:\n• CLAUDE.md (11.6KB)\n• .gitignore\n• DECISIONS.md\n• TODO.md\n• README.md\n\nPER PROJECT:\n• CLAUDE.md\n• DECISIONS.md\n• TODO.md\n• README.md","fontSize":16}},
+
+    {"type":"rectangle","id":"dotclaude","x":430,"y":100,"width":350,"height":280,"backgroundColor":"#d0bfff","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#8b5cf6","strokeWidth":3,"label":{"text":"⚙️ .claude/ Ecosystem\n\n27 SKILLS:\n✓ Planning (create-plan, review)\n✓ AWS (bedrock, lambda, terraform)\n✓ Azure (ai-foundry)\n✓ Platforms (jira, data-pipeline)\n✓ Utilities (streamlit, pptx)\n\n4 AGENTS:\n✓ garmin-health-agent\n✓ code-quality-agent\n✓ jira-confluence-agent\n✓ aws-infra-agent","fontSize":14}},
+
+    {"type":"rectangle","id":"dotconfig","x":810,"y":100,"width":320,"height":280,"backgroundColor":"#fef08a","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#ca8a04","strokeWidth":3,"label":{"text":"📋 .config/ & Other\n\n.config/:\n• templates/ → docs\n• snippets/ → code\n\n.plans/:\n• 8 execution plans\n\n.cursor/:\n• IDE commands","fontSize":16}},
+
+    {"type":"rectangle","id":"sizes","x":1150,"y":100,"width":400,"height":280,"backgroundColor":"#bbf7d0","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#059669","strokeWidth":3,"label":{"text":"📊 Project Sizes\n\n01-personal/ — 49MB\n  ✓ 8 projects (learning)\n  ✓ Garmin Health (core)\n  ✓ AWS AI Agent\n  ✓ Math Practice\n\n02-work/ — 13MB\n  ✓ Azure AI Foundry\n  ✓ JIRA Automation\n\n03-plans/ — 248KB\n04-reference/ — 13MB","fontSize":14}},
+
+    {"type":"rectangle","id":"personal1","x":50,"y":420,"width":330,"height":200,"backgroundColor":"#d1fae5","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#10b981","strokeWidth":2,"label":{"text":"🟢 01-personal/\nLearning Projects\n\n🔥 garmin-health (49M)\n   Streamlit + Lambda\n   + Terraform\n\naws-ai-agent\n   Bedrock + LangChain\n\nmath-practice\n   Python + JavaScript","fontSize":15}},
+
+    {"type":"rectangle","id":"personal2","x":410,"y":420,"width":330,"height":200,"backgroundColor":"#d1fae5","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#10b981","strokeWidth":2,"label":{"text":"🟢 01-personal/\n(continued)\n\nOther Projects:\n\n• interview-coach\n  Career coaching skill\n\n• sandbox\n  Experimental code\n\n• windows-monitor\n  System monitoring\n\n• bookmark-mgmt\n• electricity-dashboard","fontSize":15}},
+
+    {"type":"rectangle","id":"work1","x":770,"y":420,"width":330,"height":200,"backgroundColor":"#fef3c7","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#d97706","strokeWidth":2,"label":{"text":"🟡 02-work/\nProfessional Projects\n\nai-foundry-agent (10M)\n   Azure AI Foundry\n   Enterprise agents\n\nautomation-integrations\n   JIRA + Confluence\n   Custom workflows\n\naws-cleanup\nhandoff","fontSize":15}},
+
+    {"type":"rectangle","id":"skills","x":1130,"y":420,"width":420,"height":200,"backgroundColor":"#ede9fe","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#7c3aed","strokeWidth":2,"label":{"text":"🤖 .claude/skills/ — 27 Total\n\n🏗️ Planning & Analysis\n• create-plan • execute-plan\n• exploration-phase • review\n• peer-review • security-audit\n\n🎯 AWS & Cloud\n• aws-bedrock • aws-lambda\n• aws-strands • aws-agentcore\n• terraform-ops • aws-eventbridge\n• aws-step-functions","fontSize":13}},
+
+    {"type":"rectangle","id":"agents","x":50,"y":650,"width":1500,"height":180,"backgroundColor":"#fecaca","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#dc2626","strokeWidth":2,"label":{"text":"🤖 4 DOMAIN-SPECIALIZED AGENTS\n\ngarmin-health-agent — Analyze training data, health insights\ncode-quality-agent — Run tests, security audits, peer review\njira-confluence-agent — Build sprint automation, documentation\naws-infra-agent — Plan Lambda deployment, Terraform management","fontSize":16}},
+
+    {"type":"rectangle","id":"stats","x":50,"y":870,"width":1500,"height":120,"backgroundColor":"#e0e7ff","fillStyle":"solid","roundness":{"type":3},"strokeColor":"#4f46e5","strokeWidth":2,"label":{"text":"📈 REPOSITORY STATISTICS\n\nTotal Size: 88MB | Config Files: 22 | Skills: 27 | Agents: 4 | Projects: 15 | Languages: Python, JavaScript, Terraform, SQL\nPrimary Stack: AWS (Lambda, Bedrock, DynamoDB) | Azure (AI Foundry) | GCP (n/a) | Streamlit | Anthropic SDK | LangChain","fontSize":15}}
+  ],
+  "appState": {
+    "gridMode": "adaptive",
+    "zoom": {"value": 1}
+  }
+}

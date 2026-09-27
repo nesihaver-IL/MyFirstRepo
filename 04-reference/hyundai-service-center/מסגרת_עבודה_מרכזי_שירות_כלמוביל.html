@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מסגרת עבודה – מרכזי שירות | סדנת פשרה ונירוון | הדיון</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1B2340;
+      --navy-light: #243050;
+      --red: #CC1230;
+      --red-hover: #a50e27;
+      --white: #FFFFFF;
+      --gray-bg: #F5F6F8;
+      --gray-light: #EFF1F5;
+      --gray-border: #D8DCE6;
+      --text-dark: #1A1D2E;
+      --text-mid: #4A5068;
+      --text-light: #7A80A0;
+      --success: #1A7A4A;
+      --warning: #C47B00;
+      --danger: #CC1230;
+      --font: 'Assistant', Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--gray-bg);
+      color: var(--text-dark);
+      direction: rtl;
+      line-height: 1.75;
+      font-size: 16px;
+    }
+
+    /* Header */
+    header {
+      background: var(--navy);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 14px 28px;
+    }
+    .logo-area { display: flex; align-items: center; gap: 14px; }
+    .logo-badge {
+      width: 44px; height: 44px;
+      background: var(--red);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 18px; color: var(--white);
+    }
+    .logo-text { color: var(--white); font-size: 20px; font-weight: 700; }
+    .logo-sub { color: rgba(255,255,255,0.5); font-size: 12px; }
+    .header-badge {
+      background: rgba(204,18,48,0.18);
+      border: 1px solid rgba(204,18,48,0.4);
+      color: #ff8095;
+      font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 20px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a3660 100%);
+      padding: 48px 28px 40px;
+      text-align: center;
+      color: var(--white);
+      border-bottom: 4px solid var(--red);
+    }
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 2px; color: #ff8095;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .hero h1 { font-size: 32px; font-weight: 800; margin-bottom: 8px; }
+    .hero-subtitle { font-size: 16px; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+    .hero-meta {
+      display: inline-flex; gap: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 10px 24px;
+      font-size: 13px; color: rgba(255,255,255,0.75);
+      flex-wrap: wrap; justify-content: center;
+    }
+
+    /* Layout */
+    .main-layout {
+      max-width: 1150px;
+      margin: 24px auto 60px;
+      padding: 0 28px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--gray-border);
+      overflow: hidden;
+      position: sticky;
+      top: 82px;
+    }
+    .sidebar-title {
+      background: var(--navy);
+      color: var(--white);
+      font-size: 13px; font-weight: 700;
+      padding: 12px 16px; letter-spacing: 0.5px;
+    }
+    .sidebar-nav a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: var(--text-mid);
+      font-size: 13.5px; font-weight: 500;
+      border-bottom: 1px solid var(--gray-light);
+      transition: all 0.15s;
+    }
+    .sidebar-nav a:hover { background: var(--gray-bg); color: var(--navy); }
+    .sidebar-nav a.active { background: var(--gray-light); color: var(--navy); font-weight: 700; }
+
+    /* Chapter blocks */
+    .chapter {
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .chapter-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 22px;
+      background: var(--navy);
+      cursor: pointer;
+      user-select: none;
+    }
+    .chapter-num {
+      background: var(--red);
+      color: var(--white);
+      font-size: 15px; font-weight: 800;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .chapter-title {
+      color: var(--white);
+      font-size: 18px; font-weight: 700;
+      flex: 1;
+    }
+    .chapter-chevron {
+      color: rgba(255,255,255,0.6);
+      font-size: 20px;
+      transition: transform 0.25s;
+    }
+    .chapter.collapsed .chapter-chevron { transform: rotate(180deg); }
+
+    .chapter-body {
+      padding: 24px 26px;
+    }
+    .chapter.collapsed .chapter-body { display: none; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 14px;
+    }
+    th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 10px 14px;
+      text-align: right;
+      font-weight: 600;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--gray-light);
+      color: var(--text-dark);
+    }
+    tr:nth-child(even) td { background: var(--gray-bg); }
+    tr:hover td { background: #eef0f8; }
+
+    /* Alert boxes */
+    .alert {
+      border-radius: 8px;
+      padding: 13px 16px;
+      margin: 14px 0;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .alert-warning { background: #fff8e6; border: 1px solid #e6b800; border-right: 3px solid #e6b800; color: #5a4200; }
+    .alert-danger { background: #fff0f2; border: 1px solid #f0b0bb; border-right: 3px solid var(--red); color: #6a0010; }
+    .alert-success { background: #edfaf4; border: 1px solid #a0dfc0; border-right: 3px solid var(--success); color: #0a4a25; }
+    .alert-info { background: #eef2ff; border: 1px solid #b0bef0; border-right: 3px solid #3050cc; color: #1a2868; }
+
+    /* Footer */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.85); }
+
+    @media (max-width: 768px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-badge">ה</div>
+      <div>
+        <div class="logo-text">הדיון | מרכזי שירות</div>
+        <div class="logo-sub">סדנת פשרה – פן ניירוון ונירוון</div>
+      </div>
+    </div>
+    <div class="header-badge">🧪 מרכזי שירות חדש</div>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">תאריך עדכון: 9.4.2026 | ממלא מקום בעדכון מערכת</div>
+  <h1>מסגרת עבודה – מרכזי שירות</h1>
+  <div class="hero-subtitle">סדנת פשרה כלמוביל צפוני הצפון לחברה | עדכון אחרון 9.4.2026</div>
+  <div class="hero-meta">
+    <span>📋 10 פרקים</span>
+    <span>🧪 ניווט מוקדי מובחן</span>
+    <span>📊 KPIs מוגדרים</span>
+    <span>📅 גרסה 1.0 | יולי 2026</span>
+  </div>
+</div>
+
+<!-- Main Layout -->
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-title">📑 ניווט מהיר</div>
+    <nav class="sidebar-nav">
+      <a href="#ch1">פרק 1 – רקע ותיאור עדכוני</a>
+      <a href="#ch2">פרק 2 – מסגרת ובסיס עבודה</a>
+      <a href="#ch3">פרק 3 – תיאור מפורש של שירות</a>
+      <a href="#ch4">פרק 4 – מטריצה ומטרות עבודה</a>
+      <a href="#ch5">פרק 5 – ממשק משימות</a>
+      <a href="#ch6">פרק 6 – שמירה וחידוש ערך</a>
+      <a href="#ch7">פרק 7 – טווח ממלא מקום פנימי</a>
+      <a href="#ch8">פרק 8 – תיעוד וקבלת מידע</a>
+      <a href="#ch9">פרק 9 – לא סדר משימות</a>
+      <a href="#ch10">פרק 10 – שאלות שנשאלו תדיר</a>
+      <a href="#app-a">נספח א – מי זה קשור</a>
+    </nav>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Chapter 1 -->
+    <div class="chapter" id="ch1">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-num">1</div>
+        <div class="chapter-title">רקע התוכנית והבנת דוקומנט</div>
+        <span class="chapter-chevron">⌄</span>
+      </div>
+      <div class="chapter-body">
+        <p>זה מסמך עבודה בסיסי עבור מרכז שירות הדיון. הוא מכיל מידע חיוני לעבודה יומיומית של צוות המרכז. כל סעיף מכסה נושא שונה.</p>
+        <div class="alert alert-warning">
+          <span>⚠️</span>
+          <div><strong>הערה חשובה:</strong> זה מסמך עבודה פנימי בלבד. הוא לא פרסומי ודיוק מידע עשוי להשתנות.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter" id="ch2">
+      <div class="chapter-header" onclick="toggleChapter(this)">
+        <div class="chapter-num">2</div>
+        <div class="chapter-title">מסגרת עבודה בסיסית</div>
+        <span class="chapter-chevron">⌄</span>
+      </div>
+      <div class="chapter-body">
+        <p>מסגרת העבודה מתאימה לתהליך סטנדרטי של שירות לקוחות בכלמוביל:</p>
+        <table>
+          <tr><th>#</th><th>שלב עבודה</th></tr>
+          <tr><td>1</td><td>קבלת בקשת שירות מלקוח</td></tr>
+          <tr><td>2</td><td>ניתוח הנושא בסיסי</td></tr>
+          <tr><td>3</td><td>הצעת פתרון</td></tr>
+          <tr><td>4</td><td>ביצוע השירות</td></tr>
+          <tr><td>5</td><td>סגירת קובץ הלקוח</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Additional chapters would go here... -->
+
+  </div>
+</div>
+
+<footer>
+  <strong>הדיון בע"מ</strong> | סדנת שירות | מסגרת עבודה מרכזיים | שירות מוקדים צפוניים | גרסה 1.0 | יולי 2026
+</footer>
+
+<script>
+  function toggleChapter(header) {
+    const ch = header.closest('.chapter');
+    ch.classList.toggle('collapsed');
+  }
+</script>
+</body>
+</html>
