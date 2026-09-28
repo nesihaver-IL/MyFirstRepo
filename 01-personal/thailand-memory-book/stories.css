@@ -1,0 +1,82 @@
+/* Stories page — builds on the tokens already defined in styles.css */
+
+body { padding-bottom: var(--space-6); }
+
+.stories-head { padding: var(--space-5) 0 var(--space-3); text-align: center; }
+
+.stories-title {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.2rem);
+  margin: 0 0 var(--space-2);
+}
+
+.stories-head .footer-link { display: inline-block; margin-bottom: var(--space-3); }
+
+.group-toggle { margin: 0 auto; }
+
+/* Tray */
+
+.story-tray {
+  display: flex; gap: var(--space-4); overflow-x: auto; padding: var(--space-4) var(--space-4);
+  max-width: 900px; margin: 0 auto; scrollbar-width: none;
+}
+.story-tray::-webkit-scrollbar { display: none; }
+
+.tray-item {
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-1);
+  border: none; background: none; cursor: pointer; flex: 0 0 auto; width: 76px; font: inherit;
+}
+
+.tray-ring {
+  width: 68px; height: 68px; border-radius: 50%; padding: 3px;
+  background: linear-gradient(135deg, var(--stop-1), var(--stop-3), var(--stop-2));
+}
+.tray-item.is-viewed .tray-ring { background: var(--color-route); }
+
+.tray-avatar {
+  width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block;
+  border: 3px solid var(--color-bg);
+}
+
+.tray-label {
+  font-size: 0.72rem; font-weight: 700; color: var(--color-ink-soft); text-align: center;
+  line-height: 1.2; max-width: 76px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Full-screen story viewer */
+
+.story-viewer {
+  position: fixed; inset: 0; background: #000; z-index: 200;
+  opacity: 0; pointer-events: none; transition: opacity var(--duration-base) var(--ease-out);
+}
+.story-viewer.is-open { opacity: 1; pointer-events: auto; }
+
+.story-segments {
+  position: absolute; top: 10px; left: 10px; right: 10px; display: flex; gap: 4px; z-index: 5;
+}
+.story-segments .segment { flex: 1; height: 3px; border-radius: 2px; background: rgba(255, 255, 255, 0.3); overflow: hidden; }
+.story-segments .segment > span { display: block; height: 100%; width: 0%; background: #fff; }
+.story-segments .segment.is-done > span { width: 100%; transition: none; }
+.story-segments .segment.is-active > span { transition: width linear; }
+
+.story-header {
+  position: absolute; top: 22px; left: 12px; right: 12px; display: flex; align-items: center;
+  gap: var(--space-2); z-index: 5; color: #fff;
+}
+.story-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex: 0 0 auto; }
+.story-header-text { display: flex; flex-direction: column; line-height: 1.2; flex: 1; min-width: 0; }
+.story-header-text b { font-size: 0.85rem; }
+.story-header-text span { font-size: 0.72rem; opacity: 0.85; }
+
+.story-close {
+  background: none; border: none; color: #fff; font-size: 1.6rem; line-height: 1;
+  cursor: pointer; padding: var(--space-1);
+}
+
+.story-media {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+}
+.story-media img, .story-media video { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.story-tap { position: absolute; top: 0; bottom: 0; z-index: 4; cursor: pointer; }
+.story-tap.prev { left: 0; width: 35%; }
+.story-tap.next { right: 0; width: 65%; }
