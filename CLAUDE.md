@@ -21,6 +21,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **AWS AI Agent** | `01-personal/aws-ai-agent/` | Python, AWS Bedrock, LangChain | Generic AWS Bedrock agent framework using Strands/AgentCore patterns |
 | **Math Practice** | `01-personal/math-practice/` | Python, JavaScript | Grade 5 math exam generator with Hebrew UI |
 | **Interview Coach** | `01-personal/interview-coach/` | JavaScript (Node submodule) | Career coaching skill and utility scripts |
+| **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
 | **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
 | **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
@@ -145,6 +146,7 @@ Use the skill system (invoke via natural language or slash commands):
 | AWS infrastructure | `terraform-ops` + `aws-bedrock` + `aws-lambda` | "terraform plan the garmin backend" |
 | Azure Foundry work | `azure-ai-foundry` | "build an agent in Azure AI Foundry" |
 | JIRA/Confluence | `jira-confluence` | "create a JIRA ticket for this" |
+| Content → image generation | `content-to-image` | "turn this into an image" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
 | Workspace snapshot / hygiene check | `habits-dashboard` | "show me the habits dashboard" |
 

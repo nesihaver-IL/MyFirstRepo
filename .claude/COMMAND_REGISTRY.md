@@ -41,6 +41,9 @@
 #### Design & Utilities
 - analytics-metrics
 
+#### Content Generation (added 2026-07-10)
+- content-to-image
+
 #### Design Language (added 2026-09-15)
 - emil-kowalski-design
 
@@ -101,6 +104,8 @@ You can use these trigger phrases to activate commands:
 | "owasp" | security-audit | OWASP Top 10 compliance check |
 | "dashboard" | analytics-metrics | Data visualization / Recharts charts |
 | "chart" | analytics-metrics | KPI displays, metrics dashboards |
+| "turn this into an image" | content-to-image | Content-to-image via nano-banana-studio |
+| "visualize this" | content-to-image | Draft prompt from content, then render |
 | "apply design polish" | emil-kowalski-design | Typography, spacing, motion, color restraint |
 | "make it look designed" | emil-kowalski-design | Emil Kowalski-style visual pass |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
@@ -247,7 +252,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-09-27 (regenerated against .claude/skills/ + .claude/skills-archive/, +emil-kowalski-design, +impeccable agent)
-Total Skills: 26 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Last Updated: 2026-09-28 (regenerated against .claude/skills/ + .claude/skills-archive/, +content-to-image, +emil-kowalski-design, +impeccable agent)
+Total Skills: 27 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
 Total Agents: 5
 Status: ✅ Active
