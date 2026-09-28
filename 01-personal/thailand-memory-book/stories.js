@@ -80,6 +80,11 @@ function renderTray() {
         <span class="tray-label">${escapeHtml(block.titleText)}</span>
       </button>`;
   }).join("");
+  // A fresh render always starts scrolled to 0, so re-check whether the
+  // "more to scroll" fade hint should show (e.g. after switching between
+  // day/location grouping, which can change the block count).
+  tray.scrollLeft = 0;
+  updateTrayScrollHint();
 }
 
 function setGrouping(grouping) {
@@ -99,11 +104,20 @@ function setupGroupToggle() {
   });
 }
 
+function updateTrayScrollHint() {
+  const tray = document.getElementById("storyTray");
+  const canScrollMore = tray.scrollWidth - tray.clientWidth - tray.scrollLeft > 1;
+  tray.classList.toggle("is-scrollable", canScrollMore);
+}
+
 function setupTray() {
-  document.getElementById("storyTray").addEventListener("click", (e) => {
+  const tray = document.getElementById("storyTray");
+  tray.addEventListener("click", (e) => {
     const button = e.target.closest(".tray-item");
     if (button) openBlock(Number(button.dataset.index));
   });
+  tray.addEventListener("scroll", updateTrayScrollHint);
+  window.addEventListener("resize", updateTrayScrollHint);
 }
 
 function clearAdvanceTimer() {
