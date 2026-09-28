@@ -2,7 +2,7 @@ name: Deploy Pages site (Thailand trip + Memory Book + Morzin budget)
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "claude/thailand-trip-itinerary-uqcon2"]
     paths:
       - "01-personal/thailand-trip-2026/**"
       - "01-personal/thailand-memory-book/**"
