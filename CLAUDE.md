@@ -9,7 +9,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - **Work projects** (`02-work/`) for professional deliverables using Azure AI Foundry and enterprise automation
 - **Planning & research** (`03-plans/`) for strategy documents and technical roadmaps
 - **Reference materials** (`04-reference/`) for knowledge base, cheatsheets, and archived data
-- **Claude Code ecosystem** (`.claude/`) with 24 active skills (+7 archived in `.claude/skills-archive/`) and 4 domain-specialized agents
+- **Claude Code ecosystem** (`.claude/`) with skills and agents auto-loaded — see `.claude/COMMAND_REGISTRY.md` for the current count (don't hardcode a number here, it goes stale)
 
 ## Project Architecture Map
 
@@ -21,8 +21,31 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **AWS AI Agent** | `01-personal/aws-ai-agent/` | Python, AWS Bedrock, LangChain | Generic AWS Bedrock agent framework using Strands/AgentCore patterns |
 | **Math Practice** | `01-personal/math-practice/` | Python, JavaScript | Grade 5 math exam generator with Hebrew UI |
 | **Interview Coach** | `01-personal/interview-coach/` | JavaScript (Node submodule) | Career coaching skill and utility scripts |
+| **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
+| **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
+| **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
+
+### Other Project Folders (undocumented until 2026-07-16)
+
+These exist in the work tree but were missing from the table above — added here rather than left
+undocumented. Verify each is still active before treating it as such; several show no commits since
+early-to-mid April 2026.
+
+| Project | Location | Notes |
+|---------|----------|-------|
+| **Zohar Resume** | `01-personal/zohar-resume/` | Resume tooling |
+| **Windows Monitor** | `01-personal/windows-monitor/` | System monitoring utility |
+| **Bookmark Management** | `01-personal/bookmark-management/` | Bookmark tooling |
+| **Electricity Dashboard** | `01-personal/electricity-dashboard/` | Gmail API bill extraction (see root TODO.md) |
+| **Tzofim Payments** | `01-personal/tzofim-payments/` | Payments-related utility |
+| **Strategy Presentation** | `02-work/strategy-presentation/` | Contains tracked `.xlsx` planning files |
+| **AWS Cleanup** | `02-work/aws-cleanup/` | AWS account cleanup scripts |
+| **Handoff** | `02-work/handoff/` | Handoff documentation/materials |
+
+`sandbox` and `marketplace` were archived to `01-personal/archive/` on 2026-07-16 (idle since
+2026-01-09 and 2026-02-17 respectively) rather than documented here.
 
 ### Architecture Highlights
 
@@ -37,11 +60,74 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 - Bedrock model invocation, tool use, prompt management
 - Terraform infrastructure for backend services
 
+**Thailand Trip 2026 / Morzin Budget 2026** (static sites):
+- Both deploy to GitHub Pages via `.github/workflows/deploy-pages.yml` on push to `main`
+- Thailand Trip 2026 also bundles the `whatsapp-export` album (see `04-reference/whatsapp-export/`)
+
 ## Build, Test & Run Commands
 
-See each project's `CLAUDE.md` for project-specific build, test, and run commands.
+### Python Projects (with `.venv`)
 
-**Key rule**: Always activate the project's `.venv` before running `pip`, `python`, or any Python script.
+Before running any Python command, **always check for and activate the project's `.venv`**:
+
+```bash
+# Garmin Health Analytics (Streamlit dashboard)
+cd 01-personal/garmin-health/analytics
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+
+# Garmin Health Backend (AWS Lambda)
+cd 01-personal/garmin-health/backend
+source .venv/bin/activate
+pip install -r requirements.txt
+bash scripts/test.sh        # Run OAuth + query tests
+bash scripts/deploy.sh      # Deploy Terraform
+bash scripts/destroy.sh     # Tear down infrastructure
+
+# Math Practice Tests
+cd 01-personal/math-practice
+python -m pytest tests/ -v
+
+# AWS AI Agent (if venv exists)
+cd 01-personal/aws-ai-agent
+[if .venv exists: source .venv/bin/activate]
+pip install -r requirements.txt  # or add to .venv
+python run_agent.py
+```
+
+### JavaScript/Node Projects
+
+```bash
+# Interview Coach (submodule with build scripts)
+cd 01-personal/interview-coach
+npm install
+npm run build    # or project-specific script
+
+# Work projects
+cd 02-work/automation-integrations
+npm install && npm run test
+```
+
+### Terraform (Garmin Backend)
+
+```bash
+cd 01-personal/garmin-health/backend/terraform
+terraform init
+terraform plan -var-file="../config/terraform.tfvars"
+terraform apply -var-file="../config/terraform.tfvars"
+```
+
+## Python Environment Rules
+
+- **Before running `pip`, `python`, or any Python script, check for a project-level `.venv`**
+- Use `.venv/bin/python` (not system `python3`) when a `.venv` exists
+- If `.venv` exists: activate it (`source .venv/bin/activate`) before pip install
+- Known project venvs:
+  - `01-personal/garmin-health/analytics/.venv` — Streamlit + Anthropic SDK
+  - `01-personal/aws-ai-agent/.venv` — Bedrock + LangChain (if exists)
+- There is no root-level venv — each project is isolated
+- When creating a new `.venv`: `python -m venv .venv && source .venv/bin/activate`
 
 ## Development Workflows
 
@@ -60,7 +146,9 @@ Use the skill system (invoke via natural language or slash commands):
 | AWS infrastructure | `terraform-ops` + `aws-bedrock` + `aws-lambda` | "terraform plan the garmin backend" |
 | Azure Foundry work | `azure-ai-foundry` | "build an agent in Azure AI Foundry" |
 | JIRA/Confluence | `jira-confluence` | "create a JIRA ticket for this" |
+| Content → image generation | `content-to-image` | "turn this into an image" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
+| Workspace snapshot / hygiene check | `habits-dashboard` | "show me the habits dashboard" |
 
 ### Domain-Specialized Agents
 
@@ -128,6 +216,11 @@ All Claude-generated branches follow the pattern: `claude/<description>-<id>`
 
 Example: `claude/update-claude-md-BGuLn`
 
+**Important**: `main` is the single trunk. Every PR targets `main` — never another `claude/*`
+branch. (Recovered 2026-09-27 after `claude/update-claude-md-BGuLn` had drifted into being
+GitHub's default branch and silently became a second trunk for several months; see D-009 in
+DECISIONS.md.)
+
 ### Creating Pull Requests
 
 1. Run `security-audit` and `test-runner` on all changed code
@@ -135,6 +228,23 @@ Example: `claude/update-claude-md-BGuLn`
 3. Create PR with `gh pr create` (includes test results and security scan in body)
 4. Link related issues and add description context
 5. Run `update-docs` skill after merge to sync documentation
+
+## Tool Preference (Dedicated Tools > Bash)
+
+Always use the right tool first — Bash is a fallback:
+
+| Task | Preferred Tool | Bash Only When |
+|------|---|---|
+| Read a file | `Read` | File is too large (use offset/limit) |
+| Edit a file | `Edit` | Bulk find-replace (use replace_all) |
+| Create a file | `Write` | Creating a one-off script |
+| Search files | `Grep` | Complex regex or multiple patterns |
+| Find files | `Glob` | Pattern matching by name |
+| Run processes | `Bash` | — (exclusive use case) |
+| Git operations | `Bash` | — (exclusive use case) |
+| System commands | `Bash` | — (exclusive use case) |
+
+Reserve Bash for: running processes, git commands, system utilities, and anything the above tools cannot do.
 
 ## Bash Efficiency Rules
 
@@ -151,13 +261,27 @@ Example: `claude/update-claude-md-BGuLn`
 - One active todo list per conversation; clear stale items when starting new work
 - Update status in real-time, especially for long-running tasks
 
+## Known Limitations & Workarounds
+
+**Anthropic API connectivity**: Corporate network TLS handshake timeout (cached 2026-03-21)
+- Workaround: Use mobile hotspot or VPN
+- Detailed troubleshooting: `.claude/CONNECTIVITY-TROUBLESHOOTING.md`
+
+**Data file locations**: Garmin JSON exports currently in `01-personal/aws-ai-agent/docs/`
+- Target migration: `01-personal/garmin-health/data/raw/` on next pipeline run
+- Use `data-pipeline` skill to orchestrate migration
+
 ## Resources
 
-Documentation and links: See [.claude/docs/resources.md](.claude/docs/resources.md)
+- **AWS**: [Bedrock](https://docs.aws.amazon.com/bedrock/), [Lambda](https://docs.aws.amazon.com/lambda/), [EventBridge](https://docs.aws.amazon.com/eventbridge/), [DynamoDB](https://docs.aws.amazon.com/dynamodb/)
+- **Azure**: [AI Foundry Documentation](https://learn.microsoft.com/azure/ai-studio/)
+- **Agent Frameworks**: [LangChain](https://python.langchain.com/), [Anthropic SDK](https://github.com/anthropics/anthropic-sdk-python)
+- **Local Dashboards**: [Streamlit](https://docs.streamlit.io/)
+- **Terraform**: [Registry](https://registry.terraform.io/), [AWS Provider](https://registry.terraform.io/providers/hashicorp/aws/)
 
 ## Skill & Agent Registry
 
-Full listing: `.claude/COMMAND_REGISTRY.md` (27 skills, 4 agents, auto-loaded on startup)
+Full listing: `.claude/COMMAND_REGISTRY.md` (auto-loaded on startup — see that file for the current count)
 
 Use short trigger phrases in conversation: "run tests", "terraform plan", "create issue", "update docs", etc.
 

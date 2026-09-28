@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HaVenture — Stories</title>
+<meta name="description" content="The Haver family's Thailand trip, one story at a time.">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B4%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="stories.css">
+</head>
+<body>
+
+<nav class="lang-toggle" id="langToggle">
+  <button type="button" data-lang="en" class="is-active">EN</button>
+  <button type="button" data-lang="he">HE</button>
+</nav>
+
+<header class="stories-head">
+  <div class="wrap">
+    <h1 class="stories-title">HaVenture</h1>
+    <a class="footer-link" href="index.html" data-i18n="backToBook">← Full book</a>
+    <nav class="view-toggle group-toggle" id="groupToggle">
+      <button type="button" data-group="day" class="is-active" data-i18n="byDay">By day</button>
+      <button type="button" data-group="location" data-i18n="byLocation">By location</button>
+    </nav>
+  </div>
+</header>
+
+<div class="story-tray" id="storyTray"></div>
+
+<div class="story-viewer" id="storyViewer">
+  <div class="story-segments" id="storySegments"></div>
+  <div class="story-header">
+    <span class="story-avatar" id="storyAvatar"></span>
+    <div class="story-header-text">
+      <b id="storyTitle"></b>
+      <span id="storySubtitle"></span>
+    </div>
+    <button type="button" class="story-close" id="storyClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="story-media" id="storyMedia"></div>
+  <div class="story-tap prev" id="storyPrev"></div>
+  <div class="story-tap next" id="storyNext"></div>
+</div>
+
+<button type="button" class="music-toggle" id="musicToggle" aria-label="Play background music">🎵</button>
+<audio id="bgMusic" loop preload="none">
+  <source src="media/music/background.mp3" type="audio/mpeg">
+</audio>
+
+<footer>
+  <div class="wrap footer-links">
+    <a class="google-photos-btn" href="https://photos.app.goo.gl/aG3CTPYC4m85oYo6A" target="_blank" rel="noopener" data-i18n="explorePhotos">Explore all our Thailand photos</a>
+  </div>
+</footer>
+
+<script src="shared.js"></script>
+<script src="stories.js"></script>
+</body>
+</html>

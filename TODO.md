@@ -16,7 +16,16 @@ the full reasoning behind each call.
 - [ ] **Garmin Health Analytics** — Build analytics pipeline and dashboard
   - Plan: `.plans/PLAN-garmin-health-analytics-2026-02-20.md`
   - Location: `01-personal/garmin-health/analytics/`
-  - Status: real, paused — 52 days since last commit, agent + 3 skills already in place
+  - Status: real, paused — last commit 2026-04-16, agent + 3 skills already in place; confirm
+    still active before continuing
+
+- [ ] **Math Practice App** — Build interactive math practice application
+  - Plan: `.plans/PLAN-math-practice-app-2026-02-20.md`
+  - Location: `01-personal/math-practice/`
+  - Status: `[unclear — conflicting signals]` Last commit 2026-04-16. File count (87 files,
+    31M) originally read as substantially built, but an archived copy already exists at
+    `01-personal/archive/math-practice/`, which could mean this was already superseded. The
+    two checks disagree — needs your actual read on this one rather than another guess.
 
 - [ ] **AWS AI Agent** — Develop AWS Bedrock AI Agent implementation
   - Location: `01-personal/aws-ai-agent/`
@@ -68,11 +77,8 @@ the full reasoning behind each call.
 - [x] Run security audit (report: `.claude/SECURITY_AUDIT_REPORT_20260314.md`)
 - [x] Establish ongoing commit discipline — 97 commits now on record; the original "first
       commit" concern from D-006 is long resolved
-- [x] **Math Practice App** `[inferred done]` — 87 files, 31M, largest personal project by
-      content; reads as substantially built rather than still "in progress." Confirm and move
-      back to In Progress if that's wrong.
 - [x] **Azure AI Foundry Agent** `[inferred done]` — 93 files, the largest project in the
-      workspace by file count. Same read as Math Practice App — confirm if this is wrong.
+      workspace by file count. Confirm if this is wrong.
 - [x] Add RAG dataset for Garmin analytics `[inferred done]` — CLAUDE.md's own architecture
       description already documents `datasets/` as holding "RAG vector datasets (activities,
       wellness, training)"
@@ -81,7 +87,18 @@ the full reasoning behind each call.
 - [x] Add `habits-dashboard` skill for on-demand workspace snapshots — work tree, active
       session, installed base, and hygiene at a glance, runnable from Desktop, VS Code, or
       web (PR #34)
+- [x] Archive dormant personal projects `sandbox` (idle since 2026-01-09) and `marketplace`
+      (idle since 2026-02-17) into `01-personal/archive/`
+- [x] Fix stale skill-count references in CLAUDE.md / CLAUDE-STATUS.md (now point to
+      `.claude/COMMAND_REGISTRY.md` instead of a hardcoded number)
+- [x] Document 8 previously-undocumented project folders in CLAUDE.md's Project Architecture Map
+- [x] Recover `main` as the single development trunk after a months-long branch-default
+      misconfiguration split real work (Thailand trip site, budget tracker) onto a stray
+      branch; see D-009 in DECISIONS.md
+- [x] Merge PRs #28 (content-to-image / nano-banana-studio skill), #42 and #44 (Thailand
+      trip site + memory book) into main
+- [x] Delete 60 stale/redundant branches after a full repo-wide branch audit
 
 ---
 
-_Updated: 2026-07-20_
+_Updated: 2026-09-28_

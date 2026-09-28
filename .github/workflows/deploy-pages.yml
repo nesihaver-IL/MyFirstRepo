@@ -1,0 +1,64 @@
+name: Deploy Pages site (Thailand trip + Memory Book + Morzin budget)
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "01-personal/thailand-trip-2026/**"
+      - "01-personal/thailand-memory-book/**"
+      - "01-personal/morzin-budget-2026/**"
+      - "04-reference/whatsapp-export/album/**"
+      - ".github/workflows/deploy-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Build combined site
+        run: |
+          mkdir -p _site
+          cp -r 01-personal/thailand-trip-2026/. _site/
+          if [ -d "04-reference/whatsapp-export/album" ]; then
+            mkdir -p _site/whatsapp-export/album
+            cp -r 04-reference/whatsapp-export/album/. _site/whatsapp-export/album/
+          fi
+          if [ -d "01-personal/morzin-budget-2026" ]; then
+            mkdir -p _site/morzin-budget-2026
+            cp -r 01-personal/morzin-budget-2026/. _site/morzin-budget-2026/
+          fi
+          if [ -d "01-personal/thailand-memory-book" ]; then
+            mkdir -p _site/thailand-memory-book
+            cp -r 01-personal/thailand-memory-book/. _site/thailand-memory-book/
+            # raw originals and build tooling aren't needed to serve the site
+            rm -rf _site/thailand-memory-book/media/originals
+            rm -rf _site/thailand-memory-book/scripts
+            # drop precise lodging coordinates from the published copy only —
+            # the source file keeps them for the pipeline's own GPS checks,
+            # but nothing in the page itself renders lat/lon
+            META="_site/thailand-memory-book/data/trip-meta.json"
+            if [ -f "$META" ]; then
+              python3 -c "import json; p='$META'; d = json.load(open(p, encoding='utf-8')); [(leg.pop('lat', None), leg.pop('lon', None)) for leg in d.get('legs', [])]; json.dump(d, open(p, 'w', encoding='utf-8'), indent=2, ensure_ascii=False)"
+            fi
+          fi
+      - name: Upload combined site as Pages artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
