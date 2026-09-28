@@ -232,7 +232,19 @@ a { color: inherit; }
 }
 
 .lightbox.is-open { opacity: 1; pointer-events: auto; }
-.lightbox img, .lightbox video { max-height: 88vh; max-width: 100%; border-radius: 8px; }
+.lightbox video { max-height: 88vh; max-width: 100%; border-radius: 8px; }
+.lightbox .media-frame { max-height: 88vh; max-width: 100%; border-radius: 8px; overflow: hidden; }
+.lightbox .media-frame img { max-height: 88vh; max-width: 100%; display: block; }
+
+/* Blur-up placeholder for the full-resolution photo (shared.js mediaFull()),
+   used here and in the Stories viewer (stories.css). */
+.media-frame { position: relative; display: inline-block; }
+.media-placeholder {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  filter: blur(20px); transform: scale(1.1);
+}
+.media-hero { position: relative; height: auto; width: auto; opacity: 0; transition: opacity 300ms ease-out; }
+.media-hero.is-loaded { opacity: 1; }
 
 .lightbox-close {
   position: absolute; top: var(--space-4); right: var(--space-4); background: none; border: none;

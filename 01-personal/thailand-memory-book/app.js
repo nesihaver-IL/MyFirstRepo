@@ -148,6 +148,7 @@ function setupLightbox(photosById, musicControls) {
     const item = photosById.get(id);
     if (!item) return;
     lightboxContent.innerHTML = mediaFull(item);
+    wireMediaFade(lightboxContent);
     lightbox.classList.add("is-open");
     if (item.type === "video") {
       musicControls.pauseForVideo();

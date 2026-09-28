@@ -107,10 +107,44 @@ function tripDayCount(tripMeta) {
 
 function mediaFull(item) {
   const src = `${MEDIA_BASE}/${escapeHtml(item.filename)}`;
+  const thumbSrc = `${MEDIA_BASE}/${escapeHtml(item.thumb)}`;
   if (item.type === "video") {
-    return `<video src="${src}" controls autoplay playsinline></video>`;
+    // poster shows the already-cached thumbnail instantly instead of a
+    // blank/black box while the (much larger) video buffers on a slow
+    // connection.
+    return `<video src="${src}" poster="${thumbSrc}" controls autoplay playsinline></video>`;
   }
-  return `<img src="${src}" alt="">`;
+  // The full-resolution photo can be 1-1.5MB, which is slow to appear on
+  // mobile data. Show the already-cached thumbnail as a blurred
+  // placeholder immediately, fading the sharp version in once it loads,
+  // so something is visible right away instead of a blank frame. The
+  // width/height attributes let the browser reserve the right aspect
+  // ratio before the full image has even started downloading.
+  const dims = item.width && item.height ? ` width="${item.width}" height="${item.height}"` : "";
+  return `
+    <div class="media-frame">
+      <img class="media-placeholder" src="${thumbSrc}" alt="" aria-hidden="true">
+      <img class="media-hero" src="${src}"${dims} alt="" decoding="async" fetchpriority="high">
+    </div>`;
+}
+
+// The page's CSP has no script-src 'unsafe-inline', so an inline onload=""
+// attribute on the hero image is silently blocked — the fade-in has to be
+// wired up from here instead, right after mediaFull()'s HTML is inserted.
+function wireMediaFade(container) {
+  const hero = container.querySelector(".media-hero");
+  if (!hero) return;
+  if (hero.complete) {
+    hero.classList.add("is-loaded");
+  } else {
+    hero.addEventListener("load", () => hero.classList.add("is-loaded"), { once: true });
+  }
+}
+
+function preloadMedia(item) {
+  if (!item || item.type === "video") return;
+  const img = new Image();
+  img.src = `${MEDIA_BASE}/${item.filename}`;
 }
 
 function applyStaticI18n() {

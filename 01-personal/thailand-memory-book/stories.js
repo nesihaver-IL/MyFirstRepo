@@ -194,6 +194,12 @@ function showItem(itemIndex) {
 
   const mediaWrap = document.getElementById("storyMedia");
   mediaWrap.innerHTML = mediaFull(item);
+  wireMediaFade(mediaWrap);
+
+  // Warm the cache for the next photo now, while this item is on screen,
+  // so it's already downloaded by the time auto-advance (or a tap) gets
+  // there — otherwise every step waits on a fresh 1MB+ fetch.
+  preloadMedia(block.items[itemIndex + 1]);
 
   if (isVideo) {
     const videoEl = mediaWrap.querySelector("video");
