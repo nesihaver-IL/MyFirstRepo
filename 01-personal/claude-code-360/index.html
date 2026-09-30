@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code 360°</title>
+<style>
+  :root{
+    --surface-1:#fcfcfb; --page:#f9f9f7; --text-primary:#0b0b0b; --text-secondary:#52514e;
+    --text-muted:#898781; --grid:#e1e0d9; --border:rgba(11,11,11,0.10);
+    --good:#0ca30c; --warning:#fab219; --critical:#d03b3b;
+    --cat-1:#2a78d6; --cat-2:#1baf7a; --cat-3:#eda100; --cat-4:#008300;
+    --cat-5:#4a3aa7; --cat-6:#e34948; --cat-7:#e87ba4; --cat-8:#eb6834;
+    --shadow: 0 1px 2px rgba(11,11,11,0.06), 0 4px 16px rgba(11,11,11,0.06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --surface-1:#1a1a19; --page:#0d0d0d; --text-primary:#ffffff; --text-secondary:#c3c2b7;
+      --text-muted:#898781; --grid:#2c2c2a; --border:rgba(255,255,255,0.10);
+      --good:#3fbf3f; --warning:#fab219; --critical:#e66767;
+      --cat-1:#3987e5; --cat-2:#199e70; --cat-3:#c98500; --cat-4:#3a9d3a;
+      --cat-5:#9085e9; --cat-6:#e66767; --cat-7:#d55181; --cat-8:#d95926;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface-1:#1a1a19; --page:#0d0d0d; --text-primary:#ffffff; --text-secondary:#c3c2b7;
+    --text-muted:#898781; --grid:#2c2c2a; --border:rgba(255,255,255,0.10);
+    --good:#3fbf3f; --warning:#fab219; --critical:#e66767;
+    --cat-1:#3987e5; --cat-2:#199e70; --cat-3:#c98500; --cat-4:#3a9d3a;
+    --cat-5:#9085e9; --cat-6:#e66767; --cat-7:#d55181; --cat-8:#d95926;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 20px rgba(0,0,0,0.35);
+    color-scheme: dark;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background:var(--page); color:var(--text-primary);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+    padding-block: 22px 64px;
+  }
+  .wrap{ max-width:1360px; margin:0 auto; padding:0 20px; }
+
+  .hdr{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:6px; flex-wrap:wrap; }
+  .hdr h1{ font-size:22px; font-weight:700; margin:0 0 4px; letter-spacing:-0.01em; }
+  .hdr p.sub{ margin:0; color:var(--text-secondary); font-size:13px; max-width:64ch; line-height:1.5; }
+  .hdr-right{ display:flex; align-items:center; gap:8px; flex:none; }
+  .btn{ border:1px solid var(--border); background:var(--surface-1); color:var(--text-primary);
+    border-radius:8px; padding:8px 14px; font-size:12.5px; cursor:pointer; font-weight:700; display:inline-flex; align-items:center; gap:6px; }
+  .btn:hover{ border-color:var(--cat-1); }
+  .btn.primary{ background:var(--cat-1); color:#fff; border-color:var(--cat-1); }
+  .btn:disabled{ opacity:.55; cursor:default; }
+  .spin{ width:12px; height:12px; border-radius:50%; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; animation:spin .7s linear infinite; display:inline-block; }
+  .btn:not(.primary) .spin{ border-color:var(--border); border-top-color:var(--text-primary); }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .asof{ font-size:11px; color:var(--text-muted); margin-top:8px; }
+
+  .banner{ display:flex; gap:10px; align-items:flex-start; border-radius:12px; padding:13px 15px; margin:14px 0; font-size:12.5px; line-height:1.55; }
+  .banner.info{ background:color-mix(in srgb, var(--cat-1) 8%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--cat-1) 30%, var(--border)); }
+  .banner.warn{ background:color-mix(in srgb, var(--warning) 10%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--warning) 35%, var(--border)); }
+  .banner.critical{ background:color-mix(in srgb, var(--critical) 10%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--critical) 35%, var(--border)); }
+  .banner.good{ background:color-mix(in srgb, var(--good) 8%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--good) 30%, var(--border)); }
+  .banner b{ color:inherit; }
+
+  .tabs{ display:flex; gap:2px; border-bottom:1px solid var(--border); margin:16px 0 20px; overflow-x:auto; }
+  .tab{ border:none; background:transparent; color:var(--text-secondary); font-size:12.8px; font-weight:600;
+    padding:9px 14px; cursor:pointer; white-space:nowrap; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tab:hover{ color:var(--text-primary); }
+  .tab.active{ color:var(--cat-1); border-bottom-color:var(--cat-1); }
+  .panel{ display:none; }
+  .panel.active{ display:block; }
+
+  .kpis{ display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-bottom:8px; }
+  .kpi{ background:var(--surface-1); border:1px solid var(--border); border-radius:12px; padding:12px 14px; box-shadow:var(--shadow); }
+  .kpi .val{ font-size:22px; font-weight:700; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .kpi .lbl{ font-size:11px; color:var(--text-secondary); margin-top:3px; }
+  .kpi .sub{ font-size:10.5px; color:var(--text-muted); margin-top:2px; }
+  @media (max-width:900px){ .kpis{ grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:520px){ .kpis{ grid-template-columns:1fr 1fr; } }
+
+  .section{ margin-bottom:24px; }
+  .section-hd{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px; flex-wrap:wrap; gap:6px;}
+  .section-hd h2{ font-size:14.5px; font-weight:700; margin:0; }
+  .section-hd .hint{ font-size:11.5px; color:var(--text-muted); }
+
+  .grid-cards{ display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:12px; }
+  .card{ background:var(--surface-1); border:1px solid var(--border); border-radius:13px; padding:14px 15px;
+    box-shadow:var(--shadow); border-top:3px solid var(--accent, var(--cat-1)); }
+  .card.clickable{ cursor:pointer; transition:transform .12s ease; }
+  .card.clickable:hover{ transform:translateY(-2px); }
+  .card h3{ font-size:13.5px; margin:0 0 3px; font-weight:700; }
+  .card .meta1{ font-size:11px; color:var(--text-muted); }
+  .card-row{ display:flex; justify-content:space-between; font-size:11.3px; color:var(--text-secondary); margin-top:3px; }
+  .card-row .k{ color:var(--text-muted); }
+  .badge{ display:inline-flex; align-items:center; gap:5px; font-size:10.8px; font-weight:700;
+    padding:2.5px 8px; border-radius:999px; border:1px solid transparent; white-space:nowrap; }
+  .badge.good{ color:var(--good); background:color-mix(in srgb, var(--good) 14%, transparent); border-color:color-mix(in srgb, var(--good) 30%, transparent); }
+  .badge.bad{ color:var(--critical); background:color-mix(in srgb, var(--critical) 14%, transparent); border-color:color-mix(in srgb, var(--critical) 30%, transparent); }
+
+  .skillgrp{ margin-bottom:14px; }
+  .skillgrp h4{ font-size:11.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted); margin:0 0 8px; }
+  .chiprow{ display:flex; flex-wrap:wrap; gap:6px; }
+  .chip{ font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:8px; background:var(--surface-1);
+    border:1px solid var(--border); color:var(--text-primary); cursor:pointer; transition:transform .1s ease, border-color .1s ease; }
+  .chip:hover{ transform:translateY(-1px); border-color:var(--cat-1); }
+
+  .flag-card{ border:1px solid var(--border); border-left:4px solid var(--critical); border-radius:10px;
+    padding:12px 14px; margin-bottom:10px; background:var(--surface-1); }
+  .flag-card.warn-sev{ border-left-color:var(--warning); }
+  .flag-card.good-sev{ border-left-color:var(--good); }
+  .flag-card .ft{ font-size:13px; font-weight:700; margin-bottom:4px; }
+  .flag-card .ff{ font-size:11.8px; color:var(--text-secondary); }
+
+  .footnote{ font-size:11.5px; color:var(--text-muted); margin-top:10px; line-height:1.6; }
+  .skel{ display:inline-block; width:60px; height:12px; background:var(--grid); border-radius:4px; animation:pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:.5} 50%{opacity:1} }
+
+  .scrim{ position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; pointer-events:none; transition:opacity .18s ease; z-index:20; }
+  .scrim.open{ opacity:1; pointer-events:auto; }
+  .drawer{ position:fixed; top:0; right:0; bottom:0; width:min(440px,92vw); background:var(--surface-1); z-index:21;
+    box-shadow:-8px 0 32px rgba(0,0,0,0.18); transform:translateX(100%); transition:transform .2s ease; overflow-y:auto; }
+  .drawer.open{ transform:translateX(0); }
+  .drawer-hd{ padding:18px 20px 12px; border-bottom:1px solid var(--grid); position:sticky; top:0; background:var(--surface-1); }
+  .drawer-hd .close{ position:absolute; top:16px; right:16px; border:none; background:var(--page); color:var(--text-primary);
+    width:28px; height:28px; border-radius:8px; cursor:pointer; font-size:14px; }
+  .drawer-body{ padding:14px 20px 28px; font-size:12.8px; color:var(--text-secondary); }
+  .drawer h2{ font-size:16px; margin:0 0 4px; padding-right:34px; }
+  .dsec{ margin-top:16px; }
+  .dsec h4{ font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-muted); margin:0 0 8px; }
+  .factlist{ display:flex; flex-direction:column; gap:0; }
+  .factrow{ display:flex; justify-content:space-between; gap:16px; padding:9px 0; border-bottom:1px solid var(--grid); font-size:12.5px; }
+  .factrow:last-child{ border-bottom:none; }
+  .factrow .k{ color:var(--text-muted); flex:none; }
+  .factrow .v{ color:var(--text-primary); font-weight:600; text-align:right; }
+  code{ background:var(--page); border:1px solid var(--border); border-radius:5px; padding:1px 6px; font-size:11.5px; }
+
+  @media (max-width:900px){ .kpis{ grid-template-columns:repeat(3,1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div>
+      <h1>Claude Code 360°</h1>
+      <p class="sub">Live from GitHub — work tree, projects, skills &amp; agents, and hygiene, fetched directly from <code>nesihaver-IL/MyFirstRepo</code> in your browser, right now.</p>
+    </div>
+    <div class="hdr-right">
+      <button class="btn" id="themeToggle" type="button">🌓</button>
+      <button class="btn primary" id="refreshBtn" type="button">↻ Refresh</button>
+    </div>
+  </div>
+  <div class="asof" id="asof"></div>
+
+  <div id="banners"></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="panels"></div>
+
+  <div class="footnote">
+    Everything above except Deliverables is fetched live from GitHub's public API when this page loads or you click Refresh
+    — nothing is baked in at publish time. Deliverables links to Claude-published pages, which GitHub has no record of, so
+    that list stays fixed until this page is republished with a new one.
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-hd">
+    <button class="close" id="drawerClose" type="button" aria-label="Close">✕</button>
+    <span class="meta1" id="drawerCat" style="font-size:11px;color:var(--text-muted)"></span>
+    <h2 id="drawerTitle"></h2>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var OWNER = "nesihaver-IL", REPO = "MyFirstRepo", BRANCH = "main";
+  var API = "https://api.github.com/repos/" + OWNER + "/" + REPO;
+  var RAW = "https://raw.githubusercontent.com/" + OWNER + "/" + REPO + "/" + BRANCH + "/";
+
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmtBytes(n){
+    if(n < 1024) return n + " B";
+    var u = ["KB","MB","GB"], i = -1;
+    do{ n /= 1024; i++; }while(n >= 1024 && i < u.length-1);
+    return n.toFixed(n < 10 && i > 0 ? 1 : 0) + " " + u[i];
+  }
+  function daysAgo(iso){ return Math.round((Date.now() - new Date(iso).getTime()) / 86400000); }
+  function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+
+  async function gh(path){
+    var res = await fetch(API + path, {headers:{Accept:"application/vnd.github+json"}});
+    if(res.status === 403){
+      var remain = res.headers.get("X-RateLimit-Remaining");
+      if(remain === "0"){
+        var reset = new Date(parseInt(res.headers.get("X-RateLimit-Reset"),10) * 1000);
+        throw {rateLimited:true, resetAt: reset};
+      }
+    }
+    if(!res.ok) throw new Error("GitHub API " + res.status + " on " + path);
+    return res.json();
+  }
+  async function rawFile(path){
+    var res = await fetch(RAW + path);
+    if(!res.ok) return null;
+    return res.text();
+  }
+
+  var STATE = { tree:null, branches:null, projectCommits:{}, docCommits:{}, skillDescCache:{} };
+
+  function topLevelBuckets(tree){
+    var buckets = {};
+    var order = ["01-personal","02-work","03-plans","04-reference",".claude",".config",".cursor"];
+    order.forEach(function(k){ buckets[k] = {size:0, children:{}}; });
+    buckets["root"] = {size:0, children:{}};
+    tree.forEach(function(t){
+      if(t.type !== "blob") return;
+      var parts = t.path.split("/");
+      var top = order.indexOf(parts[0]) >= 0 ? parts[0] : (parts.length===1 ? "root" : null);
+      if(!top) return; // ignore anything not under a tracked top-level dir (submodule gitlinks, etc.)
+      buckets[top].size += t.size;
+      if(parts.length > 1){
+        var child = parts[1];
+        buckets[top].children[child] = (buckets[top].children[child] || 0) + t.size;
+      }
+    });
+    return buckets;
+  }
+
+  function projectList(tree){
+    var groups = {"01-personal":[], "02-work":[]};
+    Object.keys(groups).forEach(function(g){
+      var seen = {};
+      tree.forEach(function(t){
+        if(t.type !== "blob") return;
+        if(t.path.indexOf(g + "/") !== 0) return;
+        var rest = t.path.slice(g.length + 1);
+        var name = rest.split("/")[0];
+        if(!name || rest.indexOf("/") < 0) return; // skip loose files directly in the group root
+        if(!seen[name]){ seen[name] = {name:name, path:g+"/"+name, size:0, files:0, group: g==="01-personal"?"Personal":"Work"}; groups[g].push(seen[name]); }
+        seen[name].size += t.size;
+        seen[name].files += 1;
+      });
+    });
+    return groups["01-personal"].concat(groups["02-work"]);
+  }
+
+  function skillsAndAgents(tree){
+    var skills = [], archived = [], agents = [];
+    var seenSkill = {}, seenArch = {}, seenAgent = {};
+    tree.forEach(function(t){
+      var m1 = t.path.match(/^\.claude\/skills\/([^\/]+)\/SKILL\.md$/);
+      if(m1 && !seenSkill[m1[1]]){ seenSkill[m1[1]]=1; skills.push(m1[1]); }
+      var m2 = t.path.match(/^\.claude\/skills-archive\/([^\/]+)\//);
+      if(m2 && !seenArch[m2[1]]){ seenArch[m2[1]]=1; archived.push(m2[1]); }
+      var m3 = t.path.match(/^\.claude\/agents\/([^\/]+)\/AGENT\.md$/);
+      if(m3 && !seenAgent[m3[1]]){ seenAgent[m3[1]]=1; agents.push(m3[1]); }
+    });
+    skills.sort(); archived.sort(); agents.sort();
+    return {skills:skills, archived:archived, agents:agents};
+  }
+
+  function renderBanner(kind, html){
+    var el = document.createElement("div");
+    el.className = "banner " + kind;
+    el.innerHTML = html;
+    document.getElementById("banners").appendChild(el);
+  }
+
+  async function loadAll(){
+    document.getElementById("banners").innerHTML = "";
+    var btn = document.getElementById("refreshBtn");
+    btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Refreshing…';
+    try{
+      var branchesP = gh("/branches?per_page=100");
+      var treeP = gh("/git/trees/" + BRANCH + "?recursive=1");
+      var latestCommitP = gh("/commits?per_page=1");
+      var claudeMdP = rawFile("CLAUDE.md");
+      var claudeStatusP = rawFile("CLAUDE-STATUS.md");
+      var registryP = rawFile(".claude/COMMAND_REGISTRY.md");
+
+      var branches = await branchesP;
+      var treeData = await treeP;
+      var latestCommit = await latestCommitP;
+      var claudeMd = await claudeMdP;
+      var claudeStatus = await claudeStatusP;
+      var registry = await registryP;
+
+      if(treeData.truncated){
+        renderBanner("warn", "⚠ <b>The file tree was too large to fetch in one call</b> — sizes below may undercount. (GitHub truncates recursive tree listings past a limit.)");
+      }
+
+      var tree = treeData.tree;
+      var buckets = topLevelBuckets(tree);
+      var projects = projectList(tree);
+      var sa = skillsAndAgents(tree);
+
+      // per-project last-commit (bounded: one call per project, real API cost)
+      var commitPromises = projects.map(function(p){
+        return gh("/commits?path=" + encodeURIComponent(p.path) + "&per_page=1").then(function(c){
+          p.lastCommit = c[0] ? c[0].commit.author.date : null;
+        }).catch(function(){ p.lastCommit = null; });
+      });
+      await Promise.all(commitPromises);
+
+      STATE = {tree:tree, buckets:buckets, projects:projects, sa:sa, branches:branches, latestCommit:latestCommit[0],
+        claudeMd:claudeMd||"", claudeStatus:claudeStatus||"", registry:registry||""};
+
+      document.getElementById("asof").textContent = "Last refreshed " + new Date().toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+      renderAll();
+    }catch(err){
+      if(err && err.rateLimited){
+        renderBanner("critical", "⛔ <b>GitHub's public API rate limit was hit.</b> Unauthenticated requests are capped at 60/hour per visitor. Try again after " + err.resetAt.toLocaleTimeString() + ".");
+      } else {
+        renderBanner("critical", "⛔ <b>Couldn't load live data.</b> " + escapeHtml(err && err.message ? err.message : String(err)));
+      }
+    } finally {
+      btn.disabled = false; btn.innerHTML = "↻ Refresh";
+    }
+  }
+
+  var TABS = [
+    {id:"overview", label:"Overview"},
+    {id:"worktree", label:"Work Tree"},
+    {id:"projects", label:"Projects"},
+    {id:"skills", label:"Skills & Agents"},
+    {id:"hygiene", label:"Hygiene"},
+    {id:"deliverables", label:"Deliverables"}
+  ];
+  document.getElementById("tabs").innerHTML = TABS.map(function(t,i){
+    return '<button class="tab'+(i===0?' active':'')+'" data-tab="'+t.id+'" type="button">'+t.label+'</button>';
+  }).join("");
+  document.getElementById("tabs").addEventListener("click", function(e){
+    var btn = e.target.closest(".tab"); if(!btn) return;
+    document.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("active", b===btn); });
+    var id = btn.getAttribute("data-tab");
+    document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("active", p.id==="panel-"+id); });
+  });
+
+  var TOP_META = {
+    "01-personal": {color:"var(--cat-1)", desc:"Personal projects — learning & experimentation"},
+    "02-work": {color:"var(--cat-2)", desc:"Professional deliverables — may be shared"},
+    "03-plans": {color:"var(--cat-3)", desc:"Strategy, roadmaps, research"},
+    "04-reference": {color:"var(--cat-4)", desc:"Knowledge base, cheatsheets, archives"},
+    ".claude": {color:"var(--cat-5)", desc:"Skills, agents, diagnostic tools"},
+    ".config": {color:"var(--cat-6)", desc:"Templates & snippets"},
+    ".cursor": {color:"var(--cat-7)", desc:"Cursor IDE command mirrors"},
+    "root": {color:"var(--cat-8)", desc:"Files directly at the repo root"}
+  };
+
+  function renderOverview(){
+    var docCoverage = STATE.projects.length ? Math.round(STATE.projects.filter(function(p){return p._documented;}).length / STATE.projects.length * 100) : 0;
+    var kpis = [
+      {val: STATE.projects.length, lbl:"Project folders"},
+      {val: STATE.branches.length, lbl:"Branches"},
+      {val: STATE.sa.skills.length, lbl:"Repo skills"},
+      {val: STATE.sa.agents.length, lbl:"Sub-agents"},
+      {val: fmtBytes(Object.values(STATE.buckets).reduce(function(s,b){return s+b.size;},0)), lbl:"Total tracked size"},
+      {val: STATE.latestCommit ? daysAgo(STATE.latestCommit.commit.author.date)+"d" : "—", lbl:"Since last commit"}
+    ];
+    var html = '<div class="kpis">' + kpis.map(function(k){
+      return '<div class="kpi"><div class="val">'+k.val+'</div><div class="lbl">'+k.lbl+'</div></div>';
+    }).join("") + "</div>";
+
+    if(STATE.latestCommit){
+      var c = STATE.latestCommit;
+      html += '<div class="banner info">ⓘ <span><b>Latest commit on main:</b> "'+escapeHtml(c.commit.message.split("\n")[0])+'" — '+fmtDate(c.commit.author.date)+' ('+c.sha.slice(0,7)+')</span></div>';
+    }
+    return html;
+  }
+
+  function renderWorkTree(){
+    var html = '<div class="section-hd"><h2>Work tree — live sizes</h2><span class="hint">Computed from GitHub\'s file tree just now · click a card to drill in</span></div>';
+    html += '<div class="grid-cards">' + Object.keys(TOP_META).map(function(id){
+      var b = STATE.buckets[id];
+      if(!b || (b.size===0 && Object.keys(b.children).length===0)) return "";
+      var meta = TOP_META[id];
+      var childCount = Object.keys(b.children).length;
+      return '<div class="card clickable" data-folder="'+id+'" style="--accent:'+meta.color+'"><h3>'+(id==="root"?"repo root":id)+'</h3><div class="meta1">'+meta.desc+'</div>'+
+        '<div class="card-row"><span class="k">Size</span><span>'+fmtBytes(b.size)+'</span></div>'+
+        '<div class="card-row"><span class="k">Contains</span><span>'+(childCount ? childCount+' subfolders' : 'files only')+'</span></div></div>';
+    }).join("") + "</div>";
+    return html;
+  }
+
+  function renderProjects(){
+    var html = '<div class="section-hd"><h2>All '+STATE.projects.length+' project folders</h2><span class="hint">Live sizes and last-commit dates, fetched just now</span></div>';
+    var sorted = STATE.projects.slice().sort(function(a,b){ return (a.lastCommit && b.lastCommit) ? new Date(b.lastCommit)-new Date(a.lastCommit) : 0; });
+    html += '<div class="grid-cards">' + sorted.map(function(p){
+      var idle = p.lastCommit ? daysAgo(p.lastCommit) : null;
+      var col = idle===null ? "var(--text-muted)" : (idle < 14 ? "var(--good)" : (idle <= 45 ? "var(--warning)" : "var(--critical)"));
+      return '<div class="card" style="--accent:'+col+'"><h3>'+escapeHtml(p.name)+'</h3><div class="meta1">'+p.group+' · '+escapeHtml(p.path)+'</div>'+
+        '<div class="card-row"><span class="k">Last commit</span><span>'+(p.lastCommit ? fmtDate(p.lastCommit)+" ("+idle+"d ago)" : "unknown")+'</span></div>'+
+        '<div class="card-row"><span class="k">Size</span><span>'+p.files+' files · '+fmtBytes(p.size)+'</span></div></div>';
+    }).join("") + "</div>";
+    return html;
+  }
+
+  function renderSkills(){
+    var html = '<div class="section-hd"><h2>Repo skills — '+STATE.sa.skills.length+'</h2><span class="hint">Click a skill to fetch its real description live</span></div>';
+    html += '<div class="chiprow">' + STATE.sa.skills.map(function(s){
+      return '<span class="chip" data-skill="'+escapeHtml(s)+'">'+escapeHtml(s)+'</span>';
+    }).join("") + "</div>";
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Archived — '+STATE.sa.archived.length+'</h2></div>' +
+      '<div class="chiprow">' + STATE.sa.archived.map(function(s){ return '<span class="chip" style="opacity:.6; text-decoration:line-through; cursor:default">'+escapeHtml(s)+'</span>'; }).join("") + "</div></div>";
+
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Sub-agents — '+STATE.sa.agents.length+'</h2></div>';
+    html += '<div class="chiprow">' + STATE.sa.agents.map(function(a){
+      return '<span class="chip" data-agent="'+escapeHtml(a)+'" style="border-color:color-mix(in srgb, var(--cat-5) 40%, var(--border))">'+escapeHtml(a)+'</span>';
+    }).join("") + "</div></div>";
+    return html;
+  }
+
+  function renderHygiene(){
+    var flags = [];
+    var m = STATE.claudeStatus.match(/skill count[^\n]*?(\d+)/i) || STATE.claudeStatus.match(/\((\d+)\s+as of/i);
+    if(m){
+      var claimed = parseInt(m[1],10);
+      if(claimed !== STATE.sa.skills.length){
+        flags.push({sev:"warn", title:"CLAUDE-STATUS.md's skill count doesn't match reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+" (checked live, right now)."});
+      } else {
+        flags.push({sev:"good", title:"CLAUDE-STATUS.md's skill count matches reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+"."});
+      }
+    }
+    var undocumented = STATE.projects.filter(function(p){
+      p._documented = STATE.claudeMd.indexOf(p.name) >= 0 || STATE.claudeMd.toLowerCase().indexOf(p.name.replace(/-/g," ")) >= 0;
+      return !p._documented;
+    });
+    if(undocumented.length){
+      flags.push({sev:"warn", title: undocumented.length+" project folder"+(undocumented.length===1?"":"s")+" not mentioned in CLAUDE.md", detail: undocumented.map(function(p){return p.name;}).join(", ")+" — checked by searching CLAUDE.md's live content for each folder name."});
+    } else {
+      flags.push({sev:"good", title:"Every project folder is at least named in CLAUDE.md", detail:"Checked live against CLAUDE.md's current content."});
+    }
+    var html = '<div class="section-hd"><h2>Live checks</h2><span class="hint">Computed just now against real file content — not cached</span></div>';
+    html += flags.map(function(f){
+      return '<div class="flag-card '+(f.sev==="warn"?"warn-sev":f.sev==="good"?"good-sev":"")+'"><div class="ft">'+(f.sev==="good"?"✓":"⚠")+" "+escapeHtml(f.title)+'</div><div class="ff">'+escapeHtml(f.detail)+'</div></div>';
+    }).join("");
+    return html;
+  }
+
+  var DELIVERABLES = [
+    {title:"Claude Code 360°", desc:"This page — hosted on GitHub Pages, not claude.ai", url: "https://nesihaver-il.github.io/MyFirstRepo/claude-code-360/"},
+    {title:"Claude Code Habits Dashboard", desc:"The claude.ai-hosted sibling to this page", url:"https://claude.ai/artifact/GUSqHHCGXRWV3QPi8dGfbD"},
+    {title:"Trunk Recovery", desc:"The before/after report on the branch-and-trunk cleanup", url:"https://claude.ai/artifact/XMdoaCT9q7G1VKd8A3ibto"},
+    {title:"Artifact Vault", desc:"Private index of every Claude-published page for this account", url:"https://claude.ai/artifact/24M5ns4SJQG9Kdj3DdMbhn"}
+  ];
+  var SHOWCASE = [
+    {title:"Nesi Haver — Résumé", url:"https://nesihaver-il.github.io/Nesi_Haver_Resume.html"},
+    {title:"HaVenture — Thailand Trip Site", url:"https://nesihaver-il.github.io/MyFirstRepo/"},
+    {title:"HaVenture — Memory Book", url:"https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/"},
+    {title:"HaVenture — Stories", url:"https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/stories.html"},
+    {title:"Morzin 2026 — Budget", url:"https://nesihaver-il.github.io/MyFirstRepo/morzin-budget-2026/"},
+    {title:"Garmin Story", url:"https://nesihaver-il.github.io/garmin_story.html"}
+  ];
+  function renderDeliverables(){
+    var html = '<div class="banner info">ⓘ <span>This tab is <b>static</b>, not live — these are Claude-published pages and other GitHub Pages sites, which this page\'s live GitHub API calls can\'t see or enumerate. Ask Claude to update this list when it changes.</span></div>';
+    html += '<div class="section"><div class="section-hd"><h2>Workspace — '+DELIVERABLES.length+'</h2></div><div class="grid-cards">' + DELIVERABLES.map(function(d){
+      return '<a class="card clickable" style="--accent:var(--cat-1); text-decoration:none; color:inherit; display:block" href="'+d.url+'" target="_blank" rel="noopener"><h3>'+escapeHtml(d.title)+'</h3><div class="meta1">'+escapeHtml(d.desc)+'</div></a>';
+    }).join("") + "</div></div>";
+    html += '<div class="section"><div class="section-hd"><h2>Showcase — '+SHOWCASE.length+'</h2></div><div class="grid-cards">' + SHOWCASE.map(function(d){
+      return '<a class="card clickable" dir="auto" style="--accent:var(--cat-3); text-decoration:none; color:inherit; display:block" href="'+d.url+'" target="_blank" rel="noopener"><h3 dir="auto">'+escapeHtml(d.title)+'</h3></a>';
+    }).join("") + "</div></div>";
+    return html;
+  }
+
+  function renderAll(){
+    var html = "";
+    html += '<div class="panel active" id="panel-overview">' + renderOverview() + "</div>";
+    html += '<div class="panel" id="panel-worktree">' + renderWorkTree() + "</div>";
+    html += '<div class="panel" id="panel-projects">' + renderProjects() + "</div>";
+    html += '<div class="panel" id="panel-skills">' + renderSkills() + "</div>";
+    html += '<div class="panel" id="panel-hygiene">' + renderHygiene() + "</div>";
+    html += '<div class="panel" id="panel-deliverables">' + renderDeliverables() + "</div>";
+    document.getElementById("panels").innerHTML = html;
+    document.querySelectorAll(".tab").forEach(function(b,i){ b.classList.toggle("active", i===0); });
+    document.querySelectorAll(".panel").forEach(function(p,i){ p.classList.toggle("active", i===0); });
+  }
+
+  // Drawer
+  var scrim = document.getElementById("scrim"), drawer = document.getElementById("drawer");
+  function openDrawer(cat, title, bodyHtml){
+    document.getElementById("drawerCat").textContent = cat;
+    document.getElementById("drawerTitle").textContent = title;
+    document.getElementById("drawerBody").innerHTML = bodyHtml;
+    scrim.classList.add("open"); drawer.classList.add("open");
+  }
+  function closeDrawer(){ scrim.classList.remove("open"); drawer.classList.remove("open"); }
+  document.getElementById("drawerClose").addEventListener("click", closeDrawer);
+  scrim.addEventListener("click", closeDrawer);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDrawer(); });
+
+  document.addEventListener("click", async function(e){
+    var folderCard = e.target.closest("[data-folder]");
+    if(folderCard){
+      var id = folderCard.getAttribute("data-folder");
+      var b = STATE.buckets[id];
+      var kids = Object.keys(b.children).sort(function(a,c){ return b.children[c]-b.children[a]; });
+      var body = kids.length ? '<div class="factlist">' + kids.map(function(k){
+        return '<div class="factrow"><span class="k">'+escapeHtml(k)+'</span><span class="v">'+fmtBytes(b.children[k])+'</span></div>';
+      }).join("") + "</div>" : '<div class="ff">No subfolders — just files directly here.</div>';
+      openDrawer("Work Tree", id==="root"?"repo root":id, body);
+      return;
+    }
+    var skillChip = e.target.closest("[data-skill]");
+    if(skillChip){
+      var name = skillChip.getAttribute("data-skill");
+      openDrawer("Skill", name, '<div class="dsec"><h4>What it does</h4><div class="ff"><span class="skel"></span> fetching live…</div></div>');
+      var desc = STATE.skillDescCache[name];
+      if(!desc){
+        var md = await rawFile(".claude/skills/" + name + "/SKILL.md");
+        var m = md && md.match(/^description:\s*(.+)$/m);
+        desc = m ? m[1].trim() : (md ? "No description frontmatter — see the file directly." : "Couldn't fetch this skill's file.");
+        STATE.skillDescCache[name] = desc;
+      }
+      document.getElementById("drawerBody").innerHTML = '<div class="dsec"><h4>What it does</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(desc)+'</div></div>' +
+        '<div class="dsec"><h4>Location</h4><div class="ff"><code>.claude/skills/'+escapeHtml(name)+'/SKILL.md</code></div></div>' +
+        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/skills/'+encodeURIComponent(name)+'/SKILL.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>';
+      return;
+    }
+    var agentChip = e.target.closest("[data-agent]");
+    if(agentChip){
+      var aname = agentChip.getAttribute("data-agent");
+      openDrawer("Agent", aname, '<div class="ff"><span class="skel"></span> fetching live…</div>');
+      var amd = await rawFile(".claude/agents/" + aname + "/AGENT.md");
+      var firstPara = amd ? amd.replace(/^#.+\n+/,"").split(/\n\n/)[0] : "Couldn't fetch this agent's file.";
+      document.getElementById("drawerBody").innerHTML = '<div class="dsec"><h4>Description</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(firstPara)+'</div></div>' +
+        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/agents/'+encodeURIComponent(aname)+'/AGENT.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>';
+      return;
+    }
+  });
+
+  document.getElementById("refreshBtn").addEventListener("click", loadAll);
+  document.getElementById("themeToggle").addEventListener("click", function(){
+    var root = document.documentElement;
+    root.setAttribute("data-theme", root.getAttribute("data-theme")==="dark" ? "light" : "dark");
+  });
+
+  loadAll();
+})();
+</script>
+</body>
+</html>

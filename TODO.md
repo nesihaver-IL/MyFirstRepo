@@ -104,6 +104,12 @@ the full reasoning behind each call.
       no `.gitmodules` entry), not recoverable content
 - [x] Archive `02-work/aws-cleanup` and `02-work/genesis-feedback-storytelling` to
       `02-work/archive/` — both completed one-time efforts, not ongoing work
+- [x] Build "Claude Code 360°" — a public, live-refreshing workspace snapshot at
+      `01-personal/claude-code-360/`, deployed via GitHub Pages. Unlike the claude.ai habits
+      dashboard, this fetches live from GitHub's public API/raw-content CDN directly in the
+      visitor's browser (work tree, projects, skills & agents, hygiene checks), with a real
+      "↻ Refresh" button — no claude.ai sandbox restriction, genuinely public. Deliverables
+      tab stays static since GitHub has no record of claude.ai-published pages.
 
 ---
 

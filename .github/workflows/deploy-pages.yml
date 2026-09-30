@@ -7,6 +7,7 @@ on:
       - "01-personal/thailand-trip-2026/**"
       - "01-personal/thailand-memory-book/**"
       - "01-personal/morzin-budget-2026/**"
+      - "01-personal/claude-code-360/**"
       - "04-reference/whatsapp-export/album/**"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
@@ -40,6 +41,10 @@ jobs:
           if [ -d "01-personal/morzin-budget-2026" ]; then
             mkdir -p _site/morzin-budget-2026
             cp -r 01-personal/morzin-budget-2026/. _site/morzin-budget-2026/
+          fi
+          if [ -d "01-personal/claude-code-360" ]; then
+            mkdir -p _site/claude-code-360
+            cp -r 01-personal/claude-code-360/. _site/claude-code-360/
           fi
           if [ -d "01-personal/thailand-memory-book" ]; then
             mkdir -p _site/thailand-memory-book
