@@ -24,6 +24,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
 | **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
 | **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
+| **Claude Code 360°** | `01-personal/claude-code-360/` | Static HTML/JS | Public, live-refreshing workspace snapshot — fetches this repo's tree/branches/commits directly from GitHub's API in the visitor's browser; deployed via GitHub Pages |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
 
