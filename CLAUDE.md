@@ -41,8 +41,11 @@ early-to-mid April 2026.
 | **Electricity Dashboard** | `01-personal/electricity-dashboard/` | Gmail API bill extraction (see root TODO.md) |
 | **Tzofim Payments** | `01-personal/tzofim-payments/` | Payments-related utility |
 | **Strategy Presentation** | `02-work/strategy-presentation/` | Contains tracked `.xlsx` planning files |
-| **AWS Cleanup** | `02-work/aws-cleanup/` | AWS account cleanup scripts |
 | **Handoff** | `02-work/handoff/` | Handoff documentation/materials |
+
+`aws-cleanup` and `genesis-feedback-storytelling` were archived to `02-work/archive/` on
+2026-09-30 — both read as completed one-time efforts (a finished AWS cost audit; a pipeline
+with final output already generated), not ongoing work.
 
 `sandbox` and `marketplace` were archived to `01-personal/archive/` on 2026-07-16 (idle since
 2026-01-09 and 2026-02-17 respectively) rather than documented here.
