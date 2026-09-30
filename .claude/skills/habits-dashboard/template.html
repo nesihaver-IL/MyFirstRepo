@@ -332,19 +332,18 @@
   ];
 
   var TOP_LEVEL = [
-    {id:'01-personal', color:'var(--cat-1)', size:'1.4G', desc:'Personal projects — learning & experimentation. Jumped from 49M: the Thailand memory book’s photo/video library.', count:'15 folders',
+    {id:'01-personal', color:'var(--cat-1)', size:'1.4G', desc:'Personal projects — learning & experimentation. Jumped from 49M: the Thailand memory book’s photo/video library.', count:'14 folders',
       children:[
         {name:'thailand-memory-book', size:'1.3G'}, {name:'math-practice', size:'31M'}, {name:'aws-ai-agent', size:'16M'},
         {name:'thailand-trip-2026', size:'7.1M'}, {name:'garmin-health', size:'1.5M'}, {name:'zohar-resume', size:'628K'},
         {name:'bookmark-management', size:'308K'}, {name:'windows-monitor', size:'160K'}, {name:'electricity-dashboard', size:'76K'},
         {name:'archive', size:'60K'}, {name:'morzin-budget-2026', size:'48K'}, {name:'nano-banana-studio', size:'40K'},
-        {name:'tzofim-payments', size:'20K'}, {name:'token-optimizer', size:'4.0K', flag:'empty — orphaned git submodule reference, no .gitmodules entry'},
-        {name:'interview-coach', size:'4.0K', flag:'submodule not initialized'}
+        {name:'tzofim-payments', size:'20K'}, {name:'interview-coach', size:'4.0K', flag:'submodule not initialized'}
       ]},
-    {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'6 folders',
+    {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'5 folders',
       children:[
-        {name:'strategy-presentation', size:'13M'}, {name:'genesis-feedback-storytelling', size:'3.9M', flag:'has final output — reads as complete, not abandoned'},
-        {name:'ai-foundry-agent', size:'744K'}, {name:'aws-cleanup', size:'64K', flag:'docs literally named "COMPLETE" — a finished one-time effort'},
+        {name:'strategy-presentation', size:'13M'}, {name:'ai-foundry-agent', size:'744K'},
+        {name:'archive', size:'3.9M', flag:'aws-cleanup + genesis-feedback-storytelling, moved here 2026-09-30'},
         {name:'automation-integrations', size:'48K'}, {name:'handoff', size:'12K'}
       ]},
     {id:'03-plans', color:'var(--cat-3)', size:'260K', desc:'Strategy, roadmaps, research — human-owned planning', count:'4 subfolders',
@@ -387,13 +386,11 @@
     {name:'electricity-dashboard', group:'Personal', path:'01-personal/electricity-dashboard', lastCommit:'2026-05-29', files:9, size:'76K', documented:true, note:'Gmail API bill extraction — security review completed'},
     {name:'tzofim-payments', group:'Personal', path:'01-personal/tzofim-payments', lastCommit:'2026-05-29', files:2, size:'20K', documented:true, note:'Payments-related utility'},
     {name:'archive', group:'Personal', path:'01-personal/archive', lastCommit:'2026-09-27', files:4, size:'60K', documented:true, note:'Where dormant sandbox/marketplace folders were retired to'},
-    {name:'token-optimizer', group:'Personal', path:'01-personal/token-optimizer', lastCommit:'2026-05-29', files:0, size:'4.0K', documented:false, note:'0 files on disk — not in CLAUDE.md project table'},
     {name:'ai-foundry-agent', group:'Work', path:'02-work/ai-foundry-agent', lastCommit:'2026-05-29', files:93, size:'744K', documented:true, note:'Agent: JIRA/Confluence Agent (integrations subpath) · Skill: azure-ai-foundry'},
     {name:'automation-integrations', group:'Work', path:'02-work/automation-integrations', lastCommit:'2026-05-29', files:10, size:'48K', documented:true, note:'Agent: JIRA/Confluence Automation Agent · Skill: jira-confluence — mostly scaffolding (.gitkeep placeholders)'},
     {name:'strategy-presentation', group:'Work', path:'02-work/strategy-presentation', lastCommit:'2026-06-04', files:14, size:'13M', documented:true, note:'Contains tracked .xlsx planning files'},
-    {name:'aws-cleanup', group:'Work', path:'02-work/aws-cleanup', lastCommit:'2026-04-08', files:6, size:'64K', documented:true, note:'AWS account cleanup scripts'},
     {name:'handoff', group:'Work', path:'02-work/handoff', lastCommit:'2026-04-08', files:2, size:'12K', documented:true, note:'Handoff documentation/materials'},
-    {name:'genesis-feedback-storytelling', group:'Work', path:'02-work/genesis-feedback-storytelling', lastCommit:'2026-05-29', files:5, size:'3.9M', documented:false, note:'Not in CLAUDE.md project table'}
+    {name:'archive', group:'Work', path:'02-work/archive', lastCommit:'2026-09-30', files:11, size:'3.9M', documented:true, note:'aws-cleanup + genesis-feedback-storytelling — both completed one-time efforts'}
   ];
 
   var SKILLS_REPO = {
@@ -458,10 +455,11 @@
 
   var HYGIENE_OPEN = [
     {sev:'warning', title:'CLAUDE-STATUS.md still hardcodes a skill count, and it’s wrong', detail:'Says "36" — actual is 26. Ironically the line itself says "don’t hardcode a number here, it goes stale," then hardcodes one anyway.', fix:'Point it at COMMAND_REGISTRY.md the same way CLAUDE.md now does.'},
-    {sev:'warning', title:'2 project folders still undocumented', detail:'genesis-feedback-storytelling and thailand-memory-book (728 files — the newest and largest project in the workspace) have no row in CLAUDE.md’s project table.', fix:'Add thailand-memory-book at minimum — it’s actively deployed.'},
-    {sev:'critical', title:'token-optimizer is an orphaned git submodule reference', detail:'`git ls-tree` shows a 160000 gitlink at this path, but there\'s no matching entry in .gitmodules — it points nowhere and can never be initialized. It\'s not "empty," it\'s broken.', fix:'Safe to remove entirely (`git rm 01-personal/token-optimizer`) — there is no recoverable content here.'}
+    {sev:'warning', title:'1 project folder still undocumented', detail:'thailand-memory-book (728 files — the newest and largest project in the workspace) has no row in CLAUDE.md’s project table.', fix:'Add it — it’s actively deployed via GitHub Pages.'}
   ];
   var HYGIENE_RESOLVED = [
+    {title:'token-optimizer removed', when:'this run', detail:'It was an orphaned git submodule gitlink with no .gitmodules entry — pointed nowhere, could never be initialized. Nothing recoverable was lost.'},
+    {title:'aws-cleanup and genesis-feedback-storytelling archived', when:'this run', detail:'Both read as completed one-time efforts (a finished AWS cost audit; a pipeline with its final output already generated) — moved to 02-work/archive/, out of the active project list.'},
     {title:'Corrected: Math Practice App status', when:'this run', detail:'An earlier claim (that an archived copy exists at 01-personal/archive/math-practice/) was flat wrong — no such path has ever existed in git history. Real evidence instead: 87 files, a March 2026 exam in Hebrew, curriculum data for two grades, reference scans through January 2026. Kept as active, not archived.'},
     {title:'GitHub’s default branch pointed at a stray branch instead of main for ~2 months', when:'D-009, this run — the big one'},
     {title:'Two development trunks had diverged silently — real work (Thailand trip site, budget tracker) existed only outside main', when:'Reunited via PR #43'},
@@ -529,7 +527,7 @@
 
   function renderOverview(){
     var kpis = [
-      {val:TOTAL_PROJECTS, lbl:'Project folders', sub:'15 personal · 6 work'},
+      {val:TOTAL_PROJECTS, lbl:'Project folders', sub:'14 personal · 5 work'},
       {val:DOCUMENTED+'/'+TOTAL_PROJECTS, lbl:'Documented in CLAUDE.md', sub:Math.round(DOCUMENTED/TOTAL_PROJECTS*100)+'% coverage', cls:'good'},
       {val:TOTAL_BRANCHES, lbl:'Branches in the repo', sub:'down from 63 after a full audit', cls:'good'},
       {val:REPO_SKILL_COUNT, lbl:'Repo skills active', sub:'+2 this cycle: content-to-image, emil-kowalski-design', cls:'good'},

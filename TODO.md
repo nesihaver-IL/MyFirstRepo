@@ -100,7 +100,11 @@ the full reasoning behind each call.
 - [x] Merge PRs #28 (content-to-image / nano-banana-studio skill), #42 and #44 (Thailand
       trip site + memory book) into main
 - [x] Delete 60 stale/redundant branches after a full repo-wide branch audit
+- [x] Remove `01-personal/token-optimizer` — an orphaned git submodule reference (gitlink with
+      no `.gitmodules` entry), not recoverable content
+- [x] Archive `02-work/aws-cleanup` and `02-work/genesis-feedback-storytelling` to
+      `02-work/archive/` — both completed one-time efforts, not ongoing work
 
 ---
 
-_Updated: 2026-09-28_
+_Updated: 2026-09-30_
