@@ -22,10 +22,12 @@ the full reasoning behind each call.
 - [ ] **Math Practice App** — Build interactive math practice application
   - Plan: `.plans/PLAN-math-practice-app-2026-02-20.md`
   - Location: `01-personal/math-practice/`
-  - Status: `[unclear — conflicting signals]` Last commit 2026-04-16. File count (87 files,
-    31M) originally read as substantially built, but an archived copy already exists at
-    `01-personal/archive/math-practice/`, which could mean this was already superseded. The
-    two checks disagree — needs your actual read on this one rather than another guess.
+  - Status: real, active — corrected 2026-09-30. An earlier note here claimed an archived
+    copy exists at `01-personal/archive/math-practice/`; that was wrong, no such path has
+    ever existed in git history. Real evidence: a March 2026 exam in Hebrew, curriculum data
+    for two grades, and reference scans through January 2026. Last git commit 2026-05-29, but
+    this is clearly still in real use outside of commits (homework generation doesn't need
+    a commit each time).
 
 - [ ] **AWS AI Agent** — Develop AWS Bedrock AI Agent implementation
   - Location: `01-personal/aws-ai-agent/`

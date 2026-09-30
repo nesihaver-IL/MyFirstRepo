@@ -176,6 +176,8 @@
   .chiprow{ display:flex; flex-wrap:wrap; gap:6px; }
   .chip{ font-size:11.5px; font-weight:600; padding:4px 10px; border-radius:8px; background:var(--surface-1);
     border:1px solid var(--border); color:var(--text-primary); }
+  .chip.clickable{ cursor:pointer; transition:transform .1s ease, border-color .1s ease; }
+  .chip.clickable:hover{ transform:translateY(-1px); border-color:var(--cat-1); }
   .chip.platform{ background:color-mix(in srgb, var(--cat-5) 10%, var(--surface-1)); border-color:color-mix(in srgb, var(--cat-5) 30%, var(--border)); }
   .chip.new{ border-color:color-mix(in srgb, var(--good) 45%, var(--border)); background:color-mix(in srgb, var(--good) 12%, var(--surface-1)); }
 
@@ -330,14 +332,39 @@
   ];
 
   var TOP_LEVEL = [
-    {id:'01-personal', color:'var(--cat-1)', size:'1.4G', desc:'Personal projects — learning & experimentation. Jumped from 49M: the Thailand memory book’s photo/video library.', count:'15 folders'},
-    {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'6 folders'},
-    {id:'03-plans', color:'var(--cat-3)', size:'260K', desc:'Strategy, roadmaps, research — human-owned planning', count:'4 subfolders'},
-    {id:'04-reference', color:'var(--cat-4)', size:'92M', desc:'Knowledge base, cheatsheets, archives', count:'9 subfolders'},
-    {id:'.claude', color:'var(--cat-5)', size:'860K', desc:'Skills, agents, diagnostic tools', count:'26 skills · 5 agents'},
-    {id:'.config', color:'var(--cat-6)', size:'64K', desc:'Templates & snippets', count:'6 templates'},
-    {id:'.cursor', color:'var(--cat-7)', size:'84K', desc:'Cursor IDE command mirrors', count:'7 commands'},
-    {id:'scripts + root', color:'var(--cat-8)', size:'~80K', desc:'Sync scripts + workspace root docs', count:'10 files'}
+    {id:'01-personal', color:'var(--cat-1)', size:'1.4G', desc:'Personal projects — learning & experimentation. Jumped from 49M: the Thailand memory book’s photo/video library.', count:'15 folders',
+      children:[
+        {name:'thailand-memory-book', size:'1.3G'}, {name:'math-practice', size:'31M'}, {name:'aws-ai-agent', size:'16M'},
+        {name:'thailand-trip-2026', size:'7.1M'}, {name:'garmin-health', size:'1.5M'}, {name:'zohar-resume', size:'628K'},
+        {name:'bookmark-management', size:'308K'}, {name:'windows-monitor', size:'160K'}, {name:'electricity-dashboard', size:'76K'},
+        {name:'archive', size:'60K'}, {name:'morzin-budget-2026', size:'48K'}, {name:'nano-banana-studio', size:'40K'},
+        {name:'tzofim-payments', size:'20K'}, {name:'token-optimizer', size:'4.0K', flag:'empty — orphaned git submodule reference, no .gitmodules entry'},
+        {name:'interview-coach', size:'4.0K', flag:'submodule not initialized'}
+      ]},
+    {id:'02-work', color:'var(--cat-2)', size:'17M', desc:'Professional deliverables — may be shared', count:'6 folders',
+      children:[
+        {name:'strategy-presentation', size:'13M'}, {name:'genesis-feedback-storytelling', size:'3.9M', flag:'has final output — reads as complete, not abandoned'},
+        {name:'ai-foundry-agent', size:'744K'}, {name:'aws-cleanup', size:'64K', flag:'docs literally named "COMPLETE" — a finished one-time effort'},
+        {name:'automation-integrations', size:'48K'}, {name:'handoff', size:'12K'}
+      ]},
+    {id:'03-plans', color:'var(--cat-3)', size:'260K', desc:'Strategy, roadmaps, research — human-owned planning', count:'4 subfolders',
+      children:[{name:'archive', size:'56K'}, {name:'research', size:'48K'}, {name:'templates', size:'16K'}, {name:'roadmaps', size:'16K'}]},
+    {id:'04-reference', color:'var(--cat-4)', size:'92M', desc:'Knowledge base, cheatsheets, archives', count:'9 subfolders',
+      children:[
+        {name:'Teams 365', size:'80M'}, {name:'whatsapp-export', size:'9.9M'}, {name:'learning', size:'1.5M'},
+        {name:'Yellow-Paz', size:'232K'}, {name:'chatgpt-export', size:'72K'}, {name:'cheatsheets', size:'52K'},
+        {name:'hyundai-service-center', size:'32K'}, {name:'patterns', size:'20K'}, {name:'bookmarks', size:'8.0K'}
+      ]},
+    {id:'.claude', color:'var(--cat-5)', size:'860K', desc:'Skills, agents, diagnostic tools', count:'26 skills · 5 agents',
+      children:[
+        {name:'skills', size:'496K'}, {name:'skills-archive', size:'140K'}, {name:'scripts', size:'64K'},
+        {name:'agents', size:'64K'}, {name:'job-search', size:'28K'}, {name:'config', size:'12K'}, {name:'docs', size:'8.0K'}
+      ]},
+    {id:'.config', color:'var(--cat-6)', size:'64K', desc:'Templates & snippets', count:'6 templates',
+      children:[{name:'templates', size:'40K'}, {name:'snippets', size:'8.0K'}]},
+    {id:'.cursor', color:'var(--cat-7)', size:'84K', desc:'Cursor IDE command mirrors', count:'7 commands',
+      children:[{name:'commands', size:'80K'}]},
+    {id:'scripts + root', color:'var(--cat-8)', size:'~80K', desc:'Sync scripts + workspace root docs', count:'10 files', children:[]}
   ];
 
   var BRANCHES = [
@@ -381,6 +408,34 @@
   };
   var SKILLS_NEW = ['content-to-image','emil-kowalski-design'];
   var SKILLS_ARCHIVED = ['copilot-docs','cyber-exec-brief','exploration-phase','figma','github-trending','nano-banana-pro','resume-optimizer'];
+  var SKILL_DESC = {
+    'analytics-metrics':'Build data visualization and analytics dashboards — charts, KPI displays, metrics dashboards, Recharts components.',
+    'aws-agentcore':'Build AI agents with AWS Bedrock AgentCore — agent orchestration, tool-use patterns, Lambda tools.',
+    'aws-bedrock':'Work with Bedrock foundational models, Knowledge Bases (RAG), Bedrock Flows, Guardrails, and Prompt Management.',
+    'aws-eventbridge':'Build event-driven architectures — event rules, routing to Lambda/Step Functions, scheduled triggers, custom buses.',
+    'aws-lambda':'Build, deploy, and optimize Lambda functions as agent tool backends — handlers, function URLs, event sources, SAM CLI.',
+    'aws-step-functions':'Orchestrate multi-step workflows — state machines, human-in-the-loop approval, parallel execution, retry logic.',
+    'aws-strands':'Build AI agents with the Strands Agents SDK — model-agnostic agents, ReAct patterns, multi-agent systems.',
+    'azure-ai-foundry':'Build AI agents and automation on Azure AI Foundry — prompt flows, RAG applications, multi-agent orchestration.',
+    'content-to-image':'Turn loose content (an idea, a doc, a mood) into a crafted image via Gemini Nano Banana Pro, using nano-banana-studio.',
+    'create-issue':'Records a bug, feature, or idea and sends it to Linear, GitHub Issues, or Jira.',
+    'create-plan':'Creates a detailed implementation plan file — steps and technical choices — before writing code.',
+    'data-pipeline':'Manage Garmin data ingestion, ETL pipeline, and RAG dataset operations — imports, migrations, ZIP batches.',
+    'emil-kowalski-design':'Apply Emil Kowalski’s design language — minimal, typography-driven UI, restrained motion, generous whitespace.',
+    'excel-pm-planner':'Analyze PM Excel files structured as block-based timeline plans — plan vs. actuals, schedule gaps, status reports.',
+    'execute-plan':'Writes the code from an approved plan, using different models for different parts of the work as needed.',
+    'garmin-analyzer':'Reads Garmin Connect health/activity exports and produces evidence-based analysis of sleep, training load, running, and recovery. (Note: has no description frontmatter like the others — described here from its own Purpose section.)',
+    'habits-dashboard':'Builds and publishes this dashboard — work tree, session, skills/agents, hygiene, and deliverables, on demand.',
+    'jira-confluence':'Automate JIRA and Confluence operations — create/update tickets, write pages, build integrations.',
+    'peer-review':'A different model reviews the same code, catching problems the first model missed.',
+    'pptx-builder':'Generate PowerPoint decks from structured content — status slides, roadmaps, gate reviews, architecture overviews.',
+    'review':'Self-review of code to find bugs, performance issues, security vulnerabilities, and improvements.',
+    'security-audit':'Audit code for exposed secrets, hardcoded credentials, and OWASP issues before committing.',
+    'streamlit-dash':'Build and maintain the Garmin Health Streamlit dashboard — app.py and its src modules.',
+    'terraform-ops':'Manage Terraform infrastructure for AWS projects — plan/apply/troubleshoot Lambda, DynamoDB, API Gateway, IAM.',
+    'test-runner':'Run tests across projects and report coverage — pytest, Lambda validation, coverage checks.',
+    'update-docs':'After code changes, updates the instruction documents so other sessions know what changed.'
+  };
   var SKILLS_PLATFORM = ['session-start-hook','dataviz','artifact-design','artifact-capabilities','update-config',
     'keybindings-help','verify','code-review','simplify','fewer-permission-prompts','loop','claude-api','run','init',
     'security-review','morning','israeli-bituach-leumi','web-artifacts-builder','skill-creator','xlsx','pptx','pdf','docx'];
@@ -403,10 +458,11 @@
 
   var HYGIENE_OPEN = [
     {sev:'warning', title:'CLAUDE-STATUS.md still hardcodes a skill count, and it’s wrong', detail:'Says "36" — actual is 26. Ironically the line itself says "don’t hardcode a number here, it goes stale," then hardcodes one anyway.', fix:'Point it at COMMAND_REGISTRY.md the same way CLAUDE.md now does.'},
-    {sev:'warning', title:'3 project folders still undocumented', detail:'token-optimizer (0 files on disk), genesis-feedback-storytelling, and thailand-memory-book (728 files — the newest and largest project in the workspace) have no row in CLAUDE.md’s project table.', fix:'Add thailand-memory-book at minimum — it’s actively deployed. Confirm the other two are still wanted before documenting them.'},
-    {sev:'warning', title:'Math Practice App status is genuinely unclear', detail:'One check said "done" (file count); a separate check found an archived copy already exists at 01-personal/archive/math-practice/, which points the other way. Left unresolved on purpose — needs your read, not another guess.', fix:'Confirm in TODO.md whether this project is done, abandoned, or still active.'}
+    {sev:'warning', title:'2 project folders still undocumented', detail:'genesis-feedback-storytelling and thailand-memory-book (728 files — the newest and largest project in the workspace) have no row in CLAUDE.md’s project table.', fix:'Add thailand-memory-book at minimum — it’s actively deployed.'},
+    {sev:'critical', title:'token-optimizer is an orphaned git submodule reference', detail:'`git ls-tree` shows a 160000 gitlink at this path, but there\'s no matching entry in .gitmodules — it points nowhere and can never be initialized. It\'s not "empty," it\'s broken.', fix:'Safe to remove entirely (`git rm 01-personal/token-optimizer`) — there is no recoverable content here.'}
   ];
   var HYGIENE_RESOLVED = [
+    {title:'Corrected: Math Practice App status', when:'this run', detail:'An earlier claim (that an archived copy exists at 01-personal/archive/math-practice/) was flat wrong — no such path has ever existed in git history. Real evidence instead: 87 files, a March 2026 exam in Hebrew, curriculum data for two grades, reference scans through January 2026. Kept as active, not archived.'},
     {title:'GitHub’s default branch pointed at a stray branch instead of main for ~2 months', when:'D-009, this run — the big one'},
     {title:'Two development trunks had diverged silently — real work (Thailand trip site, budget tracker) existed only outside main', when:'Reunited via PR #43'},
     {title:'63 stale/redundant branches cluttering the work tree', when:'Down to 2 (main + gh-pages) after a full audit and your own cleanup pass'},
@@ -498,9 +554,9 @@
       return '<div class="card" style="--accent:'+b.color+'"><h3><code>'+b.name+'</code></h3><div class="meta1">'+b.role+'</div></div>';
     }).join('') + '</div></div>';
 
-    html += '<div class="section"><div class="section-hd"><h2>Work tree at a glance</h2><span class="hint">'+WORKSPACE_AGE_DAYS+' days old · branch <code>'+SESSION.branch+'</code></span></div>';
+    html += '<div class="section"><div class="section-hd"><h2>Work tree at a glance</h2><span class="hint">'+WORKSPACE_AGE_DAYS+' days old · branch <code>'+SESSION.branch+'</code> · click a card to see what\'s inside</span></div>';
     html += '<div class="grid-cards">' + TOP_LEVEL.map(function(t){
-      return '<div class="card" style="--accent:'+t.color+'"><h3>'+t.id+'</h3><div class="meta1">'+t.desc+'</div>'+
+      return '<div class="card clickable" data-folder="'+escapeHtml(t.id)+'" style="--accent:'+t.color+'"><h3>'+t.id+'</h3><div class="meta1">'+t.desc+'</div>'+
         '<div class="card-row"><span class="k">Size</span><span>'+t.size+'</span></div>'+
         '<div class="card-row"><span class="k">Contains</span><span>'+t.count+'</span></div></div>';
     }).join('') + '</div></div>';
@@ -551,10 +607,10 @@
   }
 
   function renderSkills(){
-    var html = '<div class="section-hd"><h2>Repo skills — '+REPO_SKILL_COUNT+' in .claude/skills/</h2><span class="hint">Grouped by domain — check here before building a new script or automation</span></div>';
+    var html = '<div class="section-hd"><h2>Repo skills — '+REPO_SKILL_COUNT+' in .claude/skills/</h2><span class="hint">Grouped by domain — click a skill to see what it does</span></div>';
     html += Object.keys(SKILLS_REPO).map(function(g){
       return '<div class="skillgrp"><h4>'+g+'</h4><div class="chiprow">' +
-        SKILLS_REPO[g].map(function(s){ return '<span class="chip'+(SKILLS_NEW.indexOf(s)>=0?' new':'')+'">'+s+(SKILLS_NEW.indexOf(s)>=0?' — new':'')+'</span>'; }).join('') + '</div></div>';
+        SKILLS_REPO[g].map(function(s){ return '<span class="chip clickable" data-skill="'+escapeHtml(s)+'"'+(SKILLS_NEW.indexOf(s)>=0?' style="border-color:color-mix(in srgb, var(--good) 45%, var(--border)); background:color-mix(in srgb, var(--good) 12%, var(--surface-1))"':'')+'>'+s+(SKILLS_NEW.indexOf(s)>=0?' — new':'')+'</span>'; }).join('') + '</div></div>';
     }).join('');
 
     html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Archived — '+SKILLS_ARCHIVED.length+' in .claude/skills-archive/</h2></div>' +
@@ -584,8 +640,9 @@
 
     html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Resolved — '+HYGIENE_RESOLVED.length+' flags</h2></div>';
     html += HYGIENE_RESOLVED.map(function(h){
+      var trailer = h.detail ? escapeHtml(h.detail) : 're-verified clean by this run\'s <code>gather.sh</code> scan, not just remembered from before.';
       return '<div class="flag-card resolved"><div class="ft" style="color:var(--good)">✓ '+escapeHtml(h.title)+'</div>' +
-        '<div class="ff">Fixed in <b>'+escapeHtml(h.when)+'</b> — re-verified clean by this run\'s <code>gather.sh</code> scan, not just remembered from before.</div></div>';
+        '<div class="ff">Fixed in <b>'+escapeHtml(h.when)+'</b> — '+trailer+'</div></div>';
     }).join('') + '</div>';
 
     html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Stale docs</h2></div>' +
@@ -673,6 +730,52 @@
     var root = document.documentElement;
     var cur = root.getAttribute('data-theme');
     root.setAttribute('data-theme', cur==='dark' ? 'light' : 'dark');
+  });
+
+  // Drawer: folder drill-down + skill descriptions
+  var scrim = document.getElementById('ccScrim');
+  var drawer = document.getElementById('ccDrawer');
+  function openDrawer(cat, title, badge, bodyHtml){
+    document.getElementById('ccDrawerCat').textContent = cat;
+    document.getElementById('ccDrawerTitle').textContent = title;
+    document.getElementById('ccDrawerBadge').innerHTML = badge || '';
+    document.getElementById('ccDrawerBody').innerHTML = bodyHtml;
+    scrim.classList.add('open'); drawer.classList.add('open');
+  }
+  function closeDrawer(){ scrim.classList.remove('open'); drawer.classList.remove('open'); }
+  document.getElementById('ccDrawerClose').addEventListener('click', closeDrawer);
+  scrim.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeDrawer(); });
+
+  document.addEventListener('click', function(e){
+    var folderCard = e.target.closest('[data-folder]');
+    if(folderCard){
+      var id = folderCard.getAttribute('data-folder');
+      var t = TOP_LEVEL.filter(function(x){ return x.id===id; })[0];
+      if(!t) return;
+      var kids = (t.children||[]);
+      var body = '<div class="dsec"><h4>Inside '+escapeHtml(t.id)+'</h4>';
+      if(kids.length===0){
+        body += '<div class="ff" style="color:var(--text-secondary); font-size:12.5px">No subfolders — just files directly here.</div>';
+      } else {
+        body += '<div class="factlist">' + kids.map(function(k){
+          return '<div class="factrow"><span class="k">'+escapeHtml(k.name)+(k.flag?' <span style="color:var(--warning)">⚠</span>':'')+'</span><span class="v">'+escapeHtml(k.size)+'</span></div>' +
+            (k.flag ? '<div class="ff" style="font-size:11px; color:var(--warning); padding:0 0 8px; margin-top:-4px">'+escapeHtml(k.flag)+'</div>' : '');
+        }).join('') + '</div>';
+      }
+      body += '</div>';
+      openDrawer('Work Tree', t.id, '<span class="badge neutral">'+t.size+'</span>', body);
+      return;
+    }
+    var skillChip = e.target.closest('[data-skill]');
+    if(skillChip){
+      var name = skillChip.getAttribute('data-skill');
+      var desc = SKILL_DESC[name] || 'No description recorded for this skill yet.';
+      var body = '<div class="dsec"><h4>What it does</h4><div class="ff" style="font-size:13px; line-height:1.6; color:var(--text-secondary)">'+escapeHtml(desc)+'</div></div>' +
+        '<div class="dsec"><h4>Location</h4><div class="ff"><code>.claude/skills/'+escapeHtml(name)+'/SKILL.md</code></div></div>';
+      openDrawer('Skill', name, SKILLS_NEW.indexOf(name)>=0 ? '<span class="badge good">new</span>' : '', body);
+      return;
+    }
   });
 
   var asofStr = TODAY.toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric', timeZone:'UTC'});
