@@ -110,7 +110,10 @@ the full reasoning behind each call.
       visitor's browser (work tree, projects, skills & agents, hygiene checks), with a real
       "↻ Refresh" button — no claude.ai sandbox restriction, genuinely public. Deliverables
       tab stays static since GitHub has no record of claude.ai-published pages.
+- [x] Fix `COMMAND_REGISTRY.md`: `garmin-analyzer` existed in `.claude/skills/` but was never
+      added when the registry was last regenerated (PR #32) — added it, corrected the total
+      from 27 to the actual 26 active skills.
 
 ---
 
-_Updated: 2026-09-30_
+_Updated: 2026-10-01_
