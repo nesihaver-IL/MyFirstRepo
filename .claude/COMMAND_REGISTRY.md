@@ -28,6 +28,7 @@
 #### Domain Skills (added 2026-02-27)
 - streamlit-dash
 - data-pipeline
+- garmin-analyzer
 - jira-confluence
 
 #### Project Management (added 2026-02-28)
@@ -85,6 +86,8 @@ You can use these trigger phrases to activate commands:
 | "streamlit" | streamlit-dash | Garmin analytics dashboard (01-personal/) |
 | "run dashboard" | streamlit-dash | Launch or update Streamlit app |
 | "garmin analytics" | streamlit-dash | Update health metrics dashboard |
+| "garmin analyzer" | garmin-analyzer | Analyze training/wellness data, generate insights |
+| "analyze garmin data" | garmin-analyzer | Garmin Health Agent's underlying analysis skill |
 | "ingest data" | data-pipeline | Garmin data ingestion + ETL |
 | "pipeline" | data-pipeline | Data pipeline operations |
 | "migrate dataset" | data-pipeline | Move files to data/raw/ |
@@ -252,7 +255,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-09-28 (regenerated against .claude/skills/ + .claude/skills-archive/, +content-to-image, +emil-kowalski-design, +impeccable agent)
-Total Skills: 27 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Last Updated: 2026-10-01 (regenerated against .claude/skills/ + .claude/skills-archive/, +garmin-analyzer — was on disk but missing from this registry)
+Total Skills: 26 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
 Total Agents: 5
 Status: ✅ Active
