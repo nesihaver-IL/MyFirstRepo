@@ -51,6 +51,9 @@
 #### Workspace Insight (added 2026-07-20)
 - habits-dashboard
 
+#### Workspace Insight (added 2026-09-30)
+- claude-code-360-sync
+
 ### Aliases (Short Names)
 You can use these trigger phrases to activate commands:
 
@@ -59,6 +62,9 @@ You can use these trigger phrases to activate commands:
 | "dashboard status" | habits-dashboard | Show the habits dashboard (work tree, session, skills, hygiene) |
 | "habits dashboard" | habits-dashboard | Same as above |
 | "refresh snapshot" | habits-dashboard | Re-scan and republish the dashboard |
+| "sync the 360 page" | claude-code-360-sync | Scan for new GitHub-Pages-shaped projects, wire safe ones in, open a PR |
+| "check for new deliverables" | claude-code-360-sync | Same as above |
+| "run the dashboard sync" | claude-code-360-sync | Same as above |
 | "create issue" | create-issue | Document bugs, features, ideas |
 | "log bug" | create-issue | Record a bug |
 | "track feature" | create-issue | Track new feature |
@@ -255,7 +261,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-10-01 (regenerated against .claude/skills/ + .claude/skills-archive/, +garmin-analyzer — was on disk but missing from this registry)
-Total Skills: 26 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Last Updated: 2026-10-01 (regenerated against .claude/skills/ + .claude/skills-archive/, +claude-code-360-sync, +garmin-analyzer — was on disk but missing from this registry)
+Total Skills: 27 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
 Total Agents: 5
 Status: ✅ Active
