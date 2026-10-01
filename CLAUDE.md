@@ -153,6 +153,7 @@ Use the skill system (invoke via natural language or slash commands):
 | Content → image generation | `content-to-image` | "turn this into an image" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
 | Workspace snapshot / hygiene check | `habits-dashboard` | "show me the habits dashboard" |
+| Sync the public Claude Code 360° page's Showcase list | `claude-code-360-sync` | "sync the 360 page" (also runs on its own twice a week) |
 
 ### Domain-Specialized Agents
 
