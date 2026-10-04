@@ -58,6 +58,51 @@
   @keyframes spin{ to{ transform:rotate(360deg); } }
   .asof{ font-size:11px; color:var(--text-muted); margin-top:8px; }
 
+  .searchwrap{ position:relative; margin:14px 0 4px; z-index:15; }
+  .searchbar{ display:flex; align-items:center; gap:8px; background:var(--surface-1); border:1px solid var(--border);
+    border-radius:11px; padding:9px 12px; box-shadow:var(--shadow); }
+  .searchbar:focus-within{ outline:2px solid var(--cat-1); outline-offset:1px; }
+  .searchbar .sicon{ font-size:15px; color:var(--text-muted); flex:none; }
+  .searchbar input{ flex:1; border:none; background:transparent; color:var(--text-primary); font-size:13.5px;
+    font-family:inherit; outline:none; }
+  .searchbar input::placeholder{ color:var(--text-muted); }
+  .searchbar .sclear{ border:none; background:var(--page); color:var(--text-secondary); width:20px; height:20px;
+    border-radius:50%; cursor:pointer; font-size:11px; flex:none; }
+  .searchresults{ position:absolute; top:calc(100% + 6px); left:0; right:0; max-height:420px; overflow-y:auto;
+    background:var(--surface-1); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow); padding:6px; }
+  .sresult{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; cursor:pointer; }
+  .sresult:hover, .sresult.active{ background:var(--page); }
+  .sresult .sdot{ width:7px; height:7px; border-radius:2px; flex:none; }
+  .sresult .slabel{ font-size:12.8px; font-weight:600; color:var(--text-primary); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sresult .ssub{ font-size:11px; color:var(--text-muted); flex:none; max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .sresult .stype{ font-size:9.5px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:5px; padding:2px 6px; flex:none; }
+  .sresult-empty{ padding:16px 10px; font-size:12.5px; color:var(--text-muted); text-align:center; }
+
+  .kind-badge{ display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700; text-transform:uppercase;
+    letter-spacing:.03em; padding:2px 7px; border-radius:999px; border:1px solid transparent; white-space:nowrap; }
+  .kind-badge.active{ color:var(--cat-1); background:color-mix(in srgb, var(--cat-1) 14%, transparent); border-color:color-mix(in srgb, var(--cat-1) 30%, transparent); }
+  .kind-badge.base{ color:var(--text-secondary); background:color-mix(in srgb, var(--text-secondary) 12%, transparent); border-color:var(--border); }
+  .kind-badge.stale{ color:var(--critical); background:color-mix(in srgb, var(--critical) 14%, transparent); border-color:color-mix(in srgb, var(--critical) 30%, transparent); }
+
+  table.datatable{ width:100%; border-collapse:collapse; background:var(--surface-1); border:1px solid var(--border);
+    border-radius:12px; overflow:hidden; font-size:12.5px; }
+  table.datatable th{ text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--text-muted);
+    padding:9px 11px; border-bottom:1px solid var(--grid); font-weight:700; }
+  table.datatable td{ padding:8px 11px; border-bottom:1px solid var(--grid); color:var(--text-secondary); vertical-align:middle; }
+  table.datatable tr:last-child td{ border-bottom:none; }
+  table.datatable td.name{ color:var(--text-primary); font-weight:600; }
+
+  .rec-copyrow{ display:flex; gap:8px; align-items:flex-start; margin-top:8px; }
+  .copy-btn{ border:none; background:var(--cat-1); color:#fff; border-radius:7px; padding:6px 12px;
+    font-size:11px; font-weight:700; cursor:pointer; flex:none; white-space:nowrap; }
+  .copy-btn.copied{ background:var(--good); }
+  .done-btn{ border:1px solid var(--border); background:var(--surface-1); color:var(--text-secondary); border-radius:7px;
+    padding:6px 10px; font-size:11px; font-weight:700; cursor:pointer; flex:none; white-space:nowrap; }
+  .done-btn.is-marked{ background:color-mix(in srgb, var(--good) 14%, var(--surface-1)); color:var(--good); border-color:color-mix(in srgb, var(--good) 30%, transparent); }
+  .flag-card.is-reviewed{ opacity:.5; }
+  .flag-card.is-reviewed .ft{ text-decoration:line-through; }
+
   .banner{ display:flex; gap:10px; align-items:flex-start; border-radius:12px; padding:13px 15px; margin:14px 0; font-size:12.5px; line-height:1.55; }
   .banner.info{ background:color-mix(in srgb, var(--cat-1) 8%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--cat-1) 30%, var(--border)); }
   .banner.warn{ background:color-mix(in srgb, var(--warning) 10%, var(--surface-1)); border:1px solid color-mix(in srgb, var(--warning) 35%, var(--border)); }
@@ -145,7 +190,7 @@
   <div class="hdr">
     <div>
       <h1>Claude Code 360°</h1>
-      <p class="sub">Live from GitHub — work tree, projects, skills &amp; agents, and hygiene, fetched directly from <code>nesihaver-IL/MyFirstRepo</code> in your browser, right now.</p>
+      <p class="sub">Live from GitHub — work tree, projects, branches, skills &amp; agents, and hygiene, fetched directly from <code>nesihaver-IL/MyFirstRepo</code> in your browser, right now. The one canonical workspace dashboard — the claude.ai-hosted Habits Dashboard and Workspace Command Center were merged into this page and are no longer maintained.</p>
     </div>
     <div class="hdr-right">
       <button class="btn" id="themeToggle" type="button">🌓</button>
@@ -154,6 +199,16 @@
   </div>
   <div class="asof" id="asof"></div>
 
+  <div class="searchwrap" id="searchWrap">
+    <div class="searchbar">
+      <span class="sicon">⌕</span>
+      <input id="globalSearch" type="text" autocomplete="off" spellcheck="false"
+        placeholder="Search projects, skills, agents, folders, hygiene flags…" aria-label="Search this page">
+      <button class="sclear" id="searchClear" type="button" aria-label="Clear search" hidden>✕</button>
+    </div>
+    <div class="searchresults" id="searchResults" hidden></div>
+  </div>
+
   <div id="banners"></div>
   <div class="tabs" id="tabs"></div>
   <div id="panels"></div>
@@ -161,7 +216,8 @@
   <div class="footnote">
     Everything above except Deliverables is fetched live from GitHub's public API when this page loads or you click Refresh
     — nothing is baked in at publish time. Deliverables links to Claude-published pages, which GitHub has no record of, so
-    that list stays fixed until this page is republished with a new one.
+    that list stays fixed until this page is republished with a new one. "Mark reviewed" on a hygiene flag is remembered
+    only in this browser (no account, no server) — it won't follow you to another device.
   </div>
 </div>
 
@@ -208,6 +264,15 @@
     var res = await fetch(RAW + path);
     if(!res.ok) return null;
     return res.text();
+  }
+  function firstLine(md){
+    if(!md) return null;
+    var lines = md.split("\n");
+    for(var i=0;i<lines.length;i++){
+      var line = lines[i].trim().replace(/^#+\s*/,"").trim();
+      if(line) return line;
+    }
+    return null;
   }
 
   var STATE = { tree:null, branches:null, projectCommits:{}, docCommits:{}, skillDescCache:{} };
@@ -305,7 +370,22 @@
           p.lastCommit = c[0] ? c[0].commit.author.date : null;
         }).catch(function(){ p.lastCommit = null; });
       });
-      await Promise.all(commitPromises);
+      // per-project one-line description, from the project's own docs (not hardcoded, not rate-limited)
+      var hintPromises = projects.map(function(p){
+        return rawFile(p.path + "/CLAUDE.md").then(function(md){
+          var line = firstLine(md);
+          if(line){ p.note = line; return; }
+          return rawFile(p.path + "/README.md").then(function(r){ p.note = firstLine(r); });
+        }).catch(function(){ p.note = null; });
+      });
+      // branch ahead/behind main (bounded: one call per non-main branch, real API cost)
+      var otherBranches = branches.filter(function(b){ return b.name !== BRANCH; });
+      var branchPromises = otherBranches.map(function(b){
+        return gh("/compare/" + BRANCH + "..." + b.name).then(function(c){
+          b.aheadBy = c.ahead_by; b.behindBy = c.behind_by;
+        }).catch(function(){ b.aheadBy = null; b.behindBy = null; });
+      });
+      await Promise.all(commitPromises.concat(hintPromises, branchPromises));
 
       STATE = {tree:tree, buckets:buckets, projects:projects, sa:sa, branches:branches, latestCommit:latestCommit[0],
         claudeMd:claudeMd||"", claudeStatus:claudeStatus||"", registry:registry||""};
@@ -327,6 +407,7 @@
     {id:"overview", label:"Overview"},
     {id:"worktree", label:"Work Tree"},
     {id:"projects", label:"Projects"},
+    {id:"branches", label:"Branches"},
     {id:"skills", label:"Skills & Agents"},
     {id:"hygiene", label:"Hygiene"},
     {id:"deliverables", label:"Deliverables"}
@@ -384,19 +465,62 @@
         '<div class="card-row"><span class="k">Size</span><span>'+fmtBytes(b.size)+'</span></div>'+
         '<div class="card-row"><span class="k">Contains</span><span>'+(childCount ? childCount+' subfolders' : 'files only')+'</span></div></div>';
     }).join("") + "</div>";
+
+    var flat = [];
+    Object.keys(STATE.buckets).forEach(function(top){
+      var b = STATE.buckets[top];
+      Object.keys(b.children).forEach(function(child){
+        flat.push({label:(top==="root"?"":top+"/")+child, bytes:b.children[child]});
+      });
+    });
+    flat.sort(function(a,b){ return b.bytes - a.bytes; });
+    var top10 = flat.slice(0,10);
+    var maxBytes = top10.length ? top10[0].bytes : 1;
+    html += '<div class="section" style="margin-top:22px"><div class="section-hd"><h2>Largest subfolders</h2><span class="hint">Top 10 by tracked size, repo-wide</span></div>';
+    html += '<div class="barlist" style="display:flex; flex-direction:column; gap:9px">' + top10.map(function(f){
+      var pct = Math.max(4, Math.round(f.bytes / maxBytes * 100));
+      return '<div class="barrow" style="display:grid; grid-template-columns:200px 1fr 80px; align-items:center; gap:10px; font-size:12px">'+
+        '<span class="name" style="color:var(--text-primary); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">'+escapeHtml(f.label)+'</span>'+
+        '<span class="btrack" style="height:9px; border-radius:5px; background:var(--grid); overflow:hidden"><span style="display:block; height:100%; border-radius:5px; width:'+pct+'%; background:var(--cat-1)"></span></span>'+
+        '<span class="bval" style="text-align:right; color:var(--text-muted); font-variant-numeric:tabular-nums">'+fmtBytes(f.bytes)+'</span></div>';
+    }).join("") + "</div></div>";
     return html;
   }
 
   function renderProjects(){
-    var html = '<div class="section-hd"><h2>All '+STATE.projects.length+' project folders</h2><span class="hint">Live sizes and last-commit dates, fetched just now</span></div>';
+    var html = '<div class="section-hd"><h2>All '+STATE.projects.length+' project folders</h2><span class="hint">Live sizes, last-commit dates, and each project\'s own one-line description, fetched just now</span></div>';
     var sorted = STATE.projects.slice().sort(function(a,b){ return (a.lastCommit && b.lastCommit) ? new Date(b.lastCommit)-new Date(a.lastCommit) : 0; });
     html += '<div class="grid-cards">' + sorted.map(function(p){
       var idle = p.lastCommit ? daysAgo(p.lastCommit) : null;
       var col = idle===null ? "var(--text-muted)" : (idle < 14 ? "var(--good)" : (idle <= 45 ? "var(--warning)" : "var(--critical)"));
       return '<div class="card" style="--accent:'+col+'"><h3>'+escapeHtml(p.name)+'</h3><div class="meta1">'+p.group+' · '+escapeHtml(p.path)+'</div>'+
+        (p.note ? '<div class="meta1" style="margin-top:4px; color:var(--text-secondary)">'+escapeHtml(p.note)+'</div>' : '')+
         '<div class="card-row"><span class="k">Last commit</span><span>'+(p.lastCommit ? fmtDate(p.lastCommit)+" ("+idle+"d ago)" : "unknown")+'</span></div>'+
         '<div class="card-row"><span class="k">Size</span><span>'+p.files+' files · '+fmtBytes(p.size)+'</span></div></div>';
     }).join("") + "</div>";
+    return html;
+  }
+
+  function renderBranches(){
+    var html = '<div class="section-hd"><h2>Branches — '+STATE.branches.length+'</h2><span class="hint">Ahead/behind '+BRANCH+', computed live just now</span></div>';
+    var rows = STATE.branches.slice().sort(function(a,b){
+      if(a.name === BRANCH) return -1;
+      if(b.name === BRANCH) return 1;
+      return (b.aheadBy||0) - (a.aheadBy||0);
+    });
+    html += '<table class="datatable"><thead><tr><th>Branch</th><th>Status</th><th>Ahead</th><th>Behind</th></tr></thead><tbody>';
+    html += rows.map(function(b){
+      var kind, label;
+      if(b.name === BRANCH){ kind = "base"; label = "base branch"; }
+      else if(b.aheadBy === 0){ kind = "stale"; label = "fully merged — safe to delete"; }
+      else if(b.aheadBy === null){ kind = "base"; label = "couldn't compare"; }
+      else { kind = "active"; label = "has unmerged commits"; }
+      return '<tr><td class="name">'+escapeHtml(b.name)+'</td>'+
+        '<td><span class="kind-badge '+kind+'">'+label+'</span></td>'+
+        '<td>'+(b.aheadBy==null ? "—" : b.aheadBy)+'</td>'+
+        '<td>'+(b.behindBy==null ? "—" : b.behindBy)+'</td></tr>';
+    }).join("") + "</tbody></table>";
+    html += '<div class="footnote">"Fully merged" means zero commits ahead of '+BRANCH+' — nothing unique left on that branch. It does not check whether a pull request for it is still open; always check GitHub before deleting a branch.</div>';
     return html;
   }
 
@@ -416,13 +540,29 @@
     return html;
   }
 
+  function strHash(s){
+    var h = 0;
+    for(var i=0;i<s.length;i++){ h = ((h<<5)-h+s.charCodeAt(i))|0; }
+    return "h" + Math.abs(h);
+  }
+  function reviewedSet(){
+    try{ return JSON.parse(localStorage.getItem("cc360.reviewedFlags") || "[]"); }catch(e){ return []; }
+  }
+  function isReviewed(id){ return reviewedSet().indexOf(id) >= 0; }
+  function toggleReviewed(id){
+    var set = reviewedSet();
+    var i = set.indexOf(id);
+    if(i >= 0) set.splice(i,1); else set.push(id);
+    try{ localStorage.setItem("cc360.reviewedFlags", JSON.stringify(set)); }catch(e){}
+  }
+
   function renderHygiene(){
     var flags = [];
     var m = STATE.claudeStatus.match(/skill count[^\n]*?(\d+)/i) || STATE.claudeStatus.match(/\((\d+)\s+as of/i);
     if(m){
       var claimed = parseInt(m[1],10);
       if(claimed !== STATE.sa.skills.length){
-        flags.push({sev:"warn", title:"CLAUDE-STATUS.md's skill count doesn't match reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+" (checked live, right now)."});
+        flags.push({sev:"warn", title:"CLAUDE-STATUS.md's skill count doesn't match reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+" (checked live, right now).", fix:"Update CLAUDE-STATUS.md's skill count to "+STATE.sa.skills.length+", or point it at COMMAND_REGISTRY.md instead of a hardcoded number."});
       } else {
         flags.push({sev:"good", title:"CLAUDE-STATUS.md's skill count matches reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+"."});
       }
@@ -432,20 +572,49 @@
       return !p._documented;
     });
     if(undocumented.length){
-      flags.push({sev:"warn", title: undocumented.length+" project folder"+(undocumented.length===1?"":"s")+" not mentioned in CLAUDE.md", detail: undocumented.map(function(p){return p.name;}).join(", ")+" — checked by searching CLAUDE.md's live content for each folder name."});
+      flags.push({sev:"warn", title: undocumented.length+" project folder"+(undocumented.length===1?"":"s")+" not mentioned in CLAUDE.md", detail: undocumented.map(function(p){return p.name;}).join(", ")+" — checked by searching CLAUDE.md's live content for each folder name.", fix:"Add a row to CLAUDE.md's Project Architecture Map table for: "+undocumented.map(function(p){return p.name;}).join(", ")});
     } else {
       flags.push({sev:"good", title:"Every project folder is at least named in CLAUDE.md", detail:"Checked live against CLAUDE.md's current content."});
     }
+    var registrySkills = STATE.sa.skills.filter(function(s){ return STATE.registry.indexOf(s) < 0; });
+    if(registrySkills.length){
+      flags.push({sev:"warn", title: registrySkills.length+" active skill"+(registrySkills.length===1?"":"s")+" missing from COMMAND_REGISTRY.md", detail: registrySkills.join(", ")+" — exist in .claude/skills/ but aren't named anywhere in the registry's current text.", fix:"Add to COMMAND_REGISTRY.md's Full Command Names list: "+registrySkills.join(", ")});
+    }
+    var worktreeTracked = STATE.tree.filter(function(t){ return t.path.indexOf(".claude/worktrees/") === 0; });
+    if(worktreeTracked.length){
+      var wtBytes = worktreeTracked.reduce(function(s,t){ return s+(t.size||0); },0);
+      flags.push({sev:"critical", title:"A tracked .claude/worktrees/ directory is committed", detail: worktreeTracked.length+" files, "+fmtBytes(wtBytes)+" — usually a leftover isolated-session checkout that was never meant to be committed.", fix:"git rm -r .claude/worktrees/ && echo 'worktrees/' >> .gitignore"});
+    }
+    var venvTracked = STATE.tree.filter(function(t){ return /(^|\/)\.venv[^\/]*\//.test(t.path); });
+    if(venvTracked.length){
+      flags.push({sev:"critical", title:"A tracked virtualenv is committed", detail: venvTracked.length+" files under a .venv*/ path — this repo's own CLAUDE.md says never to commit .venv/.", fix:"git rm -r --cached <the .venv path> && echo '.venv*/' >> .gitignore"});
+    }
+    var malformed = STATE.tree.filter(function(t){ return t.path.indexOf("\\") >= 0; });
+    if(malformed.length){
+      flags.push({sev:"warn", title:"A path with a literal backslash is tracked", detail: malformed.map(function(t){return t.path;}).join(", ")+" — almost always an accidentally-escaped space in a folder name, not a real backslash.", fix:"Rename to the folder it was meant to be inside, then delete the malformed one: git mv \""+malformed[0].path+"\" <correct path>"});
+    }
+    var envFiles = STATE.tree.filter(function(t){ return /\.env$/.test(t.path) && !/\.env\.example$/.test(t.path); });
+    if(envFiles.length){
+      flags.push({sev:"critical", title:"A tracked .env file was found", detail: envFiles.map(function(t){return t.path;}).join(", ")+" — this repo's own rules say never to commit .env files.", fix:"git rm --cached "+envFiles.map(function(t){return t.path;}).join(" ")+" (rotate any real secrets it held, then add to .gitignore)"});
+    }
     var html = '<div class="section-hd"><h2>Live checks</h2><span class="hint">Computed just now against real file content — not cached</span></div>';
     html += flags.map(function(f){
-      return '<div class="flag-card '+(f.sev==="warn"?"warn-sev":f.sev==="good"?"good-sev":"")+'"><div class="ft">'+(f.sev==="good"?"✓":"⚠")+" "+escapeHtml(f.title)+'</div><div class="ff">'+escapeHtml(f.detail)+'</div></div>';
+      var id = strHash(f.title);
+      var reviewed = f.sev !== "good" && isReviewed(id);
+      var cls = f.sev==="warn"?"warn-sev":f.sev==="good"?"good-sev":"";
+      var controls = "";
+      if(f.sev !== "good"){
+        controls = '<div class="rec-copyrow">' +
+          (f.fix ? '<button class="copy-btn" data-copy="'+escapeHtml(f.fix)+'" type="button">Copy fix</button>' : '') +
+          '<button class="done-btn'+(reviewed?' is-marked':'')+'" data-reviewid="'+id+'" type="button">'+(reviewed?'✓ Reviewed':'Mark reviewed')+'</button></div>';
+      }
+      return '<div class="flag-card '+cls+(reviewed?' is-reviewed':'')+'" data-flagid="'+id+'"><div class="ft">'+(f.sev==="good"?"✓":"⚠")+" "+escapeHtml(f.title)+'</div><div class="ff">'+escapeHtml(f.detail)+'</div>'+controls+'</div>';
     }).join("");
     return html;
   }
 
   var DELIVERABLES = [
-    {title:"Claude Code 360°", desc:"This page — hosted on GitHub Pages, not claude.ai", url: "https://nesihaver-il.github.io/MyFirstRepo/claude-code-360/"},
-    {title:"Claude Code Habits Dashboard", desc:"The claude.ai-hosted sibling to this page", url:"https://claude.ai/artifact/GUSqHHCGXRWV3QPi8dGfbD"},
+    {title:"Claude Code 360°", desc:"This page — the one canonical workspace dashboard. The claude.ai-hosted Habits Dashboard and Workspace Command Center were merged into this page on 2026-10-04 and are no longer maintained.", url: "https://nesihaver-il.github.io/MyFirstRepo/claude-code-360/"},
     {title:"Trunk Recovery", desc:"The before/after report on the branch-and-trunk cleanup", url:"https://claude.ai/artifact/XMdoaCT9q7G1VKd8A3ibto"},
     {title:"Artifact Vault", desc:"Private index of every Claude-published page for this account", url:"https://claude.ai/artifact/24M5ns4SJQG9Kdj3DdMbhn"}
   ];
@@ -473,13 +642,72 @@
     html += '<div class="panel active" id="panel-overview">' + renderOverview() + "</div>";
     html += '<div class="panel" id="panel-worktree">' + renderWorkTree() + "</div>";
     html += '<div class="panel" id="panel-projects">' + renderProjects() + "</div>";
+    html += '<div class="panel" id="panel-branches">' + renderBranches() + "</div>";
     html += '<div class="panel" id="panel-skills">' + renderSkills() + "</div>";
     html += '<div class="panel" id="panel-hygiene">' + renderHygiene() + "</div>";
     html += '<div class="panel" id="panel-deliverables">' + renderDeliverables() + "</div>";
     document.getElementById("panels").innerHTML = html;
     document.querySelectorAll(".tab").forEach(function(b,i){ b.classList.toggle("active", i===0); });
     document.querySelectorAll(".panel").forEach(function(p,i){ p.classList.toggle("active", i===0); });
+    buildSearchIndex();
   }
+
+  function goToTab(tabId){
+    document.querySelectorAll(".tab").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab")===tabId); });
+    document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("active", p.id==="panel-"+tabId); });
+  }
+
+  // ---- Global search (client-side only, over already-loaded live data) ----
+  var SEARCH_INDEX = [];
+  function buildSearchIndex(){
+    SEARCH_INDEX = [];
+    STATE.projects.forEach(function(p){
+      SEARCH_INDEX.push({type:"project", label:p.name, sub:p.path, tab:"projects", color:"var(--cat-1)"});
+    });
+    STATE.sa.skills.forEach(function(s){
+      SEARCH_INDEX.push({type:"skill", label:s, sub:".claude/skills/"+s, tab:"skills", color:"var(--cat-5)"});
+    });
+    STATE.sa.agents.forEach(function(a){
+      SEARCH_INDEX.push({type:"agent", label:a, sub:".claude/agents/"+a, tab:"skills", color:"var(--cat-5)"});
+    });
+    Object.keys(TOP_META).forEach(function(id){
+      var b = STATE.buckets[id];
+      if(b && (b.size>0 || Object.keys(b.children).length>0)){
+        SEARCH_INDEX.push({type:"folder", label:id==="root"?"repo root":id, sub:fmtBytes(b.size), tab:"worktree", color:"var(--cat-8)"});
+      }
+    });
+    STATE.branches.forEach(function(b){
+      SEARCH_INDEX.push({type:"branch", label:b.name, sub: b.aheadBy==null ? "" : (b.aheadBy+" ahead · "+b.behindBy+" behind"), tab:"branches", color:"var(--cat-3)"});
+    });
+  }
+  function runSearch(q){
+    q = q.trim().toLowerCase();
+    var box = document.getElementById("searchResults");
+    var clearBtn = document.getElementById("searchClear");
+    clearBtn.hidden = q.length === 0;
+    if(!q){ box.hidden = true; box.innerHTML = ""; return; }
+    var hits = SEARCH_INDEX.filter(function(it){ return it.label.toLowerCase().indexOf(q) >= 0; }).slice(0, 20);
+    box.hidden = false;
+    box.innerHTML = hits.length ? hits.map(function(it){
+      return '<div class="sresult" data-tab="'+it.tab+'" data-label="'+escapeHtml(it.label)+'">'+
+        '<span class="sdot" style="background:'+it.color+'"></span>'+
+        '<span class="slabel">'+escapeHtml(it.label)+'</span>'+
+        '<span class="ssub">'+escapeHtml(it.sub||"")+'</span>'+
+        '<span class="stype">'+it.type+'</span></div>';
+    }).join("") : '<div class="sresult-empty">No matches in projects, skills, agents, folders, or branches.</div>';
+  }
+  document.getElementById("globalSearch").addEventListener("input", function(e){ runSearch(e.target.value); });
+  document.getElementById("searchClear").addEventListener("click", function(){
+    document.getElementById("globalSearch").value = "";
+    runSearch("");
+  });
+  document.getElementById("searchResults").addEventListener("click", function(e){
+    var row = e.target.closest(".sresult"); if(!row) return;
+    goToTab(row.getAttribute("data-tab"));
+    document.getElementById("searchResults").hidden = true;
+    document.getElementById("globalSearch").value = "";
+    document.getElementById("searchClear").hidden = true;
+  });
 
   // Drawer
   var scrim = document.getElementById("scrim"), drawer = document.getElementById("drawer");
@@ -492,9 +720,35 @@
   function closeDrawer(){ scrim.classList.remove("open"); drawer.classList.remove("open"); }
   document.getElementById("drawerClose").addEventListener("click", closeDrawer);
   scrim.addEventListener("click", closeDrawer);
-  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeDrawer(); });
+  document.addEventListener("keydown", function(e){
+    if(e.key==="Escape"){ closeDrawer(); document.getElementById("searchResults").hidden = true; }
+  });
+  document.addEventListener("click", function(e){
+    if(!e.target.closest("#searchWrap")) document.getElementById("searchResults").hidden = true;
+  });
 
   document.addEventListener("click", async function(e){
+    var copyBtn = e.target.closest("[data-copy]");
+    if(copyBtn){
+      var text = copyBtn.getAttribute("data-copy");
+      try{
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = "Copied ✓"; copyBtn.classList.add("copied");
+        setTimeout(function(){ copyBtn.textContent = "Copy fix"; copyBtn.classList.remove("copied"); }, 1500);
+      }catch(err){ copyBtn.textContent = "Couldn't copy"; }
+      return;
+    }
+    var reviewBtn = e.target.closest("[data-reviewid]");
+    if(reviewBtn){
+      var rid = reviewBtn.getAttribute("data-reviewid");
+      toggleReviewed(rid);
+      var card = reviewBtn.closest(".flag-card");
+      var nowReviewed = isReviewed(rid);
+      card.classList.toggle("is-reviewed", nowReviewed);
+      reviewBtn.classList.toggle("is-marked", nowReviewed);
+      reviewBtn.textContent = nowReviewed ? "✓ Reviewed" : "Mark reviewed";
+      return;
+    }
     var folderCard = e.target.closest("[data-folder]");
     if(folderCard){
       var id = folderCard.getAttribute("data-folder");

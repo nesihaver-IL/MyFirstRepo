@@ -24,7 +24,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
 | **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
 | **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
-| **Claude Code 360°** | `01-personal/claude-code-360/` | Static HTML/JS | Public, live-refreshing workspace snapshot — fetches this repo's tree/branches/commits directly from GitHub's API in the visitor's browser; deployed via GitHub Pages |
+| **Claude Code 360°** | `01-personal/claude-code-360/` | Static HTML/JS | The one canonical workspace dashboard — public, live-refreshing, fetches this repo's tree/branches/commits directly from GitHub's API in the visitor's browser; deployed via GitHub Pages. Merged in and superseded the claude.ai Habits Dashboard and Workspace Command Center artifacts on 2026-10-04. |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
 
@@ -152,7 +152,7 @@ Use the skill system (invoke via natural language or slash commands):
 | JIRA/Confluence | `jira-confluence` | "create a JIRA ticket for this" |
 | Content → image generation | `content-to-image` | "turn this into an image" |
 | Docs after merge | `update-docs` | "update docs to reflect changes" |
-| Workspace snapshot / hygiene check | `habits-dashboard` | "show me the habits dashboard" |
+| Workspace snapshot / hygiene check | — see Claude Code 360° (public, live, no skill needed) | open https://nesihaver-il.github.io/MyFirstRepo/claude-code-360/ |
 | Sync the public Claude Code 360° page's Showcase list | `claude-code-360-sync` | "sync the 360 page" (also runs on its own twice a week) |
 
 ### Domain-Specialized Agents

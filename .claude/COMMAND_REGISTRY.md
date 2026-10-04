@@ -47,9 +47,6 @@
 #### Design Language (added 2026-09-15)
 - emil-kowalski-design
 
-#### Workspace Insight (added 2026-07-20)
-- habits-dashboard
-
 #### Workspace Insight (added 2026-09-30)
 - claude-code-360-sync
 
@@ -58,9 +55,7 @@ You can use these trigger phrases to activate commands:
 
 | Alias/Trigger | Full Command | Description |
 |---------------|--------------|-------------|
-| "dashboard status" | habits-dashboard | Show the habits dashboard (work tree, session, skills, hygiene) |
-| "habits dashboard" | habits-dashboard | Same as above |
-| "refresh snapshot" | habits-dashboard | Re-scan and republish the dashboard |
+| "dashboard status" | — | See Claude Code 360° (public, live): https://nesihaver-il.github.io/MyFirstRepo/claude-code-360/ — habits-dashboard was archived 2026-10-04 |
 | "sync the 360 page" | claude-code-360-sync | Scan for new GitHub-Pages-shaped projects, wire safe ones in, open a PR |
 | "check for new deliverables" | claude-code-360-sync | Same as above |
 | "run the dashboard sync" | claude-code-360-sync | Same as above |
@@ -258,7 +253,7 @@ Run before reporting login or connectivity issues.
 
 ## Command Status
 
-Last Updated: 2026-09-30 (regenerated against .claude/skills/ + .claude/skills-archive/, +claude-code-360-sync)
-Total Skills: 28 active (.claude/skills/) + 7 archived (.claude/skills-archive/)
+Last Updated: 2026-10-04 (regenerated against .claude/skills/ + .claude/skills-archive/, -habits-dashboard (archived, superseded by Claude Code 360°))
+Total Skills: 27 active (.claude/skills/) + 8 archived (.claude/skills-archive/)
 Total Agents: 5
 Status: ✅ Active

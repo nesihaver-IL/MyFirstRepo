@@ -1,9 +1,33 @@
 ---
 name: habits-dashboard
-description: Build and publish the Claude Code Habits Dashboard — a snapshot of the work tree, active session, installed base, and archive for this workspace. Use when the user asks to see, refresh, update, or check "the dashboard," "the habits dashboard," "my snapshot," or asks how their workspace/setup looks right now. Works identically from Claude Code Desktop, VS Code, and the web.
+description: ARCHIVED 2026-10-04 — superseded by the claude-code-360-sync skill and the public Claude Code 360° GitHub Pages page (01-personal/claude-code-360/). Do not use for new requests; see the note below before reviving any part of it.
 ---
 
-# Habits Dashboard
+# Habits Dashboard (archived)
+
+**Archived 2026-10-04.** This skill published a claude.ai artifact snapshot of the workspace.
+That artifact and a second one built in a parallel session ("Workspace Command Center") were
+both merged into one public, live-refreshing page — `01-personal/claude-code-360/index.html`,
+deployed via GitHub Pages — so there would be exactly one canonical dashboard instead of three
+overlapping ones. Both superseded artifacts now just redirect to that page.
+
+What carried over, and how: the work tree/projects/skills & agents/hygiene views became live
+GitHub-API-driven tabs instead of hand-regenerated snapshots; global search, a live Branches
+tab, and copy-to-clipboard hygiene fixes were added, all computed from already-fetched live
+data. What did **not** carry over, deliberately: a "Suggestions agent" and an Automations tab
+that could create/fire/delete the account's own scheduled Routines via the `mcp` capability —
+that requires a signed-in viewer's own connector grant and cannot exist on a public,
+unauthenticated page without exposing the account's private automations to any visitor.
+
+If you're reading this to decide whether to revive it: don't restore the old publish-a-snapshot
+workflow. If something from the old `RECOMMENDATIONS`/`HYGIENE` approach is still missing from
+Claude Code 360°, add it there as a *live* check instead (see that page's script and
+`.claude/skills/claude-code-360-sync/SKILL.md`), not as a new hand-maintained snapshot.
+
+The rest of this file is kept as-written below, for reference only — it no longer reflects how
+this workspace is actually maintained.
+
+---
 
 On-demand snapshot of this workspace, built fresh every time it's invoked — never edit a
 previous run's output by hand, always regenerate from current state. There is no background
