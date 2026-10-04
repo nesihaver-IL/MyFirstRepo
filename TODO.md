@@ -110,6 +110,16 @@ the full reasoning behind each call.
       visitor's browser (work tree, projects, skills & agents, hygiene checks), with a real
       "↻ Refresh" button — no claude.ai sandbox restriction, genuinely public. Deliverables
       tab stays static since GitHub has no record of claude.ai-published pages.
+- [x] Merge the claude.ai Habits Dashboard and a separately-built "Workspace Command Center"
+      artifact into Claude Code 360°, so there is exactly one canonical dashboard. Added:
+      global search, a live Branches tab (ahead/behind main, merged-vs-active), richer live
+      hygiene checks (tracked worktrees/.venv/.env, malformed path names, registry drift),
+      a "largest subfolders" ranking, per-project doc hints, and copy-to-clipboard fixes with
+      a localStorage "mark reviewed" state. Deliberately not carried over: a Routines/
+      Automations tab and a "Suggestions agent" that could create/fire/delete scheduled
+      Routines via the `mcp` capability — both need a signed-in viewer's own connector grant
+      and cannot exist on a public, unauthenticated page. Both superseded artifacts now
+      redirect to Claude Code 360°; the `habits-dashboard` skill was archived.
 
 ---
 
