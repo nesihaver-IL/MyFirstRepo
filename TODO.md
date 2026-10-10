@@ -120,6 +120,15 @@ the full reasoning behind each call.
       Routines via the `mcp` capability — both need a signed-in viewer's own connector grant
       and cannot exist on a public, unauthenticated page. Both superseded artifacts now
       redirect to Claude Code 360°; the `habits-dashboard` skill was archived.
+- [x] Add a live Routines view (requested 2026-10-10): a private claude.ai artifact
+      (https://claude.ai/artifact/6E98fs43yHjaU2vPuCTZnc) showing every scheduled Routine's
+      schedule, last/next run, and full prompt text, with inline fire/pause/edit/delete —
+      backed by the `mcp` capability against the Claude Code Remote connector. Had to go
+      private, not on the public Claude Code 360° page as first asked: the real Routine data
+      includes full job-search prompts naming the account owner's employer and ~40 real
+      LinkedIn contacts by name for warm-intro outreach — publishing that on an unauthenticated
+      page would leak it to anyone with the link. The public page only gets a labeled, clearly
+      "🔒 private" card in Deliverables that links out to it.
 
 ---
 
