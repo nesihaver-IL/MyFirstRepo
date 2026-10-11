@@ -106,8 +106,10 @@ the full reasoning behind each call.
       `02-work/archive/` — both completed one-time efforts, not ongoing work
 - [x] Build "Claude Code 360°" — a public, live-refreshing workspace snapshot at
       `01-personal/claude-code-360/`, deployed via GitHub Pages. Unlike the claude.ai habits
-      dashboard, this fetches live from GitHub's public API/raw-content CDN directly in the
-      visitor's browser (work tree, projects, skills & agents, hygiene checks), with a real
+      dashboard, this reads a `data.json` snapshot built by the deploy workflow — superseded on
+      2026-10-11 (see the snapshot entry below), since per-visitor API calls hit GitHub's
+      60-requests/hour anonymous limit. Originally it fetched live from GitHub's public API
+      directly in the visitor's browser (work tree, projects, skills & agents, hygiene checks), with a real
       "↻ Refresh" button — no claude.ai sandbox restriction, genuinely public. Deliverables
       tab stays static since GitHub has no record of claude.ai-published pages.
 - [x] Merge the claude.ai Habits Dashboard and a separately-built "Workspace Command Center"
@@ -135,6 +137,15 @@ the full reasoning behind each call.
       through the dashboard — narrowed the declared capability to `list_triggers` only, and
       added a 2-minute cache (`watchTool`'s `cache.staleTime`) so reopening is near-instant
       instead of re-querying the connector every time.
+
+- [x] Replace per-visitor GitHub API calls on Claude Code 360° with a build-time snapshot
+      (2026-10-11): the page hit GitHub's 60-requests/hour anonymous limit after a few loads
+      (~34 calls per load, auto-run on every open). `.github/scripts/build-claude-code-360-snapshot.py`
+      now runs in the Pages deploy workflow with full-history checkout and writes `data.json`
+      from local git (branches, ahead/behind, project dates, skill/agent descriptions, CLAUDE.md).
+      The page reads it once on open and again only on Refresh. Skill and agent descriptions
+      are pre-baked, so clicking one no longer fetches anything. Workflow now runs on every push
+      to `main` plus a weekly Monday cron, replacing the path filter.
 
 ---
 

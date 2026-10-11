@@ -10,8 +10,8 @@ description: Scheduled maintenance pass for the Claude Code 360° GitHub Pages d
 `01-personal/claude-code-360/index.html` (the public GitHub Pages dashboard) has two kinds of
 content:
 
-- **Live tabs** (Overview, Work Tree, Projects, Skills & Agents, Hygiene) — these fetch
-  straight from GitHub's API in the visitor's browser on every page load. They need **no
+- **Snapshot tabs** (Overview, Work Tree, Projects, Branches, Skills & Agents, Hygiene) — these read
+  `data.json`, which the deploy workflow rebuilds on every push to `main` and weekly. They need **no
   maintenance**. Don't "update" them from this skill; there's nothing to update.
 - **The Showcase section of the Deliverables tab** — a hardcoded `SHOWCASE` array in that same
   file, because GitHub's API has no way to see what other GitHub-Pages-hosted projects exist in

@@ -190,7 +190,7 @@
   <div class="hdr">
     <div>
       <h1>Claude Code 360°</h1>
-      <p class="sub">Live from GitHub — work tree, projects, branches, skills &amp; agents, and hygiene, fetched directly from <code>nesihaver-IL/MyFirstRepo</code> in your browser, right now. The one canonical workspace dashboard — the claude.ai-hosted Habits Dashboard and Workspace Command Center were merged into this page and are no longer maintained.</p>
+      <p class="sub">A snapshot of <code>nesihaver-IL/MyFirstRepo</code> — work tree, projects, branches, skills &amp; agents, and hygiene — rebuilt by the deploy workflow on every push to <code>main</code> and weekly. Refresh re-reads the latest snapshot. The one canonical workspace dashboard — the claude.ai-hosted Habits Dashboard and Workspace Command Center were merged into this page and are no longer maintained.</p>
     </div>
     <div class="hdr-right">
       <button class="btn" id="themeToggle" type="button">🌓</button>
@@ -214,9 +214,10 @@
   <div id="panels"></div>
 
   <div class="footnote">
-    Everything above except Deliverables is fetched live from GitHub's public API when this page loads or you click Refresh
-    — nothing is baked in at publish time. Deliverables links to Claude-published pages, which GitHub has no record of, so
-    that list stays fixed until this page is republished with a new one. "Mark reviewed" on a hygiene flag is remembered
+    Everything above except Deliverables comes from the snapshot file the deploy workflow builds — this browser never calls
+    GitHub's API, so the page isn't subject to its rate limit. The page reads the snapshot once on open and again only when you
+    click Refresh. Deliverables links to Claude-published pages, which the repo can't see, so that list is maintained by hand.
+    "Mark reviewed" on a hygiene flag is remembered
     only in this browser (no account, no server) — it won't follow you to another device.
   </div>
 </div>
@@ -235,8 +236,7 @@
 (function(){
   "use strict";
   var OWNER = "nesihaver-IL", REPO = "MyFirstRepo", BRANCH = "main";
-  var API = "https://api.github.com/repos/" + OWNER + "/" + REPO;
-  var RAW = "https://raw.githubusercontent.com/" + OWNER + "/" + REPO + "/" + BRANCH + "/";
+  var SNAPSHOT_URL = "data.json";
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   function fmtBytes(n){
@@ -248,34 +248,8 @@
   function daysAgo(iso){ return Math.round((Date.now() - new Date(iso).getTime()) / 86400000); }
   function fmtDate(iso){ return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
 
-  async function gh(path){
-    var res = await fetch(API + path, {headers:{Accept:"application/vnd.github+json"}});
-    if(res.status === 403){
-      var remain = res.headers.get("X-RateLimit-Remaining");
-      if(remain === "0"){
-        var reset = new Date(parseInt(res.headers.get("X-RateLimit-Reset"),10) * 1000);
-        throw {rateLimited:true, resetAt: reset};
-      }
-    }
-    if(!res.ok) throw new Error("GitHub API " + res.status + " on " + path);
-    return res.json();
-  }
-  async function rawFile(path){
-    var res = await fetch(RAW + path);
-    if(!res.ok) return null;
-    return res.text();
-  }
-  function firstLine(md){
-    if(!md) return null;
-    var lines = md.split("\n");
-    for(var i=0;i<lines.length;i++){
-      var line = lines[i].trim().replace(/^#+\s*/,"").trim();
-      if(line) return line;
-    }
-    return null;
-  }
 
-  var STATE = { tree:null, branches:null, projectCommits:{}, docCommits:{}, skillDescCache:{} };
+  var STATE = null;
 
   function topLevelBuckets(tree){
     var buckets = {};
@@ -341,63 +315,34 @@
     var btn = document.getElementById("refreshBtn");
     btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Refreshing…';
     try{
-      var branchesP = gh("/branches?per_page=100");
-      var treeP = gh("/git/trees/" + BRANCH + "?recursive=1");
-      var latestCommitP = gh("/commits?per_page=1");
-      var claudeMdP = rawFile("CLAUDE.md");
-      var claudeStatusP = rawFile("CLAUDE-STATUS.md");
-      var registryP = rawFile(".claude/COMMAND_REGISTRY.md");
-
-      var branches = await branchesP;
-      var treeData = await treeP;
-      var latestCommit = await latestCommitP;
-      var claudeMd = await claudeMdP;
-      var claudeStatus = await claudeStatusP;
-      var registry = await registryP;
-
-      if(treeData.truncated){
-        renderBanner("warn", "⚠ <b>The file tree was too large to fetch in one call</b> — sizes below may undercount. (GitHub truncates recursive tree listings past a limit.)");
-      }
-
-      var tree = treeData.tree;
-      var buckets = topLevelBuckets(tree);
-      var projects = projectList(tree);
-      var sa = skillsAndAgents(tree);
-
-      // per-project last-commit (bounded: one call per project, real API cost)
-      var commitPromises = projects.map(function(p){
-        return gh("/commits?path=" + encodeURIComponent(p.path) + "&per_page=1").then(function(c){
-          p.lastCommit = c[0] ? c[0].commit.author.date : null;
-        }).catch(function(){ p.lastCommit = null; });
+      var res = await fetch(SNAPSHOT_URL, {cache:"no-store"});
+      if(!res.ok) throw new Error("snapshot request failed with HTTP " + res.status);
+      var snap = await res.json();
+      var projects = projectList(snap.tree);
+      projects.forEach(function(p){
+        var meta = (snap.projectMeta || {})[p.path] || {};
+        p.lastCommit = meta.lastCommit || null;
+        p.note = meta.note || null;
       });
-      // per-project one-line description, from the project's own docs (not hardcoded, not rate-limited)
-      var hintPromises = projects.map(function(p){
-        return rawFile(p.path + "/CLAUDE.md").then(function(md){
-          var line = firstLine(md);
-          if(line){ p.note = line; return; }
-          return rawFile(p.path + "/README.md").then(function(r){ p.note = firstLine(r); });
-        }).catch(function(){ p.note = null; });
-      });
-      // branch ahead/behind main (bounded: one call per non-main branch, real API cost)
-      var otherBranches = branches.filter(function(b){ return b.name !== BRANCH; });
-      var branchPromises = otherBranches.map(function(b){
-        return gh("/compare/" + BRANCH + "..." + b.name).then(function(c){
-          b.aheadBy = c.ahead_by; b.behindBy = c.behind_by;
-        }).catch(function(){ b.aheadBy = null; b.behindBy = null; });
-      });
-      await Promise.all(commitPromises.concat(hintPromises, branchPromises));
-
-      STATE = {tree:tree, buckets:buckets, projects:projects, sa:sa, branches:branches, latestCommit:latestCommit[0],
-        claudeMd:claudeMd||"", claudeStatus:claudeStatus||"", registry:registry||""};
-
-      document.getElementById("asof").textContent = "Last refreshed " + new Date().toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+      STATE = {
+        tree: snap.tree,
+        buckets: topLevelBuckets(snap.tree),
+        projects: projects,
+        sa: skillsAndAgents(snap.tree),
+        branches: snap.branches,
+        latestCommit: snap.latestCommit,
+        claudeMd: snap.claudeMd || "",
+        claudeStatus: snap.claudeStatus || "",
+        registry: snap.registry || "",
+        skillDescriptions: snap.skillDescriptions || {},
+        agentDescriptions: snap.agentDescriptions || {},
+        generatedAt: snap.generatedAt,
+        generatedFrom: snap.generatedFrom
+      };
+      document.getElementById("asof").textContent = "Snapshot built " + new Date(snap.generatedAt).toLocaleString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}) + " · " + snap.generatedFrom;
       renderAll();
     }catch(err){
-      if(err && err.rateLimited){
-        renderBanner("critical", "⛔ <b>GitHub's public API rate limit was hit.</b> Unauthenticated requests are capped at 60/hour per visitor. Try again after " + err.resetAt.toLocaleTimeString() + ".");
-      } else {
-        renderBanner("critical", "⛔ <b>Couldn't load live data.</b> " + escapeHtml(err && err.message ? err.message : String(err)));
-      }
+      renderBanner("critical", "⛔ <b>Couldn't load the snapshot.</b> " + escapeHtml(err && err.message ? err.message : String(err)) + ". Try Refresh again in a moment; if it keeps failing, the deploy workflow may not have run yet.");
     } finally {
       btn.disabled = false; btn.innerHTML = "↻ Refresh";
     }
@@ -455,7 +400,7 @@
   }
 
   function renderWorkTree(){
-    var html = '<div class="section-hd"><h2>Work tree — live sizes</h2><span class="hint">Computed from GitHub\'s file tree just now · click a card to drill in</span></div>';
+    var html = '<div class="section-hd"><h2>Work tree — sizes</h2><span class="hint">From the last snapshot · click a card to drill in</span></div>';
     html += '<div class="grid-cards">' + Object.keys(TOP_META).map(function(id){
       var b = STATE.buckets[id];
       if(!b || (b.size===0 && Object.keys(b.children).length===0)) return "";
@@ -488,7 +433,7 @@
   }
 
   function renderProjects(){
-    var html = '<div class="section-hd"><h2>All '+STATE.projects.length+' project folders</h2><span class="hint">Live sizes, last-commit dates, and each project\'s own one-line description, fetched just now</span></div>';
+    var html = '<div class="section-hd"><h2>All '+STATE.projects.length+' project folders</h2><span class="hint">Sizes, last-commit dates, and each project\'s own one-line description, as of the last snapshot</span></div>';
     var sorted = STATE.projects.slice().sort(function(a,b){ return (a.lastCommit && b.lastCommit) ? new Date(b.lastCommit)-new Date(a.lastCommit) : 0; });
     html += '<div class="grid-cards">' + sorted.map(function(p){
       var idle = p.lastCommit ? daysAgo(p.lastCommit) : null;
@@ -502,7 +447,7 @@
   }
 
   function renderBranches(){
-    var html = '<div class="section-hd"><h2>Branches — '+STATE.branches.length+'</h2><span class="hint">Ahead/behind '+BRANCH+', computed live just now</span></div>';
+    var html = '<div class="section-hd"><h2>Branches — '+STATE.branches.length+'</h2><span class="hint">Ahead/behind '+BRANCH+', as of the last snapshot</span></div>';
     var rows = STATE.branches.slice().sort(function(a,b){
       if(a.name === BRANCH) return -1;
       if(b.name === BRANCH) return 1;
@@ -525,7 +470,7 @@
   }
 
   function renderSkills(){
-    var html = '<div class="section-hd"><h2>Repo skills — '+STATE.sa.skills.length+'</h2><span class="hint">Click a skill to fetch its real description live</span></div>';
+    var html = '<div class="section-hd"><h2>Repo skills — '+STATE.sa.skills.length+'</h2><span class="hint">Click a skill to see its description</span></div>';
     html += '<div class="chiprow">' + STATE.sa.skills.map(function(s){
       return '<span class="chip" data-skill="'+escapeHtml(s)+'">'+escapeHtml(s)+'</span>';
     }).join("") + "</div>";
@@ -562,7 +507,7 @@
     if(m){
       var claimed = parseInt(m[1],10);
       if(claimed !== STATE.sa.skills.length){
-        flags.push({sev:"warn", title:"CLAUDE-STATUS.md's skill count doesn't match reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+" (checked live, right now).", fix:"Update CLAUDE-STATUS.md's skill count to "+STATE.sa.skills.length+", or point it at COMMAND_REGISTRY.md instead of a hardcoded number."});
+        flags.push({sev:"warn", title:"CLAUDE-STATUS.md's skill count doesn't match reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+" (checked against the snapshot).", fix:"Update CLAUDE-STATUS.md's skill count to "+STATE.sa.skills.length+", or point it at COMMAND_REGISTRY.md instead of a hardcoded number."});
       } else {
         flags.push({sev:"good", title:"CLAUDE-STATUS.md's skill count matches reality", detail:"Claims "+claimed+", actual is "+STATE.sa.skills.length+"."});
       }
@@ -572,9 +517,9 @@
       return !p._documented;
     });
     if(undocumented.length){
-      flags.push({sev:"warn", title: undocumented.length+" project folder"+(undocumented.length===1?"":"s")+" not mentioned in CLAUDE.md", detail: undocumented.map(function(p){return p.name;}).join(", ")+" — checked by searching CLAUDE.md's live content for each folder name.", fix:"Add a row to CLAUDE.md's Project Architecture Map table for: "+undocumented.map(function(p){return p.name;}).join(", ")});
+      flags.push({sev:"warn", title: undocumented.length+" project folder"+(undocumented.length===1?"":"s")+" not mentioned in CLAUDE.md", detail: undocumented.map(function(p){return p.name;}).join(", ")+" — checked by searching the snapshot's CLAUDE.md for each folder name.", fix:"Add a row to CLAUDE.md's Project Architecture Map table for: "+undocumented.map(function(p){return p.name;}).join(", ")});
     } else {
-      flags.push({sev:"good", title:"Every project folder is at least named in CLAUDE.md", detail:"Checked live against CLAUDE.md's current content."});
+      flags.push({sev:"good", title:"Every project folder is at least named in CLAUDE.md", detail:"Checked against the snapshot's CLAUDE.md."});
     }
     var registrySkills = STATE.sa.skills.filter(function(s){ return STATE.registry.indexOf(s) < 0; });
     if(registrySkills.length){
@@ -597,7 +542,7 @@
     if(envFiles.length){
       flags.push({sev:"critical", title:"A tracked .env file was found", detail: envFiles.map(function(t){return t.path;}).join(", ")+" — this repo's own rules say never to commit .env files.", fix:"git rm --cached "+envFiles.map(function(t){return t.path;}).join(" ")+" (rotate any real secrets it held, then add to .gitignore)"});
     }
-    var html = '<div class="section-hd"><h2>Live checks</h2><span class="hint">Computed just now against real file content — not cached</span></div>';
+    var html = '<div class="section-hd"><h2>Checks</h2><span class="hint">Computed from the snapshot\'s real file content</span></div>';
     html += flags.map(function(f){
       var id = strHash(f.title);
       var reviewed = f.sev !== "good" && isReviewed(id);
@@ -628,7 +573,7 @@
     {title:"Garmin Story", url:"https://nesihaver-il.github.io/garmin_story.html"}
   ];
   function renderDeliverables(){
-    var html = '<div class="banner info">ⓘ <span>This tab is <b>static</b>, not live — these are Claude-published pages and other GitHub Pages sites, which this page\'s live GitHub API calls can\'t see or enumerate. Ask Claude to update this list when it changes.</span></div>';
+    var html = '<div class="banner info">ⓘ <span>This tab is <b>static</b>, not live — these are Claude-published pages and other GitHub Pages sites, which the repo snapshot can\'t see or enumerate. Ask Claude to update this list when it changes.</span></div>';
     html += '<div class="section"><div class="section-hd"><h2>Workspace — '+DELIVERABLES.length+'</h2></div><div class="grid-cards">' + DELIVERABLES.map(function(d){
       return '<a class="card clickable" style="--accent:var(--cat-1); text-decoration:none; color:inherit; display:block" href="'+d.url+'" target="_blank" rel="noopener"><h3>'+escapeHtml(d.title)+'</h3><div class="meta1">'+escapeHtml(d.desc)+'</div></a>';
     }).join("") + "</div></div>";
@@ -658,7 +603,7 @@
     document.querySelectorAll(".panel").forEach(function(p){ p.classList.toggle("active", p.id==="panel-"+tabId); });
   }
 
-  // ---- Global search (client-side only, over already-loaded live data) ----
+  // ---- Global search (client-side, over the loaded snapshot) ----
   var SEARCH_INDEX = [];
   function buildSearchIndex(){
     SEARCH_INDEX = [];
@@ -764,27 +709,18 @@
     var skillChip = e.target.closest("[data-skill]");
     if(skillChip){
       var name = skillChip.getAttribute("data-skill");
-      openDrawer("Skill", name, '<div class="dsec"><h4>What it does</h4><div class="ff"><span class="skel"></span> fetching live…</div></div>');
-      var desc = STATE.skillDescCache[name];
-      if(!desc){
-        var md = await rawFile(".claude/skills/" + name + "/SKILL.md");
-        var m = md && md.match(/^description:\s*(.+)$/m);
-        desc = m ? m[1].trim() : (md ? "No description frontmatter — see the file directly." : "Couldn't fetch this skill's file.");
-        STATE.skillDescCache[name] = desc;
-      }
-      document.getElementById("drawerBody").innerHTML = '<div class="dsec"><h4>What it does</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(desc)+'</div></div>' +
+      var desc = STATE.skillDescriptions[name] || "No description recorded for this skill.";
+      openDrawer("Skill", name, '<div class="dsec"><h4>What it does</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(desc)+'</div></div>' +
         '<div class="dsec"><h4>Location</h4><div class="ff"><code>.claude/skills/'+escapeHtml(name)+'/SKILL.md</code></div></div>' +
-        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/skills/'+encodeURIComponent(name)+'/SKILL.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>';
+        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/skills/'+encodeURIComponent(name)+'/SKILL.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>');
       return;
     }
     var agentChip = e.target.closest("[data-agent]");
     if(agentChip){
       var aname = agentChip.getAttribute("data-agent");
-      openDrawer("Agent", aname, '<div class="ff"><span class="skel"></span> fetching live…</div>');
-      var amd = await rawFile(".claude/agents/" + aname + "/AGENT.md");
-      var firstPara = amd ? amd.replace(/^#.+\n+/,"").split(/\n\n/)[0] : "Couldn't fetch this agent's file.";
-      document.getElementById("drawerBody").innerHTML = '<div class="dsec"><h4>Description</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(firstPara)+'</div></div>' +
-        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/agents/'+encodeURIComponent(aname)+'/AGENT.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>';
+      var adesc = STATE.agentDescriptions[aname] || "No description recorded for this agent.";
+      openDrawer("Agent", aname, '<div class="dsec"><h4>Description</h4><div class="ff" style="font-size:13px; line-height:1.6">'+escapeHtml(adesc)+'</div></div>' +
+        '<div class="dsec"><a href="https://github.com/'+OWNER+'/'+REPO+'/blob/main/.claude/agents/'+encodeURIComponent(aname)+'/AGENT.md" target="_blank" rel="noopener" style="color:var(--cat-1)">View on GitHub ↗</a></div>');
       return;
     }
   });
