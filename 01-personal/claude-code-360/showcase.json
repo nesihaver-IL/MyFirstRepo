@@ -1,42 +1,52 @@
 [
   {
     "title": "Nesi Haver — Résumé",
-    "url": "https://nesihaver-il.github.io/Nesi_Haver_Resume.html"
-  },
-  {
-    "title": "HaVenture — Thailand Trip Site",
-    "url": "https://nesihaver-il.github.io/MyFirstRepo/"
-  },
-  {
-    "title": "HaVenture — Memory Book",
-    "url": "https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/"
-  },
-  {
-    "title": "HaVenture — Stories",
-    "url": "https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/stories.html"
-  },
-  {
-    "title": "Morzin 2026 — Budget",
-    "url": "https://nesihaver-il.github.io/MyFirstRepo/morzin-budget-2026/"
-  },
-  {
-    "title": "Garmin Story",
-    "url": "https://nesihaver-il.github.io/garmin_story.html"
-  },
-  {
-    "title": "Thailand Clip 2026",
-    "url": "https://claude.ai/artifact/K19dcfKECEJjf5549d9wXc"
+    "url": "https://nesihaver-il.github.io/Nesi_Haver_Resume.html",
+    "group": "professional"
   },
   {
     "title": "Nesi Haver — Visual Timeline Résumé",
-    "url": "https://nesihaver-il.github.io/Nesi_Haver_Resume_Visual.html"
-  },
-  {
-    "title": "HaVenture — WhatsApp Memory Book",
-    "url": "https://nesihaver-il.github.io/MyFirstRepo/whatsapp-export/album/index.html"
+    "url": "https://nesihaver-il.github.io/Nesi_Haver_Resume_Visual.html",
+    "group": "professional"
   },
   {
     "title": "Nesi Haver — Profile",
-    "url": "https://nesihaver-il.github.io/"
+    "url": "https://nesihaver-il.github.io/",
+    "group": "professional"
+  },
+  {
+    "title": "HaVenture — Thailand Trip Site",
+    "url": "https://nesihaver-il.github.io/MyFirstRepo/",
+    "group": "personal"
+  },
+  {
+    "title": "HaVenture — Memory Book",
+    "url": "https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/",
+    "group": "personal"
+  },
+  {
+    "title": "HaVenture — Stories",
+    "url": "https://nesihaver-il.github.io/MyFirstRepo/thailand-memory-book/stories.html",
+    "group": "personal"
+  },
+  {
+    "title": "Thailand Clip 2026",
+    "url": "https://claude.ai/artifact/K19dcfKECEJjf5549d9wXc",
+    "group": "personal"
+  },
+  {
+    "title": "HaVenture — WhatsApp Memory Book",
+    "url": "https://nesihaver-il.github.io/MyFirstRepo/whatsapp-export/album/index.html",
+    "group": "personal"
+  },
+  {
+    "title": "Morzin 2026 — Budget",
+    "url": "https://nesihaver-il.github.io/MyFirstRepo/morzin-budget-2026/",
+    "group": "other"
+  },
+  {
+    "title": "Garmin Story",
+    "url": "https://nesihaver-il.github.io/garmin_story.html",
+    "group": "other"
   }
 ]

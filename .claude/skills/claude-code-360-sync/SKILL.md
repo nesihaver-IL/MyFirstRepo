@@ -79,7 +79,7 @@ one reviewable kind of change:
      fi
      ```
      and add `"<path>/**"` to the `on.push.paths` list.
-   - Add an entry to `01-personal/claude-code-360/showcase.json` (a JSON array of `{title, url}`):
+   - Add an entry to `01-personal/claude-code-360/showcase.json` as `{title, url, group}`, where `group` is `professional`, `personal`, or `other` (use `other` when unsure, and say so in the PR):
      `{title:"<Guessed Title>", url:"https://nesihaver-il.github.io/MyFirstRepo/<folder>/"}` —
      derive the title from the folder name (kebab-case → Title Case) and note the script's
      `readmeHint` for that candidate in the PR body as a suggested better title/description for
