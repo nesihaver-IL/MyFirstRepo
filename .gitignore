@@ -47,3 +47,6 @@ whatsapp-export/
 # Interview coach personal data
 01-personal/interview-coach/Nesi_Haver_PDM.pdf
 01-personal/interview-coach/memory/user_profile.md
+
+# Readable dashboard source; kept local, the published page is encrypted (see src/build-gate.mjs)
+01-personal/claude-code-360/src/dashboard.html
