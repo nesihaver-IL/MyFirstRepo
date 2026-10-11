@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 200px; width: 900px; }
+      .t-tag { display: inline-block; margin-bottom: 26px; padding: 8px 20px; border-radius: 999px; background: #ffb23f; color: #15110c; font-size: 26px; font-weight: 700; letter-spacing: 0.18em; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 30px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 60px; height: 110px; display: flex; justify-content: center; align-items: center; z-index: 5; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.82); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; z-index: 5; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+      </style>
+      <div id="root" data-composition-id="ch2" data-width="1920" data-height="1080" data-duration="48.215">
+        <div id="ch2-card" class="clip layer" data-start="0" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-bd" src="../assets/bg/card-ch2.jpg" alt="" />
+          <div class="shade soft"></div>
+          <div class="ghost" data-layout-ignore aria-hidden="true" id="ch2-ghost">02</div>
+          <div class="ch-num" id="ch2-num">02 / 04</div>
+          <div class="mask ch-mask"><div class="ch-name" id="ch2-name"><span class="cc">K</span><span class="cc">R</span><span class="cc">A</span><span class="cc">B</span><span class="cc">I</span></div></div>
+          <div class="ch-emo" id="ch2-emo">🛶</div>
+          <div class="ch-date" id="ch2-date">AUG 22 - 26</div>
+        </div>
+        <div id="ch2-f0" class="clip layer" data-start="2.143" data-duration="3.215" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f0-bd" src="../assets/bg/V7526.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="ch2-f0-w" style="left:220px;top:144px;width:1480px;height:832px;">
+          <video id="ch2-f0-v" class="clip vid" src="../assets/clips/V7526.mp4" muted playsinline data-start="2.143" data-duration="3.215" data-media-start="0" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="ch2-f0-cap" class="clip cap" data-start="2.679" data-duration="2.679" data-track-index="3">
+          <div class="pill" id="ch2-f0-pill"><span class="emo">💦</span><span class="pill-text">STONE POOL</span></div>
+        </div>
+        <div id="ch2-f1" class="clip layer" data-start="5.358" data-duration="2.142" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f1-bd" src="../assets/bg/K01.jpg" alt="" />
+          <div class="card" id="ch2-f1-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f1-p0" src="../assets/photos/K01.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f2" class="clip layer" data-start="7.5" data-duration="3.215" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f2-bd" src="../assets/bg/K02.jpg" alt="" />
+          <div class="card" id="ch2-f2-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f2-p0" src="../assets/photos/K02.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f2-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f2-p1" src="../assets/photos/K05.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f2-cap" class="clip cap" data-start="8.304" data-duration="2.411" data-track-index="3">
+          <div class="pill" id="ch2-f2-pill"><span class="emo">🪷</span><span class="pill-text">LILY PADS & LAZY POOLS</span></div>
+        </div>
+        <div id="ch2-f3" class="clip layer" data-start="10.715" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f3-bd" src="../assets/bg/K03.jpg" alt="" />
+          <div class="card" id="ch2-f3-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f3-p0" src="../assets/photos/K03.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f3-cap" class="clip cap" data-start="11.251" data-duration="1.607" data-track-index="3">
+          <div class="pill" id="ch2-f3-pill"><span class="emo">🛍️</span><span class="pill-text">NIGHT MARKET</span></div>
+        </div>
+        <div id="ch2-f4" class="clip layer" data-start="12.858" data-duration="3.214" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f4-bd" src="../assets/bg/K06.jpg" alt="" />
+          <div class="card" id="ch2-f4-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f4-p0" src="../assets/photos/K06.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f4-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f4-p1" src="../assets/photos/K07.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f5" class="clip layer" data-start="16.072" data-duration="4.286" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f5-bd" src="../assets/bg/K08.jpg" alt="" />
+          <div class="card" id="ch2-f5-c0" style="left:100px;top:170px;width:540px;height:780px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f5-p0" src="../assets/photos/K08.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f5-c1" style="left:690px;top:170px;width:540px;height:780px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f5-p1" src="../assets/photos/K09.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f5-c2" style="left:1280px;top:170px;width:540px;height:780px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f5-p2" src="../assets/photos/K10.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f5-cap" class="clip cap" data-start="17.411" data-duration="2.947" data-track-index="3">
+          <div class="pill" id="ch2-f5-pill"><span class="emo">🥊</span><span class="pill-text">MUAY THAI CAMP</span></div>
+        </div>
+        <div id="ch2-f6" class="clip layer" data-start="20.358" data-duration="2.142" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f6-bd" src="../assets/bg/K04.jpg" alt="" />
+          <div class="card" id="ch2-f6-c0" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f6-p0" src="../assets/photos/K04.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f7" class="clip layer" data-start="22.5" data-duration="3.215" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f7-bd" src="../assets/bg/K12.jpg" alt="" />
+          <div class="card" id="ch2-f7-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f7-p0" src="../assets/photos/K12.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f7-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f7-p1" src="../assets/photos/K13.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f7-cap" class="clip cap" data-start="23.304" data-duration="2.411" data-track-index="3">
+          <div class="pill" id="ch2-f7-pill"><span class="emo">🛶</span><span class="pill-text">LONGTAIL CREW</span></div>
+        </div>
+        <div id="ch2-f8" class="clip layer" data-start="25.715" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f8-bd" src="../assets/bg/K15.jpg" alt="" />
+          <div class="card" id="ch2-f8-c0" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f8-p0" src="../assets/photos/K15.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f9" class="clip layer" data-start="27.858" data-duration="3.214" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f9-bd" src="../assets/bg/K16.jpg" alt="" />
+          <div class="card" id="ch2-f9-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f9-p0" src="../assets/photos/K16.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f9-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f9-p1" src="../assets/photos/K18.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f10" class="clip layer" data-start="31.072" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f10-bd" src="../assets/bg/K17.jpg" alt="" />
+          <div class="card" id="ch2-f10-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f10-p0" src="../assets/photos/K17.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f10-cap" class="clip cap" data-start="31.608" data-duration="1.607" data-track-index="3">
+          <div class="pill" id="ch2-f10-pill"><span class="emo">🙌</span><span class="pill-text">FOUND PARADISE</span></div>
+        </div>
+        <div id="ch2-f11" class="clip layer" data-start="33.215" data-duration="3.214" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f11-bd" src="../assets/bg/K19.jpg" alt="" />
+          <div class="card" id="ch2-f11-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f11-p0" src="../assets/photos/K19.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f11-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f11-p1" src="../assets/photos/K20.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f11-cap" class="clip cap" data-start="34.019" data-duration="2.41" data-track-index="3">
+          <div class="pill" id="ch2-f11-pill"><span class="emo">🌊</span><span class="pill-text">HONG ISLAND</span></div>
+        </div>
+        <div id="ch2-f12" class="clip layer" data-start="36.429" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f12-bd" src="../assets/bg/K21.jpg" alt="" />
+          <div class="card" id="ch2-f12-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f12-p0" src="../assets/photos/K21.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f13" class="clip layer" data-start="38.572" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f13-bd" src="../assets/bg/K23.jpg" alt="" />
+          <div class="card" id="ch2-f13-c0" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f13-p0" src="../assets/photos/K23.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f14" class="clip layer" data-start="40.715" data-duration="3.214" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f14-bd" src="../assets/bg/K24.jpg" alt="" />
+          <div class="card" id="ch2-f14-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f14-p0" src="../assets/photos/K24.jpg" alt="" />
+          </div>
+          <div class="card" id="ch2-f14-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f14-p1" src="../assets/photos/K25.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f14-cap" class="clip cap" data-start="41.519" data-duration="2.41" data-track-index="3">
+          <div class="pill" id="ch2-f14-pill"><span class="emo">🌴</span><span class="pill-text">SWING SESSION</span></div>
+        </div>
+        <div id="ch2-f15" class="clip layer" data-start="43.929" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f15-bd" src="../assets/bg/K26.jpg" alt="" />
+          <div class="card" id="ch2-f15-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f15-p0" src="../assets/photos/K26.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f16" class="clip layer" data-start="46.072" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch2-f16-bd" src="../assets/bg/K28.jpg" alt="" />
+          <div class="card" id="ch2-f16-c0" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="ch2-f16-p0" src="../assets/photos/K28.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch2-f16-cap" class="clip cap" data-start="46.608" data-duration="1.607" data-track-index="3">
+          <div class="pill" id="ch2-f16-pill"><span class="emo">🤿</span><span class="pill-text">SNORKEL TIME</span></div>
+        </div>
+        <div id="ch2-chip" class="clip chip" data-start="2.143" data-duration="46.072" data-track-index="4">
+          <div class="chip-in" id="ch2-chip-in"><span class="emo">📍</span>KRABI · AUG 22 - 26</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#ch2-bd", { scale: 1.2 }, { scale: 1.05, duration: 2.143, ease: "none" }, 0);
+        tl.fromTo("#ch2-ghost", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 2.143, ease: "power1.out" }, 0);
+        tl.fromTo("#ch2-num", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.fromTo("#ch2-name .cc", { yPercent: 115 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.04 }, 0.05);
+        tl.fromTo("#ch2-emo", { scale: 0, rotation: -30 }, { scale: 1, rotation: 8, duration: 0.6, ease: "elastic.out(1.15, 0.45)" }, 0.536);
+        tl.fromTo("#ch2-date", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 1.072);
+        tl.fromTo("#ch2-f0-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.215, ease: "none" }, 2.143);
+        tl.fromTo("#ch2-f0-w", { y: 36, scale: 0.95, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 2.143);
+        tl.set("#ch2-f0-w", { opacity: 0 }, 5.358);
+        tl.fromTo("#ch2-f0-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 2.679);
+        tl.fromTo("#ch2-f0-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 2.679);
+        tl.fromTo("#ch2-f1-c0", { y: 40, scale: 0.94, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 5.358);
+        tl.fromTo("#ch2-f1-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.142, ease: "none" }, 5.358);
+        tl.fromTo("#ch2-f1-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.142, ease: "none" }, 5.358);
+        tl.fromTo("#ch2-f2-c0", { y: 40, scale: 0.94, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 7.5);
+        tl.fromTo("#ch2-f2-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 3.215, ease: "none" }, 7.5);
+        tl.fromTo("#ch2-f2-c1", { y: 40, scale: 0.94, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 8.036);
+        tl.fromTo("#ch2-f2-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.679, ease: "none" }, 8.036);
+        tl.fromTo("#ch2-f2-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.215, ease: "none" }, 7.5);
+        tl.fromTo("#ch2-f2-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 8.304);
+        tl.fromTo("#ch2-f2-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 8.304);
+        tl.fromTo("#ch2-f3-c0", { y: 40, scale: 0.94, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 10.715);
+        tl.fromTo("#ch2-f3-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 10.715);
+        tl.fromTo("#ch2-f3-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 10.715);
+        tl.fromTo("#ch2-f3-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 11.251);
+        tl.fromTo("#ch2-f3-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 11.251);
+        tl.fromTo("#ch2-f4-c0", { y: 40, scale: 0.94, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 12.858);
+        tl.fromTo("#ch2-f4-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.214, ease: "none" }, 12.858);
+        tl.fromTo("#ch2-f4-c1", { y: 40, scale: 0.94, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 13.394);
+        tl.fromTo("#ch2-f4-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.678, ease: "none" }, 13.394);
+        tl.fromTo("#ch2-f4-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.214, ease: "none" }, 12.858);
+        tl.fromTo("#ch2-f5-c0", { y: 40, scale: 0.94, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 16.072);
+        tl.fromTo("#ch2-f5-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 4.286, ease: "none" }, 16.072);
+        tl.fromTo("#ch2-f5-c1", { y: 40, scale: 0.94, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 16.608);
+        tl.fromTo("#ch2-f5-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 3.75, ease: "none" }, 16.608);
+        tl.fromTo("#ch2-f5-c2", { y: 40, scale: 0.94, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 17.143);
+        tl.fromTo("#ch2-f5-p2", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.215, ease: "none" }, 17.143);
+        tl.fromTo("#ch2-f5-bd", { scale: 1.08 }, { scale: 1.0, duration: 4.286, ease: "none" }, 16.072);
+        tl.fromTo("#ch2-f5-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 17.411);
+        tl.fromTo("#ch2-f5-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 17.411);
+        tl.fromTo("#ch2-f6-c0", { y: 40, scale: 0.94, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 20.358);
+        tl.fromTo("#ch2-f6-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.142, ease: "none" }, 20.358);
+        tl.fromTo("#ch2-f6-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.142, ease: "none" }, 20.358);
+        tl.fromTo("#ch2-f7-c0", { y: 40, scale: 0.94, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 22.5);
+        tl.fromTo("#ch2-f7-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.215, ease: "none" }, 22.5);
+        tl.fromTo("#ch2-f7-c1", { y: 40, scale: 0.94, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 23.036);
+        tl.fromTo("#ch2-f7-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.679, ease: "none" }, 23.036);
+        tl.fromTo("#ch2-f7-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.215, ease: "none" }, 22.5);
+        tl.fromTo("#ch2-f7-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 23.304);
+        tl.fromTo("#ch2-f7-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 23.304);
+        tl.fromTo("#ch2-f8-c0", { y: 40, scale: 0.94, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 25.715);
+        tl.fromTo("#ch2-f8-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.143, ease: "none" }, 25.715);
+        tl.fromTo("#ch2-f8-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 25.715);
+        tl.fromTo("#ch2-f9-c0", { y: 40, scale: 0.94, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 27.858);
+        tl.fromTo("#ch2-f9-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 3.214, ease: "none" }, 27.858);
+        tl.fromTo("#ch2-f9-c1", { y: 40, scale: 0.94, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 28.394);
+        tl.fromTo("#ch2-f9-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.678, ease: "none" }, 28.394);
+        tl.fromTo("#ch2-f9-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.214, ease: "none" }, 27.858);
+        tl.fromTo("#ch2-f10-c0", { y: 40, scale: 0.94, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 31.072);
+        tl.fromTo("#ch2-f10-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 31.072);
+        tl.fromTo("#ch2-f10-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 31.072);
+        tl.fromTo("#ch2-f10-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 31.608);
+        tl.fromTo("#ch2-f10-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 31.608);
+        tl.fromTo("#ch2-f11-c0", { y: 40, scale: 0.94, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 33.215);
+        tl.fromTo("#ch2-f11-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.214, ease: "none" }, 33.215);
+        tl.fromTo("#ch2-f11-c1", { y: 40, scale: 0.94, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 33.751);
+        tl.fromTo("#ch2-f11-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.678, ease: "none" }, 33.751);
+        tl.fromTo("#ch2-f11-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.214, ease: "none" }, 33.215);
+        tl.fromTo("#ch2-f11-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 34.019);
+        tl.fromTo("#ch2-f11-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 34.019);
+        tl.fromTo("#ch2-f12-c0", { y: 40, scale: 0.94, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 36.429);
+        tl.fromTo("#ch2-f12-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.143, ease: "none" }, 36.429);
+        tl.fromTo("#ch2-f12-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 36.429);
+        tl.fromTo("#ch2-f13-c0", { y: 40, scale: 0.94, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 38.572);
+        tl.fromTo("#ch2-f13-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 38.572);
+        tl.fromTo("#ch2-f13-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 38.572);
+        tl.fromTo("#ch2-f14-c0", { y: 40, scale: 0.94, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 40.715);
+        tl.fromTo("#ch2-f14-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.214, ease: "none" }, 40.715);
+        tl.fromTo("#ch2-f14-c1", { y: 40, scale: 0.94, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 41.251);
+        tl.fromTo("#ch2-f14-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.678, ease: "none" }, 41.251);
+        tl.fromTo("#ch2-f14-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.214, ease: "none" }, 40.715);
+        tl.fromTo("#ch2-f14-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 41.519);
+        tl.fromTo("#ch2-f14-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 41.519);
+        tl.fromTo("#ch2-f15-c0", { y: 40, scale: 0.94, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 43.929);
+        tl.fromTo("#ch2-f15-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.143, ease: "none" }, 43.929);
+        tl.fromTo("#ch2-f15-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 43.929);
+        tl.fromTo("#ch2-f16-c0", { y: 40, scale: 0.94, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 46.072);
+        tl.fromTo("#ch2-f16-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 46.072);
+        tl.fromTo("#ch2-f16-bd", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 46.072);
+        tl.fromTo("#ch2-f16-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 46.608);
+        tl.fromTo("#ch2-f16-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 46.608);
+        tl.fromTo("#ch2-chip-in", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 2.143);
+        window.__timelines["ch2"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

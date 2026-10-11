@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 200px; width: 900px; }
+      .t-tag { display: inline-block; margin-bottom: 26px; padding: 8px 20px; border-radius: 999px; background: #ffb23f; color: #15110c; font-size: 26px; font-weight: 700; letter-spacing: 0.18em; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 30px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 60px; height: 110px; display: flex; justify-content: center; align-items: center; z-index: 5; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.82); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; z-index: 5; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+      </style>
+      <div id="root" data-composition-id="closing" data-width="1920" data-height="1080" data-duration="6.318">
+        <div id="closing-scene" class="clip layer" data-start="0" data-duration="6.318" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="z-bd" src="../assets/bg/closing-lit.jpg" alt="" />
+          <div class="shade end"></div>
+          <span class="z-emo" id="z-e0" style="left:1680px;top:500px;">🐘</span>
+          <span class="z-emo" id="z-e1" style="left:330px;top:787px;">🛶</span>
+          <span class="z-emo" id="z-e2" style="left:993px;top:51px;">🌴</span>
+          <span class="z-emo" id="z-e3" style="left:1382px;top:876px;">🫧</span>
+          <span class="z-emo" id="z-e4" style="left:132px;top:430px;">🥥</span>
+          <span class="z-emo" id="z-e5" style="left:1628px;top:271px;">🏝️</span>
+          <span class="z-emo" id="z-e6" style="left:722px;top:934px;">☀️</span>
+          <span class="z-emo" id="z-e7" style="left:551px;top:78px;">🌊</span>
+          <span class="z-emo" id="z-e8" style="left:1709px;top:637px;">🍹</span>
+          <span class="z-emo" id="z-e9" style="left:217px;top:662px;">🥊</span>
+          <span class="z-emo" id="z-e10" style="left:1259px;top:92px;">🪷</span>
+          <span class="z-emo" id="z-e11" style="left:1171px;top:953px;">🤿</span>
+          <span class="z-emo" id="z-e12" style="left:262px;top:299px;">🙌</span>
+          <span class="z-emo" id="z-e13" style="left:1701px;top:408px;">📸</span>
+          <span class="z-emo" id="z-e14" style="left:436px;top:868px;">✈️</span>
+          <span class="z-emo" id="z-e15" style="left:822px;top:40px;">💚</span>
+          <div class="z-head">
+            <div class="mask"><div class="z-line" id="z-l1">UNTIL THE</div></div>
+            <div class="mask"><div class="z-line accent" id="z-l2">NEXT ONE</div></div>
+            <div class="z-sub" id="z-sub">19 DAYS · 4 STOPS · 1 FAMILY</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#z-bd", { scale: 1.05 }, { scale: 1.18, duration: 6.318, ease: "none" }, 0);
+        tl.fromTo("#z-l1", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out" }, 0);
+        tl.fromTo("#z-l2", { yPercent: 110 }, { yPercent: 0, duration: 0.5, ease: "power4.out" }, 0.536);
+        tl.fromTo("#z-sub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 1.607);
+        tl.fromTo("#z-e0", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.3);
+        tl.to("#z-e0", { x: 70.0, y: 0.0, duration: 6.018, ease: "none" }, 0.3);
+        tl.fromTo("#z-e1", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.37);
+        tl.to("#z-e1", { x: -51.6, y: 33.8, duration: 5.948, ease: "none" }, 0.37);
+        tl.fromTo("#z-e2", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.44);
+        tl.to("#z-e2", { x: 6.1, y: -49.8, duration: 5.878, ease: "none" }, 0.44);
+        tl.fromTo("#z-e3", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.51);
+        tl.to("#z-e3", { x: 42.6, y: 39.7, duration: 5.808, ease: "none" }, 0.51);
+        tl.fromTo("#z-e4", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.58);
+        tl.to("#z-e4", { x: -68.9, y: -8.7, duration: 5.738, ease: "none" }, 0.58);
+        tl.fromTo("#z-e5", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.65);
+        tl.to("#z-e5", { x: 59.1, y: -26.8, duration: 5.668, ease: "none" }, 0.65);
+        tl.fromTo("#z-e6", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.72);
+        tl.to("#z-e6", { x: -18.2, y: 48.3, duration: 5.598, ease: "none" }, 0.72);
+        tl.fromTo("#z-e7", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.79);
+        tl.to("#z-e7", { x: -32.3, y: -44.4, duration: 5.528, ease: "none" }, 0.79);
+        tl.fromTo("#z-e8", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.86);
+        tl.to("#z-e8", { x: 65.8, y: 17.2, duration: 5.458, ease: "none" }, 0.86);
+        tl.fromTo("#z-e9", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 0.93);
+        tl.to("#z-e9", { x: -64.7, y: 19.1, duration: 5.388, ease: "none" }, 0.93);
+        tl.fromTo("#z-e10", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1);
+        tl.to("#z-e10", { x: 29.7, y: -45.3, duration: 5.318, ease: "none" }, 1);
+        tl.fromTo("#z-e11", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1.07);
+        tl.to("#z-e11", { x: 21.0, y: 47.7, duration: 5.248, ease: "none" }, 1.07);
+        tl.fromTo("#z-e12", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1.14);
+        tl.to("#z-e12", { x: -60.6, y: -25.1, duration: 5.178, ease: "none" }, 1.14);
+        tl.fromTo("#z-e13", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1.21);
+        tl.to("#z-e13", { x: 68.4, y: -10.7, duration: 5.108, ease: "none" }, 1.21);
+        tl.fromTo("#z-e14", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1.28);
+        tl.to("#z-e14", { x: -40.3, y: 40.9, duration: 5.038, ease: "none" }, 1.28);
+        tl.fromTo("#z-e15", { scale: 0 }, { scale: 1, duration: 0.5, ease: "elastic.out(1.15, 0.45)" }, 1.35);
+        tl.to("#z-e15", { x: -9.0, y: -49.6, duration: 4.968, ease: "none" }, 1.35);
+        window.__timelines["closing"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.strong { background: radial-gradient(ellipse at 50% 55%, rgba(21,17,12,0.45), rgba(21,17,12,0.88)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 230px; width: 900px; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 34px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 70px; height: 110px; display: flex; justify-content: center; align-items: center; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.8); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+      </style>
+      <div id="root" data-composition-id="ch1" data-width="1920" data-height="1080" data-duration="17.143">
+        <div id="ch1-card" class="clip layer" data-start="0" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch1-bd" src="../assets/bg/card-ch1-lit.jpg" alt="" />
+          <div class="shade soft"></div>
+          <div class="ghost" data-layout-ignore aria-hidden="true" id="ch1-ghost">01</div>
+          <div class="ch-num" id="ch1-num">01 / 04</div>
+          <div class="mask ch-mask"><div class="ch-name" id="ch1-name"><span class="cc">P</span><span class="cc">H</span><span class="cc">U</span><span class="cc">K</span><span class="cc">E</span><span class="cc">T</span></div></div>
+          <div class="ch-emo" id="ch1-emo">🐘</div>
+          <div class="ch-date" id="ch1-date">AUG 18 - 22</div>
+        </div>
+        <div id="s-A01" class="clip layer" data-start="2.143" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A01" src="../assets/bg/A01.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="c-A01" style="left:645px;top:140px;width:630px;height:840px;">
+          <video id="v-A01" class="clip vid" src="../assets/clips/A01.mp4" muted playsinline data-start="2.143" data-duration="2.143" data-media-start="0.0" data-playback-rate="1.0" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="cap-A01" class="clip cap" data-start="2.411" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-A01"><span class="emo">🐘</span><span class="pill-text">BATH TIME</span></div>
+        </div>
+        <div id="s-A12" class="clip layer" data-start="4.286" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A12" src="../assets/bg/A12.jpg" alt="" />
+          <div class="card" id="c-A12" style="left:645px;top:140px;width:630px;height:839px;">
+            <img class="ph" data-layout-allow-overflow id="p-A12" src="../assets/photos/A12.jpg" alt="" />
+          </div>
+        </div>
+        <div id="s-A14" class="clip layer" data-start="6.429" data-duration="1.071" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A14" src="../assets/bg/A14.jpg" alt="" />
+          <div class="card" id="c-A14" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-A14" src="../assets/photos/A14.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-A14" class="clip cap" data-start="6.697" data-duration="0.803" data-track-index="3">
+          <div class="pill" id="pill-A14"><span class="emo">🙏</span><span class="pill-text">GOLDEN CALM</span></div>
+        </div>
+        <div id="s-A21" class="clip layer" data-start="7.5" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A21" src="../assets/bg/A21.jpg" alt="" />
+          <div class="card" id="c-A21" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-A21" src="../assets/photos/A21.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-A21" class="clip cap" data-start="7.768" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-A21"><span class="emo">🍹</span><span class="pill-text">FIRST NIGHT OUT</span></div>
+        </div>
+        <div id="s-A44" class="clip layer" data-start="9.643" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A44" src="../assets/bg/A44.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="c-A44" style="left:724px;top:140px;width:472px;height:840px;">
+          <video id="v-A44" class="clip vid" src="../assets/clips/A44.mp4" muted playsinline data-start="9.643" data-duration="2.143" data-media-start="3.0" data-playback-rate="1.0" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="cap-A44" class="clip cap" data-start="9.911" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-A44"><span class="emo">📍</span><span class="pill-text">JAMES BOND ISLAND</span></div>
+        </div>
+        <div id="s-A40" class="clip layer" data-start="11.786" data-duration="1.071" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A40" src="../assets/bg/A40.jpg" alt="" />
+          <div class="card" id="c-A40" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-A40" src="../assets/photos/A40.jpg" alt="" />
+          </div>
+        </div>
+        <div id="s-A51" class="clip layer" data-start="12.857" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A51" src="../assets/bg/A51.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="c-A51" style="left:645px;top:140px;width:630px;height:840px;">
+          <video id="v-A51" class="clip vid" src="../assets/clips/A51.mp4" muted playsinline data-start="12.857" data-duration="2.143" data-media-start="0.0" data-playback-rate="0.8" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="cap-A51" class="clip cap" data-start="13.125" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-A51"><span class="emo">💚</span><span class="pill-text">SEA CAVES</span></div>
+        </div>
+        <div id="s-A53" class="clip layer" data-start="15" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-A53" src="../assets/bg/A53.jpg" alt="" />
+          <div class="card" id="c-A53" style="left:724px;top:140px;width:472px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-A53" src="../assets/photos/A53.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-A53" class="clip cap" data-start="15.268" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-A53"><span class="emo">🤸</span><span class="pill-text">SEND IT</span></div>
+        </div>
+        <div id="ch1-chip" class="clip chip" data-start="2.143" data-duration="15" data-track-index="4">
+          <div class="chip-in" id="ch1-chip-in"><span class="emo">📍</span>PHUKET · AUG 18 - 22</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#ch1-bd", { scale: 1.2 }, { scale: 1.05, duration: 2.143, ease: "none" }, 0);
+        tl.fromTo("#ch1-ghost", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 2.143, ease: "power1.out" }, 0);
+        tl.fromTo("#ch1-num", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.fromTo("#ch1-name .cc", { yPercent: 115 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.04 }, 0.05);
+        tl.fromTo("#ch1-emo", { scale: 0, rotation: -30 }, { scale: 1, rotation: 8, duration: 0.6, ease: "elastic.out(1.15, 0.45)" }, 0.536);
+        tl.fromTo("#ch1-date", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 1.071);
+        tl.fromTo("#bd-A01", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 2.143);
+        tl.fromTo("#c-A01", { y: 36, scale: 0.95, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 2.143);
+        tl.set("#c-A01", { opacity: 0 }, 4.286);
+        tl.fromTo("#pill-A01", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 2.411);
+        tl.fromTo("#pill-A01 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 2.411);
+        tl.fromTo("#bd-A12", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 4.286);
+        tl.fromTo("#c-A12", { y: 36, scale: 0.95, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 4.286);
+        tl.fromTo("#p-A12", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 4.286);
+        tl.fromTo("#bd-A14", { scale: 1.08 }, { scale: 1.0, duration: 1.071, ease: "none" }, 6.429);
+        tl.fromTo("#c-A14", { y: 36, scale: 0.95, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 6.429);
+        tl.fromTo("#p-A14", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 1.071, ease: "none" }, 6.429);
+        tl.fromTo("#pill-A14", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 6.697);
+        tl.fromTo("#pill-A14 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 6.697);
+        tl.fromTo("#bd-A21", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 7.5);
+        tl.fromTo("#c-A21", { y: 36, scale: 0.95, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 7.5);
+        tl.fromTo("#p-A21", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 7.5);
+        tl.fromTo("#pill-A21", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 7.768);
+        tl.fromTo("#pill-A21 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 7.768);
+        tl.fromTo("#bd-A44", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 9.643);
+        tl.fromTo("#c-A44", { y: 36, scale: 0.95, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 9.643);
+        tl.set("#c-A44", { opacity: 0 }, 11.786);
+        tl.fromTo("#pill-A44", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 9.911);
+        tl.fromTo("#pill-A44 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 9.911);
+        tl.fromTo("#bd-A40", { scale: 1.08 }, { scale: 1.0, duration: 1.071, ease: "none" }, 11.786);
+        tl.fromTo("#c-A40", { y: 36, scale: 0.95, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 11.786);
+        tl.fromTo("#p-A40", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 1.071, ease: "none" }, 11.786);
+        tl.fromTo("#bd-A51", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 12.857);
+        tl.fromTo("#c-A51", { y: 36, scale: 0.95, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 12.857);
+        tl.set("#c-A51", { opacity: 0 }, 15);
+        tl.fromTo("#pill-A51", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 13.125);
+        tl.fromTo("#pill-A51 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 13.125);
+        tl.fromTo("#bd-A53", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 15);
+        tl.fromTo("#c-A53", { y: 36, scale: 0.95, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 15);
+        tl.fromTo("#p-A53", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 15);
+        tl.fromTo("#pill-A53", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 15.268);
+        tl.fromTo("#pill-A53 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 15.268);
+        tl.fromTo("#ch1-chip-in", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 2.143);
+        window.__timelines["ch1"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

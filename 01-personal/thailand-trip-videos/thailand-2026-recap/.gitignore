@@ -1,0 +1,5 @@
+renders/
+snapshots/
+assets/clips-hdr-src/
+node_modules/
+.hyperframes/

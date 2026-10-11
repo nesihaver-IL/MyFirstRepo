@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 200px; width: 900px; }
+      .t-tag { display: inline-block; margin-bottom: 26px; padding: 8px 20px; border-radius: 999px; background: #ffb23f; color: #15110c; font-size: 26px; font-weight: 700; letter-spacing: 0.18em; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 30px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 60px; height: 110px; display: flex; justify-content: center; align-items: center; z-index: 5; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.82); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; z-index: 5; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+
+      .progress { position: absolute; left: 70px; right: 70px; top: 30px; height: 8px; display: flex; gap: 12px; }
+      .seg { flex: 1; height: 8px; border-radius: 4px; background: rgba(247,239,227,0.28); overflow: hidden; }
+      .fill { width: 100%; height: 100%; background: #ffb23f; transform-origin: 0 50%; }
+      .black { position: absolute; inset: 0; background: #0b0906; }
+      </style>
+      <div id="root" data-composition-id="overlay" data-width="1920" data-height="1080" data-duration="135">
+        <div id="progress" class="clip progress" data-start="5.468" data-duration="123.214" data-track-index="1"><div class="seg"><div class="fill" id="fill1"></div></div><div class="seg"><div class="fill" id="fill2"></div></div><div class="seg"><div class="fill" id="fill3"></div></div><div class="seg"><div class="fill" id="fill4"></div></div></div>
+        <div id="fade-black" class="clip black" data-start="133.8" data-duration="1.2" data-track-index="2"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#fill1", { scaleX: 0 }, { scaleX: 1, duration: 28.928, ease: "none" }, 5.468);
+        tl.fromTo("#fill2", { scaleX: 0 }, { scaleX: 1, duration: 48.215, ease: "none" }, 34.396);
+        tl.fromTo("#fill3", { scaleX: 0 }, { scaleX: 1, duration: 5.357, ease: "none" }, 82.611);
+        tl.fromTo("#fill4", { scaleX: 0 }, { scaleX: 1, duration: 40.714, ease: "none" }, 87.968);
+        tl.fromTo("#fade-black", { opacity: 0 }, { opacity: 1, duration: 1.1, ease: "power1.in" }, 133.8);
+        window.__timelines["overlay"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

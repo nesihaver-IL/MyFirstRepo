@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.strong { background: radial-gradient(ellipse at 50% 55%, rgba(21,17,12,0.45), rgba(21,17,12,0.88)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 230px; width: 900px; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 34px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 70px; height: 110px; display: flex; justify-content: center; align-items: center; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.8); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+      </style>
+      <div id="root" data-composition-id="ch4" data-width="1920" data-height="1080" data-duration="17.143">
+        <div id="ch4-card" class="clip layer" data-start="0" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch4-bd" src="../assets/bg/card-ch4-lit.jpg" alt="" />
+          <div class="shade soft"></div>
+          <div class="ghost" data-layout-ignore aria-hidden="true" id="ch4-ghost">04</div>
+          <div class="ch-num" id="ch4-num">04 / 04</div>
+          <div class="mask ch-mask"><div class="ch-name" id="ch4-name"><span class="cc">P</span><span class="cc">H</span><span class="cc">U</span><span class="cc">K</span><span class="cc">E</span><span class="cc">T</span></div></div>
+          <div class="ch-emo" id="ch4-emo">🫧</div>
+          <div class="ch-date" id="ch4-date">AUG 30 - SEP 4</div>
+        </div>
+        <div id="s-D04" class="clip layer" data-start="2.143" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D04" src="../assets/bg/D04.jpg" alt="" />
+          <div class="card" id="c-D04" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-D04" src="../assets/photos/D04.jpg" alt="" />
+          </div>
+        </div>
+        <div id="s-D01" class="clip layer" data-start="4.286" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D01" src="../assets/bg/D01.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="c-D01" style="left:400px;top:140px;width:1120px;height:840px;">
+          <video id="v-D01" class="clip vid" src="../assets/clips/D01.mp4" muted playsinline data-start="4.286" data-duration="2.143" data-media-start="0.0" data-playback-rate="0.95" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="s-D25" class="clip layer" data-start="6.429" data-duration="1.071" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D25" src="../assets/bg/D25.jpg" alt="" />
+          <div class="card" id="c-D25" style="left:645px;top:140px;width:630px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-D25" src="../assets/photos/D25.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-D25" class="clip cap" data-start="6.697" data-duration="0.803" data-track-index="3">
+          <div class="pill" id="pill-D25"><span class="emo">🫧</span><span class="pill-text">FOAM PARTY</span></div>
+        </div>
+        <div id="s-D45" class="clip layer" data-start="7.5" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D45" src="../assets/bg/D45.jpg" alt="" />
+          <div class="card" id="c-D45" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-D45" src="../assets/photos/D45.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-D45" class="clip cap" data-start="7.768" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-D45"><span class="emo">🧗</span><span class="pill-text">ZIPLINE CREW</span></div>
+        </div>
+        <div id="s-D44" class="clip layer" data-start="9.643" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D44" src="../assets/bg/D44.jpg" alt="" />
+        </div>
+        <div class="vwrap" id="c-D44" style="left:724px;top:140px;width:472px;height:840px;">
+          <video id="v-D44" class="clip vid" src="../assets/clips/D44.mp4" muted playsinline data-start="9.643" data-duration="2.143" data-media-start="2.0" data-playback-rate="1.0" data-hf-media-start-basis="local" data-track-index="2"></video>
+        </div>
+        <div id="s-D57" class="clip layer" data-start="11.786" data-duration="1.071" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D57" src="../assets/bg/D57.jpg" alt="" />
+          <div class="card" id="c-D57" style="left:645px;top:140px;width:630px;height:839px;">
+            <img class="ph" data-layout-allow-overflow id="p-D57" src="../assets/photos/D57.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-D57" class="clip cap" data-start="12.054" data-duration="0.803" data-track-index="3">
+          <div class="pill" id="pill-D57"><span class="emo">🐈‍⬛</span><span class="pill-text">CAT CAFÉ</span></div>
+        </div>
+        <div id="s-D74" class="clip layer" data-start="12.857" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D74" src="../assets/bg/D74.jpg" alt="" />
+          <div class="card" id="c-D74" style="left:724px;top:140px;width:472px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-D74" src="../assets/photos/D74.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-D74" class="clip cap" data-start="13.125" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-D74"><span class="emo">🥭</span><span class="pill-text">MANGO STICKY RICE</span></div>
+        </div>
+        <div id="s-D35" class="clip layer" data-start="15" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="bd-D35" src="../assets/bg/D35.jpg" alt="" />
+          <div class="card" id="c-D35" style="left:400px;top:140px;width:1120px;height:840px;">
+            <img class="ph" data-layout-allow-overflow id="p-D35" src="../assets/photos/D35.jpg" alt="" />
+          </div>
+        </div>
+        <div id="cap-D35" class="clip cap" data-start="15.268" data-duration="1.875" data-track-index="3">
+          <div class="pill" id="pill-D35"><span class="emo">🌅</span><span class="pill-text">ONE LAST SUNSET</span></div>
+        </div>
+        <div id="ch4-chip" class="clip chip" data-start="2.143" data-duration="15" data-track-index="4">
+          <div class="chip-in" id="ch4-chip-in"><span class="emo">📍</span>PHUKET · AUG 30 - SEP 4</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#ch4-bd", { scale: 1.2 }, { scale: 1.05, duration: 2.143, ease: "none" }, 0);
+        tl.fromTo("#ch4-ghost", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 2.143, ease: "power1.out" }, 0);
+        tl.fromTo("#ch4-num", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.fromTo("#ch4-name .cc", { yPercent: 115 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.04 }, 0.05);
+        tl.fromTo("#ch4-emo", { scale: 0, rotation: -30 }, { scale: 1, rotation: 8, duration: 0.6, ease: "elastic.out(1.15, 0.45)" }, 0.536);
+        tl.fromTo("#ch4-date", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 1.072);
+        tl.fromTo("#bd-D04", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 2.143);
+        tl.fromTo("#c-D04", { y: 36, scale: 0.95, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 2.143);
+        tl.fromTo("#p-D04", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.143, ease: "none" }, 2.143);
+        tl.fromTo("#bd-D01", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 4.286);
+        tl.fromTo("#c-D01", { y: 36, scale: 0.95, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 4.286);
+        tl.set("#c-D01", { opacity: 0 }, 6.429);
+        tl.fromTo("#bd-D25", { scale: 1.08 }, { scale: 1.0, duration: 1.071, ease: "none" }, 6.429);
+        tl.fromTo("#c-D25", { y: 36, scale: 0.95, rotation: -3.2, opacity: 0 }, { y: 0, scale: 1, rotation: -1.6, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 6.429);
+        tl.fromTo("#p-D25", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 1.071, ease: "none" }, 6.429);
+        tl.fromTo("#pill-D25", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 6.697);
+        tl.fromTo("#pill-D25 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 6.697);
+        tl.fromTo("#bd-D45", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 7.5);
+        tl.fromTo("#c-D45", { y: 36, scale: 0.95, rotation: 2.4, opacity: 0 }, { y: 0, scale: 1, rotation: 1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 7.5);
+        tl.fromTo("#p-D45", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 7.5);
+        tl.fromTo("#pill-D45", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 7.768);
+        tl.fromTo("#pill-D45 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 7.768);
+        tl.fromTo("#bd-D44", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 9.643);
+        tl.fromTo("#c-D44", { y: 36, scale: 0.95, rotation: -1.6, opacity: 0 }, { y: 0, scale: 1, rotation: -0.8, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 9.643);
+        tl.set("#c-D44", { opacity: 0 }, 11.786);
+        tl.fromTo("#bd-D57", { scale: 1.08 }, { scale: 1.0, duration: 1.071, ease: "none" }, 11.786);
+        tl.fromTo("#c-D57", { y: 36, scale: 0.95, rotation: 3.0, opacity: 0 }, { y: 0, scale: 1, rotation: 1.5, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 11.786);
+        tl.fromTo("#p-D57", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 1.071, ease: "none" }, 11.786);
+        tl.fromTo("#pill-D57", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 12.054);
+        tl.fromTo("#pill-D57 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 12.054);
+        tl.fromTo("#bd-D74", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 12.857);
+        tl.fromTo("#c-D74", { y: 36, scale: 0.95, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 12.857);
+        tl.fromTo("#p-D74", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 2.143, ease: "none" }, 12.857);
+        tl.fromTo("#pill-D74", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 13.125);
+        tl.fromTo("#pill-D74 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 13.125);
+        tl.fromTo("#bd-D35", { scale: 1.08 }, { scale: 1.0, duration: 2.143, ease: "none" }, 15);
+        tl.fromTo("#c-D35", { y: 36, scale: 0.95, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 15);
+        tl.fromTo("#p-D35", { scale: 1.03, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.143, ease: "none" }, 15);
+        tl.fromTo("#pill-D35", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 15.268);
+        tl.fromTo("#pill-D35 .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 15.268);
+        tl.fromTo("#ch4-chip-in", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 2.143);
+        window.__timelines["ch4"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

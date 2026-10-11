@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+      #root { position: absolute; inset: 0; overflow: hidden; color: #f7efe3; font-family: "Space Mono", monospace; }
+      .layer { position: absolute; inset: 0; overflow: hidden; }
+      .bd { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(21,17,12,0.35), rgba(21,17,12,0.75)); }
+      .shade.soft { background: linear-gradient(90deg, rgba(21,17,12,0.78) 0%, rgba(21,17,12,0.45) 55%, rgba(21,17,12,0.2) 100%); }
+      .shade.end { background: radial-gradient(ellipse at 50% 50%, rgba(21,17,12,0.62), rgba(21,17,12,0.35)); }
+      .ghost { position: absolute; right: -40px; top: 40px; font-family: "League Gothic", sans-serif; font-size: 1000px; line-height: 1; color: rgba(255,178,63,0.10); white-space: nowrap; }
+      .card, .vwrap { position: absolute; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.55), 0 0 0 6px rgba(247,239,227,0.92); }
+      .ph, .vid { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .mask { overflow: hidden; display: block; }
+      .t-block { position: absolute; left: 130px; top: 200px; width: 900px; }
+      .t-tag { display: inline-block; margin-bottom: 26px; padding: 8px 20px; border-radius: 999px; background: #ffb23f; color: #15110c; font-size: 26px; font-weight: 700; letter-spacing: 0.18em; }
+      .t-word { font-family: "League Gothic", sans-serif; font-size: 250px; line-height: 0.92; letter-spacing: -0.01em; color: #f7efe3; }
+      .accent { color: #ffb23f; }
+      .t-route { margin-top: 34px; font-size: 30px; font-weight: 700; letter-spacing: 0.08em; }
+      .t-date { margin-top: 14px; font-size: 26px; letter-spacing: 0.12em; color: #ffb23f; }
+      .t-emojis { margin-top: 30px; display: flex; gap: 26px; font-size: 64px; line-height: 1; }
+      .t-emo { display: inline-block; }
+      .ch-num { position: absolute; left: 140px; top: 250px; font-size: 32px; font-weight: 700; letter-spacing: 0.2em; color: #ffb23f; }
+      .ch-mask { position: absolute; left: 130px; top: 300px; }
+      .ch-name { font-family: "League Gothic", sans-serif; font-size: 400px; line-height: 0.95; letter-spacing: -0.01em; white-space: nowrap; }
+      .ch-name.long { font-size: 300px; }
+      .cc { display: inline-block; }
+      .ch-emo { position: absolute; z-index: 3; right: 170px; top: 95px; font-size: 220px; line-height: 1; }
+      .ch-date { position: absolute; left: 140px; top: 720px; font-size: 40px; font-weight: 700; letter-spacing: 0.16em; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 60px; height: 110px; display: flex; justify-content: center; align-items: center; z-index: 5; }
+      .pill { display: flex; align-items: center; gap: 18px; padding: 16px 34px 16px 22px; border-radius: 999px; background: rgba(21,17,12,0.82); border: 2px solid rgba(255,178,63,0.85); }
+      .pill .emo { display: inline-block; font-size: 52px; line-height: 1; }
+      .pill-text { font-size: 34px; font-weight: 700; letter-spacing: 0.1em; }
+      .chip { position: absolute; left: 70px; top: 64px; height: 64px; z-index: 5; }
+      .chip-in { display: flex; align-items: center; gap: 12px; padding: 10px 24px 10px 16px; border-radius: 999px; background: rgba(21,17,12,0.8); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; }
+      .chip-in .emo { font-size: 30px; line-height: 1; }
+      .z-emo { position: absolute; width: 80px; height: 80px; font-size: 64px; line-height: 80px; text-align: center; }
+      .z-head { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; }
+      .z-line { font-family: "League Gothic", sans-serif; font-size: 230px; line-height: 0.95; text-align: center; }
+      .z-sub { margin-top: 30px; font-size: 32px; font-weight: 700; letter-spacing: 0.18em; }
+      </style>
+      <div id="root" data-composition-id="ch3" data-width="1920" data-height="1080" data-duration="5.357">
+        <div id="ch3-card" class="clip layer" data-start="0" data-duration="2.143" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch3-bd" src="../assets/bg/card-ch3.jpg" alt="" />
+          <div class="shade soft"></div>
+          <div class="ghost" data-layout-ignore aria-hidden="true" id="ch3-ghost">03</div>
+          <div class="ch-num" id="ch3-num">03 / 04</div>
+          <div class="mask ch-mask"><div class="ch-name long" id="ch3-name"><span class="cc">K</span><span class="cc">H</span><span class="cc">A</span><span class="cc">O</span><span class="cc">&nbsp;</span><span class="cc">L</span><span class="cc">A</span><span class="cc">K</span></div></div>
+          <div class="ch-emo" id="ch3-emo">🌴</div>
+          <div class="ch-date" id="ch3-date">AUG 26 - 30</div>
+        </div>
+        <div id="ch3-f0" class="clip layer" data-start="2.143" data-duration="3.214" data-track-index="1">
+          <img class="bd" data-layout-allow-overflow id="ch3-f0-bd" src="../assets/bg/L01.jpg" alt="" />
+          <div class="card" id="ch3-f0-c0" style="left:170px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch3-f0-p0" src="../assets/photos/L01.jpg" alt="" />
+          </div>
+          <div class="card" id="ch3-f0-c1" style="left:990px;top:120px;width:760px;height:880px;">
+            <img class="ph" data-layout-allow-overflow id="ch3-f0-p1" src="../assets/photos/L02.jpg" alt="" />
+          </div>
+        </div>
+        <div id="ch3-f0-cap" class="clip cap" data-start="2.947" data-duration="2.41" data-track-index="3">
+          <div class="pill" id="ch3-f0-pill"><span class="emo">🌙</span><span class="pill-text">SLOW DAYS</span></div>
+        </div>
+        <div id="ch3-chip" class="clip chip" data-start="2.143" data-duration="3.214" data-track-index="4">
+          <div class="chip-in" id="ch3-chip-in"><span class="emo">📍</span>KHAO LAK · AUG 26 - 30</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#ch3-bd", { scale: 1.2 }, { scale: 1.05, duration: 2.143, ease: "none" }, 0);
+        tl.fromTo("#ch3-ghost", { x: 120, opacity: 0 }, { x: 0, opacity: 1, duration: 2.143, ease: "power1.out" }, 0);
+        tl.fromTo("#ch3-num", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, 0);
+        tl.fromTo("#ch3-name .cc", { yPercent: 115 }, { yPercent: 0, duration: 0.5, ease: "power4.out", stagger: 0.04 }, 0.05);
+        tl.fromTo("#ch3-emo", { scale: 0, rotation: -30 }, { scale: 1, rotation: 8, duration: 0.6, ease: "elastic.out(1.15, 0.45)" }, 0.535);
+        tl.fromTo("#ch3-date", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 1.071);
+        tl.fromTo("#ch3-f0-c0", { y: 40, scale: 0.94, rotation: -2.4, opacity: 0 }, { y: 0, scale: 1, rotation: -1.2, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 2.143);
+        tl.fromTo("#ch3-f0-p0", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: 3, duration: 3.214, ease: "none" }, 2.143);
+        tl.fromTo("#ch3-f0-c1", { y: 40, scale: 0.94, rotation: 1.8, opacity: 0 }, { y: 0, scale: 1, rotation: 0.9, opacity: 1, duration: 0.32, ease: "back.out(1.7)" }, 2.679);
+        tl.fromTo("#ch3-f0-p1", { scale: 1.04, xPercent: 0 }, { scale: 1.12, xPercent: -3, duration: 2.678, ease: "none" }, 2.679);
+        tl.fromTo("#ch3-f0-bd", { scale: 1.08 }, { scale: 1.0, duration: 3.214, ease: "none" }, 2.143);
+        tl.fromTo("#ch3-f0-pill", { y: 24, scale: 0.85, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.4, ease: "back.out(2)" }, 2.947);
+        tl.fromTo("#ch3-f0-pill .emo", { rotation: -20, scale: 0.6 }, { rotation: 0, scale: 1, duration: 0.5, ease: "elastic.out(1.2, 0.4)" }, 2.947);
+        tl.fromTo("#ch3-chip-in", { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.35, ease: "power3.out" }, 2.143);
+        window.__timelines["ch3"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
