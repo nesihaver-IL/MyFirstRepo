@@ -120,15 +120,21 @@ the full reasoning behind each call.
       Routines via the `mcp` capability — both need a signed-in viewer's own connector grant
       and cannot exist on a public, unauthenticated page. Both superseded artifacts now
       redirect to Claude Code 360°; the `habits-dashboard` skill was archived.
-- [x] Add a live Routines view (requested 2026-10-10): a private claude.ai artifact
+- [x] Add a Routines view (requested 2026-10-10): a private claude.ai artifact
       (https://claude.ai/artifact/6E98fs43yHjaU2vPuCTZnc) showing every scheduled Routine's
-      schedule, last/next run, and full prompt text, with inline fire/pause/edit/delete —
-      backed by the `mcp` capability against the Claude Code Remote connector. Had to go
-      private, not on the public Claude Code 360° page as first asked: the real Routine data
-      includes full job-search prompts naming the account owner's employer and ~40 real
-      LinkedIn contacts by name for warm-intro outreach — publishing that on an unauthenticated
-      page would leak it to anyone with the link. The public page only gets a labeled, clearly
-      "🔒 private" card in Deliverables that links out to it.
+      schedule, enabled state, and last/next run — backed by the `mcp` capability against the
+      Claude Code Remote connector. Had to go private, not on the public Claude Code 360° page
+      as first asked: the real Routine data includes full job-search prompts naming the account
+      owner's employer and ~40 real LinkedIn contacts by name for warm-intro outreach —
+      publishing that on an unauthenticated page would leak it to anyone with the link. The
+      public page only gets a labeled, clearly "🔒 private" card in Deliverables that links out.
+- [x] Simplified the Routines view (2026-10-11): the first version also had inline fire/pause/
+      edit/delete/create actions and declared all 6 trigger-management tools. Dropped to a
+      read-only inventory (title, schedule, enabled, next/last run, a truncated prompt preview)
+      once the user clarified they'd make any actual changes by asking Claude directly, not
+      through the dashboard — narrowed the declared capability to `list_triggers` only, and
+      added a 2-minute cache (`watchTool`'s `cache.staleTime`) so reopening is near-instant
+      instead of re-querying the connector every time.
 
 ---
 
