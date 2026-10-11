@@ -13,8 +13,7 @@ content:
 - **Snapshot tabs** (Overview, Work Tree, Projects, Branches, Skills & Agents, Hygiene) — these read
   `data.json`, which the deploy workflow rebuilds on every push to `main` and weekly. They need **no
   maintenance**. Don't "update" them from this skill; there's nothing to update.
-- **The Showcase section of the Deliverables tab** — a hardcoded `SHOWCASE` array in that same
-  file, because GitHub's API has no way to see what other GitHub-Pages-hosted projects exist in
+- **The Showcase section of the Deliverables tab** — a list in `01-personal/claude-code-360/showcase.json`, read by the page at load time, because GitHub's API has no way to see what other GitHub-Pages-hosted projects exist in
   this repo until they're deployed. This drifts stale as new projects get added. **This is the
   only thing this skill touches.**
 
@@ -80,7 +79,7 @@ one reviewable kind of change:
      fi
      ```
      and add `"<path>/**"` to the `on.push.paths` list.
-   - Add an entry to the `SHOWCASE` array in `01-personal/claude-code-360/index.html`:
+   - Add an entry to `01-personal/claude-code-360/showcase.json` (a JSON array of `{title, url}`):
      `{title:"<Guessed Title>", url:"https://nesihaver-il.github.io/MyFirstRepo/<folder>/"}` —
      derive the title from the folder name (kebab-case → Title Case) and note the script's
      `readmeHint` for that candidate in the PR body as a suggested better title/description for
