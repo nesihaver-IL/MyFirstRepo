@@ -1,15 +1,10 @@
-name: Deploy Pages site (Thailand trip + Memory Book + Morzin budget)
+name: Deploy Pages site (Thailand trip + Memory Book + Morzin budget + Claude Code 360°)
 
 on:
   push:
     branches: ["main"]
-    paths:
-      - "01-personal/thailand-trip-2026/**"
-      - "01-personal/thailand-memory-book/**"
-      - "01-personal/morzin-budget-2026/**"
-      - "01-personal/claude-code-360/**"
-      - "04-reference/whatsapp-export/album/**"
-      - ".github/workflows/deploy-pages.yml"
+  schedule:
+    - cron: "0 6 * * 1"
   workflow_dispatch:
 
 permissions:
@@ -30,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
       - name: Build combined site
         run: |
           mkdir -p _site
@@ -45,6 +42,7 @@ jobs:
           if [ -d "01-personal/claude-code-360" ]; then
             mkdir -p _site/claude-code-360
             cp -r 01-personal/claude-code-360/. _site/claude-code-360/
+            python3 .github/scripts/build-claude-code-360-snapshot.py _site/claude-code-360/data.json
           fi
           if [ -d "01-personal/thailand-memory-book" ]; then
             mkdir -p _site/thailand-memory-book

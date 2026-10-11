@@ -24,7 +24,7 @@ This is a sophisticated multi-project workspace for AI agent development, contai
 | **Nano Banana Studio** | `01-personal/nano-banana-studio/` | Python, Gemini 3 Pro Image | Content-to-image generator: Claude drafts prompts from raw content, Gemini renders |
 | **Thailand Trip 2026** | `01-personal/thailand-trip-2026/` | Static HTML/CSS/JS, Python (image gen) | HaVenture family trip site — itinerary, flights, restaurants, weather; deployed via GitHub Pages |
 | **Morzin Budget 2026** | `01-personal/morzin-budget-2026/` | Static HTML, Firestore-synced | Vacation budget tracker; deployed via GitHub Pages |
-| **Claude Code 360°** | `01-personal/claude-code-360/` | Static HTML/JS | The one canonical workspace dashboard — public, live-refreshing, fetches this repo's tree/branches/commits directly from GitHub's API in the visitor's browser; deployed via GitHub Pages. Merged in and superseded the claude.ai Habits Dashboard and Workspace Command Center artifacts on 2026-10-04. |
+| **Claude Code 360°** | `01-personal/claude-code-360/` | Static HTML/JS | The one canonical workspace dashboard — public, reads a static `data.json` snapshot that the Pages deploy workflow builds from this repo (`.github/scripts/build-claude-code-360-snapshot.py`) on every push to `main` and weekly; the browser never calls GitHub's API, so there's no visitor rate limit. Merged in and superseded the claude.ai Habits Dashboard and Workspace Command Center artifacts on 2026-10-04. |
 | **Azure Foundry Agent** | `02-work/ai-foundry-agent/` | Python, Azure AI Foundry | Enterprise agent for professional use cases |
 | **JIRA/Confluence Automation** | `02-work/automation-integrations/` | Python | Automation integrations for work ticketing systems |
 
