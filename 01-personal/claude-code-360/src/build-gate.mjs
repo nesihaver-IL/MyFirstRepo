@@ -44,6 +44,7 @@ const shell = `<!doctype html>
   form{ width:min(320px,100%); text-align:center; }
   h1{ font-size:18px; margin:0 0 6px; }
   p{ font-size:13px; opacity:.7; margin:0 0 18px; }
+  input, button{ box-sizing:border-box; }
   input{ width:100%; font-size:24px; letter-spacing:.4em; text-align:center; padding:10px; border-radius:10px;
     border:1px solid rgba(127,127,127,.4); background:transparent; color:inherit; }
   button{ margin-top:12px; width:100%; padding:10px; border:0; border-radius:10px; font-weight:700; font-size:14px;
