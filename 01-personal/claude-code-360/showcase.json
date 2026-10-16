@@ -35,9 +35,10 @@
     "group": "personal"
   },
   {
-    "title": "WhatsApp Memory Book",
+    "title": "WhatsApp Memory Group",
     "url": "https://nesihaver-il.github.io/MyFirstRepo/whatsapp-export/album/index.html",
-    "group": "personal"
+    "group": "personal",
+    "accent": "#d55181"
   },
   {
     "title": "Morzin 2026 — Budget",
