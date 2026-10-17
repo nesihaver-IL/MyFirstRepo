@@ -50,3 +50,6 @@ whatsapp-export/
 
 # Readable dashboard source; kept local, the published page is encrypted (see src/build-gate.mjs)
 01-personal/claude-code-360/src/dashboard.html
+
+# Shai tribute video: raw personal media (minors, private) - never commit
+01-personal/shai-video/raw/
