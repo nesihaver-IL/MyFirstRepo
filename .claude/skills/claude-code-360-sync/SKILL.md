@@ -154,3 +154,9 @@ guess was wrong, a folder shape the scanner doesn't handle yet, a false positive
   mode here (a human reviews one extra harmless folder), under-flagging is not. If `bank\b`
   keeps producing false positives across real runs, tighten it to something like
   `bank\s*(account|details|routing|iban)` instead of removing it outright.
+
+- **2026-10-19 (scheduled run):** Scan found the same 3 candidates as the build-time scan, all
+  flagged (`electricity-dashboard`, `math-practice`, `tzofim-payments`); nothing safe to wire.
+  Logged all three in `needs-review.md` (it was empty, so they had never been recorded). The
+  `math-practice` flag is again the "Question Bank" false positive — still not tightened;
+  `bank\b` → `bank\s*(account|details|routing|iban)` is now worth doing since it recurred.
