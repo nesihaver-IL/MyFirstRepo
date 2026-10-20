@@ -1,7 +1,7 @@
-"""Build the Hebrew (RTL) kids' deck about Starship: starship-kids.pptx.
+"""Build the Hebrew (RTL) kids' deck about the Falcon Heavy demo flight (Tesla Roadster): falcon-heavy-kids.pptx.
 
 Run from this folder:  .venv/bin/python build_deck.py
-Requires: python-pptx. The video is embedded from video/starship-animation.mp4.
+Requires: python-pptx. The video is embedded from video/falcon-heavy-animation.mp4.
 """
 
 from pathlib import Path
@@ -13,9 +13,9 @@ from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Inches, Pt
 
 HERE = Path(__file__).parent
-VIDEO = HERE / "video" / "starship-animation.mp4"
+VIDEO = HERE / "video" / "falcon-heavy-animation.mp4"
 POSTER = HERE / "video" / "poster.png"
-OUTPUT = HERE / "starship-kids.pptx"
+OUTPUT = HERE / "falcon-heavy-kids.pptx"
 
 FONT = "Arial"  # Arial renders Hebrew in PowerPoint on Windows and macOS
 
@@ -102,38 +102,43 @@ def slide_title(prs) -> None:
     band.fill.fore_color.rgb = ORANGE
     band.line.fill.background()
     add_text(slide, Inches(0.8), Inches(1.6), prs.slide_width - Inches(1.6), Inches(1.6),
-             ["Starship: הרקטה שחוזרת הביתה"], size=54, color=NAVY, bold=True)
-    add_text(slide, Inches(0.8), Inches(3.3), prs.slide_width - Inches(1.6), Inches(1.2),
-             ["איך נראית רקטה שאפשר להשתמש בה שוב ושוב?"], size=30, color=ORANGE, bold=True)
+             ["מכונית בחלל!"], size=60, color=NAVY, bold=True)
+    add_text(slide, Inches(0.8), Inches(3.0), prs.slide_width - Inches(1.6), Inches(0.8),
+             ["הטיסה הראשונה של Falcon Heavy, 2018"], size=30, color=NAVY)
+    add_text(slide, Inches(0.8), Inches(3.9), prs.slide_width - Inches(1.6), Inches(1.2),
+             ["למה שמישהו ישלח מכונית לחלל?"], size=30, color=ORANGE, bold=True)
     add_text(slide, Inches(0.8), Inches(5.6), prs.slide_width - Inches(1.6), Inches(0.6),
-             ["מצגת לכיתה ו׳  |  על SpaceX ועל Starship"], size=20, color=INK)
-    add_notes(slide, "פתיחה: שאלו את הילדים מה לדעתם יכולה לעשות רקטה שחוזרת לכדור הארץ.")
+             ["מצגת לכיתה ו׳  |  SpaceX"], size=20, color=INK)
+    add_notes(slide,
+              "פתיחה: שאלו את הילדים למה לדעתם שולחים מכונית לחלל, לפני שמספרים להם את התשובה.\n\n"
+              "מקורות לבדיקה: https://www.pressreader.com/usa/albuquerque-journal/20180207/281595240984804 ; "
+              "https://planeandpilotmag.com/spacex-launches-falcon-heavy-rocket/")
 
 
-def slide_product(prs) -> None:
+def slide_what(prs) -> None:
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_background(slide, prs)
-    add_title(slide, prs, "מה זה Starship?")
+    add_title(slide, prs, "מה שוגר לחלל?")
     add_text(slide, Inches(0.8), Inches(1.6), Inches(11.7), Inches(4.5), [
-        "Starship היא רקטה ענקית שפותחה על ידי SpaceX.",
-        "היא בנויה משני חלקים: הבוסטר (המאיץ) שדוחף אותה בהתחלה, והחללית שממשיכה לחלל.",
-        "המטרה: לקחת אנשים ומטענים לחלל, ולחזור ולטוס שוב ושוב.",
-        "היא אחת הרקטות הגדולות והחזקות שנבנו אי פעם.",
+        "הרקטה: Falcon Heavy, שלושה בוסטרים שעובדים ביחד, עם כ-27 מנועים.",
+        "באותו זמן זו הייתה הרקטה החזקה ביותר שפועלת בעולם.",
+        "המטען: מכונית Tesla Roadster אדומה, עם בובה בשם Starman בחליפת חלל.",
+        "הטיסה יצאה ב-6 בפברואר 2018 מאתר השיגור 39A בפלורידה.",
     ], size=26)
     add_notes(slide,
-              "הערה למציג: הגובה והעוצמה של הרקטה משתנים בין גרסאות וטיסות. "
-              "לפני ההצגה, בדקו את המספרים העדכניים באתר SpaceX (spacex.com) ובדפי הטיסות של Starship. "
-              "אין לי אישור עדכני למספרים מדויקים.")
+              "מספר המנועים (כ-27) והכינוי 'החזקה ביותר שפועלת' מבוססים על מקור משני בלבד: "
+              "https://weatherboy.com/?p=4675 . יש לאמת מול אתר SpaceX לפני ההצגה.\n"
+              "תאריך השיגור ואתר השיגור: https://planeandpilotmag.com/spacex-launches-falcon-heavy-rocket/")
 
 
 def slide_process(prs) -> None:
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_background(slide, prs)
-    add_title(slide, prs, "איך בונים רקטה כזאת?")
+    add_title(slide, prs, "איך הכינו את הטיסה?")
     steps = [
-        ("1. בונים אב-טיפוס", "מתחילים בגרסה קטנה וניסיונית"),
-        ("2. טסים ולומדים", "כל טיסת ניסוי נותנת מידע חדש"),
-        ("3. נכשלים? זה חלק מהדרך", "כשלון הוא שיעור, לא סוף"),
+        ("משקל במקום מטען", "במקום מטען רגיל בחרו מכונית"),
+        ("Starman בחליפה", "בובה בחליפת חלל שתוכננה ב-SpaceX"),
+        ("שידור חי לעולם", "מיליוני אנשים צפו בטיסה בשידור חי"),
     ]
     top = Inches(1.7)
     for i, (title, body) in enumerate(steps):
@@ -147,21 +152,23 @@ def slide_process(prs) -> None:
         slide.shapes.add_movie(str(VIDEO), video_left, video_top, video_width, video_height,
                                poster_frame_image=str(poster) if poster else None)
     add_text(slide, video_left, video_top + video_height + Inches(0.15), video_width, Inches(0.5),
-             ["סרטון קצר: הרקטה עולה לחלל"], size=18, color=INK)
+             ["סרטון קצר: שלוש רקטות, שני בוסטרים שחוזרים, והמכונית בחלל"], size=18, color=INK)
     add_notes(slide,
-              "הציגו את הסרטון (כ-36 שניות). אחרי הסרטון: מה הילדים ראו? "
-              "שאלו מה היה קורה אם הטיסה הראשונה הייתה מצליחה מיד.")
+              "הציגו את הסרטון (כ-36 שניות). הסרטון הוא אנימציה המבוססת על מה שהמקורות מתארים, לא צילום אמיתי.\n"
+              "מקורות: https://www.nbcchicago.com/news/national-international/spacex-falcon-heavy-first-launch/2041756/ "
+              "(המשקל והמכונית, וציטוט של מאסק שמשקל פלדה או בטון 'נשמע משעמם').\n"
+              "שידור חי: אותו מקור מתאר מיליוני צופים ברשת.")
 
 
-def slide_technology(prs) -> None:
+def slide_result(prs) -> None:
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_background(slide, prs)
-    add_title(slide, prs, "איך זה עובד?")
+    add_title(slide, prs, "מה קרה בטיסה?")
     cards = [
-        ("מנועי Raptor", "שורפים מתאן וחמצן נוזלי כדי לייצר דחף"),
-        ("גוף מפלדה", "פלדה עמידה לחום, וחזקה יחסית למשקל שלה"),
-        ("שימוש חוזר", "הבוסטר חוזר ונתפס באוויר, במקום להישרף בים"),
-        ("תפיסה בזרועות", "מגדל השיגור תופס את הבוסטר עם זרועות ענק"),
+        ("שני בוסטרים נחתו", "הבוסטרים הצדדיים חזרו ונחתו על הקרקע, ליד השיגור"),
+        ("המרכזי החטיא", "הבוסטר המרכזי פספס את הספינה הימית ונפל לים"),
+        ("שימוש חוזר", "בוסטרים שחוזרים אפשר להשתמש שוב, וזה חוסך כסף"),
+        ("המכונית בחלל", "היא הגיעה למסלול מעבר למאדים, ולא בדיוק למה שתוכנן"),
     ]
     col_w, row_h = Inches(5.9), Inches(2.2)
     for i, (title, body) in enumerate(cards):
@@ -170,25 +177,28 @@ def slide_technology(prs) -> None:
         top = Inches(1.7) + row * (row_h + Inches(0.3))
         add_card(slide, left, top, col_w, row_h, title, body, CARD_COLORS[i])
     add_notes(slide,
-              "הסבירו בשפה פשוטה: מתאן הוא גז שמשמש גם כדלק, וחמצן נוזלי הוא החמצן שנותן לדלק לבעור. "
-              "הזרועות תופסות את הבוסטר בדומה לאיך שמיישרים כביסה על חבל. "
-              "הפרטים הטכניים משתנים בין גרסאות - בדקו לפני ההצגה.")
+              "שני הבוסטרים הצדדיים נחתו במתחמים Landing Zone 1 ו-2 בקייפ קנדי: "
+              "https://thedailyworld.com/?p=16224 , https://lunarcabin.com/Rocket_Launches/falconheavydemo_1.html .\n"
+              "הבוסטר המרכזי התכוון לספינה הימית 'Of Course I Still Love You' ופספס בכ-100 מטר: "
+              "https://thedailyworld.com/?p=16224 .\n"
+              "המסלול של המכונית: https://orbitcodex.com/operations/demo-flight-1-maiden-flight-falcon-heavy .\n"
+              "לא אומת ולכן לא הופיע בשקף: מוזיקה שהתנגנה במכונית, ולוח מעגל עם טקסט על המכונית.")
 
 
 def slide_empowerment(prs) -> None:
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_background(slide, prs)
-    add_title(slide, prs, "גם אתם יכולים להמריא!")
+    add_title(slide, prs, "גם מהחסרונות לומדים!")
     messages = [
         ("שאלו שאלות", "כל שאלה טובה, גם אם נראית קטנה"),
-        ("אל תפחדו לטעות", "גם מהנדסי SpaceX למדו מניסיונות שנכשלו"),
-        ("חלמו בגדול, תכננו צעד צעד", "חלום גדול מתחיל מצעד קטן אחד"),
+        ("כשלון הוא שיעור", "גם הבוסטר שפספס למד את המהנדסים הרבה"),
+        ("חלמו בגדול", "חלום גדול מתחיל מצעד קטן אחד"),
     ]
     for i, (title, body) in enumerate(messages):
         add_card(slide, Inches(0.6) + i * Inches(4.1), Inches(1.7), Inches(3.9), Inches(2.4),
                  title, body, CARD_COLORS[i])
     add_card(slide, Inches(0.6), Inches(4.6), prs.slide_width - Inches(1.2), Inches(1.9),
-             "שאלה לדיון", "אם הייתם בונים רקטה, מה הייתם רוצים שתעשה?", YELLOW, text_color=INK)
+             "שאלה לדיון", "אם הייתם שולחים משהו לחלל, מה זה היה ולמה?", YELLOW, text_color=INK)
     add_notes(slide,
               "סיום: תנו לכל ילד לענות בקצרה. אפשר לחלק כרטיסי כתיבה ולאסוף את התשובות לשיעור הבא.")
 
@@ -198,9 +208,9 @@ def build() -> Path:
     prs.slide_width = Inches(13.333)
     prs.slide_height = Inches(7.5)
     slide_title(prs)
-    slide_product(prs)
+    slide_what(prs)
     slide_process(prs)
-    slide_technology(prs)
+    slide_result(prs)
     slide_empowerment(prs)
     prs.save(OUTPUT)
     return OUTPUT
