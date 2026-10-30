@@ -17,6 +17,7 @@ This directory contains work-related projects that may be shared with team membe
 |---------|--------|-------------|
 | `ai-foundry-agent/` | Active | Azure AI Foundry Agent |
 | `automation-integrations/` | Ongoing | JIRA/Confluence integrations |
+| `structure-for-jira-video/` | Planning | Team video clip on Structure for Jira (Data Center, English). See STATUS.md |
 
 ## Documentation Standards
 
