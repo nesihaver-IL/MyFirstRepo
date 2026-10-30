@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* PLACEHOLDER PALETTE. Replace with Cognyte brand values from BRAND.md when available. */
+      :root {
+        --ground: #0b1220;
+        --panel: #131d30;
+        --line: #2a3a58;
+        --ink: #f2f5fa;
+        --muted: #8fa0bd;
+        --accent: #4f8cff;
+        --ok: #3ecf8e;
+        --font-display: sans-serif;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        font-family: var(--font-display);
+        color: var(--ink);
+        background: var(--ground);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+      }
+      .label {
+        position: absolute;
+        top: 56px;
+        left: 120px;
+        font-size: 28px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .note {
+        position: absolute;
+        top: 56px;
+        right: 120px;
+        font-size: 28px;
+        color: var(--muted);
+      }
+      .headline {
+        position: absolute;
+        top: 150px;
+        left: 120px;
+        right: 120px;
+        font-size: 84px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.05;
+      }
+      .caption {
+        position: absolute;
+        left: 120px;
+        right: 120px;
+        bottom: 56px;
+        font-size: 34px;
+        line-height: 1.35;
+        padding: 18px 28px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      .panel {
+        position: absolute;
+        background: var(--panel);
+        border: 2px solid var(--line);
+        border-radius: 14px;
+      }
+      .row {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 0 28px;
+        font-size: 30px;
+        border-bottom: 1px solid var(--line);
+      }
+      .key {
+        color: var(--muted);
+        width: 130px;
+        flex: none;
+      }
+      .pill {
+        margin-left: auto;
+        font-size: 28px;
+        padding: 4px 16px;
+        border-radius: 999px;
+        background: var(--line);
+        color: var(--ink);
+      }
+      .pill.ok {
+        background: var(--ok);
+        color: #06210f;
+      }
+      .node {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        border-radius: 12px;
+        background: var(--panel);
+        border: 2px solid var(--accent);
+        padding: 10px 16px;
+      }
+      .node.root {
+        background: var(--accent);
+        color: #06122b;
+        font-size: 34px;
+      }
+      .node.leaf {
+        font-size: 28px;
+        font-weight: 500;
+        border-color: var(--line);
+      }
+      .bar {
+        position: absolute;
+        height: 4px;
+        background: var(--line);
+        transform-origin: left center;
+      }
+      .card {
+        position: absolute;
+        width: 520px;
+        top: 360px;
+        padding: 40px;
+        font-size: 34px;
+        line-height: 1.35;
+      }
+      .card .num {
+        font-size: 96px;
+        font-weight: 700;
+        color: var(--accent);
+        line-height: 1;
+        margin-bottom: 18px;
+      }
+      .tab {
+        position: absolute;
+        top: 330px;
+        font-size: 30px;
+        padding: 16px 30px;
+        border-radius: 12px 12px 0 0;
+        background: var(--panel);
+        border: 2px solid var(--line);
+        border-bottom: none;
+      }
+      .tab.active {
+        background: var(--accent);
+        color: #06122b;
+        font-weight: 700;
+      }
+      .field {
+        position: absolute;
+        left: 120px;
+        top: 360px;
+        width: 900px;
+        height: 84px;
+        border-radius: 12px;
+        background: var(--panel);
+        border: 2px solid var(--accent);
+        padding: 0 26px;
+        display: flex;
+        align-items: center;
+        font-size: 40px;
+      }
+      .btn {
+        position: absolute;
+        left: 1060px;
+        top: 360px;
+        height: 84px;
+        padding: 0 44px;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        background: var(--accent);
+        color: #06122b;
+        font-size: 34px;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="107" data-width="1920" data-height="1080">
+      <!-- Narration (synthetic voice, Kokoro am_michael). Times are scene start plus 0.4 s. -->
+      <audio id="vo01" src="assets/vo-s01.wav" data-start="0.4" data-duration="7.9" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo02" src="assets/vo-s02.wav" data-start="9.4" data-duration="9.8" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo03" src="assets/vo-s03.wav" data-start="20.4" data-duration="11.1" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo04" src="assets/vo-s04.wav" data-start="33.4" data-duration="3.9" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo05" src="assets/vo-s05.wav" data-start="40.4" data-duration="6.7" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo06" src="assets/vo-s06.wav" data-start="49.4" data-duration="6.3" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo07" src="assets/vo-s07.wav" data-start="58.4" data-duration="9.2" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo08" src="assets/vo-s08.wav" data-start="69.4" data-duration="7.4" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo09" src="assets/vo-s09.wav" data-start="78.4" data-duration="7.9" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo10" src="assets/vo-s10.wav" data-start="87.4" data-duration="10.6" data-track-index="3" data-volume="1"></audio>
+      <audio id="vo11" src="assets/vo-s11.wav" data-start="100.4" data-duration="5.4" data-track-index="3" data-volume="1"></audio>
+
+      <!-- Slow background drift so holds in the narration still show motion -->
+      <div id="aura" data-layout-ignore style="position: absolute; left: -400px; top: 140px; width: 1100px; height: 1100px; border-radius: 50%; background: radial-gradient(circle, rgba(79, 140, 255, 0.16), rgba(79, 140, 255, 0) 65%); pointer-events: none;"></div>
+
+      <!-- S01 Hook: 0 to 9 s -->
+      <section class="clip scene" id="s01" data-start="0" data-duration="9" data-track-index="0">
+        <div class="label">Structure for Jira | Team onboarding</div>
+        <div class="note">Illustrative screens</div>
+        <div class="headline">40 issues. One flat list.</div>
+        <div class="panel" style="left: 120px; top: 320px; width: 1680px; height: 620px; overflow: hidden;">
+          <div class="row" style="top: 0px;"><span class="key">SEC-101</span>Ingest threat-intel feed v2<span class="pill">In progress</span></div>
+          <div class="row" style="top: 60px;"><span class="key">SEC-102</span>Export case report as PDF<span class="pill">To do</span></div>
+          <div class="row" style="top: 120px;"><span class="key">SEC-103</span>Audit log retention policy<span class="pill">To do</span></div>
+          <div class="row" style="top: 180px;"><span class="key">SEC-104</span>Analyst role permissions<span class="pill ok">Done</span></div>
+          <div class="row" style="top: 240px;"><span class="key">SEC-105</span>Alert deduplication rule<span class="pill">In progress</span></div>
+          <div class="row" style="top: 300px;"><span class="key">SEC-106</span>SSO for admin console<span class="pill">To do</span></div>
+          <div class="row" style="top: 360px;"><span class="key">SEC-107</span>Map entities to case graph<span class="pill">To do</span></div>
+          <div class="row" style="top: 420px;"><span class="key">SEC-108</span>Dashboard load-time fix<span class="pill ok">Done</span></div>
+          <div class="row" style="top: 480px;"><span class="key">SEC-109</span>Release notes for v4.2<span class="pill">To do</span></div>
+          <div class="row" style="top: 540px;"><span class="key">SEC-110</span>Retire legacy export job<span class="pill">In progress</span></div>
+        </div>
+        <div class="caption" id="s01-cap">This is our backlog. Forty issues in one flat list. Everything is in Jira, but nothing shows how it fits together.</div>
+      </section>
+
+      <!-- S02 What it is: 9 to 20 s -->
+      <section class="clip scene" id="s02" data-start="9" data-duration="11" data-track-index="0">
+        <div class="label">Structure for Jira | Data Center</div>
+        <div class="headline" id="s02-h" style="top: 330px; font-size: 110px; text-align: center; left: 120px; right: 120px;">Structure</div>
+        <div id="s02-sub" style="position: absolute; top: 480px; left: 120px; right: 120px; text-align: center; font-size: 46px; color: var(--muted);">Arrange Jira issues into the hierarchy your plan needs</div>
+        <div class="caption" id="s02-cap">Structure is an add-on for Jira Data Center. It arranges issues into the hierarchy your plan needs, so the plan and the work stay in one place.</div>
+      </section>
+
+      <!-- S03 Example plan: 20 to 33 s -->
+      <section class="clip scene" id="s03" data-start="20" data-duration="13" data-track-index="0">
+        <div class="label">Our example | Security product release</div>
+        <div class="node root" id="s03-goal" style="left: 750px; top: 170px; width: 420px; height: 96px;">Q1 security release</div>
+        <div class="bar" id="s03-bar" style="left: 480px; top: 330px; width: 960px;"></div>
+        <div class="bar" id="s03-v" style="left: 958px; top: 266px; width: 4px; height: 64px;"></div>
+        <div class="node" id="s03-f1" style="left: 300px; top: 380px; width: 360px; height: 84px;">Threat-intel feed</div>
+        <div class="node" id="s03-f2" style="left: 780px; top: 380px; width: 360px; height: 84px;">Case export</div>
+        <div class="node" id="s03-f3" style="left: 1260px; top: 380px; width: 360px; height: 84px;">Audit log</div>
+        <div class="node leaf" id="s03-s1" style="left: 170px; top: 560px; width: 230px; height: 70px;">Ingest v2</div>
+        <div class="node leaf" id="s03-s2" style="left: 430px; top: 560px; width: 230px; height: 70px;">Dedup rule</div>
+        <div class="node leaf" id="s03-s3" style="left: 730px; top: 560px; width: 230px; height: 70px;">PDF report</div>
+        <div class="node leaf" id="s03-s4" style="left: 990px; top: 560px; width: 230px; height: 70px;">Case graph</div>
+        <div class="node leaf" id="s03-s5" style="left: 1290px; top: 560px; width: 230px; height: 70px;">Retention</div>
+        <div class="node leaf" id="s03-s6" style="left: 1550px; top: 560px; width: 230px; height: 70px;">Export log</div>
+        <div class="caption" id="s03-cap">We will build one plan for a security product release. The goal sits at the top, three features sit under it, and the stories that deliver each feature sit under those.</div>
+      </section>
+
+      <!-- S04 Create a structure: 33 to 40 s -->
+      <section class="clip scene" id="s04" data-start="33" data-duration="7" data-track-index="0">
+        <div class="label">Step 1 | Create</div>
+        <div class="headline" style="top: 150px;">New structure</div>
+        <div class="field" id="s04-field"><span id="s04-name"></span><span style="width: 3px; height: 44px; background: var(--accent); margin-left: 4px;"></span></div>
+        <div class="btn" id="s04-btn" style="left: 1060px;">Create</div>
+        <div class="caption" id="s04-cap">Start a new structure and give it a name your team will recognize.</div>
+      </section>
+
+      <!-- S05 Add issues by query: 40 to 49 s -->
+      <section class="clip scene" id="s05" data-start="40" data-duration="9" data-track-index="0">
+        <div class="label">Step 2 | Add issues</div>
+        <div class="headline" style="top: 150px;">Add issues by query</div>
+        <div class="field" style="top: 290px; left: 120px; width: 1680px; font-size: 34px;">project = SEC AND labels = release-q1</div>
+        <div class="panel" style="left: 120px; top: 420px; width: 1680px; height: 380px; overflow: hidden;">
+          <div class="row" id="s05-r1" style="top: 0px;"><span class="key">SEC-101</span>Ingest threat-intel feed v2</div>
+          <div class="row" id="s05-r2" style="top: 60px;"><span class="key">SEC-102</span>Export case report as PDF</div>
+          <div class="row" id="s05-r3" style="top: 120px;"><span class="key">SEC-105</span>Alert deduplication rule</div>
+          <div class="row" id="s05-r4" style="top: 180px;"><span class="key">SEC-107</span>Map entities to case graph</div>
+          <div class="row" id="s05-r5" style="top: 240px;"><span class="key">SEC-103</span>Audit log retention policy</div>
+          <div class="row" id="s05-r6" style="top: 300px;"><span class="key">SEC-109</span>Release notes for v4.2</div>
+        </div>
+        <div class="caption" id="s05-cap">Add issues by query or by hand. A query keeps the list current as new issues appear in Jira.</div>
+      </section>
+
+      <!-- S06 Build hierarchy: 49 to 58 s -->
+      <section class="clip scene" id="s06" data-start="49" data-duration="9" data-track-index="0">
+        <div class="label">Step 3 | Build the hierarchy</div>
+        <div class="headline" style="top: 150px;">Drag issues under their parent</div>
+        <div class="panel" style="left: 120px; top: 320px; width: 1680px; height: 480px; overflow: hidden;">
+          <div class="row" style="top: 0px; font-weight: 700;"><span class="key" style="width: 120px;"></span>Threat-intel feed<span class="pill" id="s06-tot">0 of 3 done</span></div>
+          <div class="row" id="s06-m1" style="top: 60px; right: 60px;"><span class="key">SEC-101</span>Ingest threat-intel feed v2<span class="pill">In progress</span></div>
+          <div class="row" id="s06-m2" style="top: 120px; right: 60px;"><span class="key">SEC-105</span>Alert deduplication rule<span class="pill ok">Done</span></div>
+          <div class="row" style="top: 180px; font-weight: 700;"><span class="key" style="width: 120px;"></span>Case export<span class="pill">1 of 2 done</span></div>
+          <div class="row" style="top: 240px;"><span class="key">SEC-102</span>Export case report as PDF<span class="pill">To do</span></div>
+          <div class="row" style="top: 300px;"><span class="key">SEC-103</span>Audit log retention policy<span class="pill ok">Done</span></div>
+        </div>
+        <div class="caption" id="s06-cap">Build the tree by moving issues under their parent. Each parent shows the totals of the work beneath it.</div>
+      </section>
+
+      <!-- S07 Formulas: 58 to 69 s -->
+      <section class="clip scene" id="s07" data-start="58" data-duration="11" data-track-index="0">
+        <div class="label">Step 4 | Columns and formulas</div>
+        <div class="headline" style="top: 150px;">Add a percent-done column</div>
+        <div class="card" style="left: 120px; top: 330px; width: 760px;">
+          <div class="num" id="s07-n1">0%</div>
+          Threat-intel feed<br />3 of 4 stories done
+        </div>
+        <div class="card" style="left: 1040px; top: 330px; width: 760px;">
+          <div class="num" id="s07-n2">0%</div>
+          Case export<br />1 of 2 stories done
+        </div>
+        <div class="caption" id="s07-cap">Add a column that calculates a value from the Jira fields you already use. One formula is enough to start, such as percent done.</div>
+      </section>
+
+      <!-- S08 Generator: 69 to 78 s -->
+      <section class="clip scene" id="s08" data-start="69" data-duration="9" data-track-index="0">
+        <div class="label">Step 5 | Generators</div>
+        <div class="headline" style="top: 150px;">Keep the plan current automatically</div>
+        <div class="panel" style="left: 120px; top: 330px; width: 1680px; height: 110px; padding: 24px 32px; font-size: 32px; display: flex; align-items: center;">
+          Generator: add issues matching <span style="margin-left: 14px; color: var(--accent);">labels = release-q1</span>
+        </div>
+        <div class="panel" style="left: 120px; top: 480px; width: 1680px; height: 300px; overflow: hidden;">
+          <div class="row" style="top: 0px;"><span class="key">SEC-101</span>Ingest threat-intel feed v2<span class="pill">In progress</span></div>
+          <div class="row" style="top: 60px;"><span class="key">SEC-105</span>Alert deduplication rule<span class="pill ok">Done</span></div>
+          <div class="row" id="s08-new" style="top: 120px; background: rgba(79, 140, 255, 0.18);"><span class="key">SEC-111</span>New: Add SIEM connector<span class="pill">Added</span></div>
+          <div class="row" id="s08-new2" style="top: 180px;"><span class="key">SEC-112</span>New: Case timeline view<span class="pill">Added</span></div>
+        </div>
+        <div class="caption" id="s08-cap">A generator adds new matching issues to the plan automatically. Set it once, and the plan keeps itself current.</div>
+      </section>
+
+      <!-- S09 Share: 78 to 87 s -->
+      <section class="clip scene" id="s09" data-start="78" data-duration="9" data-track-index="0">
+        <div class="label">Step 6 | Save and share</div>
+        <div class="headline" style="top: 150px;">Name the view after its question</div>
+        <div class="tab active" id="s09-t1" style="left: 120px;">What ships in Q1?</div>
+        <div class="tab" id="s09-t2" style="left: 480px;">Sprint 14</div>
+        <div class="tab" id="s09-t3" style="left: 780px;">Audit view</div>
+        <div class="panel" style="left: 120px; top: 378px; width: 1680px; height: 420px; border-radius: 0 14px 14px 14px;"></div>
+        <div class="pill ok" id="s09-saved" style="position: absolute; left: 1420px; top: 330px; font-size: 30px; padding: 12px 26px; opacity: 0;">Saved and shared with the team</div>
+        <div class="caption" id="s09-cap">Save the view so everyone sees the same plan. Name it after the question it answers, such as: what ships in Q1?</div>
+      </section>
+
+      <!-- S10 Tips: 87 to 100 s -->
+      <section class="clip scene" id="s10" data-start="87" data-duration="13" data-track-index="0">
+        <div class="label">Three tips</div>
+        <div class="card" id="s10-c1" style="left: 120px; top: 230px; width: 520px;">
+          <div class="num">1</div>Start with the goal, not the tasks.
+        </div>
+        <div class="card" id="s10-c2" style="left: 700px; top: 230px; width: 520px;">
+          <div class="num">2</div>Check one roll-up against Jira by hand before you trust it.
+        </div>
+        <div class="card" id="s10-c3" style="left: 1280px; top: 230px; width: 520px;">
+          <div class="num">3</div>Use Structure to plan. Use Jira to do the work.
+        </div>
+        <div class="caption" id="s10-cap">Three tips. Start with the goal, not the tasks. Check one roll-up against Jira by hand before you trust it. Use Structure to plan, and Jira to do the work.</div>
+      </section>
+
+      <!-- S11 Close: 100 to 107 s -->
+      <section class="clip scene" id="s11" data-start="100" data-duration="7" data-track-index="0">
+        <div class="label">Next step</div>
+        <div class="headline" id="s11-h" style="top: 330px; text-align: center; font-size: 96px;">Your first structure: about 15 minutes</div>
+        <div id="s11-sub" style="position: absolute; top: 540px; left: 120px; right: 120px; text-align: center; font-size: 40px; color: var(--muted);">The one-page quick reference is linked in the team wiki</div>
+        <div class="caption" id="s11-cap">The one-page guide is linked below. Your first structure takes about fifteen minutes.</div>
+      </section>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      const $ = (sel) => document.querySelector(sel);
+
+      // S01: rows appear, then the list stays on screen
+      tl.fromTo("#s01 .row", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.4, ease: "power2.out", stagger: 0.12 }, 0.3);
+
+      // S02: title rise
+      tl.fromTo("#s02-h", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 9.2);
+      tl.fromTo("#s02-sub", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 10.2);
+
+      // S03: tree builds top-down
+      tl.fromTo("#s03-goal", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 20.4);
+      tl.fromTo("#s03-bar, #s03-v", { scaleX: 0, scaleY: 0 }, { scaleX: 1, scaleY: 1, duration: 0.5, ease: "power2.out" }, 21.0);
+      tl.fromTo("#s03-f1, #s03-f2, #s03-f3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.2 }, 21.6);
+      tl.fromTo("#s03-s1, #s03-s2, #s03-s3, #s03-s4, #s03-s5, #s03-s6", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", stagger: 0.15 }, 23.0);
+
+      // S04: name typed into the field, then Create highlights
+      const nameText = "Security release Q1";
+      const typed = { n: 0 };
+      tl.to(typed, { n: nameText.length, duration: 1.8, ease: "none", onUpdate: () => { $("#s04-name").textContent = nameText.slice(0, Math.round(typed.n)); } }, 33.8);
+      tl.fromTo("#s04-btn", { opacity: 0.4 }, { opacity: 1, duration: 0.3 }, 36.0);
+
+      // S05: query shows, then results arrive one by one
+      tl.fromTo("#s05 .field", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 40.4);
+      tl.fromTo("#s05-r1, #s05-r2, #s05-r3, #s05-r4, #s05-r5, #s05-r6", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.35, ease: "power2.out", stagger: 0.35 }, 41.2);
+
+      // S06: a row moves under its parent and the parent total updates
+      tl.fromTo("#s06-m1", { x: 0 }, { x: 60, duration: 0.6, ease: "power2.inOut" }, 51.0);
+      tl.fromTo("#s06-m2", { x: 0 }, { x: 60, duration: 0.6, ease: "power2.inOut" }, 52.2);
+      const totals = { v: 0 };
+      tl.to(totals, { v: 3, duration: 1.0, ease: "none", onUpdate: () => { $("#s06-tot").textContent = Math.round(totals.v) + " of 3 done"; } }, 53.0);
+
+      // S07: percentages count up
+      const p1 = { v: 0 };
+      const p2 = { v: 0 };
+      tl.to(p1, { v: 75, duration: 1.4, ease: "power2.out", onUpdate: () => { $("#s07-n1").textContent = Math.round(p1.v) + "%"; } }, 59.0);
+      tl.to(p2, { v: 50, duration: 1.4, ease: "power2.out", onUpdate: () => { $("#s07-n2").textContent = Math.round(p2.v) + "%"; } }, 59.6);
+
+      // S08: generator adds two new rows
+      tl.fromTo("#s08-new", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 72.0);
+      tl.fromTo("#s08-new2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: "power2.out" }, 74.0);
+
+      // S09: saved badge after the view is named
+      tl.fromTo("#s09-saved", { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 83.0);
+
+      // S10: three tip cards
+      tl.fromTo("#s10-c1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 88.0);
+      tl.fromTo("#s10-c2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 92.0);
+      tl.fromTo("#s10-c3", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 96.0);
+
+      // S11: closing card
+      tl.fromTo("#s11-h", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 100.4);
+      tl.fromTo("#s11-sub", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 101.4);
+
+      // Background drift across the full runtime (no visible pause longer than the narration gaps)
+      tl.fromTo("#aura", { x: 0 }, { x: 2200, duration: 107, ease: "none" }, 0);
+
+      // Captions fade in on every scene
+      const scenes = [["s01", 0], ["s02", 9], ["s03", 20], ["s04", 33], ["s05", 40], ["s06", 49], ["s07", 58], ["s08", 69], ["s09", 78], ["s10", 87], ["s11", 100]];
+      for (const [id, start] of scenes) {
+        tl.fromTo(`#${id}-cap`, { opacity: 0 }, { opacity: 1, duration: 0.3 }, start + 0.2);
+      }
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

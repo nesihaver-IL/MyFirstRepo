@@ -1,0 +1,1 @@
+Three tips. Start with the goal, not the tasks. Check one roll-up against Jira by hand before you trust it. Use Structure to plan, and Jira to do the work.

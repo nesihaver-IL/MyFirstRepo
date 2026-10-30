@@ -1,0 +1,1 @@
+Build the tree by moving issues under their parent. Each parent shows the totals of the work beneath it.

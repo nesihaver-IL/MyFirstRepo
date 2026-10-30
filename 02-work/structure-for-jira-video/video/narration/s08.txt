@@ -1,0 +1,1 @@
+A generator adds new matching issues to the plan automatically. Set it once, and the plan keeps itself current.

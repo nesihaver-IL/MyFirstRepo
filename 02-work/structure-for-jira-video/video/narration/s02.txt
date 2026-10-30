@@ -1,0 +1,1 @@
+Structure is an add-on for Jira Data Center. It arranges issues into the hierarchy your plan needs, so the plan and the work stay in one place.

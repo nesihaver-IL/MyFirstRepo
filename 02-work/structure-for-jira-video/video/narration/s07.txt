@@ -1,0 +1,1 @@
+Add a column that calculates a value from the Jira fields you already use. One formula is enough to start, such as percent done.
