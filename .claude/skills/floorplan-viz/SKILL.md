@@ -34,7 +34,7 @@ measurement. Say so on the page.
 | Field | Meaning |
 |-------|---------|
 | `rooms[]` | `id`, `name`, `kind` (bedroom, living, kitchen, bath, hall, safe, balcony, utility), `x y w h`, optional `walls: "thick"` (reinforced walls) and `sub` |
-| `devices[]` | `id`, `type` (router, mesh, ap), `label`, optional `sub`, `x y` |
+| `devices[]` | `id`, `type` (router, mesh, ap), `label`, optional `sub`, `x y`, optional `scale` (for example 0.78 for a smaller box) |
 | `links[]` | `from`, `to`, `type` (cable = solid line, wireless = animated dots), optional `via: [[x,y]]` |
 | `clients[]` | `x y label`, optional `icon` (laptop, desktop, tablet) and `w`: where a person's laptop, desktop or tablet usually sits (small pill, add `client` to `legend`) |
 | `ports[]` | `x y`, optional `label` (default RJ45) |

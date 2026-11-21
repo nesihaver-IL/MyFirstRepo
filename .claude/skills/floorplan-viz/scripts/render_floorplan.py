@@ -125,10 +125,15 @@ def render(spec: dict) -> str:
         svg.append(f'<rect class="port" x="{p["x"] - 14}" y="{p["y"] - 14}" width="28" height="28" rx="7"/><text class="pt" x="{p["x"]}" y="{p["y"] + 32}">{escape(p.get("label", "RJ45"))}</text>')
     for d in devs.values():
         tok = DEVICE_TOKEN.get(d["type"], "--d-mesh")
+        k = d.get("scale", 1)  # optional: draw a device smaller or larger around its center
+        if k != 1:
+            svg.append(f'<g transform="translate({d["x"]} {d["y"]}) scale({k}) translate({-d["x"]} {-d["y"]})">')
         svg.append(f'<rect class="dev" x="{d["x"] - 62}" y="{d["y"] - 24}" width="124" height="48" rx="16" fill="var(--surface)" stroke="var({tok})"/>')
         svg.append(f'<text class="dn" x="{d["x"]}" y="{d["y"] + 6}">{escape(d["label"])}</text>')
         if d.get("sub"):
             svg.append(f'<text class="sub" x="{d["x"]}" y="{d["y"] + 44}">{escape(d["sub"])}</text>')
+        if k != 1:
+            svg.append('</g>')
     for c in spec.get("clients", []):  # end-user devices as pills: optional icon (laptop, desktop, tablet) + label
         w, has_icon = c.get("w", 178), bool(c.get("icon"))
         svg.append(f'<rect class="cl" x="{c["x"] - w / 2}" y="{c["y"] - 18}" width="{w}" height="36" rx="18"/>')
