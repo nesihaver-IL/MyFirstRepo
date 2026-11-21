@@ -19,7 +19,7 @@
     {"from": "rt", "to": "m1", "type": "cable"},
     {"from": "m1", "to": "m2", "type": "wireless"}
   ],
-  "clients": [{"x": 130, "y": 100, "label": "Laptop"}, {"x": 130, "y": 270, "label": "Tablet"}],
+  "clients": [{"x": 130, "y": 100, "label": "Sam's laptop", "icon": "laptop"}, {"x": 130, "y": 270, "label": "Family tablet", "icon": "tablet"}],
   "ports": [{"x": 40, "y": 140, "label": "RJ45"}, {"x": 40, "y": 320, "label": "RJ45"}],
   "weak": [{"x": 410, "y": 312, "rx": 62, "ry": 30, "label": "Weak"}],
   "coverage": [{"device": "m1", "radius": 150}, {"device": "m2", "radius": 130}, {"device": "rt", "radius": 190}],

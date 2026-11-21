@@ -47,13 +47,27 @@ p{margin:0;max-width:68ch}.muted{color:var(--muted);font-size:.9rem}
 @keyframes flow{to{stroke-dashoffset:-26}}
 @media (prefers-reduced-motion:reduce){.wifi{animation:none}}
 .dev{stroke-width:3;filter:drop-shadow(0 4px 6px var(--shadow))}.dn{fill:var(--fg);font:700 18px var(--f);text-anchor:middle}
-.cl{fill:var(--surface);stroke:var(--muted);stroke-width:2}.ct{fill:var(--fg);font:500 15px var(--f);text-anchor:middle}
+.cl{fill:var(--surface);stroke:var(--muted);stroke-width:2}.ct{fill:var(--fg);font:500 15px var(--f);text-anchor:middle;direction:ltr;unicode-bidi:isolate}
+.ic{fill:none;stroke:var(--fg);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .port{fill:var(--port)}.pt{fill:var(--port);font:700 14px var(--f);text-anchor:middle}
 .wk{fill:url(#hatch);stroke:var(--weak);stroke-width:2;stroke-dasharray:7 5}.wt{fill:var(--weak);font:700 17px var(--f);text-anchor:middle}
 .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px 22px;list-style:none;margin:0;padding:0}
 .legend li{display:flex;gap:12px;align-items:center;min-width:0}.legend svg{width:46px;flex:none}
 ul.n{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:6px;max-width:68ch}
 """
+
+
+def icon(kind: str, cx: float, cy: float) -> str:
+    """Small outline icon (about 24x20) centered on cx, cy: laptop, desktop or tablet."""
+    if kind == "laptop":
+        body = f'<rect x="{cx - 8}" y="{cy - 9}" width="16" height="11" rx="2"/><path d="M{cx - 12} {cy + 6}H{cx + 12}"/>'
+    elif kind == "desktop":
+        body = f'<rect x="{cx - 10}" y="{cy - 10}" width="20" height="13" rx="2"/><path d="M{cx} {cy + 3}V{cy + 8}M{cx - 6} {cy + 8}H{cx + 6}"/>'
+    elif kind == "tablet":
+        body = f'<rect x="{cx - 7}" y="{cy - 10}" width="14" height="20" rx="3"/><path d="M{cx - 2} {cy + 6}H{cx + 2}"/>'
+    else:
+        return ""
+    return f'<g class="ic">{body}</g>'
 
 
 def swatch(kind: str) -> str:
@@ -115,9 +129,12 @@ def render(spec: dict) -> str:
         svg.append(f'<text class="dn" x="{d["x"]}" y="{d["y"] + 6}">{escape(d["label"])}</text>')
         if d.get("sub"):
             svg.append(f'<text class="sub" x="{d["x"]}" y="{d["y"] + 44}">{escape(d["sub"])}</text>')
-    for c in spec.get("clients", []):  # end-user devices (laptop, desktop, tablet) as small pills
-        w = c.get("w", 150)
-        svg.append(f'<rect class="cl" x="{c["x"] - w / 2}" y="{c["y"] - 16}" width="{w}" height="32" rx="16"/><text class="ct" x="{c["x"]}" y="{c["y"] + 5}">{escape(c["label"])}</text>')
+    for c in spec.get("clients", []):  # end-user devices as pills: optional icon (laptop, desktop, tablet) + label
+        w, has_icon = c.get("w", 178), bool(c.get("icon"))
+        svg.append(f'<rect class="cl" x="{c["x"] - w / 2}" y="{c["y"] - 18}" width="{w}" height="36" rx="18"/>')
+        if has_icon:
+            svg.append(icon(c["icon"], c["x"] - w / 2 + 26, c["y"]))
+        svg.append(f'<text class="ct" x="{c["x"] + (14 if has_icon else 0)}" y="{c["y"] + 5}">{escape(c["label"])}</text>')
     svg.append('</svg>')
 
     kinds = ["router", "mesh", "cable", "wifi", "port", "client", "weak"]

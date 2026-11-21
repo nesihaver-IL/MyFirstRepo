@@ -36,7 +36,7 @@ measurement. Say so on the page.
 | `rooms[]` | `id`, `name`, `kind` (bedroom, living, kitchen, bath, hall, safe, balcony, utility), `x y w h`, optional `walls: "thick"` (reinforced walls) and `sub` |
 | `devices[]` | `id`, `type` (router, mesh, ap), `label`, optional `sub`, `x y` |
 | `links[]` | `from`, `to`, `type` (cable = solid line, wireless = animated dots), optional `via: [[x,y]]` |
-| `clients[]` | `x y label`, optional `w`: where a person's laptop, desktop or tablet usually sits (small pill, add `client` to `legend`) |
+| `clients[]` | `x y label`, optional `icon` (laptop, desktop, tablet) and `w`: where a person's laptop, desktop or tablet usually sits (small pill, add `client` to `legend`) |
 | `ports[]` | `x y`, optional `label` (default RJ45) |
 | `weak[]` | `x y rx ry label` hatched ellipse |
 | `coverage[]` | `device`, `radius`: soft glow clipped to the apartment outline |
@@ -58,6 +58,7 @@ Written as design rules, not as a claim about what is fashionable.
 
 - Never present glow or ranges as measured. Suggest measuring on the phone in each room
   (a Wi-Fi analyzer app) and adding the readings as `weak` zones or notes.
+- Mixed Hebrew and English labels (for example a name plus "laptop") render left to right in client pills.
 - Mark guessed positions in `notes` (port positions inside rooms, cable routes, which device
   is which model).
 - Do not draw in-wall cable routes unless the user confirmed them.
