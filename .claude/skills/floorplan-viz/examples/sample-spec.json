@@ -19,11 +19,12 @@
     {"from": "rt", "to": "m1", "type": "cable"},
     {"from": "m1", "to": "m2", "type": "wireless"}
   ],
+  "clients": [{"x": 130, "y": 100, "label": "Laptop"}, {"x": 130, "y": 270, "label": "Tablet"}],
   "ports": [{"x": 40, "y": 140, "label": "RJ45"}, {"x": 40, "y": 320, "label": "RJ45"}],
   "weak": [{"x": 410, "y": 312, "rx": 62, "ry": 30, "label": "Weak"}],
   "coverage": [{"device": "m1", "radius": 150}, {"device": "m2", "radius": 130}, {"device": "rt", "radius": 190}],
   "legend_title": "Legend",
-  "legend": {"router": "Router", "mesh": "Mesh node", "cable": "Network cable", "wifi": "Wireless link", "port": "RJ45 wall port", "weak": "Weak signal"},
+  "legend": {"router": "Router", "mesh": "Mesh node", "cable": "Network cable", "wifi": "Wireless link", "port": "RJ45 wall port", "client": "Usual device spot", "weak": "Weak signal"},
   "notes_title": "Notes",
   "notes": ["Glow around a device is an illustration of range, not a measurement."]
 }

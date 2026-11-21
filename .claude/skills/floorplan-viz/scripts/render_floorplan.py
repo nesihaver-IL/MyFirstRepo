@@ -47,6 +47,7 @@ p{margin:0;max-width:68ch}.muted{color:var(--muted);font-size:.9rem}
 @keyframes flow{to{stroke-dashoffset:-26}}
 @media (prefers-reduced-motion:reduce){.wifi{animation:none}}
 .dev{stroke-width:3;filter:drop-shadow(0 4px 6px var(--shadow))}.dn{fill:var(--fg);font:700 18px var(--f);text-anchor:middle}
+.cl{fill:var(--surface);stroke:var(--muted);stroke-width:2}.ct{fill:var(--fg);font:500 15px var(--f);text-anchor:middle}
 .port{fill:var(--port)}.pt{fill:var(--port);font:700 14px var(--f);text-anchor:middle}
 .wk{fill:url(#hatch);stroke:var(--weak);stroke-width:2;stroke-dasharray:7 5}.wt{fill:var(--weak);font:700 17px var(--f);text-anchor:middle}
 .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px 22px;list-style:none;margin:0;padding:0}
@@ -64,6 +65,8 @@ def swatch(kind: str) -> str:
         return '<svg viewBox="0 0 46 20"><rect class="port" x="14" y="2" width="18" height="16" rx="4"/></svg>'
     if kind == "weak":
         return '<svg viewBox="0 0 46 24"><ellipse class="wk" cx="23" cy="12" rx="20" ry="10"/></svg>'
+    if kind == "client":
+        return '<svg viewBox="0 0 46 24"><rect class="cl" x="3" y="4" width="40" height="16" rx="8"/></svg>'
     if kind in DEVICE_TOKEN:
         return f'<svg viewBox="0 0 46 24"><rect x="3" y="3" width="40" height="18" rx="7" fill="var({DEVICE_TOKEN[kind]})" opacity=".25" stroke="var({DEVICE_TOKEN[kind]})" stroke-width="3"/></svg>'
     return ""
@@ -112,9 +115,12 @@ def render(spec: dict) -> str:
         svg.append(f'<text class="dn" x="{d["x"]}" y="{d["y"] + 6}">{escape(d["label"])}</text>')
         if d.get("sub"):
             svg.append(f'<text class="sub" x="{d["x"]}" y="{d["y"] + 44}">{escape(d["sub"])}</text>')
+    for c in spec.get("clients", []):  # end-user devices (laptop, desktop, tablet) as small pills
+        w = c.get("w", 150)
+        svg.append(f'<rect class="cl" x="{c["x"] - w / 2}" y="{c["y"] - 16}" width="{w}" height="32" rx="16"/><text class="ct" x="{c["x"]}" y="{c["y"] + 5}">{escape(c["label"])}</text>')
     svg.append('</svg>')
 
-    kinds = ["router", "mesh", "cable", "wifi", "port", "weak"]
+    kinds = ["router", "mesh", "cable", "wifi", "port", "client", "weak"]
     legend_text = spec.get("legend", {})
     legend = "".join(f'<li>{swatch(k)}<span>{escape(legend_text[k])}</span></li>' for k in kinds if k in legend_text)
     notes = "".join(f"<li>{escape(n)}</li>" for n in spec.get("notes", []))

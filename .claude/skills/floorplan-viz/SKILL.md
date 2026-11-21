@@ -18,7 +18,9 @@ measurement. Say so on the page.
    - which rooms have a wall network port (RJ45), and where inside the room;
    - where the router stands, and how each mesh or extender node gets its connection
      (network cable, or wall power only with a wireless link);
-   - which rooms or spots have weak signal.
+   - which rooms or spots have weak signal;
+   - which device (laptop, desktop, tablet) usually sits in which room, and whether it is wired
+     or on Wi-Fi. Do not assume wired just because a wall port exists.
 3. **Write the spec** (see `examples/sample-spec.json`). Rooms are rectangles in one shared
    coordinate system (any unit). Devices are centered on x and y. A device box is 124 wide and
    48 tall, so leave room for it. Use `via` points on a link to route around device labels.
@@ -34,6 +36,7 @@ measurement. Say so on the page.
 | `rooms[]` | `id`, `name`, `kind` (bedroom, living, kitchen, bath, hall, safe, balcony, utility), `x y w h`, optional `walls: "thick"` (reinforced walls) and `sub` |
 | `devices[]` | `id`, `type` (router, mesh, ap), `label`, optional `sub`, `x y` |
 | `links[]` | `from`, `to`, `type` (cable = solid line, wireless = animated dots), optional `via: [[x,y]]` |
+| `clients[]` | `x y label`, optional `w`: where a person's laptop, desktop or tablet usually sits (small pill, add `client` to `legend`) |
 | `ports[]` | `x y`, optional `label` (default RJ45) |
 | `weak[]` | `x y rx ry label` hatched ellipse |
 | `coverage[]` | `device`, `radius`: soft glow clipped to the apartment outline |
