@@ -1,0 +1,29 @@
+{
+  "title": "Sample apartment: Wi-Fi and wall ports",
+  "subtitle": "Generic example spec. Schematic, not to scale.",
+  "lang": "en",
+  "rooms": [
+    {"id": "b1", "name": "Bedroom", "kind": "bedroom", "x": 0, "y": 0, "w": 220, "h": 180},
+    {"id": "hall", "name": "Hall", "kind": "hall", "x": 220, "y": 0, "w": 110, "h": 360},
+    {"id": "liv", "name": "Living room", "kind": "living", "x": 330, "y": 0, "w": 360, "h": 260},
+    {"id": "kit", "name": "Kitchen", "kind": "kitchen", "x": 690, "y": 0, "w": 200, "h": 260},
+    {"id": "b2", "name": "Bedroom", "kind": "bedroom", "x": 0, "y": 180, "w": 220, "h": 180},
+    {"id": "bath", "name": "Bath", "kind": "bath", "x": 330, "y": 260, "w": 160, "h": 100}
+  ],
+  "devices": [
+    {"id": "rt", "type": "router", "label": "Router", "sub": "wired", "x": 395, "y": 130},
+    {"id": "m1", "type": "mesh", "label": "Mesh A", "sub": "cable to router", "x": 275, "y": 110},
+    {"id": "m2", "type": "mesh", "label": "Mesh B", "sub": "power only", "x": 275, "y": 300}
+  ],
+  "links": [
+    {"from": "rt", "to": "m1", "type": "cable"},
+    {"from": "m1", "to": "m2", "type": "wireless"}
+  ],
+  "ports": [{"x": 40, "y": 140, "label": "RJ45"}, {"x": 40, "y": 320, "label": "RJ45"}],
+  "weak": [{"x": 410, "y": 312, "rx": 62, "ry": 30, "label": "Weak"}],
+  "coverage": [{"device": "m1", "radius": 150}, {"device": "m2", "radius": 130}, {"device": "rt", "radius": 190}],
+  "legend_title": "Legend",
+  "legend": {"router": "Router", "mesh": "Mesh node", "cable": "Network cable", "wifi": "Wireless link", "port": "RJ45 wall port", "weak": "Weak signal"},
+  "notes_title": "Notes",
+  "notes": ["Glow around a device is an illustration of range, not a measurement."]
+}

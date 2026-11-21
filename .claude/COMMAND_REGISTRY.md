@@ -47,6 +47,9 @@
 #### Design Language (added 2026-09-15)
 - emil-kowalski-design
 
+#### Floor Plans & Network Layout (added 2026-11-21)
+- floorplan-viz
+
 #### Workspace Insight (added 2026-09-30)
 - claude-code-360-sync
 
@@ -109,6 +112,8 @@ You can use these trigger phrases to activate commands:
 | "visualize this" | content-to-image | Draft prompt from content, then render |
 | "apply design polish" | emil-kowalski-design | Typography, spacing, motion, color restraint |
 | "make it look designed" | emil-kowalski-design | Emil Kowalski-style visual pass |
+| "floor plan" | floorplan-viz | Floor plan with RJ45 ports, router, mesh, weak zones |
+| "wifi map" | floorplan-viz | Schematic Wi-Fi/mesh placement drawing |
 | "bedrock model" | aws-bedrock | Invoke Bedrock foundational models |
 | "knowledge base" | aws-bedrock | Bedrock KB RAG retrieval + ingestion |
 | "bedrock flows" | aws-bedrock | Visual agentic flow builder |
